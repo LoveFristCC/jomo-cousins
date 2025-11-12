@@ -10,7 +10,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <section
         id="home"
-        className="relative overflow-hidden"
+        className="relative overflow-hidden min-h-full"
       >
         {/* Background Image */}
         <div className="absolute inset-0">
@@ -26,7 +26,7 @@ export default function HomePage() {
         <div className="container relative z-10 mx-auto px-5 pt-6 ">
           <div className="flex flex-col items-center justify-center gap-0 md:flex-row md:items-end">
             {/* Left Content */}
-            <FadeInLeft>
+            {/* <FadeInLeft> */}
               <div className="self-center text-center md:text-left">
                 <h1 className="mb-6 text-4xl font-bold leading-tight text-[#2d2d2d] md:text-5xl lg:text-6xl">
                   <Image
@@ -54,10 +54,10 @@ export default function HomePage() {
                   Book Now
                 </Link>
               </div>
-            </FadeInLeft>
+            {/* </FadeInLeft> */}
 
             {/* Right Image */}
-            <FadeInRight delay={0.2}>
+            {/* <FadeInRight delay={0.2}> */}
               <div className="relative">
                 <Image
                   src="/images/jc-png/heroJomo.png"
@@ -65,9 +65,10 @@ export default function HomePage() {
                   width={600}
                   height={700}
                   className="mx-auto"
+                  priority
                 />
               </div>
-            </FadeInRight>
+            {/* </FadeInRight> */}
           </div>
         </div>
       </section>
