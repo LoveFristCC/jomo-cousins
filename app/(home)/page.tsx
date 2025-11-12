@@ -601,7 +601,7 @@ export default function HomePage() {
           </FadeIn>
 
           {/* Right Panel - Client Logos */}
-          <FadeInRight delay={0.4}>
+          {/* <FadeInRight delay={0.4}> */}
             <div className="grid grid-cols-2 gap-8 p-12">
               <div className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
                 <Image
@@ -640,7 +640,7 @@ export default function HomePage() {
                 />
               </div>
             </div>
-          </FadeInRight>
+          {/* </FadeInRight> */}
         </div>
       </section>
 
