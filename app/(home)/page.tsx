@@ -10,7 +10,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <section
         id="home"
-        className="relative overflow-hidden min-h-full"
+        className="relative overflow-hidden min-h-screen"
       >
         {/* Background Image */}
         <div className="absolute inset-0">
@@ -32,8 +32,8 @@ export default function HomePage() {
                   <Image
                     src="/images/icons/hearts.png"
                     alt="Heart Icon"
-                    width={80}
-                    height={80}
+                    width={64}
+                    height={64}
                     className="mb-6 hidden h-16 w-16 md:block"
                   />
                   UNLOCK THE
@@ -58,13 +58,13 @@ export default function HomePage() {
 
             {/* Right Image */}
             {/* <FadeInRight delay={0.2}> */}
-              <div className="relative">
+              <div className="relative w-full max-w-[600px]">
                 <Image
                   src="/images/jc-png/heroJomo.png"
                   alt="Dr. Jomo Cousins"
                   width={600}
                   height={700}
-                  className="mx-auto"
+                  className="mx-auto w-full h-auto"
                   priority
                 />
               </div>
