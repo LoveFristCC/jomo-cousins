@@ -135,7 +135,7 @@ export default async function RootLayout({
           <div className="pointer-events-auto">
             <Nav />
           </div>
-          <main className="pointer-events-auto pb-96">{children}</main>
+          <main className="pointer-events-auto">{children}</main>
         </div>
         <Footer />
         <SpeedInsights />
