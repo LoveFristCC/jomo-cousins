@@ -14,10 +14,17 @@ import {
 import { structureTool } from "sanity/structure";
 
 import { apiVersion, dataset, projectId, studioUrl } from "@/sanity/lib/api";
-import { pageStructure, singletonPlugin } from "@/sanity/plugins/settings";
+import { singletonPlugin } from "@/sanity/plugins/settings";
+import { productStructure } from "@/sanity/plugins/productStructure";
 import { assistWithPresets } from "@/sanity/plugins/assist";
+import { SyncToStripeAction } from "@/sanity/plugins/stripeSync";
+import { AutoStripeSyncAction } from "@/sanity/plugins/autoStripeSync";
+import { CleanOnPublishAction } from "@/sanity/plugins/cleanOnPublish";
+import { CleanDocumentAction } from "@/sanity/plugins/cleanDocument";
 import author from "@/sanity/schemas/documents/author";
 import post from "@/sanity/schemas/documents/post";
+import product, { productVariant } from "@/sanity/schemas/documents/product";
+import digitalProduct from "@/sanity/schemas/documents/digitalProduct";
 import settings from "@/sanity/schemas/singletons/settings";
 import { resolveHref } from "@/sanity/lib/utils";
 
@@ -37,7 +44,29 @@ export default defineConfig({
       // Documents
       post,
       author,
+      product,
+      digitalProduct,
+      // Objects
+      productVariant,
     ],
+  },
+  document: {
+    actions: (prev, context) => {
+      // Add clean & publish action for documents with portable text
+      if (context.schemaType === "post" || context.schemaType === "product" || context.schemaType === "digitalProduct") {
+        // Filter out default publish action and add our clean publish action
+        const filteredActions = prev.filter((action) => action.name !== "publish");
+
+        // For products, also add Stripe sync actions
+        if (context.schemaType === "product" || context.schemaType === "digitalProduct") {
+          return [CleanOnPublishAction, AutoStripeSyncAction, ...filteredActions, SyncToStripeAction, CleanDocumentAction];
+        }
+
+        // For posts, just add the clean publish action
+        return [CleanOnPublishAction, ...filteredActions, CleanDocumentAction];
+      }
+      return prev;
+    },
   },
   plugins: [
     presentationTool({
@@ -73,7 +102,7 @@ export default defineConfig({
       },
       previewUrl: { previewMode: { enable: "/api/draft-mode/enable" } },
     }),
-    structureTool({ structure: pageStructure([settings]) }),
+    structureTool({ structure: productStructure }),
     // Configures the global "new document" button, and document actions, to suit the Settings document singleton
     singletonPlugin([settings.name]),
     // Add an image asset source for Unsplash

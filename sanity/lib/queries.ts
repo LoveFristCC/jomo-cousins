@@ -32,3 +32,96 @@ export const postQuery = defineQuery(`
     ${postFields}
   }
 `);
+
+// Product queries
+const productFields = /* groq */ `
+  _id,
+  name,
+  "slug": slug.current,
+  description,
+  category,
+  images,
+  basePrice,
+  stripePriceId,
+  weight,
+  variants,
+  lowStockThreshold,
+  trackInventory,
+  status,
+  // Book-specific fields
+  isbn,
+  author,
+  publisher,
+  publicationDate,
+  pageCount,
+  previewChapter,
+  excerpt,
+  amazonLink,
+  audibleLink
+`;
+
+export const allProductsQuery = defineQuery(`
+  *[_type == "product" && status == "active"] | order(name asc) {
+    ${productFields}
+  }
+`);
+
+export const productBySlugQuery = defineQuery(`
+  *[_type == "product" && slug.current == $slug && status == "active"] [0] {
+    ${productFields}
+  }
+`);
+
+export const productsByCategoryQuery = defineQuery(`
+  *[_type == "product" && category == $category && status == "active"] | order(name asc) {
+    ${productFields}
+  }
+`);
+
+// Digital product queries
+const digitalProductFields = /* groq */ `
+  _id,
+  name,
+  "slug": slug.current,
+  description,
+  price,
+  stripePriceId,
+  kajabiOfferId,
+  upsellPosition,
+  headline,
+  subheadline,
+  bulletPoints,
+  image,
+  discount,
+  ctaText,
+  status
+`;
+
+export const digitalProductByPositionQuery = defineQuery(`
+  *[_type == "digitalProduct" && upsellPosition == $position && status == "active"] [0] {
+    ${digitalProductFields}
+  }
+`);
+
+export const digitalProductBySlugQuery = defineQuery(`
+  *[_type == "digitalProduct" && slug.current == $slug && status == "active"] [0] {
+    ${digitalProductFields}
+  }
+`);
+
+// Book queries
+const bookFields = /* groq */ `
+  _id,
+  name,
+  "slug": slug.current,
+  description,
+  images,
+  basePrice,
+  category
+`;
+
+export const newestBooksQuery = defineQuery(`
+  *[_type == "product" && category == "books" && status == "active"] | order(_createdAt desc) [0...$limit] {
+    ${bookFields}
+  }
+`);

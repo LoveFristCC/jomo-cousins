@@ -13,6 +13,167 @@
  */
 
 // Source: schema.json
+export type ProductVariant = {
+  _type: "productVariant";
+  sku?: string;
+  size?: "S" | "M" | "L" | "XL" | "2XL" | "3XL" | "ONE_SIZE";
+  color?: string;
+  colorHex?: string;
+  inventory?: number;
+  reservedInventory?: number;
+  price?: number;
+  stripePriceId?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  allowBackorder?: boolean;
+};
+
+export type DigitalProduct = {
+  _id: string;
+  _type: "digitalProduct";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  slug?: Slug;
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  price?: number;
+  stripePriceId?: string;
+  stripeProductId?: string;
+  kajabiOfferId?: string;
+  upsellPosition?: "upsell_1" | "upsell_2";
+  headline?: string;
+  subheadline?: string;
+  bulletPoints?: Array<string>;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  discount?: number;
+  ctaText?: string;
+  status?: "active" | "draft" | "archived";
+};
+
+export type Product = {
+  _id: string;
+  _type: "product";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  slug?: Slug;
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  category?: "books" | "tshirts" | "hoodies" | "accessories" | "other";
+  images?: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
+  basePrice?: number;
+  stripePriceId?: string;
+  stripeProductId?: string;
+  weight?: number;
+  variants?: Array<{
+    _key: string;
+  } & ProductVariant>;
+  lowStockThreshold?: number;
+  trackInventory?: boolean;
+  status?: "active" | "draft" | "archived";
+  isbn?: string;
+  author?: string;
+  publisher?: string;
+  publicationDate?: string;
+  pageCount?: number;
+  previewChapter?: {
+    title?: string;
+    chapterNumber?: number;
+    content?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+  };
+  excerpt?: string;
+  amazonLink?: string;
+  audibleLink?: string;
+};
+
 export type Post = {
   _id: string;
   _type: "post";
@@ -382,7 +543,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = Post | Author | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = ProductVariant | DigitalProduct | Product | Post | Author | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./app/(home)/posts/[slug]/page.tsx
 // Variable: postSlugs
@@ -605,6 +766,380 @@ export type PostQueryResult = {
     } | null;
   } | null;
 } | null;
+// Variable: allProductsQuery
+// Query: *[_type == "product" && status == "active"] | order(name asc) {      _id,  name,  "slug": slug.current,  description,  category,  images,  basePrice,  stripePriceId,  weight,  variants,  lowStockThreshold,  trackInventory,  status,  // Book-specific fields  isbn,  author,  publisher,  publicationDate,  pageCount,  previewChapter,  excerpt,  amazonLink,  audibleLink  }
+export type AllProductsQueryResult = Array<{
+  _id: string;
+  name: string | null;
+  slug: string | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  category: "accessories" | "books" | "hoodies" | "other" | "tshirts" | null;
+  images: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }> | null;
+  basePrice: number | null;
+  stripePriceId: string | null;
+  weight: number | null;
+  variants: Array<{
+    _key: string;
+  } & ProductVariant> | null;
+  lowStockThreshold: number | null;
+  trackInventory: boolean | null;
+  status: "active" | "archived" | "draft" | null;
+  isbn: string | null;
+  author: string | null;
+  publisher: string | null;
+  publicationDate: string | null;
+  pageCount: number | null;
+  previewChapter: {
+    title?: string;
+    chapterNumber?: number;
+    content?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+  } | null;
+  excerpt: string | null;
+  amazonLink: string | null;
+  audibleLink: string | null;
+}>;
+// Variable: productBySlugQuery
+// Query: *[_type == "product" && slug.current == $slug && status == "active"] [0] {      _id,  name,  "slug": slug.current,  description,  category,  images,  basePrice,  stripePriceId,  weight,  variants,  lowStockThreshold,  trackInventory,  status,  // Book-specific fields  isbn,  author,  publisher,  publicationDate,  pageCount,  previewChapter,  excerpt,  amazonLink,  audibleLink  }
+export type ProductBySlugQueryResult = {
+  _id: string;
+  name: string | null;
+  slug: string | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  category: "accessories" | "books" | "hoodies" | "other" | "tshirts" | null;
+  images: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }> | null;
+  basePrice: number | null;
+  stripePriceId: string | null;
+  weight: number | null;
+  variants: Array<{
+    _key: string;
+  } & ProductVariant> | null;
+  lowStockThreshold: number | null;
+  trackInventory: boolean | null;
+  status: "active" | "archived" | "draft" | null;
+  isbn: string | null;
+  author: string | null;
+  publisher: string | null;
+  publicationDate: string | null;
+  pageCount: number | null;
+  previewChapter: {
+    title?: string;
+    chapterNumber?: number;
+    content?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+  } | null;
+  excerpt: string | null;
+  amazonLink: string | null;
+  audibleLink: string | null;
+} | null;
+// Variable: productsByCategoryQuery
+// Query: *[_type == "product" && category == $category && status == "active"] | order(name asc) {      _id,  name,  "slug": slug.current,  description,  category,  images,  basePrice,  stripePriceId,  weight,  variants,  lowStockThreshold,  trackInventory,  status,  // Book-specific fields  isbn,  author,  publisher,  publicationDate,  pageCount,  previewChapter,  excerpt,  amazonLink,  audibleLink  }
+export type ProductsByCategoryQueryResult = Array<{
+  _id: string;
+  name: string | null;
+  slug: string | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  category: "accessories" | "books" | "hoodies" | "other" | "tshirts" | null;
+  images: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }> | null;
+  basePrice: number | null;
+  stripePriceId: string | null;
+  weight: number | null;
+  variants: Array<{
+    _key: string;
+  } & ProductVariant> | null;
+  lowStockThreshold: number | null;
+  trackInventory: boolean | null;
+  status: "active" | "archived" | "draft" | null;
+  isbn: string | null;
+  author: string | null;
+  publisher: string | null;
+  publicationDate: string | null;
+  pageCount: number | null;
+  previewChapter: {
+    title?: string;
+    chapterNumber?: number;
+    content?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+  } | null;
+  excerpt: string | null;
+  amazonLink: string | null;
+  audibleLink: string | null;
+}>;
+// Variable: digitalProductByPositionQuery
+// Query: *[_type == "digitalProduct" && upsellPosition == $position && status == "active"] [0] {      _id,  name,  "slug": slug.current,  description,  price,  stripePriceId,  kajabiOfferId,  upsellPosition,  headline,  subheadline,  bulletPoints,  image,  discount,  ctaText,  status  }
+export type DigitalProductByPositionQueryResult = {
+  _id: string;
+  name: string | null;
+  slug: string | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  price: number | null;
+  stripePriceId: string | null;
+  kajabiOfferId: string | null;
+  upsellPosition: "upsell_1" | "upsell_2" | null;
+  headline: string | null;
+  subheadline: string | null;
+  bulletPoints: Array<string> | null;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  discount: number | null;
+  ctaText: string | null;
+  status: "active" | "archived" | "draft" | null;
+} | null;
+// Variable: digitalProductBySlugQuery
+// Query: *[_type == "digitalProduct" && slug.current == $slug && status == "active"] [0] {      _id,  name,  "slug": slug.current,  description,  price,  stripePriceId,  kajabiOfferId,  upsellPosition,  headline,  subheadline,  bulletPoints,  image,  discount,  ctaText,  status  }
+export type DigitalProductBySlugQueryResult = {
+  _id: string;
+  name: string | null;
+  slug: string | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  price: number | null;
+  stripePriceId: string | null;
+  kajabiOfferId: string | null;
+  upsellPosition: "upsell_1" | "upsell_2" | null;
+  headline: string | null;
+  subheadline: string | null;
+  bulletPoints: Array<string> | null;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  discount: number | null;
+  ctaText: string | null;
+  status: "active" | "archived" | "draft" | null;
+} | null;
+// Variable: newestBooksQuery
+// Query: *[_type == "product" && category == "books" && status == "active"] | order(_createdAt desc) [0...$limit] {      _id,  name,  "slug": slug.current,  description,  images,  basePrice,  category  }
+export type NewestBooksQueryResult = Array<{
+  _id: string;
+  name: string | null;
+  slug: string | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  images: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }> | null;
+  basePrice: number | null;
+  category: "accessories" | "books" | "hoodies" | "other" | "tshirts" | null;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -615,5 +1150,11 @@ declare module "@sanity/client" {
     "\n  *[_type == \"post\" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {\n    content,\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n\n  }\n": HeroQueryResult;
     "\n  *[_type == \"post\" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n\n  }\n": MoreStoriesQueryResult;
     "\n  *[_type == \"post\" && slug.current == $slug] [0] {\n    content,\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n\n  }\n": PostQueryResult;
+    "\n  *[_type == \"product\" && status == \"active\"] | order(name asc) {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  category,\n  images,\n  basePrice,\n  stripePriceId,\n  weight,\n  variants,\n  lowStockThreshold,\n  trackInventory,\n  status,\n  // Book-specific fields\n  isbn,\n  author,\n  publisher,\n  publicationDate,\n  pageCount,\n  previewChapter,\n  excerpt,\n  amazonLink,\n  audibleLink\n\n  }\n": AllProductsQueryResult;
+    "\n  *[_type == \"product\" && slug.current == $slug && status == \"active\"] [0] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  category,\n  images,\n  basePrice,\n  stripePriceId,\n  weight,\n  variants,\n  lowStockThreshold,\n  trackInventory,\n  status,\n  // Book-specific fields\n  isbn,\n  author,\n  publisher,\n  publicationDate,\n  pageCount,\n  previewChapter,\n  excerpt,\n  amazonLink,\n  audibleLink\n\n  }\n": ProductBySlugQueryResult;
+    "\n  *[_type == \"product\" && category == $category && status == \"active\"] | order(name asc) {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  category,\n  images,\n  basePrice,\n  stripePriceId,\n  weight,\n  variants,\n  lowStockThreshold,\n  trackInventory,\n  status,\n  // Book-specific fields\n  isbn,\n  author,\n  publisher,\n  publicationDate,\n  pageCount,\n  previewChapter,\n  excerpt,\n  amazonLink,\n  audibleLink\n\n  }\n": ProductsByCategoryQueryResult;
+    "\n  *[_type == \"digitalProduct\" && upsellPosition == $position && status == \"active\"] [0] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  price,\n  stripePriceId,\n  kajabiOfferId,\n  upsellPosition,\n  headline,\n  subheadline,\n  bulletPoints,\n  image,\n  discount,\n  ctaText,\n  status\n\n  }\n": DigitalProductByPositionQueryResult;
+    "\n  *[_type == \"digitalProduct\" && slug.current == $slug && status == \"active\"] [0] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  price,\n  stripePriceId,\n  kajabiOfferId,\n  upsellPosition,\n  headline,\n  subheadline,\n  bulletPoints,\n  image,\n  discount,\n  ctaText,\n  status\n\n  }\n": DigitalProductBySlugQueryResult;
+    "\n  *[_type == \"product\" && category == \"books\" && status == \"active\"] | order(_createdAt desc) [0...$limit] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  images,\n  basePrice,\n  category\n\n  }\n": NewestBooksQueryResult;
   }
 }
