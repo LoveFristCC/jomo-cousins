@@ -16,13 +16,16 @@ export default defineType({
       title: "Product Name",
       type: "string",
       validation: (rule) =>
-        rule.required().max(250).custom((value) => {
-          // Check for hidden unicode characters
-          if (value && /[\u200B-\u200D\uFEFF]/.test(value)) {
-            return "Product name contains hidden characters. Please re-type the name.";
-          }
-          return true;
-        }),
+        rule
+          .required()
+          .max(250)
+          .custom((value) => {
+            // Check for hidden unicode characters
+            if (value && /[\u200B-\u200D\uFEFF]/.test(value)) {
+              return "Product name contains hidden characters. Please re-type the name.";
+            }
+            return true;
+          }),
     }),
     defineField({
       name: "slug",
@@ -106,6 +109,8 @@ export default defineType({
       name: "image",
       title: "Product Image",
       type: "image",
+      description:
+        "Upload high-quality product image (minimum 800px recommended)",
       options: {
         hotspot: true,
       },
@@ -156,8 +161,14 @@ export default defineType({
       status: "status",
     },
     prepare({ title, media, price, position, status }) {
-      const statusIndicator = status === "active" ? "✓" : status === "draft" ? "📝" : "📦";
-      const positionLabel = position === "upsell_1" ? "Upsell 1" : position === "upsell_2" ? "Upsell 2" : "No position";
+      const statusIndicator =
+        status === "active" ? "✓" : status === "draft" ? "📝" : "📦";
+      const positionLabel =
+        position === "upsell_1"
+          ? "Upsell 1"
+          : position === "upsell_2"
+          ? "Upsell 2"
+          : "No position";
 
       return {
         title: `${statusIndicator} ${title}`,

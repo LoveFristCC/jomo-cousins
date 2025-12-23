@@ -23,12 +23,12 @@ export default function ProductActions({ product }: ProductActionsProps) {
       .trim();
   };
 
-  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
-    product.variants?.[0] || null
+  const [ selectedVariant, setSelectedVariant ] = useState<ProductVariant | null>(
+    product.variants?.[ 0 ] || null
   );
-  const [quantity, setQuantity] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [ quantity, setQuantity ] = useState(1);
+  const [ isLoading, setIsLoading ] = useState(false);
+  const [ error, setError ] = useState<string | null>(null);
 
   // Get unique sizes and colors from variants (sanitized)
   const sizes = product.variants
@@ -38,15 +38,15 @@ export default function ProductActions({ product }: ProductActionsProps) {
   // Get unique colors by color name (not object reference, sanitized)
   const colors = product.variants
     ? Array.from(
-        product.variants.reduce((map, v) => {
-          const cleanColor = sanitize(v.color);
-          const cleanHex = sanitize(v.colorHex);
-          if (cleanColor && !map.has(cleanColor)) {
-            map.set(cleanColor, { color: cleanColor, hex: cleanHex || null });
-          }
-          return map;
-        }, new Map<string, { color: string; hex?: string | null }>())
-      ).map(([_, value]) => value)
+      product.variants.reduce((map, v) => {
+        const cleanColor = sanitize(v.color);
+        const cleanHex = sanitize(v.colorHex);
+        if (cleanColor && !map.has(cleanColor)) {
+          map.set(cleanColor, { color: cleanColor, hex: cleanHex || null });
+        }
+        return map;
+      }, new Map<string, { color: string; hex?: string | null }>())
+    ).map(([ _, value ]) => value)
     : [];
 
   // Get the currently selected size and color (sanitized)
@@ -166,14 +166,14 @@ export default function ProductActions({ product }: ProductActionsProps) {
 
   return (
     <div className="space-y-6 bg-gray-50 rounded-2xl p-6 md:p-8">
-      {/* Size selector */}
-      {sizes.length > 0 && (
+      {/* Size selector */ }
+      { sizes.length > 0 && (
         <div>
           <label className="block text-base font-bold mb-4 text-[#2d2d2d]">
-            Size {selectedSize && <span className="font-normal text-gray-600">: {selectedSize}</span>}
+            Size { selectedSize && <span className="font-normal text-gray-600">: { selectedSize }</span> }
           </label>
           <div className="flex flex-wrap gap-3">
-            {sizes.map((size) => {
+            { sizes.map((size) => {
               const variant = product.variants?.find(
                 (v) =>
                   sanitize(v.size) === sanitize(size) && (!selectedColor || sanitize(v.color) === sanitize(selectedColor))
@@ -182,34 +182,33 @@ export default function ProductActions({ product }: ProductActionsProps) {
 
               return (
                 <button
-                  key={size}
-                  onClick={() => handleSizeSelect(size!)}
-                  disabled={!available}
-                  className={`px-5 py-3 rounded-lg border-2 font-semibold transition-all ${
-                    selectedSize === size
-                      ? "border-[#e31e24] bg-[#e31e24] text-white shadow-md scale-105"
-                      : available
+                  key={ size }
+                  onClick={ () => handleSizeSelect(size!) }
+                  disabled={ !available }
+                  className={ `px-5 py-3 rounded-lg border-2 font-semibold transition-all ${selectedSize === size
+                    ? "border-[#e31e24] bg-[#e31e24] text-white shadow-md scale-105"
+                    : available
                       ? "border-[#2d2d2d] text-[#2d2d2d] hover:border-[#e31e24] hover:bg-[#e31e24] hover:text-white"
                       : "border-gray-300 text-gray-400 line-through cursor-not-allowed bg-gray-200"
-                  }`}
+                    }` }
                 >
-                  {size}
+                  { size }
                 </button>
               );
-            })}
+            }) }
           </div>
         </div>
-      )}
+      ) }
 
-      {/* Color selector */}
-      {colors.length > 0 && (
+      {/* Color selector */ }
+      { colors.length > 0 && (
         <div>
           <label className="block text-base font-bold mb-4 text-[#2d2d2d]">
-            Color{" "}
-            {selectedColor && <span className="font-normal text-gray-600">: {selectedColor}</span>}
+            Color{ " " }
+            { selectedColor && <span className="font-normal text-gray-600">: { selectedColor }</span> }
           </label>
           <div className="flex flex-wrap gap-4">
-            {colors.map(({ color, hex }) => {
+            { colors.map(({ color, hex }) => {
               if (!color) return null;
 
               const variant = product.variants?.find(
@@ -223,117 +222,123 @@ export default function ProductActions({ product }: ProductActionsProps) {
 
               return (
                 <button
-                  key={color}
-                  onClick={() => handleColorSelect(color)}
-                  disabled={!available}
-                  className={`relative w-14 h-14 rounded-full border-3 transition-all shadow-md ${
-                    selectedColor === color
-                      ? "border-[#e31e24] scale-110 ring-2 ring-[#e31e24] ring-offset-2"
-                      : available
+                  key={ color }
+                  onClick={ () => handleColorSelect(color) }
+                  disabled={ !available }
+                  className={ `relative w-14 h-14 rounded-full border-3 transition-all shadow-md ${selectedColor === color
+                    ? "border-[#e31e24] scale-110 ring-2 ring-[#e31e24] ring-offset-2"
+                    : available
                       ? "border-gray-300 hover:border-[#2d2d2d] hover:scale-105"
                       : "border-gray-200 opacity-40 cursor-not-allowed"
-                  }`}
-                  title={color}
-                  style={{
+                    }` }
+                  title={ color }
+                  style={ {
                     backgroundColor: hex || "#ccc",
-                  }}
+                  } }
                 >
-                  {selectedColor === color && (
+                  { selectedColor === color && (
                     <span className="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold drop-shadow-lg">
                       ✓
                     </span>
-                  )}
-                  {!available && (
+                  ) }
+                  { !available && (
                     <span className="absolute inset-0 flex items-center justify-center">
                       <div className="w-full h-0.5 bg-gray-400 rotate-45" />
                     </span>
-                  )}
+                  ) }
                 </button>
               );
-            })}
+            }) }
           </div>
         </div>
-      )}
+      ) }
 
-      {/* Variant image (if available) */}
-      {selectedVariant?.image && (
+      {/* Variant image (if available) */ }
+      { selectedVariant?.image && (
         <div className="relative w-24 h-24 rounded-lg overflow-hidden border">
           <Image
             src={
               urlForImage(selectedVariant.image)?.width(200).height(200).url() || ""
             }
-            alt={selectedVariant.image.alt || "Variant image"}
+            alt={ selectedVariant.image.alt || "Variant image" }
             fill
             className="object-cover"
           />
         </div>
-      )}
+      ) }
 
-      {/* Stock status */}
-      {stockStatus && (
-        <div className={`px-4 py-3 rounded-lg font-semibold ${stockStatus.className} ${
-          stockStatus.message.includes("Out")
-            ? "bg-red-50 border border-red-200"
-            : stockStatus.message.includes("Low")
+      {/* Stock status */ }
+      { stockStatus && (
+        <div className={ `px-4 py-3 rounded-lg font-semibold ${stockStatus.className} ${stockStatus.message.includes("Out")
+          ? "bg-red-50 border border-red-200"
+          : stockStatus.message.includes("Low")
             ? "bg-yellow-50 border border-yellow-200"
             : "bg-green-50 border border-green-200"
-        }`}>
-          {stockStatus.message}
+          }` }>
+          { stockStatus.message }
         </div>
-      )}
+      ) }
 
-      {/* Quantity selector */}
-      <div>
-        <label className="block text-base font-bold mb-4 text-[#2d2d2d]">Quantity</label>
+      {/* Quantity selector */ }
+      <div className="flex flex-col items-center justify-center">
+        <label className="block text-base font-bold mb-4 text-[#2d2d2d]">
+          Quantity
+        </label>
+
         <div className="flex items-center gap-4">
           <button
-            onClick={() => setQuantity(Math.max(1, quantity - 1))}
+            onClick={ () => setQuantity(Math.max(1, quantity - 1)) }
             className="w-12 h-12 rounded-lg border-2 border-[#2d2d2d] text-[#2d2d2d] font-bold hover:bg-[#2d2d2d] hover:text-white transition-all"
           >
             −
           </button>
-          <span className="text-2xl font-bold w-16 text-center text-[#2d2d2d]">{quantity}</span>
+
+          <span className="text-2xl font-bold w-16 text-center text-[#2d2d2d]">
+            { quantity }
+          </span>
+
           <button
-            onClick={() => setQuantity(quantity + 1)}
+            onClick={ () => setQuantity(quantity + 1) }
             disabled={
               product.trackInventory &&
               selectedVariant &&
               quantity >= (selectedVariant.inventory || 0) &&
               !selectedVariant.allowBackorder
             }
-            className="w-12 h-12 rounded-lg border-2 border-[#2d2d2d] text-[#2d2d2d] font-bold hover:bg-[#2d2d2d] hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-[#2d2d2d]"
+            className="w-12 h-12 rounded-lg border-2 border-[#2d2d2d] text-[#2d2d2d] font-bold hover:bg-[#2d2d2d] hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             +
           </button>
         </div>
       </div>
 
-      {/* Error message */}
-      {error && (
-        <div className="p-4 bg-red-50 border-2 border-red-300 rounded-lg text-red-700 font-semibold">
-          {error}
-        </div>
-      )}
 
-      {/* Buy Now button */}
+      {/* Error message */ }
+      { error && (
+        <div className="p-4 bg-red-50 border-2 border-red-300 rounded-lg text-red-700 font-semibold">
+          { error }
+        </div>
+      ) }
+
+      {/* Buy Now button */ }
       <button
-        onClick={handleBuyNow}
-        disabled={!canPurchase || isLoading}
+        onClick={ handleBuyNow }
+        disabled={ !canPurchase || isLoading }
         className="w-full py-5 bg-[#e31e24] text-white rounded-xl font-bold text-lg shadow-lg hover:bg-[#c41a1f] hover:scale-105 transition-all disabled:bg-gray-300 disabled:cursor-not-allowed disabled:hover:scale-100"
       >
-        {isLoading
+        { isLoading
           ? "Processing..."
           : !canPurchase
-          ? "Out of Stock"
-          : `Buy Now - $${((product.basePrice || 0) * quantity).toFixed(2)}`}
+            ? "Out of Stock"
+            : `Buy Now - $${((product.basePrice || 0) * quantity).toFixed(2)}` }
       </button>
 
-      {/* SKU display */}
-      {selectedVariant && (
+      {/* SKU display */ }
+      { selectedVariant && (
         <div className="text-sm text-gray-600 pt-4 border-t border-gray-200">
-          <span className="font-semibold text-[#2d2d2d]">SKU:</span> {selectedVariant.sku}
+          <span className="font-semibold text-[#2d2d2d]">SKU:</span> { selectedVariant.sku }
         </div>
-      )}
+      ) }
     </div>
   );
 }

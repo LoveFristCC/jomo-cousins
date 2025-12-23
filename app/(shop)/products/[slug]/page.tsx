@@ -53,11 +53,11 @@ export default async function ProductPage({
               <div className="relative aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl overflow-hidden shadow-xl">
                 <Image
                   src={
-                    urlForImage(product.images[ 0 ])?.width(800).height(800).url() || ""
+                    urlForImage(product.images[ 0 ])?.width(800).url() || ""
                   }
                   alt={ product.images[ 0 ].alt || product.name }
                   fill
-                  className="object-cover"
+                  className="object-cover object-top"
                   priority
                 />
               </div>

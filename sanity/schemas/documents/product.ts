@@ -87,7 +87,8 @@ export const productVariant = defineType({
       name: "image",
       title: "Variant Image",
       type: "image",
-      description: "Optional variant-specific image",
+      description:
+        "Optional variant-specific image (minimum 800px recommended)",
       options: {
         hotspot: true,
       },
@@ -221,6 +222,8 @@ export default defineType({
       name: "images",
       title: "Product Images",
       type: "array",
+      description:
+        "Upload high-quality product images (minimum 1000px width recommended for best display quality)",
       of: [
         {
           type: "image",

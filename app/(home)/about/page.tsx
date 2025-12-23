@@ -5,7 +5,7 @@ export default function AboutPage() {
   return (
     <div className="bg-white">
       {/* Hero Section - Screenshot 1 */ }
-      <section className="relative overflow-hidden pt-4 md:pt-20">
+      <section className="relative overflow-hidden pt-0 md:pt-20">
         {/* Background Image */ }
         <div className="absolute inset-0">
           <Image
@@ -23,7 +23,7 @@ export default function AboutPage() {
         <div className="relative container mx-auto px-5">
           <div className="grid md:grid-cols-2">
             {/* Left side - Text */ }
-            <div className="flex items-center min-h-[500px] md:min-h-[650px] pb-0 md:pb-0">
+            <div className="flex items-center min-h-[400px] md:min-h-[650px] py-8 md:py-0">
               <div className="text-center md:text-left">
                 {/* Red icon */ }
                 <div className="mb-4 flex justify-center md:justify-start">
@@ -230,7 +230,7 @@ export default function AboutPage() {
           <div className="max-w-6xl mx-auto relative min-h-[60vh] md:min-h-[760px]">
 
             {/* Text Content */ }
-            <div className="relative z-30 max-w-xl pt-8 pb-80 md:pb-0">
+            <div className="relative max-w-xl pt-8 pb-[400px] md:pb-0 z-0 md:z-30">
               <h2 className="text-3xl md:text-4xl font-bold mb-8">
                 <span className="text-gray-300">THRIVING AFTER</span>
                 <br />

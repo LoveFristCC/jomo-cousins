@@ -29,71 +29,73 @@ export default async function BooksSection() {
           </div>
         </SlideInTop>
 
-        {/* Book Images Grid */}
-        <StaggerChildren staggerDelay={0.2}>
+        {/* Book Images Grid */ }
+        <StaggerChildren staggerDelay={ 0.2 }>
           <div className="mx-auto flex max-w-5xl flex-wrap items-start justify-center gap-8">
-            {books.map((book) => (
-              <StaggerItem key={book._id}>
+            { books.map((book) => (
+              <StaggerItem key={ book._id }>
                 <div className="text-center max-w-xs">
                   <div className="mb-4 transition-transform hover:scale-105">
-                    {book.images?.[0] && (
-                      <Image
-                        src={urlForImage(book.images[0])?.width(300).height(400).url() || ""}
-                        alt={book.images[0].alt || book.name || "Book cover"}
-                        width={250}
-                        height={350}
-                        className="h-auto w-48 md:w-64 mx-auto"
-                      />
-                    )}
+                    { book.images?.[ 0 ] && (
+                      <div className="relative w-48 md:w-64 mx-auto aspect-[3/4]">
+                        <Image
+                          src={ urlForImage(book.images[ 0 ])?.width(800).url() || "" }
+                          alt={ book.images[ 0 ].alt || book.name || "Book cover" }
+                          fill
+                          quality={ 100 }
+                          className="object-cover object-top"
+                        />
+                      </div>
+                    ) }
                   </div>
-                  <h3 className="mb-3 text-lg font-bold text-[#2d2d2d]">{book.name}</h3>
-                  {book.description && (
+                  <h3 className="mb-3 text-lg font-bold text-[#2d2d2d]">{ book.name }</h3>
+                  { book.description && (
                     <p className="mb-4 text-sm text-gray-600 line-clamp-3">
-                      {typeof book.description === 'string'
+                      { typeof book.description === 'string'
                         ? book.description
-                        : book.description[0]?.children?.[0]?.text || ''}
+                        : book.description[ 0 ]?.children?.[ 0 ]?.text || '' }
                     </p>
-                  )}
+                  ) }
                   <Link
-                    href={`/products/${book.slug}`}
+                    href={ `/products/${book.slug}` }
                     className="inline-block rounded-lg bg-[#e31e24] px-6 py-2 text-sm font-bold uppercase tracking-wide text-white shadow-lg transition-all hover:scale-105 hover:bg-[#c41a1f] hover:shadow-xl"
                   >
                     View Book
                   </Link>
                 </div>
               </StaggerItem>
-            ))}
+            )) }
           </div>
         </StaggerChildren>
 
-        {/* Platform Logos */}
-        <FadeIn delay={0.4}>
+        {/* Platform Logos */ }
+        <FadeIn delay={ 0.4 }>
           <div className="mt-16 flex flex-wrap items-center justify-center gap-8 opacity-60">
             <Image
               src="/images/site-files/image (23).png"
               alt="Audible"
-              width={120}
-              height={40}
+              width={ 120 }
+              height={ 40 }
               className="h-10 w-auto"
             />
             <Image
               src="/images/site-files/image (24).png"
               alt="Audible"
-              width={120}
-              height={40}
+              width={ 120 }
+              height={ 40 }
               className="h-10 w-auto"
             />
             <Image
               src="/images/site-files/image (22).png"
               alt="iTunes"
-              width={120}
-              height={40}
+              width={ 120 }
+              height={ 40 }
               className="h-10 w-auto"
             />
           </div>
         </FadeIn>
 
-        <FadeInUp delay={0.6}>
+        <FadeInUp delay={ 0.6 }>
           <div className="mt-12 text-center">
             <Link
               href="/products"
