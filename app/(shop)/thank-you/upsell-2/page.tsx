@@ -26,7 +26,7 @@ export default async function UpsellTwoPage({
   let session: any;
   try {
     session = await stripe.checkout.sessions.retrieve(session_id, {
-      expand: ["line_items"],
+      expand: [ "line_items" ],
     });
   } catch (error) {
     console.error("[Upsell 2] Error fetching session:", error);
@@ -59,7 +59,7 @@ export default async function UpsellTwoPage({
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
+      {/* Header */ }
       <div className="bg-gradient-to-br from-[#2d2d2d] to-[#1a1a1a] text-white py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
@@ -69,24 +69,24 @@ export default async function UpsellTwoPage({
             <p className="text-xl text-gray-300">
               Before you go, check out these hand-picked recommendations
             </p>
-            {customerEmail && (
+            { customerEmail && (
               <p className="text-gray-400 mt-4 text-sm">
-                For: <strong className="text-white">{customerEmail}</strong>
+                For: <strong className="text-white">{ customerEmail }</strong>
               </p>
-            )}
+            ) }
           </div>
         </div>
       </div>
 
-      {/* Product Upsells */}
-      {upsellsToShow.length > 0 ? (
+      {/* Product Upsells */ }
+      { upsellsToShow.length > 0 ? (
         <>
           <ProductUpsells
-            upsells={upsellsToShow}
+            upsells={ upsellsToShow }
             headline="Complete Your Collection"
           />
 
-          {/* Decline/Complete CTA */}
+          {/* Decline/Complete CTA */ }
           <div className="container mx-auto px-4 max-w-4xl">
             <div className="text-center py-12">
               <p className="text-gray-600 mb-6">
@@ -96,7 +96,7 @@ export default async function UpsellTwoPage({
                 href="/thank-you/complete"
                 className="inline-block px-10 py-4 bg-white border-2 border-gray-300 text-gray-700 rounded-lg font-bold text-lg hover:bg-gray-50 transition shadow-md"
               >
-                No Thanks, Continue to My Account
+                No Thanks
               </a>
             </div>
           </div>
@@ -114,7 +114,7 @@ export default async function UpsellTwoPage({
             Continue to My Account
           </a>
         </div>
-      )}
+      ) }
     </div>
   );
 }

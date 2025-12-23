@@ -69,7 +69,10 @@ const productFields = /* groq */ `
     basePrice,
     excerpt,
     author,
-    status
+    status,
+    stripePriceId,
+    weight,
+    variants
   }
 `;
 
