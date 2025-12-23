@@ -81,6 +81,32 @@ export default async function ProductPage({
                 )) }
               </div>
             ) }
+
+            {/* Free Preview Badge - Only for books with preview chapter */ }
+            { product.previewChapter && (
+              <a
+                href="#preview-section"
+                className="block mt-6 bg-gradient-to-br from-[#e31e24] to-[#c41a1f] rounded-xl p-6 text-center text-white shadow-xl hover:shadow-2xl transition-all hover:scale-105 cursor-pointer group"
+              >
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                  </svg>
+                  <span className="text-sm font-bold uppercase tracking-wider">Free Preview</span>
+                </div>
+                <p className="text-lg font-bold mb-1">Read Before You Buy</p>
+                <p className="text-sm text-white/90">
+                  { product.previewChapter.chapterNumber
+                    ? `Chapter ${product.previewChapter.chapterNumber}`
+                    : "Sample Chapter" } Available Below
+                </p>
+                <div className="mt-3 text-white/80 group-hover:text-white transition-colors">
+                  <svg className="w-5 h-5 mx-auto animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
+                </div>
+              </a>
+            ) }
           </div>
 
           {/* Product Info & Actions */ }
@@ -170,11 +196,14 @@ export default async function ProductPage({
       </div>
 
       {/* Free Preview Chapter for Books - Critical for SEO */ }
-      { product.category === "books" && product.previewChapter && (
-        <BookPreview
-          previewChapter={ product.previewChapter }
-          bookTitle={ product.name || "" }
-        />
+      { product.previewChapter && (
+        <div id="preview-section">
+          <BookPreview
+            previewChapter={ product.previewChapter }
+            bookTitle={ product.name || "" }
+            bookSlug={ slug }
+          />
+        </div>
       ) }
     </div>
   );

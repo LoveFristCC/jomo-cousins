@@ -50,11 +50,6 @@ export default function CustomPortableText({
             .replace(/[\u0000-\u001F\u007F-\u009F]/g, '');
 
           if (cleaned !== textNode.textContent) {
-            console.log('🧹 Cleaned DOM node:', {
-              before: textNode.textContent.length,
-              after: cleaned.length,
-              removed: textNode.textContent.length - cleaned.length
-            });
             textNode.textContent = cleaned;
           }
         }

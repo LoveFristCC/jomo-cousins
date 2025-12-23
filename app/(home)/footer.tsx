@@ -1,19 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
 
+
 export default function Footer() {
   return (
     <footer className="relative bg-[#2d2d2d] py-12 text-white">
       <div className="container mx-auto px-5">
         <div className="grid gap-8 md:grid-cols-4">
-          {/* Logo & About */}
+          {/* Logo & About */ }
           <div>
             <Link href="/" className="mb-4 flex items-center gap-3">
               <Image
                 src="/images/logos/Asset 1.png"
                 alt="Jomo Cousins Logo"
-                width={40}
-                height={40}
+                width={ 40 }
+                height={ 40 }
                 className="h-10 w-10"
               />
               <span className="text-lg font-bold tracking-wider">
@@ -25,7 +26,7 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Links */ }
           <div>
             <h3 className="mb-4 text-lg font-bold">Quick Links</h3>
             <ul className="space-y-2 text-sm">
@@ -52,7 +53,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Contact Info */ }
           <div>
             <h3 className="mb-4 text-lg font-bold">Contact</h3>
             <ul className="space-y-2 text-sm text-gray-400">
@@ -65,7 +66,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Social Media */}
+          {/* Social Media */ }
           <div>
             <h3 className="mb-4 text-lg font-bold">Follow Us</h3>
             <div className="flex gap-4">
@@ -104,7 +105,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 border-t border-gray-700 pt-8 text-center text-sm text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Dr. Jomo Cousins. All rights reserved.</p>
+          <p>&copy; 2025-{ new Date().getFullYear() } Dr. Jomo Cousins. All rights reserved.</p>
         </div>
       </div>
     </footer>

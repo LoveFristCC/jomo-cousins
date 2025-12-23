@@ -275,7 +275,7 @@ export default function ContactPage() {
                     </svg>
                   </a>
                   <a
-                    href="https://www.facebook.com/wearelovefirst/"
+                    href="https://www.facebook.com/pastorjomo/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex h-12 w-12 items-center justify-center bg-[#e31e24] text-white transition-colors hover:bg-[#c41a1f]"

@@ -1,19 +1,12 @@
 import "../globals.css";
-
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import {
-  VisualEditing,
   toPlainText,
-  type PortableTextBlock,
 } from "next-sanity";
 import { Inter } from "next/font/google";
-import { draftMode } from "next/headers";
-
-import AlertBanner from "./alert-banner";
 import Footer from "./footer";
 import Nav from "./nav";
-import PortableText from "./portable-text";
 import StructuredData from "./structured-data";
 
 import * as demo from "@/sanity/lib/demo";
@@ -64,7 +57,7 @@ export async function generateMetadata(): Promise<Metadata> {
       "IRIE method",
       "Love First Christian Center"
     ],
-    authors: [{ name: "Dr. Jomo Cousins" }],
+    authors: [ { name: "Dr. Jomo Cousins" } ],
     creator: "Dr. Jomo Cousins",
     publisher: "Dr. Jomo Cousins",
     formatDetection: {
@@ -79,7 +72,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Dr. Jomo Cousins",
       title: title,
       description: plainDescription,
-      images: ogImage ? [ogImage] : [
+      images: ogImage ? [ ogImage ] : [
         {
           url: "/images/og-image.jpg",
           width: 1200,
@@ -93,7 +86,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: title,
       description: plainDescription,
       creator: "@pastorjomo",
-      images: ogImage ? [ogImage] : ["/images/og-image.jpg"],
+      images: ogImage ? [ ogImage ] : [ "/images/og-image.jpg" ],
     },
     robots: {
       index: true,
@@ -114,7 +107,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const inter = Inter({
   variable: "--font-inter",
-  subsets: ["latin"],
+  subsets: [ "latin" ],
   display: "swap",
 });
 
@@ -128,14 +121,14 @@ export default async function RootLayout({
   // const { isEnabled: isDraftMode } = await draftMode();
 
   return (
-    <html lang="en" className={`${inter.variable} bg-[#3d3d3d] text-black`}>
+    <html lang="en" className={ `${inter.variable} bg-[#3d3d3d] text-black` }>
       <body>
         <StructuredData />
         <div className="pointer-events-none relative z-10">
           <div className="pointer-events-auto">
             <Nav />
           </div>
-          <main className="pointer-events-auto">{children}</main>
+          <main className="pointer-events-auto">{ children }</main>
         </div>
         <Footer />
         <SpeedInsights />

@@ -3,9 +3,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isActive = (path: string) => {
+    if (path === "/") {
+      return pathname === "/";
+    }
+    return pathname?.startsWith(path);
+  };
 
   return (
     <>
@@ -32,25 +41,33 @@ export default function Nav() {
             <div className="hidden items-center gap-8 lg:flex">
               <Link
                 href="/"
-                className="relative text-sm font-medium uppercase tracking-wide transition-colors hover:text-[#e31e24] after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-[#e31e24] after:transition-all hover:after:w-full"
+                className={`relative text-sm font-medium uppercase tracking-wide transition-colors hover:text-[#e31e24] after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:bg-[#e31e24] after:transition-all ${
+                  isActive("/") ? "text-[#e31e24] after:w-full" : "after:w-0 hover:after:w-full"
+                }`}
               >
                 Home
               </Link>
               <Link
                 href="/about"
-                className="relative text-sm font-medium uppercase tracking-wide transition-colors hover:text-[#e31e24] after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-[#e31e24] after:transition-all hover:after:w-full"
+                className={`relative text-sm font-medium uppercase tracking-wide transition-colors hover:text-[#e31e24] after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:bg-[#e31e24] after:transition-all ${
+                  isActive("/about") ? "text-[#e31e24] after:w-full" : "after:w-0 hover:after:w-full"
+                }`}
               >
                 About
               </Link>
               <Link
                 href="/products"
-                className="relative text-sm font-medium uppercase tracking-wide transition-colors hover:text-[#e31e24] after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-[#e31e24] after:transition-all hover:after:w-full"
+                className={`relative text-sm font-medium uppercase tracking-wide transition-colors hover:text-[#e31e24] after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:bg-[#e31e24] after:transition-all ${
+                  isActive("/products") ? "text-[#e31e24] after:w-full" : "after:w-0 hover:after:w-full"
+                }`}
               >
                 Books + More
               </Link>
               <Link
                 href="/contact"
-                className="relative text-sm font-medium uppercase tracking-wide transition-colors hover:text-[#e31e24] after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-[#e31e24] after:transition-all hover:after:w-full"
+                className={`relative text-sm font-medium uppercase tracking-wide transition-colors hover:text-[#e31e24] after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:bg-[#e31e24] after:transition-all ${
+                  isActive("/contact") ? "text-[#e31e24] after:w-full" : "after:w-0 hover:after:w-full"
+                }`}
               >
                 Contact
               </Link>
@@ -147,28 +164,36 @@ export default function Nav() {
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-sm font-medium uppercase tracking-wide transition-colors hover:text-[#e31e24] py-2"
+              className={`text-sm font-medium uppercase tracking-wide transition-colors hover:text-[#e31e24] py-2 ${
+                isActive("/") ? "text-[#e31e24]" : ""
+              }`}
             >
               Home
             </Link>
             <Link
               href="/about"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-sm font-medium uppercase tracking-wide transition-colors hover:text-[#e31e24] py-2"
+              className={`text-sm font-medium uppercase tracking-wide transition-colors hover:text-[#e31e24] py-2 ${
+                isActive("/about") ? "text-[#e31e24]" : ""
+              }`}
             >
               About
             </Link>
             <Link
               href="/products"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-sm font-medium uppercase tracking-wide transition-colors hover:text-[#e31e24] py-2"
+              className={`text-sm font-medium uppercase tracking-wide transition-colors hover:text-[#e31e24] py-2 ${
+                isActive("/products") ? "text-[#e31e24]" : ""
+              }`}
             >
               Books + More
             </Link>
             <Link
               href="/contact"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-sm font-medium uppercase tracking-wide transition-colors hover:text-[#e31e24] py-2"
+              className={`text-sm font-medium uppercase tracking-wide transition-colors hover:text-[#e31e24] py-2 ${
+                isActive("/contact") ? "text-[#e31e24]" : ""
+              }`}
             >
               Contact
             </Link>

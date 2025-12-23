@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { FadeInUp, FadeInLeft, FadeInRight, ScaleIn, StaggerChildren, StaggerItem, FadeIn, SlideInTop } from "./animations";
 import BooksSection from "./books-section";
+import NewsletterSection from "./NewsLetterSection";
 
 export default function HomePage() {
   return (
@@ -575,6 +576,9 @@ export default function HomePage() {
           </FadeInUp>
         </div>
       </section>
+
+      {/* Newsletter Section - Homepage Only */}
+      <NewsletterSection />
     </div>
   );
 }
