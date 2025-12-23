@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import Stripe from "stripe";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { digitalProductByPositionQuery } from "@/sanity/lib/queries";
-import type { DigitalProductByPositionQueryResult } from "@/sanity.types";
 import UpsellOffer from "./UpsellOffer";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -39,7 +38,7 @@ export default async function ThankYouPage({
     notFound();
   }
 
-  // Fetch the first upsell product
+  // Fetch the first upsell product (digital)
   const upsellProduct = await sanityFetch({
     query: digitalProductByPositionQuery,
     params: { position: "upsell_1" },
@@ -136,24 +135,25 @@ export default async function ThankYouPage({
           )}
         </div>
 
-        {/* Upsell offer */}
-      {upsellProduct && (
-        <Suspense fallback={<UpsellSkeleton />}>
-          <UpsellOffer
-            product={upsellProduct}
-            customerEmail={customerEmail || ""}
-            customerName={customerName || ""}
-          />
-        </Suspense>
-      )}
+        {/* First Upsell - Digital Product */}
+        {upsellProduct && (
+          <Suspense fallback={<UpsellSkeleton />}>
+            <UpsellOffer
+              product={upsellProduct}
+              customerEmail={customerEmail || ""}
+              customerName={customerName || ""}
+              sessionId={session_id}
+            />
+          </Suspense>
+        )}
 
-        {/* Skip to complete button */}
+        {/* Skip link - goes to second upsell */}
         <div className="text-center mt-8">
           <a
-            href="/thank-you/complete"
+            href={`/thank-you/upsell-2?session_id=${session_id}`}
             className="text-gray-600 hover:text-[#e31e24] font-semibold underline transition-colors"
           >
-            No thanks, continue to my account
+            No thanks, show me other recommendations
           </a>
         </div>
       </div>

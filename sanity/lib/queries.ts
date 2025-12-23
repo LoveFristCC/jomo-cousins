@@ -57,7 +57,20 @@ const productFields = /* groq */ `
   previewChapter,
   excerpt,
   amazonLink,
-  audibleLink
+  audibleLink,
+  // Upsells
+  upsellHeadline,
+  "upsells": upsells[]-> {
+    _id,
+    name,
+    "slug": slug.current,
+    category,
+    images,
+    basePrice,
+    excerpt,
+    author,
+    status
+  }
 `;
 
 export const allProductsQuery = defineQuery(`

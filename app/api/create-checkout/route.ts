@@ -4,10 +4,10 @@ import { checkInventoryAvailability } from "@/lib/inventory";
 
 // Helper to sanitize metadata (Stripe limit: 500 chars)
 function sanitizeMetadata(text: string | undefined | null): string {
-  if (!text) return '';
+  if (!text) return "";
   return text
-    .replace(/[\u200B-\u200D\uFEFF]/g, '') // Remove zero-width spaces
-    .replace(/[^\x20-\x7E]/g, '') // Remove non-printable characters
+    .replace(/[\u200B-\u200D\uFEFF]/g, "") // Remove zero-width spaces
+    .replace(/[^\x20-\x7E]/g, "") // Remove non-printable characters
     .trim()
     .substring(0, 500);
 }
@@ -84,9 +84,12 @@ export async function POST(request: NextRequest) {
     if (kajabiOfferId) metadata.kajabiOfferId = sanitizeMetadata(kajabiOfferId);
 
     // Build line items (sanitize size/color for description)
-    const description = productType === "physical"
-      ? [sanitizeMetadata(size), sanitizeMetadata(color)].filter(Boolean).join(" - ") || undefined
-      : undefined;
+    const description =
+      productType === "physical"
+        ? [sanitizeMetadata(size), sanitizeMetadata(color)]
+            .filter(Boolean)
+            .join(" - ") || undefined
+        : undefined;
 
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
       {
@@ -156,13 +159,13 @@ export async function POST(request: NextRequest) {
     const baseUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
     const successUrl =
       productType === "digital"
-        ? `${baseUrl}/upsell-2?session_id={CHECKOUT_SESSION_ID}`
-        : `${baseUrl}/thank-you?session_id={CHECKOUT_SESSION_ID}`;
+        ? `${baseUrl}/thank-you/upsell-2?session_id={CHECKOUT_SESSION_ID}` // After subscription → Show product upsells
+        : `${baseUrl}/thank-you?session_id={CHECKOUT_SESSION_ID}`; // After main purchase → Show subscription upsell
 
     const cancelUrl =
       productType === "digital"
-        ? `${baseUrl}/thank-you?session_id={CHECKOUT_SESSION_ID}`
-        : `${baseUrl}/products`;
+        ? `${baseUrl}/thank-you/upsell-2?session_id={CHECKOUT_SESSION_ID}` // If cancel subscription → Still show product upsells
+        : `${baseUrl}/products`; // If cancel main purchase → Back to products
 
     // Create Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
@@ -193,7 +196,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         error:
-          error instanceof Error ? error.message : "Failed to create checkout session",
+          error instanceof Error
+            ? error.message
+            : "Failed to create checkout session",
       },
       { status: 500 }
     );

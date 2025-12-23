@@ -236,7 +236,7 @@ export async function generateMetadata({
     params: { slug },
   });
 
-  if (!product || product.category !== "books" || !product.previewChapter) {
+  if (!product || !product.previewChapter) {
     return {
       title: "Preview Not Found",
     };

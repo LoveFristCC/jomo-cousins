@@ -172,6 +172,14 @@ export type Product = {
   excerpt?: string;
   amazonLink?: string;
   audibleLink?: string;
+  upsells?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "product";
+  }>;
+  upsellHeadline?: string;
 };
 
 export type Post = {
@@ -767,7 +775,7 @@ export type PostQueryResult = {
   } | null;
 } | null;
 // Variable: allProductsQuery
-// Query: *[_type == "product" && status == "active"] | order(name asc) {      _id,  name,  "slug": slug.current,  description,  category,  images,  basePrice,  stripePriceId,  weight,  variants,  lowStockThreshold,  trackInventory,  status,  // Book-specific fields  isbn,  author,  publisher,  publicationDate,  pageCount,  previewChapter,  excerpt,  amazonLink,  audibleLink  }
+// Query: *[_type == "product" && status == "active"] | order(name asc) {      _id,  name,  "slug": slug.current,  description,  category,  images,  basePrice,  stripePriceId,  weight,  variants,  lowStockThreshold,  trackInventory,  status,  // Book-specific fields  isbn,  author,  publisher,  publicationDate,  pageCount,  previewChapter,  excerpt,  amazonLink,  audibleLink,  // Upsells  upsellHeadline,  "upsells": upsells[]-> {    _id,    name,    "slug": slug.current,    category,    images,    basePrice,    excerpt,    author,    status  }  }
 export type AllProductsQueryResult = Array<{
   _id: string;
   name: string | null;
@@ -844,9 +852,34 @@ export type AllProductsQueryResult = Array<{
   excerpt: string | null;
   amazonLink: string | null;
   audibleLink: string | null;
+  upsellHeadline: string | null;
+  upsells: Array<{
+    _id: string;
+    name: string | null;
+    slug: string | null;
+    category: "accessories" | "books" | "hoodies" | "other" | "tshirts" | null;
+    images: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+      _key: string;
+    }> | null;
+    basePrice: number | null;
+    excerpt: string | null;
+    author: string | null;
+    status: "active" | "archived" | "draft" | null;
+  }> | null;
 }>;
 // Variable: productBySlugQuery
-// Query: *[_type == "product" && slug.current == $slug && status == "active"] [0] {      _id,  name,  "slug": slug.current,  description,  category,  images,  basePrice,  stripePriceId,  weight,  variants,  lowStockThreshold,  trackInventory,  status,  // Book-specific fields  isbn,  author,  publisher,  publicationDate,  pageCount,  previewChapter,  excerpt,  amazonLink,  audibleLink  }
+// Query: *[_type == "product" && slug.current == $slug && status == "active"] [0] {      _id,  name,  "slug": slug.current,  description,  category,  images,  basePrice,  stripePriceId,  weight,  variants,  lowStockThreshold,  trackInventory,  status,  // Book-specific fields  isbn,  author,  publisher,  publicationDate,  pageCount,  previewChapter,  excerpt,  amazonLink,  audibleLink,  // Upsells  upsellHeadline,  "upsells": upsells[]-> {    _id,    name,    "slug": slug.current,    category,    images,    basePrice,    excerpt,    author,    status  }  }
 export type ProductBySlugQueryResult = {
   _id: string;
   name: string | null;
@@ -923,9 +956,34 @@ export type ProductBySlugQueryResult = {
   excerpt: string | null;
   amazonLink: string | null;
   audibleLink: string | null;
+  upsellHeadline: string | null;
+  upsells: Array<{
+    _id: string;
+    name: string | null;
+    slug: string | null;
+    category: "accessories" | "books" | "hoodies" | "other" | "tshirts" | null;
+    images: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+      _key: string;
+    }> | null;
+    basePrice: number | null;
+    excerpt: string | null;
+    author: string | null;
+    status: "active" | "archived" | "draft" | null;
+  }> | null;
 } | null;
 // Variable: productsByCategoryQuery
-// Query: *[_type == "product" && category == $category && status == "active"] | order(name asc) {      _id,  name,  "slug": slug.current,  description,  category,  images,  basePrice,  stripePriceId,  weight,  variants,  lowStockThreshold,  trackInventory,  status,  // Book-specific fields  isbn,  author,  publisher,  publicationDate,  pageCount,  previewChapter,  excerpt,  amazonLink,  audibleLink  }
+// Query: *[_type == "product" && category == $category && status == "active"] | order(name asc) {      _id,  name,  "slug": slug.current,  description,  category,  images,  basePrice,  stripePriceId,  weight,  variants,  lowStockThreshold,  trackInventory,  status,  // Book-specific fields  isbn,  author,  publisher,  publicationDate,  pageCount,  previewChapter,  excerpt,  amazonLink,  audibleLink,  // Upsells  upsellHeadline,  "upsells": upsells[]-> {    _id,    name,    "slug": slug.current,    category,    images,    basePrice,    excerpt,    author,    status  }  }
 export type ProductsByCategoryQueryResult = Array<{
   _id: string;
   name: string | null;
@@ -1002,6 +1060,31 @@ export type ProductsByCategoryQueryResult = Array<{
   excerpt: string | null;
   amazonLink: string | null;
   audibleLink: string | null;
+  upsellHeadline: string | null;
+  upsells: Array<{
+    _id: string;
+    name: string | null;
+    slug: string | null;
+    category: "accessories" | "books" | "hoodies" | "other" | "tshirts" | null;
+    images: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+      _key: string;
+    }> | null;
+    basePrice: number | null;
+    excerpt: string | null;
+    author: string | null;
+    status: "active" | "archived" | "draft" | null;
+  }> | null;
 }>;
 // Variable: digitalProductByPositionQuery
 // Query: *[_type == "digitalProduct" && upsellPosition == $position && status == "active"] [0] {      _id,  name,  "slug": slug.current,  description,  price,  stripePriceId,  kajabiOfferId,  upsellPosition,  headline,  subheadline,  bulletPoints,  image,  discount,  ctaText,  status  }
@@ -1150,9 +1233,9 @@ declare module "@sanity/client" {
     "\n  *[_type == \"post\" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {\n    content,\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n\n  }\n": HeroQueryResult;
     "\n  *[_type == \"post\" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n\n  }\n": MoreStoriesQueryResult;
     "\n  *[_type == \"post\" && slug.current == $slug] [0] {\n    content,\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n\n  }\n": PostQueryResult;
-    "\n  *[_type == \"product\" && status == \"active\"] | order(name asc) {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  category,\n  images,\n  basePrice,\n  stripePriceId,\n  weight,\n  variants,\n  lowStockThreshold,\n  trackInventory,\n  status,\n  // Book-specific fields\n  isbn,\n  author,\n  publisher,\n  publicationDate,\n  pageCount,\n  previewChapter,\n  excerpt,\n  amazonLink,\n  audibleLink\n\n  }\n": AllProductsQueryResult;
-    "\n  *[_type == \"product\" && slug.current == $slug && status == \"active\"] [0] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  category,\n  images,\n  basePrice,\n  stripePriceId,\n  weight,\n  variants,\n  lowStockThreshold,\n  trackInventory,\n  status,\n  // Book-specific fields\n  isbn,\n  author,\n  publisher,\n  publicationDate,\n  pageCount,\n  previewChapter,\n  excerpt,\n  amazonLink,\n  audibleLink\n\n  }\n": ProductBySlugQueryResult;
-    "\n  *[_type == \"product\" && category == $category && status == \"active\"] | order(name asc) {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  category,\n  images,\n  basePrice,\n  stripePriceId,\n  weight,\n  variants,\n  lowStockThreshold,\n  trackInventory,\n  status,\n  // Book-specific fields\n  isbn,\n  author,\n  publisher,\n  publicationDate,\n  pageCount,\n  previewChapter,\n  excerpt,\n  amazonLink,\n  audibleLink\n\n  }\n": ProductsByCategoryQueryResult;
+    "\n  *[_type == \"product\" && status == \"active\"] | order(name asc) {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  category,\n  images,\n  basePrice,\n  stripePriceId,\n  weight,\n  variants,\n  lowStockThreshold,\n  trackInventory,\n  status,\n  // Book-specific fields\n  isbn,\n  author,\n  publisher,\n  publicationDate,\n  pageCount,\n  previewChapter,\n  excerpt,\n  amazonLink,\n  audibleLink,\n  // Upsells\n  upsellHeadline,\n  \"upsells\": upsells[]-> {\n    _id,\n    name,\n    \"slug\": slug.current,\n    category,\n    images,\n    basePrice,\n    excerpt,\n    author,\n    status\n  }\n\n  }\n": AllProductsQueryResult;
+    "\n  *[_type == \"product\" && slug.current == $slug && status == \"active\"] [0] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  category,\n  images,\n  basePrice,\n  stripePriceId,\n  weight,\n  variants,\n  lowStockThreshold,\n  trackInventory,\n  status,\n  // Book-specific fields\n  isbn,\n  author,\n  publisher,\n  publicationDate,\n  pageCount,\n  previewChapter,\n  excerpt,\n  amazonLink,\n  audibleLink,\n  // Upsells\n  upsellHeadline,\n  \"upsells\": upsells[]-> {\n    _id,\n    name,\n    \"slug\": slug.current,\n    category,\n    images,\n    basePrice,\n    excerpt,\n    author,\n    status\n  }\n\n  }\n": ProductBySlugQueryResult;
+    "\n  *[_type == \"product\" && category == $category && status == \"active\"] | order(name asc) {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  category,\n  images,\n  basePrice,\n  stripePriceId,\n  weight,\n  variants,\n  lowStockThreshold,\n  trackInventory,\n  status,\n  // Book-specific fields\n  isbn,\n  author,\n  publisher,\n  publicationDate,\n  pageCount,\n  previewChapter,\n  excerpt,\n  amazonLink,\n  audibleLink,\n  // Upsells\n  upsellHeadline,\n  \"upsells\": upsells[]-> {\n    _id,\n    name,\n    \"slug\": slug.current,\n    category,\n    images,\n    basePrice,\n    excerpt,\n    author,\n    status\n  }\n\n  }\n": ProductsByCategoryQueryResult;
     "\n  *[_type == \"digitalProduct\" && upsellPosition == $position && status == \"active\"] [0] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  price,\n  stripePriceId,\n  kajabiOfferId,\n  upsellPosition,\n  headline,\n  subheadline,\n  bulletPoints,\n  image,\n  discount,\n  ctaText,\n  status\n\n  }\n": DigitalProductByPositionQueryResult;
     "\n  *[_type == \"digitalProduct\" && slug.current == $slug && status == \"active\"] [0] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  price,\n  stripePriceId,\n  kajabiOfferId,\n  upsellPosition,\n  headline,\n  subheadline,\n  bulletPoints,\n  image,\n  discount,\n  ctaText,\n  status\n\n  }\n": DigitalProductBySlugQueryResult;
     "\n  *[_type == \"product\" && category == \"books\" && status == \"active\"] | order(_createdAt desc) [0...$limit] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  images,\n  basePrice,\n  category\n\n  }\n": NewestBooksQueryResult;

@@ -430,6 +430,29 @@ export default defineType({
       description: "Link to Audible audiobook",
       hidden: ({ document }) => document?.category !== "books",
     }),
+    // Upsells and cross-sells
+    defineField({
+      name: "upsells",
+      title: "Upsell Products",
+      type: "array",
+      description:
+        "Recommend related products (books, merchandise, etc.) to increase sales",
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "product" }],
+        },
+      ],
+      validation: (rule) => rule.max(4),
+    }),
+    defineField({
+      name: "upsellHeadline",
+      title: "Upsell Section Headline",
+      type: "string",
+      description:
+        'Custom headline for upsell section (default: "You might also like")',
+      placeholder: "Complete your collection",
+    }),
   ],
   preview: {
     select: {

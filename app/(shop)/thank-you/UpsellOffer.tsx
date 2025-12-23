@@ -10,6 +10,7 @@ interface UpsellOfferProps {
   product: DigitalProductByPositionQueryResult;
   customerEmail: string;
   customerName: string;
+  sessionId?: string;
 }
 
 /**
@@ -20,6 +21,7 @@ export default function UpsellOffer({
   product,
   customerEmail,
   customerName,
+  sessionId,
 }: UpsellOfferProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -60,8 +62,12 @@ export default function UpsellOffer({
   };
 
   const handleDecline = () => {
-    // Redirect to complete page
-    window.location.href = "/thank-you/complete";
+    // Redirect to second upsell page (product recommendations)
+    if (sessionId) {
+      window.location.href = `/thank-you/upsell-2?session_id=${sessionId}`;
+    } else {
+      window.location.href = "/thank-you/complete";
+    }
   };
 
   const basePrice = product.price || 0;
