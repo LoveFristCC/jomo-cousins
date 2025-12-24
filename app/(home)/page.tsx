@@ -5,6 +5,7 @@ import { FadeInUp, FadeInLeft, FadeInRight, ScaleIn, StaggerChildren, StaggerIte
 import BooksSection from "./books-section";
 import NewsletterSection from "./NewsLetterSection";
 
+
 export default function HomePage() {
   return (
     <div className="bg-white">
@@ -78,12 +79,12 @@ export default function HomePage() {
       {/* About Section */ }
       <section id="about" className="relative bg-gray-50 py-20 md:py-32">
         {/* Background Image - Fixed on desktop, not on mobile */ }
-        <div className="absolute inset-0 bg-cover bg-top" style={{ backgroundImage: "url('/images/jc-color-pics/main-page-about.jpg')", backgroundAttachment: "scroll" }}>
+        <div className="absolute inset-0 bg-cover bg-top" style={ { backgroundImage: "url('/images/jc-color-pics/main-page-about.jpg')", backgroundAttachment: "scroll" } }>
           {/* Overlay - only on mobile */ }
           <div className="absolute inset-0 bg-black/50 md:bg-transparent"></div>
         </div>
         {/* Fixed background for desktop only */ }
-        <div className="hidden md:block absolute inset-0 bg-cover bg-top bg-fixed" style={{ backgroundImage: "url('/images/jc-color-pics/main-page-about.jpg')" }}>
+        <div className="hidden md:block absolute inset-0 bg-cover bg-top bg-fixed" style={ { backgroundImage: "url('/images/jc-color-pics/main-page-about.jpg')" } }>
           <div className="absolute inset-0 bg-transparent"></div>
         </div>
 
@@ -256,12 +257,12 @@ export default function HomePage() {
       {/* Spiritually Empowers Section */ }
       <section className="relative bg-[#2d2d2d] py-40 md:py-40">
         {/* Background Image - Fixed on desktop, not on mobile */ }
-        <div className="absolute inset-0 bg-cover bg-top" style={{ backgroundImage: "url('/images/backgrounds/empowersbackground.jpg')", backgroundAttachment: "scroll" }}>
+        <div className="absolute inset-0 bg-cover bg-top" style={ { backgroundImage: "url('/images/backgrounds/empowersbackground.jpg')", backgroundAttachment: "scroll" } }>
           {/* Dark Overlay */ }
           <div className="absolute inset-0 bg-black/20"></div>
         </div>
         {/* Fixed background for desktop only */ }
-        <div className="hidden md:block absolute inset-0 bg-cover bg-top bg-fixed" style={{ backgroundImage: "url('/images/backgrounds/empowersbackground.jpg')" }}>
+        <div className="hidden md:block absolute inset-0 bg-cover bg-top bg-fixed" style={ { backgroundImage: "url('/images/backgrounds/empowersbackground.jpg')" } }>
           <div className="absolute inset-0 bg-black/20"></div>
         </div>
 
@@ -312,7 +313,7 @@ export default function HomePage() {
             alt="Inspire Background"
             fill
             className="object-cover"
-            style={{ objectPosition: "-500px center" }}
+            style={ { objectPosition: "-500px center" } }
           />
           <div className="absolute inset-0 bg-black/40"></div>
         </div>
