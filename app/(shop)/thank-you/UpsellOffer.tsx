@@ -42,8 +42,11 @@ export default function UpsellOffer({
           price: product.price || 0,
           quantity: 1,
           productType: "digital",
-          kajabiOfferId: product.kajabiOfferId,
+          kajabiWebhookUrl: product.kajabiWebhookUrl,
           stripePriceId: product.stripePriceId,
+          isSubscription: product.isSubscription || false,
+          subscriptionInterval: product.subscriptionInterval || 'month',
+          originalSessionId: sessionId, // Pass through the original session ID
         }),
       });
 
@@ -74,6 +77,9 @@ export default function UpsellOffer({
   const discountedPrice = product.discount
     ? basePrice * (1 - product.discount / 100)
     : basePrice;
+  // Note: Trial pricing not yet implemented in Stripe Checkout
+  const hasTrialPricing = false;
+  const displayPrice = discountedPrice;
 
   return (
     <div className="border-2 border-blue-500 rounded-xl p-8 bg-gradient-to-br from-blue-50 to-white">
@@ -131,7 +137,21 @@ export default function UpsellOffer({
 
           {/* Price */}
           <div className="mb-6">
-            {product.discount && product.discount > 0 ? (
+            {hasTrialPricing ? (
+              <div>
+                <div className="flex items-center gap-3">
+                  <span className="text-3xl font-bold text-green-600">
+                    ${displayPrice!.toFixed(2)}
+                  </span>
+                  <span className="text-lg text-gray-600">
+                    first month
+                  </span>
+                </div>
+                <p className="text-sm text-gray-500 mt-1">
+                  Then ${basePrice.toFixed(2)}/month. Cancel anytime.
+                </p>
+              </div>
+            ) : product.discount && product.discount > 0 ? (
               <div>
                 <div className="flex items-center gap-3">
                   <span className="text-3xl font-bold text-green-600">
@@ -147,6 +167,11 @@ export default function UpsellOffer({
                 <p className="text-sm text-gray-500 mt-1">
                   Save ${(basePrice - discountedPrice).toFixed(2)} today!
                 </p>
+              </div>
+            ) : product.isSubscription ? (
+              <div>
+                <span className="text-3xl font-bold">${basePrice.toFixed(2)}</span>
+                <span className="text-lg text-gray-600">/month</span>
               </div>
             ) : (
               <span className="text-3xl font-bold">${basePrice.toFixed(2)}</span>
@@ -169,7 +194,9 @@ export default function UpsellOffer({
             >
               {isLoading
                 ? "Processing..."
-                : product.ctaText || `Yes, Add This for $${discountedPrice.toFixed(2)}!`}
+                : product.ctaText || (hasTrialPricing
+                    ? `Yes, Start for $${displayPrice!.toFixed(2)}!`
+                    : `Yes, Add This for $${discountedPrice.toFixed(2)}!`)}
             </button>
 
             <button

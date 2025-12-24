@@ -14,18 +14,22 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 export default async function UpsellTwoPage({
   searchParams,
 }: {
-  searchParams: Promise<{ session_id?: string }>;
+  searchParams: Promise<{ session_id?: string; original_session_id?: string }>;
 }) {
-  const { session_id } = await searchParams;
+  const { session_id, original_session_id } = await searchParams;
 
   if (!session_id) {
     notFound();
   }
 
+  // Use original session ID if provided (from digital product purchase),
+  // otherwise use current session ID (from physical product purchase)
+  const sessionIdToUse = original_session_id || session_id;
+
   // Fetch the Stripe session
   let session: any;
   try {
-    session = await stripe.checkout.sessions.retrieve(session_id, {
+    session = await stripe.checkout.sessions.retrieve(sessionIdToUse, {
       expand: [ "line_items" ],
     });
   } catch (error) {

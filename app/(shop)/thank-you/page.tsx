@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import Stripe from "stripe";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { digitalProductByPositionQuery } from "@/sanity/lib/queries";
+import { productByNameQuery } from "@/sanity/lib/queries";
 import UpsellOffer from "./UpsellOffer";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -38,11 +38,19 @@ export default async function ThankYouPage({
     notFound();
   }
 
-  // Fetch the first upsell product (digital)
-  const upsellProduct = await sanityFetch({
-    query: digitalProductByPositionQuery,
-    params: { position: "upsell_1" },
-  });
+  // Fetch the digital upsell based on purchased product
+  let upsellProduct = null;
+  const purchasedProductName = session.line_items?.data[0]?.description || null;
+
+  if (purchasedProductName) {
+    const purchasedProduct = await sanityFetch({
+      query: productByNameQuery,
+      params: { name: purchasedProductName },
+    });
+
+    // Use the product's specific digital upsell
+    upsellProduct = purchasedProduct?.digitalUpsell || null;
+  }
 
   const customerEmail = session.customer_details?.email;
   const customerName = session.customer_details?.name;

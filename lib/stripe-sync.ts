@@ -16,6 +16,9 @@ export interface SanityProduct {
   stripePriceId?: string;
   stripeProductId?: string;
   category?: string;
+  isSubscription?: boolean; // For digital products
+  subscriptionInterval?: "month" | "year"; // For digital products
+  firstMonthPrice?: number; // For digital products with trial pricing
   images?: Array<{
     asset: {
       _ref: string;
@@ -60,6 +63,9 @@ export async function syncProductToStripe(sanityProductId: string) {
         stripePriceId,
         stripeProductId,
         category,
+        isSubscription,
+        subscriptionInterval,
+        firstMonthPrice,
         images[]{
           asset->{
             _ref,
@@ -170,26 +176,49 @@ export async function syncProductToStripe(sanityProductId: string) {
 
     // Create or update the default price
     let stripePrice: Stripe.Price;
+    const isSubscription = product.isSubscription || false;
+    const subscriptionInterval = product.subscriptionInterval || "month";
 
     if (product.stripePriceId) {
       try {
         // Check if price exists
         stripePrice = await stripe.prices.retrieve(product.stripePriceId);
 
-        // If price amount changed, create new price (prices are immutable)
-        if (stripePrice.unit_amount !== productPrice * 100) {
+        // Check if price needs updating (amount changed OR subscription settings changed)
+        const priceAmountChanged = stripePrice.unit_amount !== productPrice * 100;
+        const subscriptionChanged =
+          isSubscription !== !!stripePrice.recurring ||
+          (isSubscription &&
+            stripePrice.recurring?.interval !== subscriptionInterval);
+
+        if (priceAmountChanged || subscriptionChanged) {
           console.log(
-            `[Stripe Sync] Price changed, creating new price for ${product.name}`
+            `[Stripe Sync] Price or subscription settings changed, creating new price for ${product.name}`
           );
-          stripePrice = await createStripePrice(stripeProduct.id, productPrice);
+          stripePrice = await createStripePrice(
+            stripeProduct.id,
+            productPrice,
+            isSubscription,
+            subscriptionInterval
+          );
         }
       } catch (error) {
         // Price doesn't exist, create new one
-        stripePrice = await createStripePrice(stripeProduct.id, productPrice);
+        stripePrice = await createStripePrice(
+          stripeProduct.id,
+          productPrice,
+          isSubscription,
+          subscriptionInterval
+        );
       }
     } else {
       // Create new price
-      stripePrice = await createStripePrice(stripeProduct.id, productPrice);
+      stripePrice = await createStripePrice(
+        stripeProduct.id,
+        productPrice,
+        isSubscription,
+        subscriptionInterval
+      );
     }
 
     // Sync variants if they exist
@@ -215,7 +244,12 @@ export async function syncProductToStripe(sanityProductId: string) {
     }
 
     // Update Sanity with Stripe IDs
-    const patchOperation = writeClient.patch(product._id).set({
+    // Remove 'drafts.' prefix if present to update the published document
+    const publishedId = product._id.replace(/^drafts\./, '');
+
+    console.log(`[Stripe Sync] Updating Sanity document: ${publishedId}`);
+
+    const patchOperation = writeClient.patch(publishedId).set({
       stripeProductId: stripeProduct.id,
       stripePriceId: stripePrice.id,
     });
@@ -225,7 +259,15 @@ export async function syncProductToStripe(sanityProductId: string) {
       patchOperation.set(variantUpdates);
     }
 
-    await patchOperation.commit();
+    try {
+      await patchOperation.commit();
+      console.log(
+        `[Stripe Sync] ✓ Successfully updated Sanity with Stripe IDs`
+      );
+    } catch (writeError) {
+      console.error(`[Stripe Sync] ❌ Failed to update Sanity:`, writeError);
+      throw new Error(`Stripe sync succeeded but Sanity update failed: ${writeError instanceof Error ? writeError.message : 'Unknown error'}`);
+    }
 
     console.log(
       `[Stripe Sync] Successfully synced product: ${product.name} (${stripeProduct.id})`
@@ -271,15 +313,28 @@ async function createStripeProduct(
  */
 async function createStripePrice(
   productId: string,
-  price: number
+  price: number,
+  isSubscription?: boolean,
+  subscriptionInterval?: "month" | "year"
 ): Promise<Stripe.Price> {
-  const stripePrice = await stripe.prices.create({
+  const priceData: Stripe.PriceCreateParams = {
     product: productId,
     unit_amount: Math.round(price * 100), // Convert to cents
     currency: "usd",
-  });
+  };
 
-  console.log(`[Stripe Sync] Created price: ${stripePrice.id}`);
+  // Add recurring billing for subscriptions
+  if (isSubscription) {
+    priceData.recurring = {
+      interval: subscriptionInterval || "month",
+    };
+  }
+
+  const stripePrice = await stripe.prices.create(priceData);
+
+  console.log(
+    `[Stripe Sync] Created ${isSubscription ? "subscription" : "one-time"} price: ${stripePrice.id}`
+  );
   return stripePrice;
 }
 

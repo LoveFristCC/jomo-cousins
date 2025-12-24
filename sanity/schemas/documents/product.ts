@@ -432,6 +432,14 @@ export default defineType({
     }),
     // Upsells and cross-sells
     defineField({
+      name: "digitalUpsell",
+      title: "Digital Product Upsell",
+      type: "reference",
+      to: [{ type: "digitalProduct" }],
+      description:
+        "Select which digital product (course, coaching, etc.) to show on the thank-you page after purchasing this product",
+    }),
+    defineField({
       name: "upsells",
       title: "Upsell Products",
       type: "array",

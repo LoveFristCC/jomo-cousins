@@ -60,7 +60,10 @@ export interface DigitalProduct {
   description: any[]; // Portable text
   price: number;
   stripePriceId: string;
-  kajabiOfferId: string;
+  kajabiWebhookUrl: string;
+  isSubscription?: boolean;
+  subscriptionInterval?: "month" | "year";
+  firstMonthPrice?: number;
   upsellPosition?: "upsell_1" | "upsell_2";
   headline: string;
   subheadline?: string;
@@ -88,7 +91,7 @@ export interface CheckoutMetadata {
   color?: string;
   weight: string;
   productType: "physical" | "digital";
-  kajabiOfferId?: string;
+  kajabiWebhookUrl?: string;
 }
 
 /**

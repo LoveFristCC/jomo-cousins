@@ -33,8 +33,11 @@ export async function POST(request: NextRequest) {
       color,
       weight,
       productType = "physical", // 'physical' or 'digital'
-      kajabiOfferId,
+      kajabiWebhookUrl,
       stripePriceId,
+      isSubscription = false,
+      subscriptionInterval = "month",
+      originalSessionId = null, // Original session ID from physical product purchase
     } = body;
 
     // Validate required fields
@@ -81,7 +84,7 @@ export async function POST(request: NextRequest) {
 
     if (size) metadata.size = sanitizeMetadata(size);
     if (color) metadata.color = sanitizeMetadata(color);
-    if (kajabiOfferId) metadata.kajabiOfferId = sanitizeMetadata(kajabiOfferId);
+    if (kajabiWebhookUrl) metadata.kajabiWebhookUrl = sanitizeMetadata(kajabiWebhookUrl);
 
     // Build line items (sanitize size/color for description)
     const description =
@@ -102,6 +105,11 @@ export async function POST(request: NextRequest) {
                 ...(description && { description }), // Only include if not empty
               },
               unit_amount: Math.round(price * 100), // Convert to cents
+              ...(isSubscription && {
+                recurring: {
+                  interval: subscriptionInterval as "month" | "year",
+                },
+              }),
             },
         price: stripePriceId || undefined,
         quantity: parseInt(quantity),
@@ -157,33 +165,52 @@ export async function POST(request: NextRequest) {
 
     // Determine success URL based on product type
     const baseUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
+
+    // For digital products, pass through the original session ID so upsell-2 can show recommendations from the original purchase
+    const originalSessionParam = originalSessionId ? `&original_session_id=${originalSessionId}` : '';
+
     const successUrl =
       productType === "digital"
-        ? `${baseUrl}/thank-you/upsell-2?session_id={CHECKOUT_SESSION_ID}` // After subscription → Show product upsells
+        ? `${baseUrl}/thank-you/upsell-2?session_id={CHECKOUT_SESSION_ID}${originalSessionParam}` // After subscription → Show product upsells
         : `${baseUrl}/thank-you?session_id={CHECKOUT_SESSION_ID}`; // After main purchase → Show subscription upsell
 
     const cancelUrl =
       productType === "digital"
-        ? `${baseUrl}/thank-you/upsell-2?session_id={CHECKOUT_SESSION_ID}` // If cancel subscription → Still show product upsells
+        ? `${baseUrl}/thank-you/upsell-2?session_id={CHECKOUT_SESSION_ID}${originalSessionParam}` // If cancel subscription → Still show product upsells
         : `${baseUrl}/products`; // If cancel main purchase → Back to products
 
     // Create Stripe Checkout session
-    const session = await stripe.checkout.sessions.create({
-      mode: "payment",
+    const sessionConfig: Stripe.Checkout.SessionCreateParams = {
+      mode: isSubscription ? "subscription" : "payment",
       line_items: lineItems,
       success_url: successUrl,
       cancel_url: cancelUrl,
       metadata,
-      ...(productType === "physical" && {
-        shipping_address_collection: {
-          allowed_countries: ["US", "CA"],
-        },
-        shipping_options: shippingOptions,
-      }),
       automatic_tax: {
         enabled: true,
       },
-    });
+    };
+
+    // For subscriptions, add subscription-specific config
+    if (isSubscription) {
+      sessionConfig.subscription_data = {
+        metadata,
+      };
+
+      // Note: Trial pricing with upfront charges requires a different approach in Stripe
+      // For now, subscriptions use the regular price from day 1
+      // To implement trial pricing, we'd need to use subscription schedules or coupons
+    }
+
+    // Add physical product shipping
+    if (productType === "physical") {
+      sessionConfig.shipping_address_collection = {
+        allowed_countries: ["US", "CA"],
+      };
+      sessionConfig.shipping_options = shippingOptions;
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionConfig);
 
     console.log(`[Checkout] Created session: ${session.id} for ${productName}`);
 

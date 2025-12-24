@@ -33,6 +33,28 @@ export const postQuery = defineQuery(`
   }
 `);
 
+// Digital product queries (defined first so it can be used in productFields)
+const digitalProductFields = /* groq */ `
+  _id,
+  name,
+  "slug": slug.current,
+  description,
+  price,
+  isSubscription,
+  subscriptionInterval,
+  firstMonthPrice,
+  stripePriceId,
+  kajabiWebhookUrl,
+  upsellPosition,
+  headline,
+  subheadline,
+  bulletPoints,
+  image,
+  discount,
+  ctaText,
+  status
+`;
+
 // Product queries
 const productFields = /* groq */ `
   _id,
@@ -60,6 +82,9 @@ const productFields = /* groq */ `
   audibleLink,
   // Upsells
   upsellHeadline,
+  "digitalUpsell": digitalUpsell-> {
+    ${digitalProductFields}
+  },
   "upsells": upsells[]-> {
     _id,
     name,
@@ -94,24 +119,11 @@ export const productsByCategoryQuery = defineQuery(`
   }
 `);
 
-// Digital product queries
-const digitalProductFields = /* groq */ `
-  _id,
-  name,
-  "slug": slug.current,
-  description,
-  price,
-  stripePriceId,
-  kajabiOfferId,
-  upsellPosition,
-  headline,
-  subheadline,
-  bulletPoints,
-  image,
-  discount,
-  ctaText,
-  status
-`;
+export const productByNameQuery = defineQuery(`
+  *[_type == "product" && name == $name] [0] {
+    ${productFields}
+  }
+`);
 
 export const digitalProductByPositionQuery = defineQuery(`
   *[_type == "digitalProduct" && upsellPosition == $position && status == "active"] [0] {

@@ -54,10 +54,61 @@ export async function POST(request: NextRequest) {
         await handlePhysicalProductOrder(session, metadata);
       }
 
-      // Handle digital product orders (upsells)
-      if (metadata.productType === "digital") {
+      // Handle digital product orders (one-time payments only)
+      // For subscriptions, we wait for invoice.paid event
+      if (metadata.productType === "digital" && session.mode === "payment") {
         await handleDigitalProductOrder(session, metadata);
       }
+    }
+
+    // Handle subscription invoice payment (for recurring subscriptions)
+    if (event.type === "invoice.paid") {
+      const invoice = event.data.object as Stripe.Invoice;
+      console.log(`[Webhook] Processing paid invoice: ${invoice.id}`);
+
+      // Only process subscription invoices
+      // The subscription field is either a string ID or an expanded Subscription object
+      const subscriptionId =
+        typeof (invoice as any).subscription === "string"
+          ? (invoice as any).subscription
+          : (invoice as any).subscription?.id;
+
+      if (subscriptionId) {
+        // Retrieve the subscription to get metadata
+        const subscription = await stripe.subscriptions.retrieve(
+          subscriptionId
+        );
+
+        // Get metadata from the subscription or checkout session
+        const metadata = subscription.metadata as unknown as CheckoutMetadata;
+
+        if (metadata.productType === "digital") {
+          // Create a session-like object for the enrollment function
+          const sessionData = {
+            customer_details: {
+              email: invoice.customer_email,
+              name: invoice.customer_name || "Customer",
+            },
+            id: invoice.id,
+          } as Stripe.Checkout.Session;
+
+          await handleDigitalProductOrder(sessionData, metadata);
+        }
+      }
+    }
+
+    // Handle subscription creation (for initial subscription setup)
+    if (event.type === "customer.subscription.created") {
+      const subscription = event.data.object as Stripe.Subscription;
+      console.log(`[Webhook] Subscription created: ${subscription.id}`);
+      // Additional logic can be added here if needed
+    }
+
+    // Handle subscription cancellation (optional, for future use)
+    if (event.type === "customer.subscription.deleted") {
+      const subscription = event.data.object as Stripe.Subscription;
+      console.log(`[Webhook] Subscription cancelled: ${subscription.id}`);
+      // Future: Handle Kajabi unenrollment if needed
     }
 
     return NextResponse.json({ received: true });
@@ -145,22 +196,22 @@ async function handlePhysicalProductOrder(
 }
 
 /**
- * Handle digital product order (upsell) - Enroll in Kajabi
+ * Handle digital product order (upsell) - Enroll via Kajabi webhook
  */
 async function handleDigitalProductOrder(
   session: Stripe.Checkout.Session,
   metadata: CheckoutMetadata
 ) {
   try {
-    const { kajabiOfferId, productName } = metadata;
+    const { kajabiWebhookUrl, productName } = metadata;
 
-    if (!kajabiOfferId) {
-      console.error("[Webhook] Missing Kajabi offer ID for digital product");
+    if (!kajabiWebhookUrl) {
+      console.error("[Webhook] Missing Kajabi webhook URL for digital product");
       return;
     }
 
     console.log(
-      `[Webhook] Processing digital product order - Kajabi Offer: ${kajabiOfferId}`
+      `[Webhook] Processing digital product order - Kajabi Webhook: ${kajabiWebhookUrl}`
     );
 
     const customerEmail = session.customer_details?.email;
@@ -171,41 +222,30 @@ async function handleDigitalProductOrder(
       return;
     }
 
-    // Enroll customer in Kajabi
-    const kajabiApiKey = process.env.KAJABI_API_KEY;
+    // Call Kajabi webhook to enroll customer
+    console.log(`[Webhook] Calling Kajabi webhook for ${customerEmail}...`);
 
-    if (!kajabiApiKey) {
-      console.error("[Webhook] KAJABI_API_KEY not configured");
-      return;
-    }
-
-    const kajabiResponse = await fetch(
-      "https://app.kajabi.com/api/v1/members",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${kajabiApiKey}`,
-        },
-        body: JSON.stringify({
-          email: customerEmail,
-          name: customerName,
-          offer_id: kajabiOfferId,
-          external_user_id: session.id,
-          tags: ["upsell-purchase"],
-        }),
-      }
-    );
+    const kajabiResponse = await fetch(kajabiWebhookUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: customerEmail,
+        name: customerName,
+        external_user_id: session.id,
+      }),
+    });
 
     if (!kajabiResponse.ok) {
       const errorText = await kajabiResponse.text();
-      console.error("[Webhook] Kajabi enrollment failed:", errorText);
-      throw new Error(`Kajabi API error: ${kajabiResponse.status}`);
+      console.error("[Webhook] Kajabi webhook failed:", errorText);
+      console.error("[Webhook] Status:", kajabiResponse.status);
+      throw new Error(`Kajabi webhook error: ${kajabiResponse.status}`);
     }
 
-    const kajabiMember = await kajabiResponse.json();
     console.log(
-      `[Webhook] ✓ Kajabi enrollment successful: ${kajabiMember.id} for ${productName}`
+      `[Webhook] ✓ Kajabi webhook successful for ${productName} (${customerEmail})`
     );
   } catch (error) {
     console.error("[Webhook] Error handling digital product order:", error);
