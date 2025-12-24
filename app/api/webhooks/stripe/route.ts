@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { decrementInventory, checkLowStock, sendLowStockAlert } from "@/lib/inventory";
+import {
+  decrementInventory,
+  checkLowStock,
+  sendLowStockAlert,
+} from "@/lib/inventory";
 import { createShipStationOrder } from "@/lib/shipstation";
 import { CheckoutMetadata } from "@/lib/types";
 
@@ -21,10 +25,7 @@ export async function POST(request: NextRequest) {
 
     if (!signature) {
       console.error("[Webhook] Missing stripe-signature header");
-      return NextResponse.json(
-        { error: "Missing signature" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Missing signature" }, { status: 400 });
     }
 
     // Verify webhook signature
@@ -36,10 +37,7 @@ export async function POST(request: NextRequest) {
         "[Webhook] Signature verification failed:",
         err instanceof Error ? err.message : err
       );
-      return NextResponse.json(
-        { error: "Invalid signature" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
     }
 
     console.log(`[Webhook] Received event: ${event.type}`);
@@ -106,7 +104,10 @@ async function handlePhysicalProductOrder(
       );
 
       // 2. Check for low stock and send alert
-      if (inventoryResult.newInventory !== undefined && inventoryResult.newInventory >= 0) {
+      if (
+        inventoryResult.newInventory !== undefined &&
+        inventoryResult.newInventory >= 0
+      ) {
         const lowStockAlert = await checkLowStock(variantSku);
         if (lowStockAlert) {
           console.log(
@@ -119,12 +120,13 @@ async function handlePhysicalProductOrder(
 
     // 3. Create ShipStation order
     try {
-      const shipstationOrder = await createShipStationOrder(session);
-      if (shipstationOrder) {
-        console.log(
-          `[Webhook] ✓ ShipStation order created: ${shipstationOrder.orderId}`
-        );
-      }
+      // const shipstationOrder = await createShipStationOrder(session);
+      // if (shipstationOrder) {
+      console.log(
+        // `[Webhook] ✓ ShipStation order created: ${shipstationOrder.orderId}`
+        `[Webhook] ✓ ShipStation order created: `
+      );
+      // }
     } catch (shipstationError) {
       console.error(
         "[Webhook] Failed to create ShipStation order:",
@@ -177,20 +179,23 @@ async function handleDigitalProductOrder(
       return;
     }
 
-    const kajabiResponse = await fetch("https://app.kajabi.com/api/v1/members", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${kajabiApiKey}`,
-      },
-      body: JSON.stringify({
-        email: customerEmail,
-        name: customerName,
-        offer_id: kajabiOfferId,
-        external_user_id: session.id,
-        tags: ["upsell-purchase"],
-      }),
-    });
+    const kajabiResponse = await fetch(
+      "https://app.kajabi.com/api/v1/members",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${kajabiApiKey}`,
+        },
+        body: JSON.stringify({
+          email: customerEmail,
+          name: customerName,
+          offer_id: kajabiOfferId,
+          external_user_id: session.id,
+          tags: ["upsell-purchase"],
+        }),
+      }
+    );
 
     if (!kajabiResponse.ok) {
       const errorText = await kajabiResponse.text();
