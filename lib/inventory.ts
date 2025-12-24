@@ -34,13 +34,15 @@ export async function decrementInventory(
 
     // Find the product containing this variant SKU
     const product = await sanityWriteClient.fetch(
-      `*[_type == "product" && variants[].sku == $sku][0]{
-        _id,
-        name,
-        trackInventory,
-        lowStockThreshold,
-        variants
-      }`,
+      `*[
+    _type == "product" &&
+    count(variants[sku == $sku]) > 0][0]{
+    _id,
+    name,
+    trackInventory,
+    lowStockThreshold,
+    variants
+  }`,
       { sku }
     );
 
@@ -127,8 +129,9 @@ export async function checkLowStock(
     count(variants[sku == $sku]) > 0][0]{
     _id,
     name,
+    inventory,
     lowStockThreshold,
-    "variant": variants[sku == $sku][0]
+    variants
   }`,
       { sku }
     );
@@ -137,7 +140,7 @@ export async function checkLowStock(
       return null;
     }
 
-    const variant = product.variant.find(
+    const variant = product.variants.find(
       (v: any) => sanitizeSku(v.sku) === sanitizeSku(sku)
     );
 
@@ -223,11 +226,13 @@ export async function reserveInventory(
     console.log(`[Inventory] Reserving ${quantity} units for SKU: ${sku}`);
 
     const product = await sanityWriteClient.fetch(
-      `*[_type == "product" && variants[].sku == $sku][0]{
-        _id,
-        name,
-        variants
-      }`,
+      `*[
+    _type == "product" &&
+    count(variants[sku == $sku]) > 0][0]{
+    _id,
+    name,
+    variants
+  }`,
       { sku }
     );
 
@@ -239,7 +244,7 @@ export async function reserveInventory(
       };
     }
 
-    const variantIndex = product.variants.findIndex(
+    const variantIndex = product.variant.findIndex(
       (v: any) => sanitizeSku(v.sku) === sanitizeSku(sku)
     );
 
