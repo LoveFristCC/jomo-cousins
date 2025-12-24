@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Stripe from "stripe";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { allProductsQuery } from "@/sanity/lib/queries";
@@ -59,6 +59,11 @@ export default async function UpsellTwoPage({
     }
   });
 
+  // If no product upsells, redirect to complete page
+  if (upsellsToShow.length === 0) {
+    redirect(`/thank-you/complete?session_id=${session_id}`);
+  }
+
   const customerEmail = session.customer_details?.email;
 
   return (
@@ -83,42 +88,25 @@ export default async function UpsellTwoPage({
       </div>
 
       {/* Product Upsells */ }
-      { upsellsToShow.length > 0 ? (
-        <>
-          <ProductUpsells
-            upsells={ upsellsToShow }
-            headline="Complete Your Collection"
-          />
+      <ProductUpsells
+        upsells={ upsellsToShow }
+        headline="Complete Your Collection"
+      />
 
-          {/* Decline/Complete CTA */ }
-          <div className="container mx-auto px-4 max-w-4xl">
-            <div className="text-center py-12">
-              <p className="text-gray-600 mb-6">
-                Not interested in these products right now?
-              </p>
-              <a
-                href="/thank-you/complete"
-                className="inline-block px-10 py-4 bg-white border-2 border-gray-300 text-gray-700 rounded-lg font-bold text-lg hover:bg-gray-50 transition shadow-md"
-              >
-                No Thanks
-              </a>
-            </div>
-          </div>
-        </>
-      ) : (
-        // No upsells available, redirect to complete
-        <div className="container mx-auto px-4 py-20 text-center">
-          <p className="text-xl text-gray-600 mb-8">
-            Thank you for your purchase!
+      {/* Decline/Complete CTA */ }
+      <div className="container mx-auto px-4 max-w-4xl">
+        <div className="text-center py-12">
+          <p className="text-gray-600 mb-6">
+            Not interested in these products right now?
           </p>
           <a
             href="/thank-you/complete"
-            className="inline-block px-10 py-4 bg-[#e31e24] text-white rounded-lg font-bold text-lg hover:bg-[#c41a1f] transition shadow-lg"
+            className="inline-block px-10 py-4 bg-white border-2 border-gray-300 text-gray-700 rounded-lg font-bold text-lg hover:bg-gray-50 transition shadow-md"
           >
-            Continue to My Account
+            No Thanks
           </a>
         </div>
-      ) }
+      </div>
     </div>
   );
 }

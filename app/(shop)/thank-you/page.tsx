@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Stripe from "stripe";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { productByNameQuery } from "@/sanity/lib/queries";
@@ -40,16 +40,30 @@ export default async function ThankYouPage({
 
   // Fetch the digital upsell based on purchased product
   let upsellProduct = null;
+  let purchasedProduct = null;
   const purchasedProductName = session.line_items?.data[0]?.description || null;
 
   if (purchasedProductName) {
-    const purchasedProduct = await sanityFetch({
+    purchasedProduct = await sanityFetch({
       query: productByNameQuery,
       params: { name: purchasedProductName },
     });
 
     // Use the product's specific digital upsell
     upsellProduct = purchasedProduct?.digitalUpsell || null;
+  }
+
+  // If no digital upsell, check for product upsells
+  if (!upsellProduct) {
+    const hasProductUpsells = purchasedProduct?.upsells && purchasedProduct.upsells.length > 0;
+
+    if (hasProductUpsells) {
+      // Skip to product upsells
+      redirect(`/thank-you/upsell-2?session_id=${session_id}`);
+    } else {
+      // No upsells at all, go to complete page
+      redirect(`/thank-you/complete?session_id=${session_id}`);
+    }
   }
 
   const customerEmail = session.customer_details?.email;

@@ -30,6 +30,14 @@ export const productStructure: StructureResolver = (S) => {
 
       S.divider(),
 
+      // Couples Corner section
+      S.listItem()
+        .title("Couples Corner Blog")
+        .schemaType("couplesCornerPost")
+        .child(S.documentTypeList("couplesCornerPost").title("Couples Corner Posts")),
+
+      S.divider(),
+
       // Products section with inventory dashboard
       S.listItem()
         .title("Products")

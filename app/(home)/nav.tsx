@@ -68,6 +68,15 @@ export default function Nav() {
                 </Link>
               </div>
 
+              <a
+                href="https://jomo-cousins.mykajabi.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mr-3 text-xs font-bold uppercase tracking-widest text-gray-300 transition-colors hover:text-white"
+              >
+                Login
+              </a>
+
               <Link
                 href="/contact"
                 className="rounded-full bg-[#e31e24] px-7 py-2.5 text-xs font-black uppercase tracking-widest shadow-lg shadow-red-900/20 transition-all hover:scale-105 hover:bg-[#c41a1f] active:scale-95"
@@ -130,10 +139,20 @@ export default function Nav() {
             <p className="mt-1 text-xs text-gray-400">Visit our marriage & couples site</p>
           </div>
 
+          <a
+            href="https://jomo-cousins.mykajabi.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={ () => setMobileMenuOpen(false) }
+            className="mt-4 text-center text-sm font-bold uppercase tracking-widest text-gray-300"
+          >
+            Member Login
+          </a>
+
           <Link
             href="/contact"
             onClick={ () => setMobileMenuOpen(false) }
-            className="mt-4 rounded-xl bg-[#e31e24] py-4 text-center text-sm font-black uppercase tracking-widest text-white shadow-xl"
+            className="rounded-xl bg-[#e31e24] py-4 text-center text-sm font-black uppercase tracking-widest text-white shadow-xl"
           >
             Book Now
           </Link>

@@ -239,9 +239,27 @@ async function handleDigitalProductOrder(
 
     if (!kajabiResponse.ok) {
       const errorText = await kajabiResponse.text();
-      console.error("[Webhook] Kajabi webhook failed:", errorText);
-      console.error("[Webhook] Status:", kajabiResponse.status);
-      throw new Error(`Kajabi webhook error: ${kajabiResponse.status}`);
+      let errorJson: any;
+      try {
+        errorJson = JSON.parse(errorText);
+      } catch (error) {
+        console.log(error);
+      }
+
+      const emailErrors = errorJson?.errors?.email ?? [];
+
+      if (
+        Array.isArray(emailErrors) &&
+        emailErrors.includes("is already taken")
+      ) {
+        console.warn(
+          "[Webhook] Kajabi user already exists — continuing to grant offer"
+        );
+      } else {
+        console.error("[Webhook] Kajabi webhook failed:", errorText);
+        console.error("[Webhook] Status:", kajabiResponse.status);
+        throw new Error(`Kajabi webhook error: ${kajabiResponse.status}`);
+      }
     }
 
     console.log(
