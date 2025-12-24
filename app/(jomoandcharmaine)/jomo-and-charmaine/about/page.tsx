@@ -4,14 +4,14 @@ import Link from "next/link";
 export default function AboutPage() {
   return (
     <div className="bg-white">
-      {/* Hero Section */}
+      {/* Hero Section */ }
       <section className="relative bg-gradient-to-br from-[#FAFCFE] to-white py-20 md:py-32">
         <div className="container mx-auto px-5">
           <div className="grid items-center gap-12 md:grid-cols-2">
-            {/* Left Content */}
+            {/* Left Content */ }
             <div>
               <h1 className="mb-6 text-4xl font-bold leading-tight text-[#303030] md:text-5xl lg:text-6xl">
-                About Drs. Jomo &{" "}
+                About Drs. Jomo &{ " " }
                 <span className="text-[#ea8125]">Charmaine Cousins</span>
               </h1>
               <div className="space-y-4 text-lg leading-relaxed text-gray-700">
@@ -41,9 +41,9 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* Right Image */}
+            {/* Right Image */ }
             <div className="relative h-[500px]">
-              {/* Placeholder for couple image */}
+              {/* Placeholder for couple image */ }
               <div className="flex h-full items-center justify-center rounded-2xl bg-gradient-to-br from-[#ffaa62] to-[#ea8125]">
                 <p className="text-2xl font-bold text-white">
                   Couple Photo
@@ -54,7 +54,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Mission Section */}
+      {/* Mission Section */ }
       <section className="bg-white py-20 md:py-32">
         <div className="container mx-auto px-5">
           <div className="mx-auto max-w-4xl text-center">
@@ -78,11 +78,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Statistics Section */}
+      {/* Statistics Section */ }
       <section className="bg-gradient-to-br from-[#FAFCFE] to-white py-20">
         <div className="container mx-auto px-5">
           <div className="grid gap-8 md:grid-cols-3">
-            {/* Couples Counseled */}
+            {/* Couples Counseled */ }
             <div className="text-center">
               <div className="mb-4 flex justify-center">
                 <div className="flex h-24 w-24 items-center justify-center rounded-full bg-[#ea8125]">
@@ -95,7 +95,7 @@ export default function AboutPage() {
               <div className="text-xl font-semibold text-[#303030]">Couples Counseled</div>
             </div>
 
-            {/* Years of Marriage */}
+            {/* Years of Marriage */ }
             <div className="text-center">
               <div className="mb-4 flex justify-center">
                 <div className="flex h-24 w-24 items-center justify-center rounded-full bg-[#0E6BB7]">
@@ -108,7 +108,7 @@ export default function AboutPage() {
               <div className="text-xl font-semibold text-[#303030]">Years of Marriage</div>
             </div>
 
-            {/* Conferences & Seminars */}
+            {/* Conferences & Seminars */ }
             <div className="text-center">
               <div className="mb-4 flex justify-center">
                 <div className="flex h-24 w-24 items-center justify-center rounded-full bg-[#ffaa62]">
@@ -124,7 +124,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Services Grid */}
+      {/* Services Grid */ }
       <section className="bg-white py-20 md:py-32">
         <div className="container mx-auto px-5">
           <div className="mb-16 text-center">
@@ -137,11 +137,11 @@ export default function AboutPage() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {/* Communication Issues */}
+            {/* Communication Issues */ }
             <div className="group rounded-xl border-2 border-gray-100 p-8 transition-all hover:border-[#ea8125] hover:shadow-lg">
               <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#ea8125]/10 transition-all group-hover:bg-[#ea8125]">
                 <svg className="h-8 w-8 text-[#ea8125] transition-all group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
               </div>
               <h3 className="mb-3 text-2xl font-bold text-[#303030]">Communication Issues</h3>
@@ -150,11 +150,11 @@ export default function AboutPage() {
               </p>
             </div>
 
-            {/* Premarital Counseling */}
+            {/* Premarital Counseling */ }
             <div className="group rounded-xl border-2 border-gray-100 p-8 transition-all hover:border-[#ea8125] hover:shadow-lg">
               <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#0E6BB7]/10 transition-all group-hover:bg-[#0E6BB7]">
                 <svg className="h-8 w-8 text-[#0E6BB7] transition-all group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </div>
               <h3 className="mb-3 text-2xl font-bold text-[#303030]">Premarital Counseling</h3>
@@ -163,11 +163,11 @@ export default function AboutPage() {
               </p>
             </div>
 
-            {/* Sexual Issues */}
+            {/* Sexual Issues */ }
             <div className="group rounded-xl border-2 border-gray-100 p-8 transition-all hover:border-[#ea8125] hover:shadow-lg">
               <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#ffaa62]/10 transition-all group-hover:bg-[#ffaa62]">
                 <svg className="h-8 w-8 text-[#ffaa62] transition-all group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </div>
               <h3 className="mb-3 text-2xl font-bold text-[#303030]">Sexual Issues</h3>
@@ -176,11 +176,11 @@ export default function AboutPage() {
               </p>
             </div>
 
-            {/* Infidelity & Unfaithfulness */}
+            {/* Infidelity & Unfaithfulness */ }
             <div className="group rounded-xl border-2 border-gray-100 p-8 transition-all hover:border-[#ea8125] hover:shadow-lg">
               <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#ea8125]/10 transition-all group-hover:bg-[#ea8125]">
                 <svg className="h-8 w-8 text-[#ea8125] transition-all group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
               </div>
               <h3 className="mb-3 text-2xl font-bold text-[#303030]">Infidelity & Unfaithfulness</h3>
@@ -189,11 +189,11 @@ export default function AboutPage() {
               </p>
             </div>
 
-            {/* Trust Issues */}
+            {/* Trust Issues */ }
             <div className="group rounded-xl border-2 border-gray-100 p-8 transition-all hover:border-[#ea8125] hover:shadow-lg">
               <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#0E6BB7]/10 transition-all group-hover:bg-[#0E6BB7]">
                 <svg className="h-8 w-8 text-[#0E6BB7] transition-all group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </div>
               <h3 className="mb-3 text-2xl font-bold text-[#303030]">Trust Issues</h3>
@@ -202,11 +202,11 @@ export default function AboutPage() {
               </p>
             </div>
 
-            {/* Blended Family Support */}
+            {/* Blended Family Support */ }
             <div className="group rounded-xl border-2 border-gray-100 p-8 transition-all hover:border-[#ea8125] hover:shadow-lg">
               <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#ffaa62]/10 transition-all group-hover:bg-[#ffaa62]">
                 <svg className="h-8 w-8 text-[#ffaa62] transition-all group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
               <h3 className="mb-3 text-2xl font-bold text-[#303030]">Blended Family Support</h3>
@@ -218,7 +218,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* CTA Section */ }
       <section className="bg-gradient-to-r from-[#ea8125] to-[#ffaa62] py-20 text-white">
         <div className="container mx-auto px-5">
           <div className="mx-auto max-w-3xl text-center">

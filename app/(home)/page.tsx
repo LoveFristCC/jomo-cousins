@@ -342,7 +342,7 @@ export default function HomePage() {
                 </p>
 
                 {/* Video Embeds */ }
-                <div className="mb-8 grid gap-4 md:grid-cols-2">
+                {/* <div className="mb-8 grid gap-4 md:grid-cols-2">
                   <div className="aspect-video bg-gray-900">
                     <iframe
                       className="h-full w-full"
@@ -361,7 +361,7 @@ export default function HomePage() {
                       allowFullScreen
                     ></iframe>
                   </div>
-                </div>
+                </div> */}
 
                 <p className="mb-8 text-base italic text-gray-400">
                   Get ready to unlock your full potential and embark on an incredible journey of personal growth with God in the center. Welcome to the movement!
