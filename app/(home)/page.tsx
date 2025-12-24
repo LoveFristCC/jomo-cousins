@@ -8,12 +8,12 @@ import NewsletterSection from "./NewsLetterSection";
 export default function HomePage() {
   return (
     <div className="bg-white">
-      {/* Hero Section */}
+      {/* Hero Section */ }
       <section
         id="home"
         className="relative overflow-hidden min-h-screen"
       >
-        {/* Background Image */}
+        {/* Background Image */ }
         <div className="absolute inset-0">
           <Image
             src="/images/backgrounds/herobackground.jpg"
@@ -26,60 +26,65 @@ export default function HomePage() {
 
         <div className="container relative z-10 mx-auto px-5 pt-6 ">
           <div className="flex flex-col items-center justify-center gap-0 md:flex-row md:items-end">
-            {/* Left Content */}
-            {/* <FadeInLeft> */}
-              <div className="self-center text-center md:text-left">
-                <h1 className="mb-6 text-4xl font-bold leading-tight text-[#2d2d2d] md:text-5xl lg:text-6xl">
-                  <Image
-                    src="/images/icons/hearts.png"
-                    alt="Heart Icon"
-                    width={64}
-                    height={64}
-                    className="mb-6 hidden h-16 w-16 md:block"
-                  />
-                  UNLOCK THE
-                  <br />
-                  POWER OF
-                  <br />
-                  PURPOSE IN
-                  <br />
-                  YOUR <span className="text-[#e31e24]">LIFE!</span>
-                </h1>
-                <p className="mb-8 max-w-md text-base leading-relaxed text-gray-700">
-                Whether at a school, an organization, or the general public, motivational speaker and pastor Dr. Jomo Cousins inspires you to transform your thoughts and maximize your potential.
-                </p>
-                <Link
-                  href="#contact"
-                  className="inline-block rounded-lg bg-[#e31e24] px-8 py-3 text-sm font-bold uppercase tracking-wide text-white shadow-lg transition-all hover:scale-105 hover:bg-[#c41a1f] hover:shadow-xl"
-                >
-                  Book Now
-                </Link>
-              </div>
-            {/* </FadeInLeft> */}
-
-            {/* Right Image */}
-            {/* <FadeInRight delay={0.2}> */}
-              <div className="relative w-full max-w-[600px]">
+            {/* Left Content */ }
+            {/* <FadeInLeft> */ }
+            <div className="self-center text-center md:text-left">
+              <h1 className="mb-6 text-4xl font-bold leading-tight text-[#2d2d2d] md:text-5xl lg:text-6xl">
                 <Image
-                  src="/images/jc-png/heroJomo.png"
-                  alt="Dr. Jomo Cousins"
-                  width={600}
-                  height={700}
-                  className="mx-auto w-full h-auto"
+                  src="/images/icons/hearts.png"
+                  alt="Heart Icon"
+                  width={ 64 }
+                  height={ 64 }
+                  className="mb-6 hidden h-16 w-16 md:block"
                   priority
                 />
-              </div>
-            {/* </FadeInRight> */}
+                UNLOCK THE
+                <br />
+                POWER OF
+                <br />
+                PURPOSE IN
+                <br />
+                YOUR <span className="text-[#e31e24]">LIFE!</span>
+              </h1>
+              <p className="mb-8 max-w-md text-base leading-relaxed text-gray-700">
+                Whether at a school, an organization, or the general public, motivational speaker and pastor Dr. Jomo Cousins inspires you to transform your thoughts and maximize your potential.
+              </p>
+              <Link
+                href="#contact"
+                className="inline-block rounded-lg bg-[#e31e24] px-8 py-3 text-sm font-bold uppercase tracking-wide text-white shadow-lg transition-all hover:scale-105 hover:bg-[#c41a1f] hover:shadow-xl"
+              >
+                Book Now
+              </Link>
+            </div>
+            {/* </FadeInLeft> */ }
+
+            {/* Right Image */ }
+            {/* <FadeInRight delay={0.2}> */ }
+            <div className="relative w-full max-w-[600px]">
+              <Image
+                src="/images/jc-png/heroJomo.png"
+                alt="Dr. Jomo Cousins"
+                width={ 600 }
+                height={ 700 }
+                className="mx-auto w-full h-auto"
+                priority
+              />
+            </div>
+            {/* </FadeInRight> */ }
           </div>
         </div>
       </section>
 
-      {/* About Section */}
+      {/* About Section */ }
       <section id="about" className="relative bg-gray-50 py-20 md:py-32">
-        {/* Background Image - Fixed on desktop, not on mobile */}
-        <div className="absolute inset-0 bg-cover bg-top md:bg-fixed" style={{ backgroundImage: "url('/images/jc-color-pics/main-page-about.jpg')" }}>
-          {/* Overlay - only on mobile */}
+        {/* Background Image - Fixed on desktop, not on mobile */ }
+        <div className="absolute inset-0 bg-cover bg-top" style={{ backgroundImage: "url('/images/jc-color-pics/main-page-about.jpg')", backgroundAttachment: "scroll" }}>
+          {/* Overlay - only on mobile */ }
           <div className="absolute inset-0 bg-black/50 md:bg-transparent"></div>
+        </div>
+        {/* Fixed background for desktop only */ }
+        <div className="hidden md:block absolute inset-0 bg-cover bg-top bg-fixed" style={{ backgroundImage: "url('/images/jc-color-pics/main-page-about.jpg')" }}>
+          <div className="absolute inset-0 bg-transparent"></div>
         </div>
 
         <div className="container relative z-10 mx-auto px-5">
@@ -91,8 +96,8 @@ export default function HomePage() {
                     <Image
                       src="/images/icons/_JC01.png"
                       alt="Icon"
-                      width={80}
-                      height={80}
+                      width={ 80 }
+                      height={ 80 }
                       className="h-16 w-16"
                     />
                     About
@@ -109,7 +114,7 @@ export default function HomePage() {
                     </svg>
                     <span>
                       Alumnus of Florida A&M University
-                      <br/>
+                      <br />
                       and Tabernacle Bible College
                     </span>
                   </p>
@@ -119,7 +124,7 @@ export default function HomePage() {
                     </svg>
                     <span>
                       Creator of The Gap
-                      <br/>
+                      <br />
                       (The Guaranteed Achievable Plan)
                     </span>
                   </p>
@@ -140,9 +145,9 @@ export default function HomePage() {
 
 
 
-      {/* I.R.I.E. Method Section */}
+      {/* I.R.I.E. Method Section */ }
       <section className="relative bg-gray-100 py-20 md:py-32">
-        {/* Background Image */}
+        {/* Background Image */ }
         <div className="absolute inset-0">
           <Image
             src="/images/backgrounds/iriebackground.jpg"
@@ -159,19 +164,19 @@ export default function HomePage() {
                 THE <span className="text-[#e31e24]">I.R.I.E.</span> METHOD
               </h2>
               <p className="mx-auto max-w-3xl text-lg text-gray-700">
-              Dr. Cousins was born in Jamaica where "everything's irie." In other words, "it's all good." Staying true to his roots, he crafted the I.R.I.E. Method for motivational speaking.
+                Dr. Cousins was born in Jamaica where "everything's irie." In other words, "it's all good." Staying true to his roots, he crafted the I.R.I.E. Method for motivational speaking.
               </p>
             </div>
           </SlideInTop>
 
           <StaggerChildren>
             <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-2 lg:grid-cols-4">
-              {/* IMPACT */}
+              {/* IMPACT */ }
               <StaggerItem>
                 <div className="text-center">
                   <div className="mb-4 flex justify-center">
                     <svg className="h-16 w-16 text-[#e31e24]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
                   <h3 className="mb-3 text-xl font-bold uppercase text-[#2d2d2d]">
@@ -183,12 +188,12 @@ export default function HomePage() {
                 </div>
               </StaggerItem>
 
-              {/* RESONATE */}
+              {/* RESONATE */ }
               <StaggerItem>
                 <div className="text-center">
                   <div className="mb-4 flex justify-center">
                     <svg className="h-16 w-16 text-[#e31e24]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                     </svg>
                   </div>
                   <h3 className="mb-3 text-xl font-bold uppercase text-[#2d2d2d]">
@@ -200,13 +205,13 @@ export default function HomePage() {
                 </div>
               </StaggerItem>
 
-              {/* INSPIRE */}
+              {/* INSPIRE */ }
               <StaggerItem>
                 <div className="text-center">
                   <div className="mb-4 flex justify-center">
                     <svg className="h-16 w-16 text-[#e31e24]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </div>
                   <h3 className="mb-3 text-xl font-bold uppercase text-[#2d2d2d]">
@@ -218,12 +223,12 @@ export default function HomePage() {
                 </div>
               </StaggerItem>
 
-              {/* ENTERTAIN */}
+              {/* ENTERTAIN */ }
               <StaggerItem>
                 <div className="text-center">
                   <div className="mb-4 flex justify-center">
                     <svg className="h-16 w-16 text-[#e31e24]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                     </svg>
                   </div>
                   <h3 className="mb-3 text-xl font-bold uppercase text-[#2d2d2d]">
@@ -248,11 +253,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Spiritually Empowers Section */}
+      {/* Spiritually Empowers Section */ }
       <section className="relative bg-[#2d2d2d] py-40 md:py-40">
-        {/* Background Image - Fixed on desktop, not on mobile */}
-        <div className="absolute inset-0 bg-cover bg-top md:bg-fixed" style={{ backgroundImage: "url('/images/backgrounds/empowersbackground.jpg')" }}>
-          {/* Dark Overlay */}
+        {/* Background Image - Fixed on desktop, not on mobile */ }
+        <div className="absolute inset-0 bg-cover bg-top" style={{ backgroundImage: "url('/images/backgrounds/empowersbackground.jpg')", backgroundAttachment: "scroll" }}>
+          {/* Dark Overlay */ }
+          <div className="absolute inset-0 bg-black/20"></div>
+        </div>
+        {/* Fixed background for desktop only */ }
+        <div className="hidden md:block absolute inset-0 bg-cover bg-top bg-fixed" style={{ backgroundImage: "url('/images/backgrounds/empowersbackground.jpg')" }}>
           <div className="absolute inset-0 bg-black/20"></div>
         </div>
 
@@ -269,7 +278,7 @@ export default function HomePage() {
                   </svg>
                 </h2>
                 <p className="text-lg leading-relaxed text-gray-300">
-                "His charismatic presence speaks to the heart of business and spiritual issues... He turns knowledge into plans for action, leaving audiences inspired and ready to achieve."
+                  "His charismatic presence speaks to the heart of business and spiritual issues... He turns knowledge into plans for action, leaving audiences inspired and ready to achieve."
                 </p>
                 <p className="text-lg leading-relaxed text-gray-300 mt-5">- WordPress Business Media</p>
               </div>
@@ -278,7 +287,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Books Section */}
+      {/* Books Section */ }
       <Suspense fallback={
         <section id="books" className="bg-white py-20 md:py-32">
           <div className="container mx-auto px-5">
@@ -294,37 +303,44 @@ export default function HomePage() {
         <BooksSection />
       </Suspense>
 
-      {/* Inspire Lives Section */}
+      {/* Inspire Lives Section */ }
       <section className="relative overflow-hidden bg-[#2d2d2d] py-20 md:py-32">
-        {/* Background Image - covers entire section, positioned left */}
-        <div className="absolute inset-0 bg-cover" style={{ backgroundImage: "url('/images/backgrounds/inspirebackground.jpg')", backgroundPosition: "-500px center" }}>
+        {/* Background Image - covers entire section, positioned left */ }
+        <div className="absolute inset-0">
+          <Image
+            src="/images/backgrounds/inspirebackground.jpg"
+            alt="Inspire Background"
+            fill
+            className="object-cover"
+            style={{ objectPosition: "-500px center" }}
+          />
           <div className="absolute inset-0 bg-black/40"></div>
         </div>
 
         <div className="container relative z-10 mx-auto px-5">
           <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2">
-            {/* Left side - spacer */}
+            {/* Left side - spacer */ }
             <div></div>
 
-            {/* Right Content */}
+            {/* Right Content */ }
             <FadeInRight>
               <div className="text-white">
                 <h2 className="mb-6 flex items-center gap-3 text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
                   <span className="text-[#e31e24]">INSPIRE</span> LIVES
                   <svg className="h-12 w-12 text-[#e31e24]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </h2>
 
                 <p className="mb-6 text-lg leading-relaxed text-gray-300">
-                Whether you're seeking personal growth, spiritual enlightenment, or a fresh perspective, Dr. Cousins has got you covered. If you haven't already, make sure to check out some of Dr. Cousins' most recent videos on YouTube. They are packed with life-changing insights, practical advice, and soul-stirring motivation.
+                  Whether you're seeking personal growth, spiritual enlightenment, or a fresh perspective, Dr. Cousins has got you covered. If you haven't already, make sure to check out some of Dr. Cousins' most recent videos on YouTube. They are packed with life-changing insights, practical advice, and soul-stirring motivation.
                 </p>
 
                 <p className="mb-8 text-lg leading-relaxed text-gray-300">
-                Join the movement of individuals who are embracing a life of purpose and fulfillment. Hit that subscribe button and turn on the notification bell, so you never miss an update.
+                  Join the movement of individuals who are embracing a life of purpose and fulfillment. Hit that subscribe button and turn on the notification bell, so you never miss an update.
                 </p>
 
-                {/* Video Embeds */}
+                {/* Video Embeds */ }
                 <div className="mb-8 grid gap-4 md:grid-cols-2">
                   <div className="aspect-video bg-gray-900">
                     <iframe
@@ -347,10 +363,10 @@ export default function HomePage() {
                 </div>
 
                 <p className="mb-8 text-base italic text-gray-400">
-                Get ready to unlock your full potential and embark on an incredible journey of personal growth with God in the center. Welcome to the movement!
+                  Get ready to unlock your full potential and embark on an incredible journey of personal growth with God in the center. Welcome to the movement!
                 </p>
 
-                {/* Social Media Icons */}
+                {/* Social Media Icons */ }
                 <div className="flex gap-4">
                   <a
                     href="https://www.facebook.com/wearelovefirst/"
@@ -389,7 +405,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Prayer Line Section */}
+      {/* Prayer Line Section */ }
       <section className="bg-gradient-to-br from-gray-100 to-gray-200 py-20 md:py-32">
         <div className="container mx-auto px-5">
           <FadeInUp>
@@ -404,7 +420,7 @@ export default function HomePage() {
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
+                    strokeWidth={ 2 }
                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
@@ -444,18 +460,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Clients Section */}
+      {/* Clients Section */ }
       <section className="py-20 md:py-20">
         <div className="grid items-stretch gap-0 md:grid-cols-3">
-          {/* Left Panel - Client Logos */}
+          {/* Left Panel - Client Logos */ }
           <FadeInLeft>
             <div className="flex flex-col items-center justify-center gap-12 p-12">
               <div className="grayscale transition-all hover:opacity-100 hover:grayscale-0">
                 <Image
                   src="/images/clients/hc-logo2.png"
                   alt="Hillsborough County Florida"
-                  width={200}
-                  height={80}
+                  width={ 200 }
+                  height={ 80 }
                   className="h-auto w-48"
                 />
               </div>
@@ -463,21 +479,21 @@ export default function HomePage() {
                 <Image
                   src="/images/clients/_00Logos_JC_09.png"
                   alt="Hillsborough County Public Schools"
-                  width={200}
-                  height={80}
+                  width={ 200 }
+                  height={ 80 }
                   className="h-auto w-48"
                 />
               </div>
             </div>
           </FadeInLeft>
 
-          {/* Center Panel - Call to Action */}
-          <FadeIn delay={0.2}>
+          {/* Center Panel - Call to Action */ }
+          <FadeIn delay={ 0.2 }>
             <div className="bg-[#2d2d2d] p-12 text-center text-white">
               <div className="mb-6 flex justify-center">
                 <svg className="h-16 w-16 text-[#e31e24]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 12l2 2 4-4" />
                 </svg>
               </div>
               <h2 className="mb-4 text-4xl font-bold md:text-5xl">
@@ -500,51 +516,51 @@ export default function HomePage() {
             </div>
           </FadeIn>
 
-          {/* Right Panel - Client Logos */}
-          {/* <FadeInRight delay={0.4}> */}
-            <div className="grid grid-cols-2 gap-8 p-12">
-              <div className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
-                <Image
-                  src="/images/clients/_00Logos_JC_18.png"
-                  alt="UNCF"
-                  width={150}
-                  height={80}
-                  className="h-auto w-32"
-                />
-              </div>
-              <div className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
-                <Image
-                  src="/images/clients/_00Logos_JC_07.png"
-                  alt="Keller Williams"
-                  width={150}
-                  height={80}
-                  className="h-auto w-32"
-                />
-              </div>
-              <div className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
-                <Image
-                  src="/images/clients/_00Logos_JC_14.png"
-                  alt="Boys & Girls Club"
-                  width={150}
-                  height={80}
-                  className="h-auto w-32"
-                />
-              </div>
-              <div className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
-                <Image
-                  src="/images/clients/_00Logos_JC_05.png"
-                  alt="RE/MAX"
-                  width={150}
-                  height={80}
-                  className="h-auto w-32"
-                />
-              </div>
+          {/* Right Panel - Client Logos */ }
+          {/* <FadeInRight delay={0.4}> */ }
+          <div className="grid grid-cols-2 gap-8 p-12">
+            <div className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
+              <Image
+                src="/images/clients/_00Logos_JC_18.png"
+                alt="UNCF"
+                width={ 150 }
+                height={ 80 }
+                className="h-auto w-32"
+              />
             </div>
-          {/* </FadeInRight> */}
+            <div className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
+              <Image
+                src="/images/clients/_00Logos_JC_07.png"
+                alt="Keller Williams"
+                width={ 150 }
+                height={ 80 }
+                className="h-auto w-32"
+              />
+            </div>
+            <div className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
+              <Image
+                src="/images/clients/_00Logos_JC_14.png"
+                alt="Boys & Girls Club"
+                width={ 150 }
+                height={ 80 }
+                className="h-auto w-32"
+              />
+            </div>
+            <div className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
+              <Image
+                src="/images/clients/_00Logos_JC_05.png"
+                alt="RE/MAX"
+                width={ 150 }
+                height={ 80 }
+                className="h-auto w-32"
+              />
+            </div>
+          </div>
+          {/* </FadeInRight> */ }
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* CTA Section */ }
       <section id="contact" className="bg-[#3d3d3d] py-20 text-white md:py-32">
         <div className="container mx-auto px-5">
           <FadeInUp>
@@ -577,7 +593,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Newsletter Section - Homepage Only */}
+      {/* Newsletter Section - Homepage Only */ }
       <NewsletterSection />
     </div>
   );

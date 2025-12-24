@@ -191,16 +191,9 @@ export default function AboutPage() {
       </section>
 
       {/* Survivor Section - Screenshot 4 */ }
-      <section
-        className="py-20 md:py-32 relative"
-        style={ {
-          backgroundImage: "url('/images/jc-color-pics/JC_NewPhotos Edit623_edited.jpg')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'top center',
-          backgroundAttachment: 'fixed',
-          backgroundRepeat: 'no-repeat'
-        } }
-      >
+      <section className="py-20 md:py-32 relative">
+        {/* Background Image - Fixed on desktop */ }
+        <div className="absolute inset-0 bg-cover bg-top bg-fixed" style={{ backgroundImage: "url('/images/jc-color-pics/JC_NewPhotos Edit623_edited.jpg')" }}></div>
         {/* Dark overlay for text readability */ }
         <div className="absolute inset-0 bg-gradient-to-br from-gray-800/80 to-gray-900/80"></div>
 

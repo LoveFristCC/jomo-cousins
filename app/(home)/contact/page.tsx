@@ -322,12 +322,9 @@ export default function ContactPage() {
       </section>
 
       {/* Trusted By Section */ }
-      <section
-        className="relative py-20 overflow-hidden bg-cover bg-center md:bg-fixed"
-        style={ {
-          backgroundImage: "url('/images/backgrounds/P1122237B_edited.png')"
-        } }
-      >
+      <section className="relative py-20 overflow-hidden">
+        {/* Background Image - Fixed on desktop */ }
+        <div className="absolute inset-0 bg-cover bg-center bg-fixed" style={{ backgroundImage: "url('/images/backgrounds/P1122237B_edited.png')" }}></div>
         {/* Light overlay for readability */ }
         <div className="absolute inset-0 bg-white/65"></div>
 
