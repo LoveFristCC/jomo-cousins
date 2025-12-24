@@ -3,10 +3,10 @@ import { InventoryUpdateResult, LowStockAlert } from "./types";
 
 // Helper to sanitize SKUs (remove hidden unicode characters)
 function sanitizeSku(sku: string | undefined): string {
-  if (!sku) return '';
+  if (!sku) return "";
   return sku
-    .replace(/[\u200B-\u200D\uFEFF]/g, '') // Remove zero-width spaces
-    .replace(/[^\x20-\x7E]/g, '') // Remove non-printable characters
+    .replace(/[\u200B-\u200D\uFEFF]/g, "") // Remove zero-width spaces
+    .replace(/[^\x20-\x7E]/g, "") // Remove non-printable characters
     .trim();
 }
 
@@ -28,7 +28,9 @@ export async function decrementInventory(
   quantity: number
 ): Promise<InventoryUpdateResult> {
   try {
-    console.log(`[Inventory] Attempting to decrement ${quantity} units for SKU: ${sku}`);
+    console.log(
+      `[Inventory] Attempting to decrement ${quantity} units for SKU: ${sku}`
+    );
 
     // Find the product containing this variant SKU
     const product = await sanityWriteClient.fetch(
@@ -52,7 +54,9 @@ export async function decrementInventory(
     }
 
     if (!product.trackInventory) {
-      console.log(`[Inventory] Inventory tracking disabled for product: ${product.name}`);
+      console.log(
+        `[Inventory] Inventory tracking disabled for product: ${product.name}`
+      );
       return {
         success: true,
         sku,
@@ -61,7 +65,9 @@ export async function decrementInventory(
     }
 
     // Find the variant index (with sanitization)
-    const variantIndex = product.variants.findIndex((v: any) => sanitizeSku(v.sku) === sanitizeSku(sku));
+    const variantIndex = product.variants.findIndex(
+      (v: any) => sanitizeSku(v.sku) === sanitizeSku(sku)
+    );
 
     if (variantIndex === -1) {
       console.error(`[Inventory] Variant not found with SKU: ${sku}`);
@@ -95,7 +101,10 @@ export async function decrementInventory(
       sku,
     };
   } catch (error) {
-    console.error(`[Inventory] Error decrementing inventory for SKU ${sku}:`, error);
+    console.error(
+      `[Inventory] Error decrementing inventory for SKU ${sku}:`,
+      error
+    );
     return {
       success: false,
       error: error instanceof Error ? error.message : "Unknown error",
@@ -107,15 +116,20 @@ export async function decrementInventory(
 /**
  * Checks if product inventory is low and returns alert data
  */
-export async function checkLowStock(sku: string): Promise<LowStockAlert | null> {
+export async function checkLowStock(
+  sku: string
+): Promise<LowStockAlert | null> {
+  console.log("🚀 ~ sku:", sku);
   try {
     const product = await sanityWriteClient.fetch(
-      `*[_type == "product" && variants[].sku == $sku][0]{
-        _id,
-        name,
-        lowStockThreshold,
-        variants
-      }`,
+      `*[
+    _type == "product" &&
+    count(variants[sku == $sku]) > 0][0]{
+    _id,
+    name,
+    lowStockThreshold,
+    "variant": variants[sku == $sku][0]
+  }`,
       { sku }
     );
 
@@ -123,7 +137,9 @@ export async function checkLowStock(sku: string): Promise<LowStockAlert | null> 
       return null;
     }
 
-    const variant = product.variants.find((v: any) => sanitizeSku(v.sku) === sanitizeSku(sku));
+    const variant = product.variant.find(
+      (v: any) => sanitizeSku(v.sku) === sanitizeSku(sku)
+    );
 
     if (!variant) {
       return null;
@@ -141,7 +157,10 @@ export async function checkLowStock(sku: string): Promise<LowStockAlert | null> 
 
     return null;
   } catch (error) {
-    console.error(`[Inventory] Error checking low stock for SKU ${sku}:`, error);
+    console.error(
+      `[Inventory] Error checking low stock for SKU ${sku}:`,
+      error
+    );
     return null;
   }
 }
@@ -220,7 +239,9 @@ export async function reserveInventory(
       };
     }
 
-    const variantIndex = product.variants.findIndex((v: any) => sanitizeSku(v.sku) === sanitizeSku(sku));
+    const variantIndex = product.variants.findIndex(
+      (v: any) => sanitizeSku(v.sku) === sanitizeSku(sku)
+    );
 
     if (variantIndex === -1) {
       return {
@@ -230,7 +251,8 @@ export async function reserveInventory(
       };
     }
 
-    const currentReserved = product.variants[variantIndex].reservedInventory || 0;
+    const currentReserved =
+      product.variants[variantIndex].reservedInventory || 0;
     const newReserved = currentReserved + quantity;
 
     await sanityWriteClient
@@ -263,7 +285,11 @@ export async function reserveInventory(
 export async function checkInventoryAvailability(
   sku: string,
   quantity: number
-): Promise<{ available: boolean; currentInventory: number; allowBackorder: boolean }> {
+): Promise<{
+  available: boolean;
+  currentInventory: number;
+  allowBackorder: boolean;
+}> {
   try {
     // Fetch all products and filter with sanitization (GROQ can't sanitize)
     const products = await sanityWriteClient.fetch(
@@ -284,7 +310,9 @@ export async function checkInventoryAvailability(
       return { available: false, currentInventory: 0, allowBackorder: false };
     }
 
-    const variant = product.variants.find((v: any) => sanitizeSku(v.sku) === sanitizeSku(sku));
+    const variant = product.variants.find(
+      (v: any) => sanitizeSku(v.sku) === sanitizeSku(sku)
+    );
 
     if (!variant) {
       return { available: false, currentInventory: 0, allowBackorder: false };
