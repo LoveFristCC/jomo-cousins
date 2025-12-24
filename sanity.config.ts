@@ -25,6 +25,7 @@ import author from "@/sanity/schemas/documents/author";
 import post from "@/sanity/schemas/documents/post";
 import product, { productVariant } from "@/sanity/schemas/documents/product";
 import digitalProduct from "@/sanity/schemas/documents/digitalProduct";
+import couplesCornerPost from "@/sanity/schemas/documents/couplesCornerPost";
 import settings from "@/sanity/schemas/singletons/settings";
 import { resolveHref } from "@/sanity/lib/utils";
 
@@ -46,6 +47,7 @@ export default defineConfig({
       author,
       product,
       digitalProduct,
+      couplesCornerPost,
       // Objects
       productVariant,
     ],
@@ -53,7 +55,7 @@ export default defineConfig({
   document: {
     actions: (prev, context) => {
       // Add clean & publish action for documents with portable text
-      if (context.schemaType === "post" || context.schemaType === "product" || context.schemaType === "digitalProduct") {
+      if (context.schemaType === "post" || context.schemaType === "product" || context.schemaType === "digitalProduct" || context.schemaType === "couplesCornerPost") {
         // Filter out default publish action and add our clean publish action
         const filteredActions = prev.filter((action) => action.name !== "publish");
 
@@ -62,7 +64,7 @@ export default defineConfig({
           return [CleanOnPublishAction, AutoStripeSyncAction, ...filteredActions, SyncToStripeAction, CleanDocumentAction];
         }
 
-        // For posts, just add the clean publish action
+        // For posts and couples corner posts, just add the clean publish action
         return [CleanOnPublishAction, ...filteredActions, CleanDocumentAction];
       }
       return prev;

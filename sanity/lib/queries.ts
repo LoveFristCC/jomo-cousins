@@ -141,3 +141,49 @@ export const newestBooksQuery = defineQuery(`
     ${bookFields}
   }
 `);
+
+// Couples Corner Blog queries
+const couplesCornerFields = /* groq */ `
+  _id,
+  title,
+  "slug": slug.current,
+  excerpt,
+  coverImage,
+  category,
+  tags,
+  youtubeVideo,
+  "publishedAt": coalesce(publishedAt, _createdAt),
+  featured,
+  seo
+`;
+
+export const allCouplesCornerPostsQuery = defineQuery(`
+  *[_type == "couplesCornerPost"] | order(publishedAt desc) {
+    ${couplesCornerFields}
+  }
+`);
+
+export const featuredCouplesCornerPostsQuery = defineQuery(`
+  *[_type == "couplesCornerPost" && featured == true] | order(publishedAt desc) [0...$limit] {
+    ${couplesCornerFields}
+  }
+`);
+
+export const couplesCornerPostsByCategoryQuery = defineQuery(`
+  *[_type == "couplesCornerPost" && category == $category] | order(publishedAt desc) {
+    ${couplesCornerFields}
+  }
+`);
+
+export const couplesCornerPostBySlugQuery = defineQuery(`
+  *[_type == "couplesCornerPost" && slug.current == $slug] [0] {
+    ${couplesCornerFields},
+    content
+  }
+`);
+
+export const recentCouplesCornerPostsQuery = defineQuery(`
+  *[_type == "couplesCornerPost"] | order(publishedAt desc) [0...$limit] {
+    ${couplesCornerFields}
+  }
+`);

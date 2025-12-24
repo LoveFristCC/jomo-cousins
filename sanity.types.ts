@@ -39,6 +39,80 @@ export type ProductVariant = {
   allowBackorder?: boolean;
 };
 
+export type CouplesCornerPost = {
+  _id: string;
+  _type: "couplesCornerPost";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  excerpt?: string;
+  coverImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  category?: "communication" | "intimacy" | "trust-forgiveness" | "conflict-resolution" | "dating-courtship" | "marriage" | "premarital" | "parenting" | "faith-relationships" | "self-care" | "general";
+  tags?: Array<string>;
+  youtubeVideo?: {
+    url?: string;
+    title?: string;
+    placement?: "top" | "bottom";
+  };
+  content?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    } | {
+      color?: "#ea8125" | "#0E6BB7" | "#ffaa62";
+      _type: "highlight";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    caption?: string;
+    _type: "image";
+    _key: string;
+  }>;
+  publishedAt?: string;
+  featured?: boolean;
+  seo?: {
+    metaTitle?: string;
+    metaDescription?: string;
+    keywords?: Array<string>;
+  };
+};
+
 export type DigitalProduct = {
   _id: string;
   _type: "digitalProduct";
@@ -551,7 +625,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = ProductVariant | DigitalProduct | Product | Post | Author | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = ProductVariant | CouplesCornerPost | DigitalProduct | Product | Post | Author | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./app/(home)/posts/[slug]/page.tsx
 // Variable: postSlugs
@@ -1238,6 +1312,217 @@ export type NewestBooksQueryResult = Array<{
   basePrice: number | null;
   category: "accessories" | "books" | "hoodies" | "other" | "tshirts" | null;
 }>;
+// Variable: allCouplesCornerPostsQuery
+// Query: *[_type == "couplesCornerPost"] | order(publishedAt desc) {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
+export type AllCouplesCornerPostsQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  excerpt: string | null;
+  coverImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  category: "communication" | "conflict-resolution" | "dating-courtship" | "faith-relationships" | "general" | "intimacy" | "marriage" | "parenting" | "premarital" | "self-care" | "trust-forgiveness" | null;
+  tags: Array<string> | null;
+  youtubeVideo: {
+    url?: string;
+    title?: string;
+    placement?: "bottom" | "top";
+  } | null;
+  publishedAt: string;
+  featured: boolean | null;
+  seo: {
+    metaTitle?: string;
+    metaDescription?: string;
+    keywords?: Array<string>;
+  } | null;
+}>;
+// Variable: featuredCouplesCornerPostsQuery
+// Query: *[_type == "couplesCornerPost" && featured == true] | order(publishedAt desc) [0...$limit] {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
+export type FeaturedCouplesCornerPostsQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  excerpt: string | null;
+  coverImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  category: "communication" | "conflict-resolution" | "dating-courtship" | "faith-relationships" | "general" | "intimacy" | "marriage" | "parenting" | "premarital" | "self-care" | "trust-forgiveness" | null;
+  tags: Array<string> | null;
+  youtubeVideo: {
+    url?: string;
+    title?: string;
+    placement?: "bottom" | "top";
+  } | null;
+  publishedAt: string;
+  featured: boolean | null;
+  seo: {
+    metaTitle?: string;
+    metaDescription?: string;
+    keywords?: Array<string>;
+  } | null;
+}>;
+// Variable: couplesCornerPostsByCategoryQuery
+// Query: *[_type == "couplesCornerPost" && category == $category] | order(publishedAt desc) {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
+export type CouplesCornerPostsByCategoryQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  excerpt: string | null;
+  coverImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  category: "communication" | "conflict-resolution" | "dating-courtship" | "faith-relationships" | "general" | "intimacy" | "marriage" | "parenting" | "premarital" | "self-care" | "trust-forgiveness" | null;
+  tags: Array<string> | null;
+  youtubeVideo: {
+    url?: string;
+    title?: string;
+    placement?: "bottom" | "top";
+  } | null;
+  publishedAt: string;
+  featured: boolean | null;
+  seo: {
+    metaTitle?: string;
+    metaDescription?: string;
+    keywords?: Array<string>;
+  } | null;
+}>;
+// Variable: couplesCornerPostBySlugQuery
+// Query: *[_type == "couplesCornerPost" && slug.current == $slug] [0] {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo,    content  }
+export type CouplesCornerPostBySlugQueryResult = {
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  excerpt: string | null;
+  coverImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  category: "communication" | "conflict-resolution" | "dating-courtship" | "faith-relationships" | "general" | "intimacy" | "marriage" | "parenting" | "premarital" | "self-care" | "trust-forgiveness" | null;
+  tags: Array<string> | null;
+  youtubeVideo: {
+    url?: string;
+    title?: string;
+    placement?: "bottom" | "top";
+  } | null;
+  publishedAt: string;
+  featured: boolean | null;
+  seo: {
+    metaTitle?: string;
+    metaDescription?: string;
+    keywords?: Array<string>;
+  } | null;
+  content: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      color?: "#0E6BB7" | "#ea8125" | "#ffaa62";
+      _type: "highlight";
+      _key: string;
+    } | {
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    caption?: string;
+    _type: "image";
+    _key: string;
+  }> | null;
+} | null;
+// Variable: recentCouplesCornerPostsQuery
+// Query: *[_type == "couplesCornerPost"] | order(publishedAt desc) [0...$limit] {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
+export type RecentCouplesCornerPostsQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  excerpt: string | null;
+  coverImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  category: "communication" | "conflict-resolution" | "dating-courtship" | "faith-relationships" | "general" | "intimacy" | "marriage" | "parenting" | "premarital" | "self-care" | "trust-forgiveness" | null;
+  tags: Array<string> | null;
+  youtubeVideo: {
+    url?: string;
+    title?: string;
+    placement?: "bottom" | "top";
+  } | null;
+  publishedAt: string;
+  featured: boolean | null;
+  seo: {
+    metaTitle?: string;
+    metaDescription?: string;
+    keywords?: Array<string>;
+  } | null;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -1254,5 +1539,10 @@ declare module "@sanity/client" {
     "\n  *[_type == \"digitalProduct\" && upsellPosition == $position && status == \"active\"] [0] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  price,\n  stripePriceId,\n  kajabiOfferId,\n  upsellPosition,\n  headline,\n  subheadline,\n  bulletPoints,\n  image,\n  discount,\n  ctaText,\n  status\n\n  }\n": DigitalProductByPositionQueryResult;
     "\n  *[_type == \"digitalProduct\" && slug.current == $slug && status == \"active\"] [0] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  price,\n  stripePriceId,\n  kajabiOfferId,\n  upsellPosition,\n  headline,\n  subheadline,\n  bulletPoints,\n  image,\n  discount,\n  ctaText,\n  status\n\n  }\n": DigitalProductBySlugQueryResult;
     "\n  *[_type == \"product\" && category == \"books\" && status == \"active\"] | order(_createdAt desc) [0...$limit] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  images,\n  basePrice,\n  category\n\n  }\n": NewestBooksQueryResult;
+    "\n  *[_type == \"couplesCornerPost\"] | order(publishedAt desc) {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": AllCouplesCornerPostsQueryResult;
+    "\n  *[_type == \"couplesCornerPost\" && featured == true] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": FeaturedCouplesCornerPostsQueryResult;
+    "\n  *[_type == \"couplesCornerPost\" && category == $category] | order(publishedAt desc) {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": CouplesCornerPostsByCategoryQueryResult;
+    "\n  *[_type == \"couplesCornerPost\" && slug.current == $slug] [0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n,\n    content\n  }\n": CouplesCornerPostBySlugQueryResult;
+    "\n  *[_type == \"couplesCornerPost\"] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": RecentCouplesCornerPostsQueryResult;
   }
 }
