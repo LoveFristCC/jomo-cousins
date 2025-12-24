@@ -58,6 +58,10 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  icons: {
+    icon: "/images/jomo-and-charmaine/main-page/Jomo-and-Charmaine-logo.png",
+    apple: "/images/jomo-and-charmaine/main-page/Jomo-and-Charmaine-logo.png",
+  },
 };
 
 const inter = Inter({

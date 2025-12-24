@@ -99,9 +99,11 @@ export async function generateMetadata(): Promise<Metadata> {
         "max-snippet": -1,
       },
     },
-    verification: {
-      google: "your-google-verification-code",
+    icons: {
+      icon: "/images/logos/Asset 1.png",
+      apple: "/images/logos/Asset 1.png",
     },
+
   };
 }
 

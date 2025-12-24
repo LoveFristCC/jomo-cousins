@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X, ArrowLeft } from "lucide-react";
 
 export default function Nav() {
@@ -22,8 +23,15 @@ export default function Nav() {
           <div className="flex h-20 items-center justify-between">
 
             {/* Logo */ }
-            <Link href="/jomo-and-charmaine" className="group text-2xl font-bold tracking-tight text-[#303030]">
-              Jomo & <span className="text-[#ea8125] transition-colors group-hover:text-[#d67320]">Charmaine</span>
+            <Link href="/jomo-and-charmaine" className="flex items-center">
+              <Image
+                src="/images/jomo-and-charmaine/main-page/Jomo-and-Charmaine-logo.png"
+                alt="Jomo & Charmaine"
+                width={ 220 }
+                height={ 70 }
+                priority
+                className="h-10 w-auto md:h-12"
+              />
             </Link>
 
             {/* Desktop Navigation */ }
@@ -40,7 +48,7 @@ export default function Nav() {
                 )) }
               </div>
 
-              {/* Separated Main Site Link */ }
+              {/* Main Site Link */ }
               <div className="flex items-center border-l border-gray-200 pl-8 mr-8">
                 <Link
                   href="/"
@@ -71,7 +79,7 @@ export default function Nav() {
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay (Darkens background) */ }
+      {/* Mobile Overlay */ }
       { isOpen && (
         <div
           className="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm md:hidden"
@@ -79,7 +87,7 @@ export default function Nav() {
         />
       ) }
 
-      {/* Mobile Side Drawer (Solid White) */ }
+      {/* Mobile Drawer */ }
       <div
         className={ `fixed right-0 top-0 z-[70] h-full w-[280px] bg-white shadow-2xl transition-transform duration-300 ease-in-out md:hidden ${isOpen ? "translate-x-0" : "translate-x-full"
           }` }
@@ -93,7 +101,10 @@ export default function Nav() {
 
         <div className="flex flex-col h-full p-8 pt-20">
           <div className="flex flex-col gap-6">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">Navigation</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
+              Navigation
+            </p>
+
             { navLinks.map((link) => (
               <Link
                 key={ link.name }
@@ -107,7 +118,6 @@ export default function Nav() {
           </div>
 
           <div className="mt-auto flex flex-col gap-4">
-            {/* Subtle separator for mobile bridge */ }
             <div className="border-t border-gray-100 pt-6">
               <Link
                 href="/"

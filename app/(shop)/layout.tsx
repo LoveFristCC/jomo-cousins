@@ -9,7 +9,7 @@ import Nav from "../(home)/nav";
 
 const inter = Inter({
   variable: "--font-inter",
-  subsets: ["latin"],
+  subsets: [ "latin" ],
   display: "swap",
 });
 
@@ -19,6 +19,10 @@ export const metadata: Metadata = {
     default: "Shop | Dr. Jomo Cousins",
   },
   description: "Shop for books, apparel, and accessories from Dr. Jomo Cousins",
+  icons: {
+    icon: "/images/logos/Asset 1.png",
+    apple: "/images/logos/Asset 1.png",
+  },
 };
 
 export default function ShopLayout({
@@ -27,13 +31,13 @@ export default function ShopLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} bg-[#3d3d3d] text-black`}>
+    <html lang="en" className={ `${inter.variable} bg-[#3d3d3d] text-black` }>
       <body className="min-h-screen flex flex-col">
         <div className="pointer-events-none relative z-10 flex-grow flex flex-col">
           <div className="pointer-events-auto">
             <Nav />
           </div>
-          <main className="pointer-events-auto flex-grow">{children}</main>
+          <main className="pointer-events-auto flex-grow">{ children }</main>
         </div>
         <Footer />
         <SpeedInsights />
