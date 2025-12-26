@@ -13,7 +13,7 @@ export default function JomoAndCharmainePage() {
           fill
           className="object-cover object-top"
           priority
-          quality={100}
+          quality={ 100 }
         />
 
         {/* Dark Overlay for text readability */ }
@@ -104,7 +104,7 @@ export default function JomoAndCharmainePage() {
             width={ 1920 }
             height={ 400 }
             className="w-full h-auto"
-            quality={100}
+            quality={ 100 }
           />
         </div>
       </section>
@@ -121,7 +121,7 @@ export default function JomoAndCharmainePage() {
                 width={ 600 }
                 height={ 700 }
                 className="w-full h-auto"
-                quality={100}
+                quality={ 100 }
               />
             </div>
 
@@ -249,7 +249,7 @@ export default function JomoAndCharmainePage() {
                   width={ 600 }
                   height={ 500 }
                   className="w-full h-auto"
-                  quality={100}
+                  quality={ 100 }
                 />
               </div>
               <div>
@@ -277,7 +277,7 @@ export default function JomoAndCharmainePage() {
                   width={ 600 }
                   height={ 500 }
                   className="w-full h-auto"
-                  quality={100}
+                  quality={ 100 }
                 />
               </div>
               <div>
@@ -322,7 +322,7 @@ export default function JomoAndCharmainePage() {
                   width={ 800 }
                   height={ 800 }
                   className="w-full h-auto transition-transform duration-300 group-hover:scale-105"
-                  quality={100}
+                  quality={ 100 }
                 />
               </div>
               <h3 className="text-xl font-bold text-[#303030] text-center">Communication Issues</h3>
@@ -337,7 +337,7 @@ export default function JomoAndCharmainePage() {
                   width={ 800 }
                   height={ 800 }
                   className="w-full h-auto transition-transform duration-300 group-hover:scale-105"
-                  quality={100}
+                  quality={ 100 }
                 />
               </div>
               <h3 className="text-xl font-bold text-[#303030] text-center">Premarital Counseling</h3>
@@ -352,7 +352,7 @@ export default function JomoAndCharmainePage() {
                   width={ 800 }
                   height={ 800 }
                   className="w-full h-auto transition-transform duration-300 group-hover:scale-105"
-                  quality={100}
+                  quality={ 100 }
                 />
               </div>
               <h3 className="text-xl font-bold text-[#303030] text-center">Sexual Issues</h3>
@@ -367,7 +367,7 @@ export default function JomoAndCharmainePage() {
                   width={ 800 }
                   height={ 800 }
                   className="w-full h-auto transition-transform duration-300 group-hover:scale-105"
-                  quality={100}
+                  quality={ 100 }
                 />
               </div>
               <h3 className="text-xl font-bold text-[#303030] text-center">Infidelity & Unfaithfulness</h3>
@@ -382,7 +382,7 @@ export default function JomoAndCharmainePage() {
                   width={ 800 }
                   height={ 800 }
                   className="w-full h-auto transition-transform duration-300 group-hover:scale-105"
-                  quality={100}
+                  quality={ 100 }
                 />
               </div>
               <h3 className="text-xl font-bold text-[#303030] text-center">Trust Issues</h3>
@@ -397,7 +397,7 @@ export default function JomoAndCharmainePage() {
                   width={ 800 }
                   height={ 800 }
                   className="w-full h-auto transition-transform duration-300 group-hover:scale-105"
-                  quality={100}
+                  quality={ 100 }
                 />
               </div>
               <h3 className="text-xl font-bold text-[#303030] text-center">Blended Family Support</h3>
@@ -463,9 +463,9 @@ export default function JomoAndCharmainePage() {
                   From dating ideas, to prayers for your marriage, get tips and resources that will help strengthen your bond.
                 </p>
               </div>
-              <a href="/jomo-and-charmaine/couples-corner" className="text-sm font-bold uppercase tracking-wider text-[#ea8125] border-b-2 border-[#ea8125] hover:opacity-80">
+              <Link href="/jomo-and-charmaine/couples-corner" className="text-sm font-bold uppercase tracking-wider text-[#ea8125] border-b-2 border-[#ea8125] hover:opacity-80">
                 Explore
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -480,10 +480,10 @@ export default function JomoAndCharmainePage() {
               <Image
                 src="/images/jomo-and-charmaine/main-page/conversation-staters.png"
                 alt="Conversation Starters for Couples"
-                width={500}
-                height={500}
+                width={ 500 }
+                height={ 500 }
                 className="w-full max-w-md h-auto"
-                quality={100}
+                quality={ 100 }
               />
             </div>
 
@@ -562,18 +562,18 @@ export default function JomoAndCharmainePage() {
             <div className="rounded-xl bg-white p-8 shadow-lg">
               <div className="mb-6">
                 <svg className="h-12 w-12 text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
+                  <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" />
                 </svg>
               </div>
               <p className="mb-6 text-gray-600 leading-relaxed">
                 Jomo and Charmaine just have an innate ability to relate to others. They were honest and transparent and shared a lot about struggles they've had and how they navigated through those situations.
               </p>
               <div className="mb-6 flex justify-center gap-1">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="h-5 w-5 text-[#ea8125]" fill="currentColor" viewBox="0 0 20 20">
+                { [ ...Array(5) ].map((_, i) => (
+                  <svg key={ i } className="h-5 w-5 text-[#ea8125]" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                   </svg>
-                ))}
+                )) }
               </div>
               <div className="text-center">
                 <div className="mx-auto mb-3 h-20 w-20 rounded-full bg-gray-200"></div>
@@ -585,18 +585,18 @@ export default function JomoAndCharmainePage() {
             <div className="rounded-xl bg-white p-8 shadow-lg">
               <div className="mb-6">
                 <svg className="h-12 w-12 text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
+                  <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" />
                 </svg>
               </div>
               <p className="mb-6 text-gray-600 leading-relaxed">
                 I was ready to give up. After learning my husband cheated, I was broken and didn't think we could come back from that pain. After speaking first individually with both Drs. Jomo and Charmaine, we eventually were able to start sessions together and work through our issues. I owe the health of my marriage to the Cousins.
               </p>
               <div className="mb-6 flex justify-center gap-1">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="h-5 w-5 text-[#ea8125]" fill="currentColor" viewBox="0 0 20 20">
+                { [ ...Array(5) ].map((_, i) => (
+                  <svg key={ i } className="h-5 w-5 text-[#ea8125]" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                   </svg>
-                ))}
+                )) }
               </div>
               <div className="text-center">
                 <div className="mx-auto mb-3 h-20 w-20 rounded-full bg-gray-200"></div>
@@ -608,18 +608,18 @@ export default function JomoAndCharmainePage() {
             <div className="rounded-xl bg-white p-8 shadow-lg">
               <div className="mb-6">
                 <svg className="h-12 w-12 text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
+                  <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" />
                 </svg>
               </div>
               <p className="mb-6 text-gray-600 leading-relaxed">
                 After following Dr. Jomo and Charmaine for a while on YouTube, I wanted to get tips for how I could be a better wife for my husband. Charmaine was so supportive and offered such great tips and ideas that I've implemented in my marriage. Thank you, Dr. Charmaine.
               </p>
               <div className="mb-6 flex justify-center gap-1">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="h-5 w-5 text-[#ea8125]" fill="currentColor" viewBox="0 0 20 20">
+                { [ ...Array(5) ].map((_, i) => (
+                  <svg key={ i } className="h-5 w-5 text-[#ea8125]" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                   </svg>
-                ))}
+                )) }
               </div>
               <div className="text-center">
                 <div className="mx-auto mb-3 h-20 w-20 rounded-full bg-gray-200"></div>
