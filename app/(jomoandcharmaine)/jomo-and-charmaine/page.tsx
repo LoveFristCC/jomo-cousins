@@ -2,8 +2,80 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function JomoAndCharmainePage() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.jomocousins.com/jomo-and-charmaine/#organization",
+        "name": "Jomo & Charmaine Ministries",
+        "url": "https://www.jomocousins.com/jomo-and-charmaine",
+        "logo": "https://www.jomocousins.com/images/jomo-and-charmaine/main-page/Jomo-and-Charmaine-logo.png",
+        "description": "Marriage counseling ministry led by Dr. Jomo and Dr. Charmaine Cousins, Senior Pastors helping couples thrive together through faith-based counseling and relationship coaching.",
+        "founder": [
+          {
+            "@type": "Person",
+            "name": "Dr. Jomo Cousins",
+            "jobTitle": "Senior Pastor & Marriage Counselor",
+            "url": "https://www.jomocousins.com/jomo-and-charmaine/about"
+          },
+          {
+            "@type": "Person",
+            "name": "Dr. Charmaine Cousins",
+            "jobTitle": "Senior Pastor & Marriage Counselor",
+            "url": "https://www.jomocousins.com/jomo-and-charmaine/about"
+          }
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Riverview",
+          "addressRegion": "FL",
+          "addressCountry": "US"
+        },
+        "areaServed": ["Tampa Bay", "Riverview", "Florida"],
+        "sameAs": [
+          "https://www.facebook.com/JomoAndCharmaine",
+          "https://www.instagram.com/jomoandcharmaine_",
+          "https://www.youtube.com/jomocharmaine",
+          "https://twitter.com/JomoCharmaine"
+        ]
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://www.jomocousins.com/jomo-and-charmaine/#service",
+        "name": "Jomo & Charmaine Marriage Counseling",
+        "description": "Faith-based marriage counseling and relationship coaching by experienced Senior Pastors",
+        "provider": {
+          "@id": "https://www.jomocousins.com/jomo-and-charmaine/#organization"
+        },
+        "serviceType": [
+          "Marriage Counseling",
+          "Pastoral Counseling",
+          "Premarital Counseling",
+          "Relationship Coaching",
+          "Christian Counseling",
+          "Couples Ministry"
+        ],
+        "areaServed": {
+          "@type": "City",
+          "name": "Riverview",
+          "containedIn": {
+            "@type": "State",
+            "name": "Florida"
+          }
+        }
+      }
+    ]
+  };
+
   return (
     <div className="bg-white">
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+
       {/* Hero Section */ }
       <section className="relative h-[600px] md:h-[700px] lg:h-[800px]">
         {/* Background Image */ }
@@ -662,6 +734,10 @@ export default function JomoAndCharmainePage() {
 }
 
 export const metadata = {
-  title: "Jomo & Charmaine - Couples Counseling & Relationship Coaching",
-  description: "Helping couples achieve better relationships through counseling, coaching, and proven strategies. Expert marriage and family therapists.",
+  title: "Marriage Counseling & Relationship Coaching",
+  description: "Drs. Jomo & Charmaine Cousins help couples thrive together through faith-based marriage counseling. Senior Pastors with 24 years of marriage, serving 1,000+ couples at Love First Christian Center. Expert guidance for communication, intimacy, trust, infidelity, and blended families.",
+  openGraph: {
+    title: "Jomo & Charmaine - Marriage Counseling Ministry",
+    description: "Senior Pastors helping couples build stronger marriages. 24 years married, 1,000+ couples counseled.",
+  },
 };

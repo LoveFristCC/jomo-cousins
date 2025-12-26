@@ -355,6 +355,10 @@ export default async function CouplesCornerPage() {
 }
 
 export const metadata = {
-  title: "Couples Corner - Relationship Advice Blog",
-  description: "Read expert advice on communication, intimacy, trust, and building stronger relationships from Dr. Jomo and Dr. Charmaine Cousins.",
+  title: "Couples' Corner - Marriage & Relationship Blog",
+  description: "Expert marriage advice and relationship tips from Drs. Jomo & Charmaine Cousins. Discover practical guidance on communication, intimacy, trust, dating ideas, prayers for marriage, and building stronger relationships. Faith-based wisdom from experienced Senior Pastors.",
+  openGraph: {
+    title: "Couples' Corner - Marriage Advice from Jomo & Charmaine",
+    description: "Relationship resources, dating ideas, marriage prayers, and expert counseling tips from experienced Senior Pastors.",
+  },
 };

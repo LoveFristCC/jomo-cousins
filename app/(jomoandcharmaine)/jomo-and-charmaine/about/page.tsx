@@ -319,6 +319,10 @@ export default function AboutPage() {
 }
 
 export const metadata = {
-  title: "About Drs. Jomo & Charmaine Cousins - Marriage & Family Therapists",
-  description: "Learn about Dr. Jomo and Dr. Charmaine Cousins, licensed marriage and family therapists with 24 years of marriage experience and over 1,000 couples counseled.",
+  title: "About Us - Senior Pastors & Marriage Counselors",
+  description: "Meet Dr. Jomo and Dr. Charmaine Cousins, Senior Pastors at Love First Christian Center. Married 24 years with 3 children, they've counseled over 1,000 couples. Their ministry helps couples thrive together through faith-based relationship coaching, premarital counseling, and marriage counseling in Riverview, FL.",
+  openGraph: {
+    title: "About Jomo & Charmaine - Senior Pastors & Marriage Counselors",
+    description: "Senior Pastors at Love First Christian Center. 24 years married, 1,000+ couples counseled. Helping relationships thrive through faith-based ministry.",
+  },
 };
