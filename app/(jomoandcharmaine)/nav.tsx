@@ -1,19 +1,22 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, ArrowLeft } from "lucide-react";
 
 export default function Nav() {
   const [ isOpen, setIsOpen ] = useState(false);
+  const pathname = usePathname();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const navLinks = [
-    { name: "Home", href: "/jomo-and-charmaine" },
-    { name: "About", href: "/jomo-and-charmaine/about" },
-    { name: "Couples Corner", href: "/jomo-and-charmaine/couples-corner" },
+    { name: "HOME", href: "/jomo-and-charmaine" },
+    { name: "ABOUT US", href: "/jomo-and-charmaine/about" },
+    { name: "COUPLES' CORNER", href: "/jomo-and-charmaine/couples-corner" },
+    { name: "CONTACT US", href: "/jomo-and-charmaine/contact" },
   ];
 
   return (
@@ -36,16 +39,25 @@ export default function Nav() {
 
             {/* Desktop Navigation */ }
             <div className="hidden items-center md:flex">
-              <div className="flex items-center gap-8 mr-8">
-                { navLinks.map((link) => (
-                  <Link
-                    key={ link.name }
-                    href={ link.href }
-                    className="text-sm font-bold text-[#303030] transition-colors hover:text-[#ea8125]"
-                  >
-                    { link.name }
-                  </Link>
-                )) }
+              <div className="flex items-center gap-10 mr-8">
+                { navLinks.map((link) => {
+                  // For home, only match exact path. For others, match exact or nested routes
+                  const isActive = link.href === "/jomo-and-charmaine"
+                    ? pathname === link.href
+                    : pathname === link.href || pathname.startsWith(link.href + "/");
+                  return (
+                    <Link
+                      key={ link.name }
+                      href={ link.href }
+                      className={ `text-sm font-bold uppercase tracking-wide transition-colors ${isActive
+                        ? "text-[#ea8125]"
+                        : "text-[#303030] hover:text-[#ea8125]"
+                        }` }
+                    >
+                      { link.name }
+                    </Link>
+                  );
+                }) }
               </div>
 
               {/* Main Site Link */ }
@@ -61,9 +73,9 @@ export default function Nav() {
 
               <Link
                 href="/jomo-and-charmaine/contact"
-                className="rounded-full bg-[#ea8125] px-7 py-2.5 text-sm font-black uppercase tracking-wider text-white shadow-lg shadow-orange-100 transition-all hover:scale-105 hover:bg-[#d67320] active:scale-95"
+                className="rounded-lg bg-[#ea8125] px-8 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
               >
-                Contact
+                Request an Appointment
               </Link>
             </div>
 
@@ -105,16 +117,25 @@ export default function Nav() {
               Navigation
             </p>
 
-            { navLinks.map((link) => (
-              <Link
-                key={ link.name }
-                href={ link.href }
-                onClick={ () => setIsOpen(false) }
-                className="text-xl font-bold text-[#303030] hover:text-[#ea8125]"
-              >
-                { link.name }
-              </Link>
-            )) }
+            { navLinks.map((link) => {
+              // For home, only match exact path. For others, match exact or nested routes
+              const isActive = link.href === "/jomo-and-charmaine"
+                ? pathname === link.href
+                : pathname === link.href || pathname.startsWith(link.href + "/");
+              return (
+                <Link
+                  key={ link.name }
+                  href={ link.href }
+                  onClick={ () => setIsOpen(false) }
+                  className={ `text-xl font-bold transition-colors ${isActive
+                    ? "text-[#ea8125]"
+                    : "text-[#303030] hover:text-[#ea8125]"
+                    }` }
+                >
+                  { link.name }
+                </Link>
+              );
+            }) }
           </div>
 
           <div className="mt-auto flex flex-col gap-4">
@@ -133,7 +154,7 @@ export default function Nav() {
               onClick={ () => setIsOpen(false) }
               className="rounded-xl bg-[#ea8125] py-4 text-center text-lg font-bold text-white shadow-lg shadow-orange-100"
             >
-              Contact Us
+              Request an Appointment
             </Link>
           </div>
         </div>

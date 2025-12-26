@@ -86,10 +86,6 @@ export default function JomoAndCharmaineLayout({
 
         {/* Footer */ }
         <Footer />
-        {/* Work in Progress Banner */ }
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-black text-white text-sm text-center py-10 px-4">
-          🚧 This section of the site is a work in progress. Thank you for your patience.
-        </div>
         <SpeedInsights />
       </body>
     </html>

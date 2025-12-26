@@ -23,16 +23,80 @@ export default async function CouplesCornerPage() {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#FAFCFE] to-white py-20 md:py-32">
-        <div className="container mx-auto px-5">
-          <div className="mx-auto max-w-4xl text-center">
-            <h1 className="mb-6 text-4xl font-bold leading-tight text-[#303030] md:text-5xl lg:text-6xl">
-              Couples <span className="text-[#ea8125]">Corner</span>
+      <section className="relative h-[400px] md:h-[500px]">
+        {/* Background Image */}
+        <Image
+          src="/images/jomo-and-charmaine/couples-corner/couple-corner-hero.jpg"
+          alt="Couples' Corner"
+          fill
+          className="object-cover object-center"
+          priority
+          quality={100}
+        />
+
+        {/* Dark Overlay for text readability */}
+        <div className="absolute inset-0 bg-black/40" />
+
+        {/* Content */}
+        <div className="relative flex h-full items-center justify-center">
+          <div className="container mx-auto px-5">
+            <h1 className="text-center text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">
+              Couples' Corner
             </h1>
-            <p className="text-lg leading-relaxed text-gray-700 md:text-xl">
-              Insights, tips, and advice for building stronger, healthier relationships.
-              Read our latest thoughts on communication, intimacy, trust, and more.
+          </div>
+        </div>
+      </section>
+
+      {/* Resources Section */}
+      <section className="bg-white py-20 md:py-32">
+        <div className="container mx-auto px-5">
+          <div className="mb-16 text-center">
+            <h2 className="mb-6 text-4xl font-bold text-[#303030] md:text-5xl">
+              Resources for Your Relationship
+            </h2>
+            <p className="mx-auto max-w-3xl text-lg text-gray-600">
+              From dating ideas, to prayers for your marriage, get tips and resources that will help strengthen your bond.
             </p>
+          </div>
+
+          <div className="grid gap-12 md:grid-cols-2 max-w-4xl mx-auto">
+            {/* Podcast */}
+            <div className="text-center">
+              <div className="mb-8 flex justify-center">
+                <svg className="h-16 w-16 text-gray-700" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-12.5c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5zm0 5.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/>
+                </svg>
+              </div>
+              <h3 className="mb-6 text-2xl font-bold text-[#303030]">Podcast</h3>
+              <p className="text-gray-600 leading-relaxed mb-8">
+                Listen to Relationship Tips & Advice on Jomo & Charmaine Podcast.
+              </p>
+              <a
+                href="#"
+                className="inline-block rounded-lg bg-[#ea8125] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
+              >
+                Listen Now
+              </a>
+            </div>
+
+            {/* YouTube */}
+            <div className="text-center">
+              <div className="mb-8 flex justify-center">
+                <svg className="h-16 w-16 text-gray-700" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/>
+                </svg>
+              </div>
+              <h3 className="mb-6 text-2xl font-bold text-[#303030]">YouTube</h3>
+              <p className="text-gray-600 leading-relaxed mb-8">
+                Our channel will provide you with relationship advice, marriage tools, and dating goals for the modern couple.
+              </p>
+              <a
+                href="#"
+                className="inline-block rounded-lg bg-[#ea8125] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
+              >
+                Watch Now
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -218,6 +282,72 @@ export default async function CouplesCornerPage() {
               </p>
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Conversation Starters Section */}
+      <section className="bg-white py-20 md:py-32">
+        <div className="container mx-auto px-5">
+          <div className="grid items-center gap-12 md:grid-cols-2 lg:gap-20">
+            {/* Left - eBook Image */}
+            <div className="relative flex justify-center">
+              <Image
+                src="/images/jomo-and-charmaine/main-page/conversation-staters.png"
+                alt="Conversation Starters for Couples"
+                width={500}
+                height={500}
+                className="w-full max-w-md h-auto"
+                quality={100}
+              />
+            </div>
+
+            {/* Right - Form */}
+            <div>
+              <h2 className="mb-4 text-3xl font-bold text-[#303030] md:text-4xl lg:text-5xl">
+                Conversation Starters for Couples
+              </h2>
+              <p className="mb-8 text-lg text-gray-600">
+                Enter Your Email Address and Download the Free eBook
+              </p>
+
+              {/* Progress Indicator */}
+              <div className="mb-8 flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#ea8125] text-sm font-bold text-white">
+                    1
+                  </div>
+                  <div className="h-[2px] w-16 bg-gray-300"></div>
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 text-sm font-bold text-gray-400">
+                    2
+                  </div>
+                </div>
+              </div>
+
+              {/* Form */}
+              <form className="space-y-4">
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    className="w-full border border-gray-300 px-4 py-3 text-gray-700 focus:border-[#ea8125] focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    className="w-full border border-gray-300 px-4 py-3 text-gray-700 focus:border-[#ea8125] focus:outline-none"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full rounded-lg bg-[#ea8125] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
+                >
+                  Next
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       </section>
     </div>
