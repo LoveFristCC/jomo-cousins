@@ -74,7 +74,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: plainDescription,
       images: ogImage ? [ ogImage ] : [
         {
-          url: "/images/og-image.jpg",
+          url: "/images/logos/JomoCousins Logo18.png",
           width: 1200,
           height: 630,
           alt: "Dr. Jomo Cousins - Motivational Speaker",
@@ -86,7 +86,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: title,
       description: plainDescription,
       creator: "@pastorjomo",
-      images: ogImage ? [ ogImage ] : [ "/images/og-image.jpg" ],
+      images: ogImage ? [ ogImage ] : [ "/images/logos/JomoCousins Logo18.png" ],
     },
     robots: {
       index: true,

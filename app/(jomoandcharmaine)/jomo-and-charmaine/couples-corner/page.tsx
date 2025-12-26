@@ -357,8 +357,28 @@ export default async function CouplesCornerPage() {
 export const metadata = {
   title: "Couples' Corner - Marriage & Relationship Blog",
   description: "Expert marriage advice and relationship tips from Drs. Jomo & Charmaine Cousins. Discover practical guidance on communication, intimacy, trust, dating ideas, prayers for marriage, and building stronger relationships. Faith-based wisdom from experienced Senior Pastors.",
+  alternates: {
+    canonical: "https://www.jomocousins.com/jomo-and-charmaine/couples-corner",
+  },
   openGraph: {
+    type: "website",
+    siteName: "Jomo & Charmaine - Marriage Counseling Ministry",
     title: "Couples' Corner - Marriage Advice from Jomo & Charmaine",
     description: "Relationship resources, dating ideas, marriage prayers, and expert counseling tips from experienced Senior Pastors.",
+    url: "https://www.jomocousins.com/jomo-and-charmaine/couples-corner",
+    images: [
+      {
+        url: "/images/jomo-and-charmaine/couples-corner/couple-corner-hero.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Couples' Corner - Marriage and Relationship Blog",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Couples' Corner - Marriage Advice from Jomo & Charmaine",
+    description: "Relationship resources, dating ideas, marriage prayers, and expert counseling tips from experienced Senior Pastors.",
+    images: ["/images/jomo-and-charmaine/couples-corner/couple-corner-hero.jpg"],
   },
 };

@@ -736,8 +736,28 @@ export default function JomoAndCharmainePage() {
 export const metadata = {
   title: "Marriage Counseling & Relationship Coaching",
   description: "Drs. Jomo & Charmaine Cousins help couples thrive together through faith-based marriage counseling. Senior Pastors with 24 years of marriage, serving 1,000+ couples at Love First Christian Center. Expert guidance for communication, intimacy, trust, infidelity, and blended families.",
+  alternates: {
+    canonical: "https://www.jomocousins.com/jomo-and-charmaine",
+  },
   openGraph: {
+    type: "website",
+    siteName: "Jomo & Charmaine - Marriage Counseling Ministry",
     title: "Jomo & Charmaine - Marriage Counseling Ministry",
     description: "Senior Pastors helping couples build stronger marriages. 24 years married, 1,000+ couples counseled.",
+    url: "https://www.jomocousins.com/jomo-and-charmaine",
+    images: [
+      {
+        url: "/images/jomo-and-charmaine/main-page/Cousins-Together-Main-page.png",
+        width: 1200,
+        height: 630,
+        alt: "Dr. Jomo and Dr. Charmaine Cousins - Marriage Counseling Pastors",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jomo & Charmaine - Marriage Counseling Ministry",
+    description: "Senior Pastors helping couples build stronger marriages. 24 years married, 1,000+ couples counseled.",
+    images: ["/images/jomo-and-charmaine/main-page/Cousins-Together-Main-page.png"],
   },
 };

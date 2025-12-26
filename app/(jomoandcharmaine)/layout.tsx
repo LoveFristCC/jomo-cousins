@@ -12,6 +12,16 @@ export const metadata: Metadata = {
     default: "Jomo & Charmaine - Marriage Counseling & Relationship Coaching | Christian Pastors",
   },
   description: "Dr. Jomo and Dr. Charmaine Cousins are Senior Pastors helping couples thrive together through faith-based marriage counseling. With 24 years of marriage and 1,000+ couples counseled, they provide relationship coaching, premarital counseling, and marriage support at Love First Christian Center in Riverview, FL.",
+  applicationName: "Jomo & Charmaine Ministries",
+  referrer: "origin-when-cross-origin",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: "https://www.jomocousins.com/jomo-and-charmaine",
+  },
   keywords: [
     "Jomo and Charmaine",
     "Jomo Charmaine Cousins",
@@ -74,9 +84,6 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
-  },
-  verification: {
-    google: "your-google-verification-code",
   },
   category: "Marriage Counseling & Relationship Therapy",
   icons: {
