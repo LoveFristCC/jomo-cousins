@@ -199,3 +199,124 @@ export const recentCouplesCornerPostsQuery = defineQuery(`
     ${couplesCornerFields}
   }
 `);
+
+// Prayer Video queries
+const prayerVideoFields = /* groq */ `
+  _id,
+  title,
+  "slug": slug.current,
+  youtubeUrl,
+  youtubeVideoId,
+  excerpt,
+  "categories": prayerCategories[]->{ title, "slug": slug.current },
+  tags,
+  featuredImage,
+  publishedAt,
+  isPrayerOfTheDay,
+  duration,
+  personalNote,
+  viewCount
+`;
+
+export const prayerOfTheDayQuery = defineQuery(`
+  *[_type == "prayerVideo" && isPrayerOfTheDay == true] | order(publishedAt desc) [0] {
+    ${prayerVideoFields}
+  }
+`);
+
+export const recentPrayersQuery = defineQuery(`
+  *[_type == "prayerVideo"] | order(publishedAt desc) [0...$limit] {
+    ${prayerVideoFields}
+  }
+`);
+
+export const prayerCategoriesQuery = defineQuery(`
+  *[_type == "prayerCategory"] | order(displayOrder asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    description,
+    icon,
+    "prayerCount": count(*[_type == "prayerVideo" && references(^._id)])
+  }
+`);
+
+export const approvedTestimonialsQuery = defineQuery(`
+  *[_type == "prayerTestimonial" && isApproved == true] | order(submittedAt desc) [0...$limit] {
+    _id,
+    name,
+    testimonialText,
+    location,
+    submittedAt
+  }
+`);
+
+// Category hub page query
+export const prayerCategoryBySlugQuery = defineQuery(`
+  *[_type == "prayerCategory" && slug.current == $slug] [0] {
+    _id,
+    title,
+    "slug": slug.current,
+    description,
+    longDescription,
+    icon,
+    featuredImage,
+    jomoMessage,
+    seoContent,
+    hubPageContent,
+    faqSection,
+    "relatedCategories": relatedCategories[]-> {
+      _id,
+      title,
+      "slug": slug.current,
+      description,
+      icon,
+      "prayerCount": count(*[_type == "prayerVideo" && references(^._id)])
+    },
+    biblicalFoundation,
+    "prayerCount": count(*[_type == "prayerVideo" && references(^._id)])
+  }
+`);
+
+// Prayers by category query
+export const prayersByCategoryQuery = defineQuery(`
+  *[_type == "prayerVideo" && references($categoryId)] | order(publishedAt desc) {
+    ${prayerVideoFields}
+  }
+`);
+
+// Featured prayer for category (most viewed)
+export const featuredPrayerByCategoryQuery = defineQuery(`
+  *[_type == "prayerVideo" && references($categoryId)] | order(viewCount desc) [0] {
+    ${prayerVideoFields},
+    fullTranscript
+  }
+`);
+
+// Individual prayer by slug query
+export const prayerBySlugQuery = defineQuery(`
+  *[_type == "prayerVideo" && slug.current == $slug] [0] {
+    ${prayerVideoFields},
+    fullTranscript,
+    "pdfDownloadUrl": pdfDownloadUrl.asset->url,
+    seoMetadata
+  }
+`);
+
+// Related prayers (same category)
+export const relatedPrayersQuery = defineQuery(`
+  *[_type == "prayerVideo" && _id != $excludeId && count((prayerCategories[]._ref)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...$limit] {
+    ${prayerVideoFields}
+  }
+`);
+
+// Category-specific testimonials
+export const testimonialsByCategoryQuery = defineQuery(`
+  *[_type == "prayerTestimonial" && isApproved == true && category._ref == $categoryId] | order(submittedAt desc) [0...$limit] {
+    _id,
+    name,
+    testimonialText,
+    location,
+    submittedAt
+  }
+`);

@@ -22,7 +22,7 @@ export default function CustomPortableText({
   value,
 }: {
   className?: string;
-  value: PortableTextBlock[];
+  value: PortableTextBlock[] | any;
 }) {
   const containerRef = React.useRef<HTMLDivElement>(null);
 

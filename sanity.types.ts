@@ -39,6 +39,190 @@ export type ProductVariant = {
   allowBackorder?: boolean;
 };
 
+export type PrayerTestimonial = {
+  _id: string;
+  _type: "prayerTestimonial";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  testimonialText?: string;
+  category?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "prayerCategory";
+  };
+  isApproved?: boolean;
+  submittedAt?: string;
+  location?: string;
+};
+
+export type PrayerCategory = {
+  _id: string;
+  _type: "prayerCategory";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  description?: string;
+  longDescription?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  icon?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  featuredImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  jomoMessage?: string;
+  seoContent?: {
+    metaTitle?: string;
+    metaDescription?: string;
+    targetKeywords?: Array<string>;
+    h1Override?: string;
+  };
+  hubPageContent?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  faqSection?: Array<{
+    question?: string;
+    answer?: string;
+    _key: string;
+  }>;
+  relatedCategories?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "prayerCategory";
+  }>;
+  displayOrder?: number;
+  biblicalFoundation?: string;
+};
+
+export type PrayerVideo = {
+  _id: string;
+  _type: "prayerVideo";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  youtubeUrl?: string;
+  youtubeVideoId?: string;
+  excerpt?: string;
+  fullTranscript?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  prayerCategories?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "prayerCategory";
+  }>;
+  tags?: Array<string>;
+  featuredImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  pdfDownloadUrl?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    media?: unknown;
+    _type: "file";
+  };
+  publishedAt?: string;
+  isPrayerOfTheDay?: boolean;
+  seoMetadata?: {
+    title?: string;
+    description?: string;
+    keywords?: Array<string>;
+  };
+  viewCount?: number;
+  duration?: string;
+  personalNote?: string;
+};
+
 export type CouplesCornerPost = {
   _id: string;
   _type: "couplesCornerPost";
@@ -634,7 +818,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = ProductVariant | CouplesCornerPost | Product | DigitalProduct | Post | Author | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = ProductVariant | PrayerTestimonial | PrayerCategory | PrayerVideo | CouplesCornerPost | Product | DigitalProduct | Post | Author | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: settingsQuery
@@ -1836,6 +2020,387 @@ export type RecentCouplesCornerPostsQueryResult = Array<{
     keywords?: Array<string>;
   } | null;
 }>;
+// Variable: prayerOfTheDayQuery
+// Query: *[_type == "prayerVideo" && isPrayerOfTheDay == true] | order(publishedAt desc) [0] {      _id,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount  }
+export type PrayerOfTheDayQueryResult = {
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  youtubeUrl: string | null;
+  youtubeVideoId: string | null;
+  excerpt: string | null;
+  categories: Array<{
+    title: string | null;
+    slug: string | null;
+  }> | null;
+  tags: Array<string> | null;
+  featuredImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  publishedAt: string | null;
+  isPrayerOfTheDay: boolean | null;
+  duration: string | null;
+  personalNote: string | null;
+  viewCount: number | null;
+} | null;
+// Variable: recentPrayersQuery
+// Query: *[_type == "prayerVideo"] | order(publishedAt desc) [0...$limit] {      _id,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount  }
+export type RecentPrayersQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  youtubeUrl: string | null;
+  youtubeVideoId: string | null;
+  excerpt: string | null;
+  categories: Array<{
+    title: string | null;
+    slug: string | null;
+  }> | null;
+  tags: Array<string> | null;
+  featuredImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  publishedAt: string | null;
+  isPrayerOfTheDay: boolean | null;
+  duration: string | null;
+  personalNote: string | null;
+  viewCount: number | null;
+}>;
+// Variable: prayerCategoriesQuery
+// Query: *[_type == "prayerCategory"] | order(displayOrder asc) {    _id,    title,    "slug": slug.current,    description,    icon,    "prayerCount": count(*[_type == "prayerVideo" && references(^._id)])  }
+export type PrayerCategoriesQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  description: string | null;
+  icon: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  prayerCount: number;
+}>;
+// Variable: approvedTestimonialsQuery
+// Query: *[_type == "prayerTestimonial" && isApproved == true] | order(submittedAt desc) [0...$limit] {    _id,    name,    testimonialText,    location,    submittedAt  }
+export type ApprovedTestimonialsQueryResult = Array<{
+  _id: string;
+  name: string | null;
+  testimonialText: string | null;
+  location: string | null;
+  submittedAt: string | null;
+}>;
+// Variable: prayerCategoryBySlugQuery
+// Query: *[_type == "prayerCategory" && slug.current == $slug] [0] {    _id,    title,    "slug": slug.current,    description,    longDescription,    icon,    featuredImage,    jomoMessage,    seoContent,    hubPageContent,    faqSection,    "relatedCategories": relatedCategories[]-> {      _id,      title,      "slug": slug.current,      description,      icon,      "prayerCount": count(*[_type == "prayerVideo" && references(^._id)])    },    biblicalFoundation,    "prayerCount": count(*[_type == "prayerVideo" && references(^._id)])  }
+export type PrayerCategoryBySlugQueryResult = {
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  description: string | null;
+  longDescription: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  icon: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  featuredImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  jomoMessage: string | null;
+  seoContent: {
+    metaTitle?: string;
+    metaDescription?: string;
+    targetKeywords?: Array<string>;
+    h1Override?: string;
+  } | null;
+  hubPageContent: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  faqSection: Array<{
+    question?: string;
+    answer?: string;
+    _key: string;
+  }> | null;
+  relatedCategories: Array<{
+    _id: string;
+    title: string | null;
+    slug: string | null;
+    description: string | null;
+    icon: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    } | null;
+    prayerCount: number;
+  }> | null;
+  biblicalFoundation: string | null;
+  prayerCount: number;
+} | null;
+// Variable: prayersByCategoryQuery
+// Query: *[_type == "prayerVideo" && references($categoryId)] | order(publishedAt desc) {      _id,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount  }
+export type PrayersByCategoryQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  youtubeUrl: string | null;
+  youtubeVideoId: string | null;
+  excerpt: string | null;
+  categories: Array<{
+    title: string | null;
+    slug: string | null;
+  }> | null;
+  tags: Array<string> | null;
+  featuredImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  publishedAt: string | null;
+  isPrayerOfTheDay: boolean | null;
+  duration: string | null;
+  personalNote: string | null;
+  viewCount: number | null;
+}>;
+// Variable: featuredPrayerByCategoryQuery
+// Query: *[_type == "prayerVideo" && references($categoryId)] | order(viewCount desc) [0] {      _id,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount,    fullTranscript  }
+export type FeaturedPrayerByCategoryQueryResult = {
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  youtubeUrl: string | null;
+  youtubeVideoId: string | null;
+  excerpt: string | null;
+  categories: Array<{
+    title: string | null;
+    slug: string | null;
+  }> | null;
+  tags: Array<string> | null;
+  featuredImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  publishedAt: string | null;
+  isPrayerOfTheDay: boolean | null;
+  duration: string | null;
+  personalNote: string | null;
+  viewCount: number | null;
+  fullTranscript: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+} | null;
+// Variable: prayerBySlugQuery
+// Query: *[_type == "prayerVideo" && slug.current == $slug] [0] {      _id,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount,    fullTranscript,    "pdfDownloadUrl": pdfDownloadUrl.asset->url,    seoMetadata  }
+export type PrayerBySlugQueryResult = {
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  youtubeUrl: string | null;
+  youtubeVideoId: string | null;
+  excerpt: string | null;
+  categories: Array<{
+    title: string | null;
+    slug: string | null;
+  }> | null;
+  tags: Array<string> | null;
+  featuredImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  publishedAt: string | null;
+  isPrayerOfTheDay: boolean | null;
+  duration: string | null;
+  personalNote: string | null;
+  viewCount: number | null;
+  fullTranscript: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  pdfDownloadUrl: string | null;
+  seoMetadata: {
+    title?: string;
+    description?: string;
+    keywords?: Array<string>;
+  } | null;
+} | null;
+// Variable: relatedPrayersQuery
+// Query: *[_type == "prayerVideo" && _id != $excludeId && count((prayerCategories[]._ref)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...$limit] {      _id,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount  }
+export type RelatedPrayersQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  youtubeUrl: string | null;
+  youtubeVideoId: string | null;
+  excerpt: string | null;
+  categories: Array<{
+    title: string | null;
+    slug: string | null;
+  }> | null;
+  tags: Array<string> | null;
+  featuredImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  publishedAt: string | null;
+  isPrayerOfTheDay: boolean | null;
+  duration: string | null;
+  personalNote: string | null;
+  viewCount: number | null;
+}>;
+// Variable: testimonialsByCategoryQuery
+// Query: *[_type == "prayerTestimonial" && isApproved == true && category._ref == $categoryId] | order(submittedAt desc) [0...$limit] {    _id,    name,    testimonialText,    location,    submittedAt  }
+export type TestimonialsByCategoryQueryResult = Array<{
+  _id: string;
+  name: string | null;
+  testimonialText: string | null;
+  location: string | null;
+  submittedAt: string | null;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -1857,5 +2422,15 @@ declare module "@sanity/client" {
     "\n  *[_type == \"couplesCornerPost\" && category == $category] | order(publishedAt desc) {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": CouplesCornerPostsByCategoryQueryResult;
     "\n  *[_type == \"couplesCornerPost\" && slug.current == $slug] [0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n,\n    content\n  }\n": CouplesCornerPostBySlugQueryResult;
     "\n  *[_type == \"couplesCornerPost\"] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": RecentCouplesCornerPostsQueryResult;
+    "\n  *[_type == \"prayerVideo\" && isPrayerOfTheDay == true] | order(publishedAt desc) [0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n\n  }\n": PrayerOfTheDayQueryResult;
+    "\n  *[_type == \"prayerVideo\"] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n\n  }\n": RecentPrayersQueryResult;
+    "\n  *[_type == \"prayerCategory\"] | order(displayOrder asc) {\n    _id,\n    title,\n    \"slug\": slug.current,\n    description,\n    icon,\n    \"prayerCount\": count(*[_type == \"prayerVideo\" && references(^._id)])\n  }\n": PrayerCategoriesQueryResult;
+    "\n  *[_type == \"prayerTestimonial\" && isApproved == true] | order(submittedAt desc) [0...$limit] {\n    _id,\n    name,\n    testimonialText,\n    location,\n    submittedAt\n  }\n": ApprovedTestimonialsQueryResult;
+    "\n  *[_type == \"prayerCategory\" && slug.current == $slug] [0] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    description,\n    longDescription,\n    icon,\n    featuredImage,\n    jomoMessage,\n    seoContent,\n    hubPageContent,\n    faqSection,\n    \"relatedCategories\": relatedCategories[]-> {\n      _id,\n      title,\n      \"slug\": slug.current,\n      description,\n      icon,\n      \"prayerCount\": count(*[_type == \"prayerVideo\" && references(^._id)])\n    },\n    biblicalFoundation,\n    \"prayerCount\": count(*[_type == \"prayerVideo\" && references(^._id)])\n  }\n": PrayerCategoryBySlugQueryResult;
+    "\n  *[_type == \"prayerVideo\" && references($categoryId)] | order(publishedAt desc) {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n\n  }\n": PrayersByCategoryQueryResult;
+    "\n  *[_type == \"prayerVideo\" && references($categoryId)] | order(viewCount desc) [0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n,\n    fullTranscript\n  }\n": FeaturedPrayerByCategoryQueryResult;
+    "\n  *[_type == \"prayerVideo\" && slug.current == $slug] [0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n,\n    fullTranscript,\n    \"pdfDownloadUrl\": pdfDownloadUrl.asset->url,\n    seoMetadata\n  }\n": PrayerBySlugQueryResult;
+    "\n  *[_type == \"prayerVideo\" && _id != $excludeId && count((prayerCategories[]._ref)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n\n  }\n": RelatedPrayersQueryResult;
+    "\n  *[_type == \"prayerTestimonial\" && isApproved == true && category._ref == $categoryId] | order(submittedAt desc) [0...$limit] {\n    _id,\n    name,\n    testimonialText,\n    location,\n    submittedAt\n  }\n": TestimonialsByCategoryQueryResult;
   }
 }

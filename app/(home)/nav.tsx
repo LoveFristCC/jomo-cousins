@@ -18,6 +18,7 @@ export default function Nav() {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
+    { name: "Prayer", href: "/prayer" },
     { name: "Books + More", href: "/products" },
     { name: "Contact", href: "/contact" },
   ];
