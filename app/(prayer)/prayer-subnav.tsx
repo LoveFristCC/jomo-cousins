@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, Search, Send } from "lucide-react";
+import { BookOpen, Search, Send, Calendar } from "lucide-react";
 
 export default function PrayerSubNav() {
   const pathname = usePathname();
@@ -14,7 +14,7 @@ export default function PrayerSubNav() {
 
   const subNavLinks = [
     { name: "Prayer Home", href: "/prayer", icon: BookOpen },
-    // { name: "Daily Prayer", href: "/prayer/daily", icon: Calendar },
+    { name: "Daily Prayer", href: "/prayer/daily", icon: Calendar },
     { name: "Search Prayers", href: "/prayer/search", icon: Search },
     { name: "Submit Request", href: "/prayer/submit", icon: Send },
   ];

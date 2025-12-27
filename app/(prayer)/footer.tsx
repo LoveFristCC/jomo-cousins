@@ -6,14 +6,14 @@ export default function Footer() {
     <footer className="bg-[#2d2d2d] py-12 text-white">
       <div className="container mx-auto px-5">
         <div className="grid gap-8 md:grid-cols-3">
-          {/* Logo & About */}
+          {/* Logo & About */ }
           <div>
             <Link href="/prayer" className="mb-4 flex items-center gap-3">
               <Image
                 src="/images/logos/Asset 1.png"
                 alt="Pray with Pastor Jomo"
-                width={40}
-                height={40}
+                width={ 40 }
+                height={ 40 }
                 className="h-10 w-10"
               />
               <div className="flex flex-col">
@@ -30,7 +30,7 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Prayer Links */}
+          {/* Prayer Links */ }
           <div>
             <h3 className="mb-4 text-lg font-bold">Prayer Resources</h3>
             <ul className="space-y-2 text-sm">
@@ -69,7 +69,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Connect */}
+          {/* Connect */ }
           <div>
             <h3 className="mb-4 text-lg font-bold">Connect</h3>
             <div className="mb-4">
@@ -82,7 +82,7 @@ export default function Footer() {
             </div>
             <div className="flex gap-4">
               <a
-                href="https://www.facebook.com/pastorjomocousins"
+                href="https://www.facebook.com/pastorjomo"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 transition-colors hover:text-white"
@@ -120,7 +120,7 @@ export default function Footer() {
 
         <div className="mt-8 border-t border-gray-700 pt-8 text-center text-sm text-gray-400">
           <p>
-            &copy; {new Date().getFullYear()} Jomo Cousins. All rights reserved.
+            &copy; { new Date().getFullYear() } Jomo Cousins. All rights reserved.
           </p>
         </div>
       </div>

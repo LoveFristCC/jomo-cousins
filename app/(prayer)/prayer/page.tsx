@@ -64,9 +64,9 @@ export default async function PrayerPage() {
         description: "Pastor Jomo Cousins leads daily prayer and provides spiritual guidance through personal prayer videos.",
         url: "https://www.jomocousins.com",
         sameAs: [
-          "https://www.facebook.com/pastorjomocousins",
+          "https://www.facebook.com/pastorjomo",
           "https://www.instagram.com/pastorjomo",
-          "https://www.youtube.com/@pastorjomocousins",
+          "https://www.youtube.com/@PASTORJOMO",
         ],
       },
       {
