@@ -18,6 +18,7 @@ export default function robots(): MetadataRoute.Robots {
           "/admin/",
           "/checkout/",
           "/thank-you/complete/",
+          "/thank-you/upsell-2/",
         ],
       },
       {
@@ -29,6 +30,7 @@ export default function robots(): MetadataRoute.Robots {
           "/admin/",
           "/checkout/",
           "/thank-you/complete/",
+          "/thank-you/upsell-2/",
         ],
       },
     ],

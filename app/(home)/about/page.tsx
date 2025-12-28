@@ -1,9 +1,138 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Dr. Jomo Cousins | NFL Veteran, Pastor & Motivational Speaker",
+  description: "Meet Dr. Jomo Cousins: NFL defensive end turned pastor, motivational speaker, and cancer survivor. Founder of Love First Christian Center and creator of The Gap success formula.",
+  keywords: [
+    "Dr. Jomo Cousins biography",
+    "NFL player pastor",
+    "motivational speaker Tampa",
+    "cancer survivor speaker",
+    "Love First Christian Center founder",
+    "Florida A&M University alumni",
+    "Arizona Cardinals alumni",
+    "New York Giants alumni",
+    "The Gap success formula",
+    "retired NFL speaker",
+    "Christian motivational speaker",
+    "corporate speaker Tampa Florida"
+  ],
+  alternates: {
+    canonical: "https://www.jomocousins.com/about",
+  },
+  openGraph: {
+    title: "About Dr. Jomo Cousins | NFL Veteran, Pastor & Cancer Survivor",
+    description: "From NFL defensive end to pastor and motivational speaker. Dr. Jomo Cousins inspires transformation through faith, perseverance, and The Gap success formula.",
+    url: "https://www.jomocousins.com/about",
+    type: "profile",
+    siteName: "Dr. Jomo Cousins",
+    images: [
+      {
+        url: "/images/jc-color-pics/aboutProfilePictures.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Dr. Jomo Cousins - Motivational Speaker and Pastor",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Dr. Jomo Cousins | NFL Veteran & Motivational Speaker",
+    description: "From NFL to ministry: Dr. Jomo Cousins' inspiring journey of faith, resilience, and transformation.",
+    creator: "@pastorjomo",
+    images: ["/images/jc-color-pics/aboutProfilePictures.jpg"],
+  },
+};
 
 export default function AboutPage() {
+  // Structured Data for SEO
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": "https://www.jomocousins.com/#jomo",
+    name: "Dr. Jomo Cousins",
+    alternateName: "Jomo Cousins",
+    description: "NFL veteran, pastor, motivational speaker, author, and cancer survivor. Founder of Love First Christian Center.",
+    url: "https://www.jomocousins.com",
+    image: "https://www.jomocousins.com/images/jc-color-pics/aboutProfilePictures.jpg",
+    jobTitle: ["Pastor", "Motivational Speaker", "Author", "Business Coach"],
+    hasOccupation: [
+      {
+        "@type": "Occupation",
+        name: "Motivational Speaker",
+        occupationLocation: {
+          "@type": "City",
+          name: "Tampa, Florida"
+        }
+      },
+      {
+        "@type": "Occupation",
+        name: "Pastor",
+        occupationLocation: {
+          "@type": "Place",
+          name: "Love First Christian Center"
+        }
+      }
+    ],
+    alumniOf: [
+      {
+        "@type": "CollegeOrUniversity",
+        name: "Florida A&M University"
+      },
+      {
+        "@type": "EducationalOrganization",
+        name: "Tabernacle Bible College",
+        degree: "PhD"
+      }
+    ],
+    memberOf: [
+      {
+        "@type": "SportsTeam",
+        name: "Arizona Cardinals",
+        sport: "American Football"
+      },
+      {
+        "@type": "SportsTeam",
+        name: "New York Giants",
+        sport: "American Football"
+      }
+    ],
+    founder: {
+      "@type": "Organization",
+      name: "Love First Christian Center",
+      url: "https://www.lfcc.tv"
+    },
+    spouse: {
+      "@type": "Person",
+      name: "Dr. Charmaine Cousins"
+    },
+    sameAs: [
+      "https://www.facebook.com/pastorjomo",
+      "https://www.instagram.com/pastorjomo",
+      "https://www.youtube.com/@PASTORJOMO",
+      "https://twitter.com/pastorjomo"
+    ],
+    award: "NFL Defensive End (Retired)",
+    knowsAbout: [
+      "Motivational Speaking",
+      "Financial Literacy",
+      "Youth Development",
+      "Spiritual Leadership",
+      "Cancer Survival",
+      "The Gap Success Formula"
+    ]
+  };
+
   return (
     <div className="bg-white">
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+
       {/* Hero Section - Screenshot 1 */ }
       <section className="relative overflow-hidden pt-0 md:pt-20">
         {/* Background Image */ }

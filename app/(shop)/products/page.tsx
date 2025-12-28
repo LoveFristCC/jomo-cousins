@@ -1,11 +1,54 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { allProductsQuery } from "@/sanity/lib/queries";
 import type { AllProductsQueryResult } from "@/sanity.types";
 import { urlForImage } from "@/sanity/lib/utils";
 import CategoryFilters from "./CategoryFilters";
+
+export const metadata: Metadata = {
+  title: "Shop Books & Products | Dr. Jomo Cousins",
+  description: "Shop Dr. Jomo Cousins' books, apparel, and inspirational products. Discover resources for personal growth, spiritual development, and success.",
+  keywords: [
+    "Dr. Jomo Cousins books",
+    "motivational speaker books",
+    "Christian books",
+    "The Gap book",
+    "inspirational merchandise",
+    "faith-based products",
+    "personal development books",
+    "spiritual growth resources",
+    "Tampa pastor books",
+    "NFL motivational books"
+  ],
+  alternates: {
+    canonical: "https://www.jomocousins.com/products",
+  },
+  openGraph: {
+    title: "Shop Dr. Jomo Cousins Books & Products",
+    description: "Browse books, apparel, and inspirational products by Dr. Jomo Cousins. Resources for growth, faith, and transformation.",
+    url: "https://www.jomocousins.com/products",
+    type: "website",
+    siteName: "Dr. Jomo Cousins",
+    images: [
+      {
+        url: "/images/backgrounds/P1122310B_edited.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Shop Dr. Jomo Cousins Products",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Shop Dr. Jomo Cousins Books & Products",
+    description: "Books, apparel, and resources for personal growth and spiritual development.",
+    creator: "@pastorjomo",
+    images: ["/images/backgrounds/P1122310B_edited.jpg"],
+  },
+};
 
 /**
  * Product listing page with category filtering
@@ -229,8 +272,3 @@ function ProductsGridSkeleton() {
     </div>
   );
 }
-
-export const metadata = {
-  title: "Shop - All Products",
-  description: "Browse our collection of books, apparel, and accessories",
-};
