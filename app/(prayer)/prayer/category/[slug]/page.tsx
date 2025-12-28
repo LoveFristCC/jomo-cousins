@@ -51,6 +51,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       "video prayers",
       category.title.toLowerCase(),
     ],
+    alternates: {
+      canonical: `https://www.jomocousins.com/prayer/category/${slug}`,
+    },
     openGraph: {
       title: metaTitle,
       description: metaDescription,
@@ -209,16 +212,16 @@ export default async function CategoryPage({ params }: Props) {
       {/* Breadcrumbs */ }
       <div className="border-b border-gray-200 bg-gray-50 py-3">
         <div className="container mx-auto px-5">
-          <nav className="flex items-center gap-2 text-sm text-gray-600">
-            <Link href="/" className="hover:text-[#e31e24]">
+          <nav className="flex flex-wrap items-center gap-2 text-sm text-gray-600">
+            <Link href="/" className="hover:text-[#e31e24] transition-colors">
               Home
             </Link>
-            <span>/</span>
-            <Link href="/prayer" className="hover:text-[#e31e24]">
+            <span className="text-gray-400">/</span>
+            <Link href="/prayer" className="hover:text-[#e31e24] transition-colors">
               Prayer
             </Link>
-            <span>/</span>
-            <span className="text-[#3d3d3d] font-semibold">
+            <span className="text-gray-400">/</span>
+            <span className="text-[#3d3d3d] font-semibold truncate">
               { category.title }
             </span>
           </nav>
@@ -267,58 +270,11 @@ export default async function CategoryPage({ params }: Props) {
         </div>
       </section>
 
-      {/* Category Overview Content */ }
-      <section className="relative py-16 md:py-24">
-        {/* Background decoration */ }
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50/50 to-white" />
-
-        <div className="container relative mx-auto px-5">
-          <div className="mx-auto max-w-5xl">
-
-            {/* If only hubPageContent exists, make it full width */ }
-            { category.hubPageContent && (
-              <div className="rounded-2xl bg-white p-8 shadow-xl ring-1 ring-gray-200 transition-shadow hover:shadow-2xl md:p-10">
-                <div className="mb-6">
-
-                  <h2 className="text-center text-2xl font-bold leading-tight text-[#3d3d3d] md:text-4xl">
-                    Why Prayer Matters for { category.title }
-                  </h2>
-                </div>
-                <div className="prose prose-lg mx-auto text-gray-700">
-                  <CustomPortableText value={ category.hubPageContent } />
-                </div>
-              </div>
-            ) }
-
-            {/* If only biblicalFoundation exists, make it full width */ }
-            { !category.hubPageContent && category.biblicalFoundation && (
-              <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-50 to-white p-8 shadow-xl ring-1 ring-gray-200 transition-all hover:shadow-2xl md:p-10">
-                <div className="absolute right-0 top-0 h-32 w-32 translate-x-8 -translate-y-8 rounded-full bg-[#e31e24]/5 blur-2xl transition-transform group-hover:scale-110" />
-
-                <div className="relative">
-                  <div className="mb-6">
-                    <div className="mb-4 inline-block rounded-lg bg-[#e31e24]/10 px-4 py-2">
-                      <span className="text-sm font-bold text-[#e31e24]">Scripture</span>
-                    </div>
-                    <h3 className="text-2xl font-bold leading-tight text-[#3d3d3d] md:text-3xl">
-                      Biblical Foundation
-                    </h3>
-                  </div>
-                  <div className="prose prose-lg max-w-none text-gray-700">
-                    <CustomPortableText value={ category.biblicalFoundation } />
-                  </div>
-                </div>
-              </div>
-            ) }
-          </div>
-        </div>
-      </section>
-
       {/* Featured Prayer of the Category */ }
       { actualFeaturedPrayer && (() => {
         const featuredVideoId = getYouTubeVideoId(actualFeaturedPrayer.youtubeVideoId, actualFeaturedPrayer.youtubeUrl);
         return (
-          <section className="bg-gray-50 py-16 md:py-20">
+          <section className="py-16 md:py-20">
             <div className="container mx-auto px-5">
               <div className="mx-auto max-w-5xl">
                 <div className="mb-8 text-center">
@@ -372,6 +328,53 @@ export default async function CategoryPage({ params }: Props) {
           </section>
         );
       })() }
+
+      {/* Category Overview Content */ }
+      <section className="relative py-16 md:py-24">
+        {/* Background decoration */ }
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50/50 to-white" />
+
+        <div className="container relative mx-auto px-5">
+          <div className="mx-auto max-w-5xl">
+
+            {/* If only hubPageContent exists, make it full width */ }
+            { category.hubPageContent && (
+              <div className="rounded-2xl bg-white p-8 shadow-xl ring-1 ring-gray-200 transition-shadow hover:shadow-2xl md:p-10">
+                <div className="mb-6">
+
+                  <h2 className="text-center text-2xl font-bold leading-tight text-[#3d3d3d] md:text-4xl">
+                    Why Prayer Matters for { category.title }
+                  </h2>
+                </div>
+                <div className="prose prose-lg mx-auto text-gray-700">
+                  <CustomPortableText value={ category.hubPageContent } />
+                </div>
+              </div>
+            ) }
+
+            {/* If only biblicalFoundation exists, make it full width */ }
+            { !category.hubPageContent && category.biblicalFoundation && (
+              <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-50 to-white p-8 shadow-xl ring-1 ring-gray-200 transition-all hover:shadow-2xl md:p-10">
+                <div className="absolute right-0 top-0 h-32 w-32 translate-x-8 -translate-y-8 rounded-full bg-[#e31e24]/5 blur-2xl transition-transform group-hover:scale-110" />
+
+                <div className="relative">
+                  <div className="mb-6">
+                    <div className="mb-4 inline-block rounded-lg bg-[#e31e24]/10 px-4 py-2">
+                      <span className="text-sm font-bold text-[#e31e24]">Scripture</span>
+                    </div>
+                    <h3 className="text-2xl font-bold leading-tight text-[#3d3d3d] md:text-3xl">
+                      Biblical Foundation
+                    </h3>
+                  </div>
+                  <div className="prose prose-lg max-w-none text-gray-700">
+                    <CustomPortableText value={ category.biblicalFoundation } />
+                  </div>
+                </div>
+              </div>
+            ) }
+          </div>
+        </div>
+      </section>
 
       {/* All Category Prayers */ }
       <section id="prayers-list" className="py-16 md:py-20">

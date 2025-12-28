@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://www.jomocousins.com/jomo-and-charmaine",
-    siteName: "Jomo & Charmaine - Marriage Counseling Ministry",
+    siteName: "Dr. Jomo Cousins",
     title: "Jomo & Charmaine - Christian Pastors Helping Couples Thrive",
     description: "Senior Pastors with 24 years of marriage experience. Helping couples build stronger relationships through faith-based counseling and coaching. Over 1,000 couples counseled at Love First Christian Center.",
     images: [

@@ -326,7 +326,7 @@ export const metadata = {
   },
   openGraph: {
     type: "website",
-    siteName: "Jomo & Charmaine - Marriage Counseling Ministry",
+    siteName: "Dr. Jomo Cousins",
     title: "About Jomo & Charmaine - Senior Pastors & Marriage Counselors",
     description: "Senior Pastors at Love First Christian Center. 24 years married, 1,000+ couples counseled. Helping relationships thrive through faith-based ministry.",
     url: "https://www.jomocousins.com/jomo-and-charmaine/about",

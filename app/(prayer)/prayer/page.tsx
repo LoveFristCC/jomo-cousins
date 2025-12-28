@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     description: "Join Jomo in prayer. Daily prayer videos for healing, finances, anxiety, and more. You're not alone - Jomo is praying with you.",
     url: "https://www.jomocousins.com/prayer",
     type: "website",
-    siteName: "Pray with Jomo Cousins",
+    siteName: "Dr. Jomo Cousins",
     images: [
       {
         url: "/images/logos/Asset 1.png",
@@ -184,7 +184,7 @@ export default async function PrayerPage() {
                 <Link
                   key={ category._id }
                   href={ `/prayer/category/${category.slug}` }
-                  className="group overflow-hidden rounded-xl bg-gradient-to-br from-gray-50 to-white p-6 shadow-md transition-all hover:shadow-xl"
+                  className="group relative overflow-hidden rounded-xl border-2 border-gray-200 bg-white p-6 shadow-lg transition-all hover:border-[#e31e24] hover:shadow-2xl hover:-translate-y-1"
                 >
                   { category.icon && (
                     <div className="mb-4">
@@ -194,20 +194,28 @@ export default async function PrayerPage() {
                         width={ 48 }
                         height={ 48 }
                         loading="lazy"
-                        className="h-12 w-12"
+                        className="h-12 w-12 transition-transform group-hover:scale-110"
                       />
                     </div>
                   ) }
                   <h3 className="mb-2 text-xl font-bold text-[#3d3d3d] transition-colors group-hover:text-[#e31e24]">
                     { category.title }
                   </h3>
-                  <p className="mb-3 text-sm text-gray-600">
+                  <p className="mb-4 text-sm text-gray-600">
                     { category.description }
                   </p>
-                  <p className="text-xs font-semibold text-gray-500">
-                    { category.prayerCount }{ " " }
-                    { category.prayerCount === 1 ? "prayer" : "prayers" }
-                  </p>
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs font-semibold text-gray-500">
+                      { category.prayerCount }{ " " }
+                      { category.prayerCount === 1 ? "prayer" : "prayers" }
+                    </p>
+                    <span className="flex items-center gap-1 text-sm font-bold text-[#e31e24] transition-transform group-hover:translate-x-1">
+                      View
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </span>
+                  </div>
                 </Link>
               )) }
             </div>

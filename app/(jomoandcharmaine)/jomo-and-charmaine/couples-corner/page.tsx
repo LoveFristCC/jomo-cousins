@@ -362,7 +362,7 @@ export const metadata = {
   },
   openGraph: {
     type: "website",
-    siteName: "Jomo & Charmaine - Marriage Counseling Ministry",
+    siteName: "Dr. Jomo Cousins",
     title: "Couples' Corner - Marriage Advice from Jomo & Charmaine",
     description: "Relationship resources, dating ideas, marriage prayers, and expert counseling tips from experienced Senior Pastors.",
     url: "https://www.jomocousins.com/jomo-and-charmaine/couples-corner",

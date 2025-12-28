@@ -358,6 +358,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: post.seo?.metaTitle || post.title,
     description: post.seo?.metaDescription || post.excerpt,
     keywords: post.seo?.keywords || post.tags,
+    alternates: {
+      canonical: `https://www.jomocousins.com/jomo-and-charmaine/couples-corner/${slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,

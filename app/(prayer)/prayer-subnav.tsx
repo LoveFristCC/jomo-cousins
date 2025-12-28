@@ -22,7 +22,7 @@ export default function PrayerSubNav() {
   return (
     <div className="border-b border-gray-200 bg-white">
       <div className="container mx-auto px-5">
-        <div className="flex items-center justify-between py-4">
+        <div className="flex flex-col items-start gap-3 py-4 md:flex-row md:items-center md:justify-between">
           {/* Left: Section Title */ }
           <div className="hidden md:block">
             <h2 className="text-sm font-bold uppercase tracking-wider text-gray-500">
@@ -31,19 +31,19 @@ export default function PrayerSubNav() {
           </div>
 
           {/* Center/Right: Sub Navigation Links */ }
-          <nav className="flex flex-wrap items-center gap-1 md:gap-2">
+          <nav className="flex w-full flex-wrap items-center gap-2 md:w-auto md:gap-2">
             { subNavLinks.map((link) => {
               const Icon = link.icon;
               return (
                 <Link
                   key={ link.name }
                   href={ link.href }
-                  className={ `flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all ${isActive(link.href)
+                  className={ `flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold transition-all md:px-4 md:py-2 ${isActive(link.href)
                     ? "bg-[#e31e24] text-white shadow-md"
                     : "text-gray-600 hover:bg-gray-100 hover:text-[#e31e24]"
                     }` }
                 >
-                  <Icon size={ 16 } />
+                  <Icon size={ 18 } className="flex-shrink-0" />
                   <span className="hidden sm:inline">{ link.name }</span>
                   <span className="sm:hidden">{ link.name.split(" ")[ 0 ] }</span>
                 </Link>

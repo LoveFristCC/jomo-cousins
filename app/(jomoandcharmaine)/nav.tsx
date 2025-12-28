@@ -16,7 +16,7 @@ export default function Nav() {
     { name: "HOME", href: "/jomo-and-charmaine" },
     { name: "ABOUT US", href: "/jomo-and-charmaine/about" },
     { name: "COUPLES' CORNER", href: "/jomo-and-charmaine/couples-corner" },
-    { name: "CONTACT US", href: "/jomo-and-charmaine/contact" },
+    // { name: "CONTACT US", href: "/jomo-and-charmaine/contact" },
   ];
 
   return (

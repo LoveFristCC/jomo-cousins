@@ -48,6 +48,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       "video prayer",
       // ...prayer.tags,
     ],
+    alternates: {
+      canonical: `https://www.jomocousins.com/prayer/${slug}`,
+    },
     openGraph: {
       title: metaTitle,
       description: metaDescription,
@@ -211,27 +214,27 @@ export default async function PrayerVideoPage({ params }: Props) {
       {/* Breadcrumbs */ }
       <div className="border-b border-gray-200 bg-gray-50 py-3">
         <div className="container mx-auto px-5">
-          <nav className="flex items-center gap-2 text-sm text-gray-600">
-            <Link href="/" className="hover:text-[#e31e24]">
+          <nav className="flex flex-wrap items-center gap-2 text-sm text-gray-600">
+            <Link href="/" className="hover:text-[#e31e24] transition-colors">
               Home
             </Link>
-            <span>/</span>
-            <Link href="/prayer" className="hover:text-[#e31e24]">
+            <span className="text-gray-400">/</span>
+            <Link href="/prayer" className="hover:text-[#e31e24] transition-colors">
               Prayer
             </Link>
             { primaryCategory && (
               <>
-                <span>/</span>
+                <span className="text-gray-400">/</span>
                 <Link
                   href={ `/prayer/category/${primaryCategory.slug}` }
-                  className="hover:text-[#e31e24]"
+                  className="hover:text-[#e31e24] transition-colors truncate max-w-[150px] sm:max-w-none"
                 >
                   { primaryCategory.title }
                 </Link>
               </>
             ) }
-            <span>/</span>
-            <span className="font-semibold text-[#3d3d3d]">
+            <span className="text-gray-400">/</span>
+            <span className="font-semibold text-[#3d3d3d] truncate">
               { prayer.title }
             </span>
           </nav>
@@ -336,7 +339,7 @@ export default async function PrayerVideoPage({ params }: Props) {
       {/* Action Bar */ }
       <section className="border-y border-gray-200 bg-gray-50 py-6">
         <div className="container mx-auto px-5">
-          <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-4">
+          <div className="mx-auto flex max-w-4xl flex-col items-center justify-center gap-4 sm:flex-row sm:justify-between">
             {/* Share Buttons */ }
             <ShareButtons shareUrl={ shareUrl } shareTitle={ shareTitle } />
 

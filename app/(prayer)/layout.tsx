@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://www.jomocousins.com/prayer",
-    siteName: "Pray with Pastor Jomo",
+    siteName: "Dr. Jomo Cousins",
     title: "Pray with Pastor Jomo Cousins | Personal Prayer Ministry",
     description: "Experience intimate, powerful prayer with Pastor Jomo. Find personalized prayer videos for every area of your life. Hope, healing, and transformation through prayer.",
     images: [

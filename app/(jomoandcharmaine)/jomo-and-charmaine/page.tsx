@@ -741,7 +741,7 @@ export const metadata = {
   },
   openGraph: {
     type: "website",
-    siteName: "Jomo & Charmaine - Marriage Counseling Ministry",
+    siteName: "Dr. Jomo Cousins",
     title: "Jomo & Charmaine - Marriage Counseling Ministry",
     description: "Senior Pastors helping couples build stronger marriages. 24 years married, 1,000+ couples counseled.",
     url: "https://www.jomocousins.com/jomo-and-charmaine",
