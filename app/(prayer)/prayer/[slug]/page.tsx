@@ -7,13 +7,10 @@ import { prayerBySlugQuery, relatedPrayersQuery } from "@/sanity/lib/queries";
 import { urlForImage } from "@/sanity/lib/utils";
 import CustomPortableText from "../../../(home)/portable-text";
 import { format, parseISO } from "date-fns";
-import {
-  Facebook,
-  Twitter,
-  Mail,
-  Link as LinkIcon,
-  Download,
-} from "lucide-react";
+import ShareButtons from "./ShareButtons";
+import { getYouTubeVideoId } from "@/lib/youtube";
+import YouTubePlayer from "@/components/YouTubePlayer";
+import DownloadPrayerPDFButton from "@/components/DownloadPrayerPDFButton";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -40,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const metaDescription =
     prayer.seoMetadata?.description ||
     prayer.excerpt ||
-    `Watch Pastor Jomo Cousins pray. Find hope, biblical encouragement, and download the prayer transcript. Pastor Jomo is praying with you.`;
+    `Watch Pastor Jomo Cousins pray. Find hope, biblical encouragement, and download the full prayer text. Pastor Jomo is praying with you.`;
 
   return {
     title: metaTitle,
@@ -49,7 +46,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       prayer.title,
       "Jomo Cousins prayer",
       "video prayer",
-      ...prayer.tags,
+      // ...prayer.tags,
     ],
     openGraph: {
       title: metaTitle,
@@ -105,6 +102,9 @@ export default async function PrayerVideoPage({ params }: Props) {
   // Get primary category for breadcrumb
   const primaryCategory = prayer.categories?.[ 0 ];
 
+  // Get video ID with fallback
+  const videoId = getYouTubeVideoId(prayer.youtubeVideoId, prayer.youtubeUrl);
+
   // Structured Data
   const structuredData = {
     "@context": "https://schema.org",
@@ -159,7 +159,7 @@ export default async function PrayerVideoPage({ params }: Props) {
         uploadDate: prayer.publishedAt,
         duration: prayer.duration,
         contentUrl: prayer.youtubeUrl,
-        embedUrl: `https://www.youtube.com/embed/${prayer.youtubeVideoId}`,
+        embedUrl: videoId ? `https://www.youtube.com/embed/${videoId}` : undefined,
         author: {
           "@type": "Person",
           name: "Jomo Cousins",
@@ -254,7 +254,6 @@ export default async function PrayerVideoPage({ params }: Props) {
                 <span>{ format(parseISO(prayer.publishedAt), "MMMM d, yyyy") }</span>
               ) }
               { prayer.duration && <span>{ prayer.duration }</span> }
-              { prayer.viewCount && <span>{ prayer.viewCount } views</span> }
             </div>
             {/* Category Tags */ }
             { prayer.categories && prayer.categories.length > 0 && (
@@ -276,19 +275,22 @@ export default async function PrayerVideoPage({ params }: Props) {
       </section>
 
       {/* Video Section */ }
-      <section className="bg-black py-8">
+      <section className="bg-gradient-to-b from-gray-50 to-white py-12">
         <div className="container mx-auto px-5">
           <div className="mx-auto max-w-5xl">
-            <div className="relative aspect-video w-full">
-              <iframe
-                src={ `https://www.youtube.com/embed/${prayer.youtubeVideoId}` }
-                title={ prayer.title }
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="absolute inset-0 h-full w-full"
-                aria-label={ `Prayer video: ${prayer.title}` }
-              />
-            </div>
+            { videoId ? (
+              <div className="overflow-hidden rounded-2xl shadow-2xl ring-1 ring-gray-200">
+                <YouTubePlayer
+                  videoId={ videoId }
+                  title={ prayer.title }
+                  thumbnailUrl={ prayer.featuredImage ? urlForImage(prayer.featuredImage)?.url() : undefined }
+                />
+              </div>
+            ) : (
+              <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-gray-100 flex items-center justify-center shadow-xl">
+                <p className="text-gray-500">Video not available</p>
+              </div>
+            ) }
           </div>
         </div>
       </section>
@@ -336,67 +338,26 @@ export default async function PrayerVideoPage({ params }: Props) {
         <div className="container mx-auto px-5">
           <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-4">
             {/* Share Buttons */ }
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="text-sm font-semibold text-gray-600">Share:</span>
-              <a
-                href={ `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}` }
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
-              >
-                <Facebook size={ 16 } />
-                Facebook
-              </a>
-              <a
-                href={ `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}` }
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-lg bg-sky-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-sky-600"
-              >
-                <Twitter size={ 16 } />
-                Twitter
-              </a>
-              <a
-                href={ `mailto:?subject=${encodeURIComponent(shareTitle)}&body=${encodeURIComponent(shareUrl)}` }
-                className="flex items-center gap-2 rounded-lg bg-gray-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-gray-700"
-              >
-                <Mail size={ 16 } />
-                Email
-              </a>
-              <button
-                onClick={ () => {
-                  navigator.clipboard.writeText(shareUrl);
-                  alert("Link copied to clipboard!");
-                } }
-                className="flex items-center gap-2 rounded-lg bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-300"
-              >
-                <LinkIcon size={ 16 } />
-                Copy Link
-              </button>
-            </div>
+            <ShareButtons shareUrl={ shareUrl } shareTitle={ shareTitle } />
 
             {/* Download PDF */ }
-            { prayer.pdfDownloadUrl && (
-              <a
-                href={ prayer.pdfDownloadUrl }
-                download
-                className="flex items-center gap-2 rounded-lg bg-[#e31e24] px-6 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#c41a1f]"
-              >
-                <Download size={ 16 } />
-                Download Prayer Transcript
-              </a>
+            { prayer.fullTranscript && (
+              <DownloadPrayerPDFButton
+                slug={ prayer.slug }
+                title={ prayer.title }
+              />
             ) }
           </div>
         </div>
       </section>
 
-      {/* Full Prayer Transcript */ }
+      {/* Full Prayer Text */ }
       { prayer.fullTranscript && (
         <section className="py-16">
           <div className="container mx-auto px-5">
             <div className="mx-auto max-w-4xl">
               <h2 className="mb-8 text-3xl font-bold text-[#3d3d3d]">
-                Prayer Transcript
+                Full Prayer Text
               </h2>
               <div className="prose prose-lg max-w-none">
                 <CustomPortableText value={ prayer.fullTranscript } />
@@ -470,7 +431,7 @@ export default async function PrayerVideoPage({ params }: Props) {
           <div className="mx-auto max-w-4xl rounded-2xl bg-gradient-to-r from-[#3d3d3d] to-[#2d2d2d] p-12 text-center text-white shadow-2xl">
             <div className="mx-auto mb-6 h-24 w-24 overflow-hidden rounded-full border-4 border-white">
               <Image
-                src="/images/jomo-profile.jpg"
+                src="/images/jc-color-pics/_JC_NewPhotos Edit141.jpg"
                 alt="Jomo Cousins"
                 width={ 96 }
                 height={ 96 }

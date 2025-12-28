@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import {
-  prayerOfTheDayQuery,
   recentPrayersQuery,
   prayerCategoriesQuery,
   approvedTestimonialsQuery,
@@ -44,9 +43,8 @@ export const metadata: Metadata = {
 };
 
 export default async function PrayerPage() {
-  const [ prayerOfTheDay, recentPrayers, categories, testimonials ] =
+  const [ recentPrayers, categories, testimonials ] =
     await Promise.all([
-      sanityFetch({ query: prayerOfTheDayQuery }),
       sanityFetch({ query: recentPrayersQuery, params: { limit: 6 } }),
       sanityFetch({ query: prayerCategoriesQuery }),
       sanityFetch({ query: approvedTestimonialsQuery, params: { limit: 3 } }),
@@ -98,21 +96,6 @@ export default async function PrayerPage() {
       },
     ],
   };
-
-  if (prayerOfTheDay) {
-    (structuredData[ "@graph" ] as any[]).push({
-      "@type": "VideoObject",
-      name: prayerOfTheDay.title,
-      description: prayerOfTheDay.excerpt,
-      thumbnailUrl: prayerOfTheDay.featuredImage
-        ? urlForImage(prayerOfTheDay.featuredImage)?.url()
-        : undefined,
-      uploadDate: prayerOfTheDay.publishedAt,
-      duration: prayerOfTheDay.duration,
-      contentUrl: prayerOfTheDay.youtubeUrl,
-      embedUrl: `https://www.youtube.com/embed/${prayerOfTheDay.youtubeVideoId}`,
-    });
-  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -181,66 +164,6 @@ export default async function PrayerPage() {
           </div>
         </div>
       </section>
-
-      {/* Prayer of the Day */ }
-      { prayerOfTheDay && (
-        <section className="bg-gradient-to-br from-gray-50 to-white py-20">
-          <div className="container mx-auto px-5">
-            <div className="mx-auto max-w-4xl">
-              <div className="mb-8 text-center">
-                <span className="mb-2 inline-block rounded-full bg-[#e31e24] px-4 py-1 text-sm font-bold uppercase tracking-wider text-white">
-                  Today's Prayer
-                </span>
-                <h2 className="mt-4 text-3xl font-bold text-[#3d3d3d] md:text-4xl">
-                  Today's Prayer with Pastor Jomo
-                </h2>
-              </div>
-
-              <div className="overflow-hidden rounded-2xl bg-white shadow-xl">
-                {/* YouTube Embed */ }
-                <div className="relative aspect-video">
-                  <iframe
-                    src={ `https://www.youtube.com/embed/${prayerOfTheDay.youtubeVideoId}` }
-                    title={ prayerOfTheDay.title }
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    loading="lazy"
-                    className="h-full w-full"
-                    aria-label={ `Prayer video: ${prayerOfTheDay.title}` }
-                  />
-                </div>
-
-                <div className="p-8">
-                  <h3 className="mb-4 text-2xl font-bold text-[#3d3d3d]">
-                    { prayerOfTheDay.title }
-                  </h3>
-                  { prayerOfTheDay.excerpt && (
-                    <p className="mb-6 text-lg leading-relaxed text-gray-600">
-                      { prayerOfTheDay.excerpt }
-                    </p>
-                  ) }
-                  { prayerOfTheDay.personalNote && (
-                    <div className="mb-6 rounded-lg border-l-4 border-[#e31e24] bg-gray-50 p-6">
-                      <p className="text-sm font-bold uppercase tracking-wider text-gray-500">
-                        A Note from Pastor Jomo
-                      </p>
-                      <p className="mt-2 italic text-gray-700">
-                        "{ prayerOfTheDay.personalNote }"
-                      </p>
-                    </div>
-                  ) }
-                  <Link
-                    href={ `/prayer/${prayerOfTheDay.slug}` }
-                    className="inline-block font-semibold text-[#e31e24] transition-colors hover:text-[#c41a1f]"
-                  >
-                    View Full Prayer →
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      ) }
 
       {/* Popular Prayer Topics Grid */ }
       { categories && categories.length > 0 && (

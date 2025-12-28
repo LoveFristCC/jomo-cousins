@@ -12,6 +12,8 @@ import {
 import { urlForImage } from "@/sanity/lib/utils";
 import CustomPortableText from "../../../../(home)/portable-text";
 import { format, parseISO } from "date-fns";
+import { getYouTubeVideoId } from "@/lib/youtube";
+import YouTubePlayer from "@/components/YouTubePlayer";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -77,44 +79,32 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CategoryPage({ params }: Props) {
   const { slug } = await params;
-  const [ category, prayers, featuredPrayer, testimonials ] = await Promise.all([
-    sanityFetch({
-      query: prayerCategoryBySlugQuery,
-      params: { slug },
-    }),
-    sanityFetch({
-      query: prayersByCategoryQuery,
-      params: { categoryId: "" }, // Will be updated after we get category
-    }),
-    sanityFetch({
-      query: featuredPrayerByCategoryQuery,
-      params: { categoryId: "" }, // Will be updated
-    }),
-    sanityFetch({
-      query: testimonialsByCategoryQuery,
-      params: { categoryId: "", limit: 2 }, // Will be updated
-    }),
-  ]);
+
+  // First fetch the category
+  const category = await sanityFetch({
+    query: prayerCategoryBySlugQuery,
+    params: { slug },
+  });
 
   if (!category) {
     notFound();
   }
 
-  // Fetch prayers with actual category ID
-  const actualPrayers = await sanityFetch({
-    query: prayersByCategoryQuery,
-    params: { categoryId: category._id },
-  });
-
-  const actualFeaturedPrayer = await sanityFetch({
-    query: featuredPrayerByCategoryQuery,
-    params: { categoryId: category._id },
-  });
-
-  const actualTestimonials = await sanityFetch({
-    query: testimonialsByCategoryQuery,
-    params: { categoryId: category._id, limit: 2 },
-  });
+  // Then fetch all related data with the actual category ID
+  const [ actualPrayers, actualFeaturedPrayer, actualTestimonials ] = await Promise.all([
+    sanityFetch({
+      query: prayersByCategoryQuery,
+      params: { categoryId: category._id },
+    }),
+    sanityFetch({
+      query: featuredPrayerByCategoryQuery,
+      params: { categoryId: category._id },
+    }),
+    sanityFetch({
+      query: testimonialsByCategoryQuery,
+      params: { categoryId: category._id, limit: 2 },
+    }),
+  ]);
 
   // Structured Data
   const structuredData = {
@@ -181,6 +171,7 @@ export default async function CategoryPage({ params }: Props) {
 
   // Add VideoObject for featured prayer
   if (actualFeaturedPrayer) {
+    const videoId = getYouTubeVideoId(actualFeaturedPrayer.youtubeVideoId, actualFeaturedPrayer.youtubeUrl);
     (structuredData[ "@graph" ] as any[]).push({
       "@type": "VideoObject",
       name: actualFeaturedPrayer.title,
@@ -191,7 +182,7 @@ export default async function CategoryPage({ params }: Props) {
       uploadDate: actualFeaturedPrayer.publishedAt,
       duration: actualFeaturedPrayer.duration,
       contentUrl: actualFeaturedPrayer.youtubeUrl,
-      embedUrl: `https://www.youtube.com/embed/${actualFeaturedPrayer.youtubeVideoId}`,
+      embedUrl: videoId ? `https://www.youtube.com/embed/${videoId}` : undefined,
     });
   }
 
@@ -251,17 +242,13 @@ export default async function CategoryPage({ params }: Props) {
                   { category.description }
                 </p>
               ) }
-              <button
-                onClick={ () =>
-                  document
-                    .getElementById("prayers-list")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="rounded-lg bg-[#e31e24] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:bg-[#c41a1f] hover:shadow-xl"
+              <a
+                href="#prayers-list"
+                className="inline-block rounded-lg bg-[#e31e24] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:bg-[#c41a1f] hover:shadow-xl"
                 aria-label={ `Scroll to ${category.title} prayers list` }
               >
                 Find Your Prayer
-              </button>
+              </a>
             </div>
 
             {/* Right - Featured Image */ }
@@ -281,41 +268,45 @@ export default async function CategoryPage({ params }: Props) {
       </section>
 
       {/* Category Overview Content */ }
-      <section className="py-16 md:py-20">
-        <div className="container mx-auto px-5">
-          <div className="mx-auto max-w-4xl">
-            {/* Personal Message from Jomo */ }
-            { category.jomoMessage && Array.isArray(category.jomoMessage) && (
-              <div className="mb-12 rounded-xl bg-gray-50 p-8 md:p-12">
-                <h2 className="mb-4 text-3xl font-bold text-[#3d3d3d]">
-                  A Message from Pastor Jomo
-                </h2>
-                <div className="prose prose-lg max-w-none">
-                  <CustomPortableText value={ category.jomoMessage } />
-                </div>
-              </div>
-            ) }
+      <section className="relative py-16 md:py-24">
+        {/* Background decoration */ }
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50/50 to-white" />
 
-            {/* Why Prayer Matters for Category */ }
-            { category.hubPageContent && Array.isArray(category.hubPageContent) && (
-              <div className="mb-12">
-                <h2 className="mb-6 text-3xl font-bold text-[#3d3d3d]">
-                  Why Prayer Matters for { category.title }
-                </h2>
-                <div className="prose prose-lg max-w-none text-gray-700">
+        <div className="container relative mx-auto px-5">
+          <div className="mx-auto max-w-5xl">
+
+            {/* If only hubPageContent exists, make it full width */ }
+            { category.hubPageContent && (
+              <div className="rounded-2xl bg-white p-8 shadow-xl ring-1 ring-gray-200 transition-shadow hover:shadow-2xl md:p-10">
+                <div className="mb-6">
+
+                  <h2 className="text-center text-2xl font-bold leading-tight text-[#3d3d3d] md:text-4xl">
+                    Why Prayer Matters for { category.title }
+                  </h2>
+                </div>
+                <div className="prose prose-lg mx-auto text-gray-700">
                   <CustomPortableText value={ category.hubPageContent } />
                 </div>
               </div>
             ) }
 
-            {/* Biblical Foundation */ }
-            { category.biblicalFoundation && Array.isArray(category.biblicalFoundation) && (
-              <div className="mb-12 rounded-xl border-l-4 border-[#e31e24] bg-gray-50 p-8">
-                <h3 className="mb-4 text-2xl font-bold text-[#3d3d3d]">
-                  Biblical Foundation
-                </h3>
-                <div className="prose prose-lg max-w-none text-gray-700">
-                  <CustomPortableText value={ category.biblicalFoundation } />
+            {/* If only biblicalFoundation exists, make it full width */ }
+            { !category.hubPageContent && category.biblicalFoundation && (
+              <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-50 to-white p-8 shadow-xl ring-1 ring-gray-200 transition-all hover:shadow-2xl md:p-10">
+                <div className="absolute right-0 top-0 h-32 w-32 translate-x-8 -translate-y-8 rounded-full bg-[#e31e24]/5 blur-2xl transition-transform group-hover:scale-110" />
+
+                <div className="relative">
+                  <div className="mb-6">
+                    <div className="mb-4 inline-block rounded-lg bg-[#e31e24]/10 px-4 py-2">
+                      <span className="text-sm font-bold text-[#e31e24]">Scripture</span>
+                    </div>
+                    <h3 className="text-2xl font-bold leading-tight text-[#3d3d3d] md:text-3xl">
+                      Biblical Foundation
+                    </h3>
+                  </div>
+                  <div className="prose prose-lg max-w-none text-gray-700">
+                    <CustomPortableText value={ category.biblicalFoundation } />
+                  </div>
                 </div>
               </div>
             ) }
@@ -324,63 +315,63 @@ export default async function CategoryPage({ params }: Props) {
       </section>
 
       {/* Featured Prayer of the Category */ }
-      { actualFeaturedPrayer && (
-        <section className="bg-gray-50 py-16 md:py-20">
-          <div className="container mx-auto px-5">
-            <div className="mx-auto max-w-5xl">
-              <div className="mb-8 text-center">
-                <span className="inline-block rounded-full bg-[#e31e24] px-4 py-1 text-sm font-bold text-white">
-                  Most Watched
-                </span>
-                <h2 className="mt-4 text-3xl font-bold text-[#3d3d3d] md:text-4xl">
-                  Featured Prayer
-                </h2>
-              </div>
-
-              <div className="overflow-hidden rounded-xl bg-white shadow-xl">
-                {/* Video Embed */ }
-                <div className="relative aspect-video w-full">
-                  <iframe
-                    src={ `https://www.youtube.com/embed/${actualFeaturedPrayer.youtubeVideoId}` }
-                    title={ actualFeaturedPrayer.title }
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    loading="lazy"
-                    className="absolute inset-0 h-full w-full"
-                    aria-label={ `Featured prayer video: ${actualFeaturedPrayer.title}` }
-                  />
+      { actualFeaturedPrayer && (() => {
+        const featuredVideoId = getYouTubeVideoId(actualFeaturedPrayer.youtubeVideoId, actualFeaturedPrayer.youtubeUrl);
+        return (
+          <section className="bg-gray-50 py-16 md:py-20">
+            <div className="container mx-auto px-5">
+              <div className="mx-auto max-w-5xl">
+                <div className="mb-8 text-center">
+                  <span className="inline-block rounded-full bg-[#e31e24] px-4 py-1 text-sm font-bold text-white">
+                    Most Watched
+                  </span>
+                  <h2 className="mt-4 text-3xl font-bold text-[#3d3d3d] md:text-4xl">
+                    Featured Prayer
+                  </h2>
                 </div>
 
-                {/* Prayer Info */ }
-                <div className="p-8">
-                  <h3 className="mb-3 text-2xl font-bold text-[#3d3d3d]">
-                    { actualFeaturedPrayer.title }
-                  </h3>
-                  { actualFeaturedPrayer.excerpt && (
-                    <p className="mb-4 text-gray-600">
-                      { actualFeaturedPrayer.excerpt }
-                    </p>
+                <div className="overflow-hidden rounded-xl bg-white shadow-xl">
+                  {/* Video Embed */ }
+                  { featuredVideoId ? (
+                    <YouTubePlayer
+                      videoId={ featuredVideoId }
+                      title={ actualFeaturedPrayer.title }
+                      thumbnailUrl={ actualFeaturedPrayer.featuredImage ? urlForImage(actualFeaturedPrayer.featuredImage)?.url() : undefined }
+                    />
+                  ) : (
+                    <div className="relative aspect-video w-full bg-gray-200 flex items-center justify-center">
+                      <p className="text-gray-600">Video not available</p>
+                    </div>
                   ) }
-                  <div className="flex items-center gap-6 text-sm text-gray-500">
-                    { actualFeaturedPrayer.duration && (
-                      <span>{ actualFeaturedPrayer.duration }</span>
+
+                  {/* Prayer Info */ }
+                  <div className="p-8">
+                    <h3 className="mb-3 text-2xl font-bold text-[#3d3d3d]">
+                      { actualFeaturedPrayer.title }
+                    </h3>
+                    { actualFeaturedPrayer.excerpt && (
+                      <p className="mb-4 text-gray-600">
+                        { actualFeaturedPrayer.excerpt }
+                      </p>
                     ) }
-                    { actualFeaturedPrayer.viewCount && (
-                      <span>{ actualFeaturedPrayer.viewCount } views</span>
-                    ) }
+                    <div className="flex items-center gap-6 text-sm text-gray-500">
+                      { actualFeaturedPrayer.duration && (
+                        <span>{ actualFeaturedPrayer.duration }</span>
+                      ) }
+                    </div>
+                    <Link
+                      href={ `/prayer/${actualFeaturedPrayer.slug}` }
+                      className="mt-6 inline-block rounded-lg bg-[#e31e24] px-6 py-3 font-bold text-white transition-colors hover:bg-[#c41a1f]"
+                    >
+                      Pray Now
+                    </Link>
                   </div>
-                  <Link
-                    href={ `/prayer/${actualFeaturedPrayer.slug}` }
-                    className="mt-6 inline-block rounded-lg bg-[#e31e24] px-6 py-3 font-bold text-white transition-colors hover:bg-[#c41a1f]"
-                  >
-                    Watch Pastor Jomo Pray
-                  </Link>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-      ) }
+          </section>
+        );
+      })() }
 
       {/* All Category Prayers */ }
       <section id="prayers-list" className="py-16 md:py-20">
@@ -560,7 +551,7 @@ export default async function CategoryPage({ params }: Props) {
           <div className="mx-auto max-w-4xl rounded-2xl bg-gradient-to-r from-[#3d3d3d] to-[#2d2d2d] p-12 text-center text-white shadow-2xl">
             <div className="mx-auto mb-6 h-24 w-24 overflow-hidden rounded-full border-4 border-white">
               <Image
-                src="/images/jomo-profile.jpg"
+                src="/images/jc-color-pics/_JC_NewPhotos Edit141.jpg"
                 alt="Jomo Cousins"
                 width={ 96 }
                 height={ 96 }

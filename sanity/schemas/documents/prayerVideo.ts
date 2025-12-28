@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity';
+import { YouTubeUrlInput } from '@/sanity/components/YouTubeUrlInput';
 
 export default defineType({
   name: 'prayerVideo',
@@ -26,6 +27,9 @@ export default defineType({
       name: 'youtubeUrl',
       title: 'YouTube URL',
       type: 'url',
+      components: {
+        input: YouTubeUrlInput,
+      },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -33,7 +37,7 @@ export default defineType({
       title: 'YouTube Video ID',
       type: 'string',
       description: 'Auto-extracted from YouTube URL',
-      readOnly: true,
+      hidden: true,
     }),
     defineField({
       name: 'excerpt',

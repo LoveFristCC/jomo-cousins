@@ -38,6 +38,68 @@ export const productStructure: StructureResolver = (S) => {
 
       S.divider(),
 
+      // Prayer section
+      S.listItem()
+        .title("🙏 Prayer Videos")
+        .schemaType("prayerVideo")
+        .child(
+          S.list()
+            .title("Prayer Management")
+            .items([
+              // All Prayer Videos
+              S.listItem()
+                .title("All Prayer Videos")
+                .child(
+                  S.documentTypeList("prayerVideo")
+                    .title("All Prayer Videos")
+                    .filter('_type == "prayerVideo"')
+                ),
+
+              S.divider(),
+
+              // Recent Prayers
+              S.listItem()
+                .title("📅 Recent Prayers")
+                .child(
+                  S.documentList()
+                    .title("Recent Prayers")
+                    .filter('_type == "prayerVideo"')
+                    .defaultOrdering([{ field: "publishedAt", direction: "desc" }])
+                ),
+
+              // Prayers by Category
+              S.listItem()
+                .title("📂 Browse by Category")
+                .child(
+                  S.list()
+                    .title("Prayer Videos by Category")
+                    .items([
+                      S.listItem()
+                        .title("All Categories")
+                        .child(S.documentTypeList("prayerCategory").title("Prayer Categories")),
+                      S.divider(),
+                      // Add dynamic category views here if needed
+                    ])
+                ),
+
+              S.divider(),
+
+              // Prayer Categories
+              S.listItem()
+                .title("📂 Prayer Categories")
+                .schemaType("prayerCategory")
+                .child(S.documentTypeList("prayerCategory").title("Prayer Categories")),
+
+              // Prayer Testimonials
+              S.listItem()
+                .title("💬 Prayer Testimonials")
+                .schemaType("prayerTestimonial")
+                .child(S.documentTypeList("prayerTestimonial").title("Prayer Testimonials")),
+            ])
+        ),
+
+      S.divider(),
+
       // Products section with inventory dashboard
       S.listItem()
         .title("Products")

@@ -135,7 +135,7 @@ export default async function DailyPrayerPage() {
                 Join Pastor Jomo Live
               </h2>
               <p className="mt-3 text-lg text-gray-600">
-                Monday through Friday at 6:30 AM
+                Monday through Friday at 6:30 AM (EST)
               </p>
             </div>
 
@@ -269,7 +269,7 @@ export default async function DailyPrayerPage() {
           <div className="container mx-auto px-5">
             <div className="mb-12 text-center">
               <h2 className="mb-4 text-3xl font-bold text-[#3d3d3d] md:text-4xl">
-                Recent Daily Prayers
+                Recent Prayers
               </h2>
               <p className="text-lg text-gray-600">
                 Catch up on prayers you might have missed

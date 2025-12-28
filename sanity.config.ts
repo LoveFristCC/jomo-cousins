@@ -5,12 +5,6 @@
 import { visionTool } from "@sanity/vision";
 import { PluginOptions, defineConfig } from "sanity";
 import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash";
-import {
-  presentationTool,
-  defineDocuments,
-  defineLocations,
-  type DocumentLocation,
-} from "sanity/presentation";
 import { structureTool } from "sanity/structure";
 
 import { apiVersion, dataset, projectId, studioUrl } from "@/sanity/lib/api";
@@ -32,10 +26,10 @@ import prayerTestimonial from "@/sanity/schemas/documents/prayerTestimonial";
 import settings from "@/sanity/schemas/singletons/settings";
 import { resolveHref } from "@/sanity/lib/utils";
 
-const homeLocation = {
-  title: "Home",
-  href: "/",
-} satisfies DocumentLocation;
+// const homeLocation = {
+//   title: "Home",
+//   href: "/",
+// } satisfies DocumentLocation;
 
 export default defineConfig({
   basePath: studioUrl,
@@ -61,13 +55,31 @@ export default defineConfig({
   document: {
     actions: (prev, context) => {
       // Add clean & publish action for documents with portable text
-      if (context.schemaType === "post" || context.schemaType === "product" || context.schemaType === "digitalProduct" || context.schemaType === "couplesCornerPost" || context.schemaType === "prayerVideo" || context.schemaType === "prayerCategory") {
+      if (
+        context.schemaType === "post" ||
+        context.schemaType === "product" ||
+        context.schemaType === "digitalProduct" ||
+        context.schemaType === "couplesCornerPost" ||
+        context.schemaType === "prayerVideo" ||
+        context.schemaType === "prayerCategory"
+      ) {
         // Filter out default publish action and add our clean publish action
-        const filteredActions = prev.filter((action) => action.name !== "publish");
+        const filteredActions = prev.filter(
+          (action) => action.name !== "publish"
+        );
 
         // For products, also add Stripe sync actions
-        if (context.schemaType === "product" || context.schemaType === "digitalProduct") {
-          return [CleanOnPublishAction, AutoStripeSyncAction, ...filteredActions, SyncToStripeAction, CleanDocumentAction];
+        if (
+          context.schemaType === "product" ||
+          context.schemaType === "digitalProduct"
+        ) {
+          return [
+            CleanOnPublishAction,
+            AutoStripeSyncAction,
+            ...filteredActions,
+            SyncToStripeAction,
+            CleanDocumentAction,
+          ];
         }
 
         // For posts, couples corner posts, and prayer content, just add the clean publish action
@@ -77,39 +89,39 @@ export default defineConfig({
     },
   },
   plugins: [
-    presentationTool({
-      resolve: {
-        mainDocuments: defineDocuments([
-          {
-            route: "/posts/:slug",
-            filter: `_type == "post" && slug.current == $slug`,
-          },
-        ]),
-        locations: {
-          settings: defineLocations({
-            locations: [homeLocation],
-            message: "This document is used on all pages",
-            tone: "caution",
-          }),
-          post: defineLocations({
-            select: {
-              title: "title",
-              slug: "slug.current",
-            },
-            resolve: (doc) => ({
-              locations: [
-                {
-                  title: doc?.title || "Untitled",
-                  href: resolveHref("post", doc?.slug)!,
-                },
-                homeLocation,
-              ],
-            }),
-          }),
-        },
-      },
-      previewUrl: { previewMode: { enable: "/api/draft-mode/enable" } },
-    }),
+    // presentationTool({
+    //   resolve: {
+    //     mainDocuments: defineDocuments([
+    //       {
+    //         route: "/posts/:slug",
+    //         filter: `_type == "post" && slug.current == $slug`,
+    //       },
+    //     ]),
+    //     locations: {
+    //       settings: defineLocations({
+    //         locations: [homeLocation],
+    //         message: "This document is used on all pages",
+    //         tone: "caution",
+    //       }),
+    //       post: defineLocations({
+    //         select: {
+    //           title: "title",
+    //           slug: "slug.current",
+    //         },
+    //         resolve: (doc) => ({
+    //           locations: [
+    //             {
+    //               title: doc?.title || "Untitled",
+    //               href: resolveHref("post", doc?.slug)!,
+    //             },
+    //             homeLocation,
+    //           ],
+    //         }),
+    //       }),
+    //     },
+    //   },
+    //   previewUrl: { previewMode: { enable: "/api/draft-mode/enable" } },
+    // }),
     structureTool({ structure: productStructure }),
     // Configures the global "new document" button, and document actions, to suit the Settings document singleton
     singletonPlugin([settings.name]),
