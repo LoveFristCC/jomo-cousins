@@ -439,14 +439,12 @@ export default function HomePage() {
                 believers worldwide every weekday morning.
               </p>
               <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-                <a
-                  href="https://www.facebook.com/pastorjomo/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/prayer/daily"
                   className="inline-block rounded-lg bg-[#e31e24] px-12 py-4 font-bold uppercase tracking-wide text-white shadow-lg transition-all hover:scale-105 hover:bg-[#c41a1f] hover:shadow-xl"
                 >
-                  Join on Facebook
-                </a>
+                  Join Prayer
+                </Link>
                 <a
                   href="https://www.youtube.com/@PASTORJOMO"
                   target="_blank"

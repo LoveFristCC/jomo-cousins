@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import JCNewsletterForm from "./JCNewsletterForm";
 
 export default function JomoAndCharmainePage() {
   const structuredData = {
@@ -561,49 +562,7 @@ export default function JomoAndCharmainePage() {
 
             {/* Right - Form */ }
             <div>
-              <h2 className="mb-4 text-3xl font-bold text-[#303030] md:text-4xl lg:text-5xl">
-                Conversation Starters for Couples
-              </h2>
-              <p className="mb-8 text-lg text-gray-600">
-                Enter Your Email Address and Download the Free eBook
-              </p>
-
-              {/* Progress Indicator */ }
-              <div className="mb-8 flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#ea8125] text-sm font-bold text-white">
-                    1
-                  </div>
-                  <div className="h-[2px] w-16 bg-gray-300"></div>
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 text-sm font-bold text-gray-400">
-                    2
-                  </div>
-                </div>
-              </div>
-
-              {/* Form */ }
-              <form className="space-y-4">
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    className="w-full border border-gray-300 px-4 py-3 text-gray-700 focus:border-[#ea8125] focus:outline-none"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    className="w-full border border-gray-300 px-4 py-3 text-gray-700 focus:border-[#ea8125] focus:outline-none"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full rounded-lg bg-[#ea8125] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
-                >
-                  Next
-                </button>
-              </form>
+              <JCNewsletterForm />
             </div>
           </div>
         </div>

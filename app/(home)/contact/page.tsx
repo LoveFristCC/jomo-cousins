@@ -297,10 +297,10 @@ export default function ContactPage() {
                   Email
                 </h3>
                 <a
-                  href="mailto:contact@jomocousins.com"
+                  href="mailto:bookjomocousins@gmail.com"
                   className="text-lg text-[#e31e24] hover:underline"
                 >
-                  contact@jomocousins.com
+                  bookjomocousins@gmail.com
                 </a>
               </div>
 
@@ -324,7 +324,7 @@ export default function ContactPage() {
       {/* Trusted By Section */ }
       <section className="relative py-20 overflow-hidden">
         {/* Background Image - Fixed on desktop */ }
-        <div className="absolute inset-0 bg-cover bg-center bg-fixed" style={{ backgroundImage: "url('/images/backgrounds/P1122237B_edited.png')" }}></div>
+        <div className="absolute inset-0 bg-cover bg-center bg-fixed" style={ { backgroundImage: "url('/images/backgrounds/P1122237B_edited.png')" } }></div>
         {/* Light overlay for readability */ }
         <div className="absolute inset-0 bg-white/65"></div>
 
