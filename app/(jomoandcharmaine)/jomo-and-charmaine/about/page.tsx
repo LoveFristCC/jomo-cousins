@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import StoryOfUsSection from "../StoryOfUsSection";
 
 export default function AboutPage() {
   return (
@@ -71,19 +72,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* The Story of US Section */ }
-      <section className="relative bg-white">
-        <div className="relative w-full">
-          <Image
-            src="/images/jomo-and-charmaine/main-page/The-Story-of-Us-7.png"
-            alt="The Story of Us - Jomo and Charmaine"
-            width={ 1920 }
-            height={ 400 }
-            className="w-full h-auto"
-            quality={ 100 }
-          />
-        </div>
-      </section>
+      <StoryOfUsSection />
 
       {/* Helping Couples Section */ }
       <section className="bg-[#4a4a4a] py-20 md:py-32">

@@ -21,6 +21,10 @@ export default async function CouplesCornerPage() {
   // Get unique categories from all posts
   const categories = Array.from(new Set(allPosts.map((post) => post.category).filter(Boolean)));
 
+  // Filter out featured posts from all posts to avoid duplicates
+  const featuredPostIds = new Set(featuredPosts.map((post) => post._id));
+  const nonFeaturedPosts = allPosts.filter((post) => !featuredPostIds.has(post._id));
+
   return (
     <div className="bg-white">
       {/* Hero Section */}
@@ -44,60 +48,6 @@ export default async function CouplesCornerPage() {
             <h1 className="text-center text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">
               Couples' Corner
             </h1>
-          </div>
-        </div>
-      </section>
-
-      {/* Resources Section */}
-      <section className="bg-white py-20 md:py-32">
-        <div className="container mx-auto px-5">
-          <div className="mb-16 text-center">
-            <h2 className="mb-6 text-4xl font-bold text-[#303030] md:text-5xl">
-              Resources for Your Relationship
-            </h2>
-            <p className="mx-auto max-w-3xl text-lg text-gray-600">
-              From dating ideas, to prayers for your marriage, get tips and resources that will help strengthen your bond.
-            </p>
-          </div>
-
-          <div className="grid gap-12 md:grid-cols-2 max-w-4xl mx-auto">
-            {/* Podcast */}
-            <div className="text-center">
-              <div className="mb-8 flex justify-center">
-                <svg className="h-16 w-16 text-gray-700" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-12.5c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5zm0 5.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/>
-                </svg>
-              </div>
-              <h3 className="mb-6 text-2xl font-bold text-[#303030]">Podcast</h3>
-              <p className="text-gray-600 leading-relaxed mb-8">
-                Listen to Relationship Tips & Advice on Jomo & Charmaine Podcast.
-              </p>
-              <a
-                href="#"
-                className="inline-block rounded-lg bg-[#ea8125] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
-              >
-                Listen Now
-              </a>
-            </div>
-
-            {/* YouTube */}
-            <div className="text-center">
-              <div className="mb-8 flex justify-center">
-                <svg className="h-16 w-16 text-gray-700" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/>
-                </svg>
-              </div>
-              <h3 className="mb-6 text-2xl font-bold text-[#303030]">YouTube</h3>
-              <p className="text-gray-600 leading-relaxed mb-8">
-                Our channel will provide you with relationship advice, marriage tools, and dating goals for the modern couple.
-              </p>
-              <a
-                href="#"
-                className="inline-block rounded-lg bg-[#ea8125] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
-              >
-                Watch Now
-              </a>
-            </div>
           </div>
         </div>
       </section>
@@ -186,6 +136,60 @@ export default async function CouplesCornerPage() {
         </section>
       )}
 
+      {/* Resources Section */}
+      <section className="bg-white py-20 md:py-32">
+        <div className="container mx-auto px-5">
+          <div className="mb-16 text-center">
+            <h2 className="mb-6 text-4xl font-bold text-[#303030] md:text-5xl">
+              Resources for Your Relationship
+            </h2>
+            <p className="mx-auto max-w-3xl text-lg text-gray-600">
+              From dating ideas, to prayers for your marriage, get tips and resources that will help strengthen your bond.
+            </p>
+          </div>
+
+          <div className="grid gap-12 md:grid-cols-2 max-w-4xl mx-auto">
+            {/* Podcast */}
+            <div className="text-center">
+              <div className="mb-8 flex justify-center">
+                <svg className="h-16 w-16 text-gray-700" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-12.5c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5zm0 5.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/>
+                </svg>
+              </div>
+              <h3 className="mb-6 text-2xl font-bold text-[#303030]">Podcast</h3>
+              <p className="text-gray-600 leading-relaxed mb-8">
+                Listen to Relationship Tips & Advice on Jomo & Charmaine Podcast.
+              </p>
+              <a
+                href="#"
+                className="inline-block rounded-lg bg-[#ea8125] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
+              >
+                Listen Now
+              </a>
+            </div>
+
+            {/* YouTube */}
+            <div className="text-center">
+              <div className="mb-8 flex justify-center">
+                <svg className="h-16 w-16 text-gray-700" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/>
+                </svg>
+              </div>
+              <h3 className="mb-6 text-2xl font-bold text-[#303030]">YouTube</h3>
+              <p className="text-gray-600 leading-relaxed mb-8">
+                Our channel will provide you with relationship advice, marriage tools, and dating goals for the modern couple.
+              </p>
+              <a
+                href="#"
+                className="inline-block rounded-lg bg-[#ea8125] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
+              >
+                Watch Now
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* All Posts */}
       <section className="bg-gradient-to-br from-[#FAFCFE] to-white py-20">
         <div className="container mx-auto px-5">
@@ -209,9 +213,9 @@ export default async function CouplesCornerPage() {
             )}
           </div>
 
-          {allPosts.length > 0 ? (
+          {nonFeaturedPosts.length > 0 ? (
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {allPosts.map((post) => {
+              {nonFeaturedPosts.map((post) => {
                 const imageUrl = post.coverImage
                   ? urlForImage(post.coverImage)?.width(800).height(600).url()
                   : null;

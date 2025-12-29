@@ -6,6 +6,8 @@ import { couplesCornerPostBySlugQuery, recentCouplesCornerPostsQuery } from "@/s
 import { urlForImage } from "@/sanity/lib/utils";
 import { format, parseISO } from "date-fns";
 import { PortableText } from "next-sanity";
+import JCNewsletterForm from "../../JCNewsletterForm";
+import ShareButtons from "./ShareButtons";
 
 // Helper function to extract YouTube video ID from URL
 function getYouTubeVideoId(url: string): string | null {
@@ -258,21 +260,10 @@ export default async function BlogPostPage({
             )}
 
             {/* Share Section */}
-            <div className="mt-12 border-t-2 border-gray-100 pt-8">
-              <p className="mb-4 text-lg font-bold text-[#303030]">Share this article</p>
-              <div className="flex gap-3">
-                <button className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0E6BB7] text-white transition-all hover:scale-110">
-                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                  </svg>
-                </button>
-                <button className="flex h-10 w-10 items-center justify-center rounded-full bg-[#303030] text-white transition-all hover:scale-110">
-                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                  </svg>
-                </button>
-              </div>
-            </div>
+            <ShareButtons
+              shareUrl={`https://www.jomocousins.com/jomo-and-charmaine/couples-corner/${slug}`}
+              shareTitle={post.title}
+            />
           </div>
         </div>
       </section>
@@ -331,6 +322,30 @@ export default async function BlogPostPage({
           </div>
         </section>
       )}
+
+      {/* Newsletter Section */}
+      <section className="bg-white py-20 md:py-32">
+        <div className="container mx-auto px-5">
+          <div className="grid items-center gap-12 md:grid-cols-2 lg:gap-20">
+            {/* Left - eBook Image */}
+            <div className="relative flex justify-center">
+              <Image
+                src="/images/jomo-and-charmaine/main-page/conversation-staters.png"
+                alt="Conversation Starters for Couples"
+                width={500}
+                height={500}
+                className="w-full max-w-md h-auto"
+                quality={100}
+              />
+            </div>
+
+            {/* Right - Form */}
+            <div>
+              <JCNewsletterForm />
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

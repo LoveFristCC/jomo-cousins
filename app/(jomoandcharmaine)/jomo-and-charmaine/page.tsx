@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import JCNewsletterForm from "./JCNewsletterForm";
+import StoryOfUsSection from "./StoryOfUsSection";
 
 export default function JomoAndCharmainePage() {
   const structuredData = {
@@ -168,19 +169,7 @@ export default function JomoAndCharmainePage() {
         </div>
       </section>
 
-      {/* The Story of US Section */ }
-      <section className="relative bg-white">
-        <div className="relative w-full">
-          <Image
-            src="/images/jomo-and-charmaine/main-page/The-Story-of-Us-7.png"
-            alt="The Story of Us - Jomo and Charmaine"
-            width={ 1920 }
-            height={ 400 }
-            className="w-full h-auto"
-            quality={ 100 }
-          />
-        </div>
-      </section>
+      <StoryOfUsSection />
 
       {/* About Us Section */ }
       <section className="bg-gray-50 pt-20 md:pt-32">
@@ -607,7 +596,14 @@ export default function JomoAndCharmainePage() {
                 )) }
               </div>
               <div className="text-center">
-                <div className="mx-auto mb-3 h-20 w-20 rounded-full bg-gray-200"></div>
+                <div className="relative mx-auto mb-3 h-20 w-20 overflow-hidden rounded-full">
+                  <Image
+                    src="/images/jomo-and-charmaine/main-page/jac-testimonial-1.jpg"
+                    alt="B. & F. Simmons"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
                 <p className="font-bold text-[#303030]">B. & F. Simmons</p>
               </div>
             </div>
@@ -630,7 +626,14 @@ export default function JomoAndCharmainePage() {
                 )) }
               </div>
               <div className="text-center">
-                <div className="mx-auto mb-3 h-20 w-20 rounded-full bg-gray-200"></div>
+                <div className="relative mx-auto mb-3 h-20 w-20 overflow-hidden rounded-full">
+                  <Image
+                    src="/images/jomo-and-charmaine/main-page/jac-testimonial-2.jpg"
+                    alt="J. and W. Brushier"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
                 <p className="font-bold text-[#303030]">J. and W. Brushier</p>
               </div>
             </div>
@@ -653,7 +656,14 @@ export default function JomoAndCharmainePage() {
                 )) }
               </div>
               <div className="text-center">
-                <div className="mx-auto mb-3 h-20 w-20 rounded-full bg-gray-200"></div>
+                <div className="relative mx-auto mb-3 h-20 w-20 overflow-hidden rounded-full">
+                  <Image
+                    src="/images/jomo-and-charmaine/main-page/jac-testimonial-3.jpg"
+                    alt="M. McKenny"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
                 <p className="font-bold text-[#303030]">M. McKenny</p>
               </div>
             </div>
