@@ -34,7 +34,7 @@ export default function JomoAndCharmainePage() {
           "addressRegion": "FL",
           "addressCountry": "US"
         },
-        "areaServed": ["Tampa Bay", "Riverview", "Florida"],
+        "areaServed": [ "Tampa Bay", "Riverview", "Florida" ],
         "sameAs": [
           "https://www.facebook.com/JomoAndCharmaine",
           "https://www.instagram.com/jomoandcharmaine_",
@@ -72,10 +72,10 @@ export default function JomoAndCharmainePage() {
 
   return (
     <div className="bg-white">
-      {/* Structured Data for SEO */}
+      {/* Structured Data for SEO */ }
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        dangerouslySetInnerHTML={ { __html: JSON.stringify(structuredData) } }
       />
 
       {/* Hero Section */ }
@@ -321,12 +321,12 @@ export default function JomoAndCharmainePage() {
                 <p className="mb-6 text-lg text-gray-600 leading-relaxed">
                   Are you ready to hit the gas pedal on reaching the marriage of your dreams? It's full speed ahead once you learn the mechanics of marriage!
                 </p>
-                <a
-                  href="#"
+                <Link
+                  href="/products/the-mechanics-of-marriage"
                   className="inline-block rounded-lg bg-[#ea8125] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
                 >
                   Get Your Copy Today
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -349,12 +349,12 @@ export default function JomoAndCharmainePage() {
                 <p className="mb-6 text-lg text-gray-600 leading-relaxed">
                   Allow your marriage to be transformed by the renewing of your mind.
                 </p>
-                <a
-                  href="#"
+                <Link
+                  href="/products/transform-your-mind-transform-your-marriage"
                   className="inline-block rounded-lg bg-[#ea8125] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
                 >
                   Get Your Copy Today
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -727,6 +727,6 @@ export const metadata = {
     card: "summary_large_image",
     title: "Jomo & Charmaine - Marriage Counseling Ministry",
     description: "Senior Pastors helping couples build stronger marriages. 24 years married, 1,000+ couples counseled.",
-    images: ["/images/jomo-and-charmaine/main-page/Cousins-Together-Main-page.png"],
+    images: [ "/images/jomo-and-charmaine/main-page/Cousins-Together-Main-page.png" ],
   },
 };

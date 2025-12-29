@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { productBySlugQuery } from "@/sanity/lib/queries";
@@ -8,6 +7,7 @@ import CustomPortableText from "@/app/(home)/portable-text";
 import ProductActions from "./ProductActions";
 import ProductStructuredData from "./product-structured-data";
 import BookPreview from "./book-preview";
+import ProductImageGallery from "./ProductImageGallery";
 
 /**
  * Product detail page with variant selection
@@ -27,6 +27,12 @@ export default async function ProductPage({
   if (!product) {
     notFound();
   }
+
+  // Prepare images for gallery
+  const galleryImages = product.images?.map((image: any) => ({
+    url: urlForImage(image)?.width(1200).url() || "",
+    alt: image.alt || product.name,
+  })) || [];
 
   return (
     <div className="min-h-screen bg-white">
@@ -48,44 +54,12 @@ export default async function ProductPage({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Product Images */ }
           <div className="space-y-4">
-            {/* Main image */ }
-            { product.images && product.images.length > 0 && (
-              <div className="relative aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl overflow-hidden shadow-xl">
-                <Image
-                  src={
-                    urlForImage(product.images[ 0 ])?.width(800).url() || ""
-                  }
-                  alt={ product.images[ 0 ].alt || product.name }
-                  fill
-                  className="object-cover object-top"
-                  priority
-                />
-              </div>
-            ) }
-
-            {/* Thumbnail gallery */ }
-            { product.images && product.images.length > 1 && (
-              <div className="grid grid-cols-4 gap-3">
-                { product.images.slice(1, 5).map((image: any, idx: number) => (
-                  <div
-                    key={ idx }
-                    className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer hover:ring-2 hover:ring-[#e31e24] transition-all shadow-md"
-                  >
-                    <Image
-                      src={ urlForImage(image)?.width(200).height(200).url() || "" }
-                      alt={ image.alt || `${product.name || 'Product'} ${idx + 2}` }
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                )) }
-              </div>
-            ) }
+            <ProductImageGallery images={galleryImages} productName={product.name || "Product"} />
 
             {/* Free Preview Badge - Only for books with preview chapter */ }
             { product.previewChapter && (
-              <a
-                href="#preview-section"
+              <Link
+                href={ `/books/${slug}/preview` }
                 className="block mt-6 bg-gradient-to-br from-[#e31e24] to-[#c41a1f] rounded-xl p-6 text-center text-white shadow-xl hover:shadow-2xl transition-all hover:scale-105 cursor-pointer group"
               >
                 <div className="flex items-center justify-center gap-2 mb-2">
@@ -95,17 +69,8 @@ export default async function ProductPage({
                   <span className="text-sm font-bold uppercase tracking-wider">Free Preview</span>
                 </div>
                 <p className="text-lg font-bold mb-1">Read Before You Buy</p>
-                <p className="text-sm text-white/90">
-                  { product.previewChapter.chapterNumber
-                    ? `Chapter ${product.previewChapter.chapterNumber}`
-                    : "Sample Chapter" } Available Below
-                </p>
-                <div className="mt-3 text-white/80 group-hover:text-white transition-colors">
-                  <svg className="w-5 h-5 mx-auto animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                  </svg>
-                </div>
-              </a>
+
+              </Link>
             ) }
           </div>
 
@@ -129,7 +94,7 @@ export default async function ProductPage({
             </div>
 
             {/* Book Excerpt for SEO */ }
-            { product.category === "books" && product.excerpt && (
+            {/* { product.category === "books" && product.excerpt && (
               <div className="bg-gray-50 rounded-lg p-6 mb-6">
                 <h3 className="text-lg font-bold text-[#2d2d2d] mb-3">
                   About This Book
@@ -138,7 +103,7 @@ export default async function ProductPage({
                   { product.excerpt }
                 </p>
               </div>
-            ) }
+            ) } */}
 
             {/* Description */ }
             { product.description && (
