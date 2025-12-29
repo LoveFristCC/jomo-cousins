@@ -39,6 +39,7 @@ export async function POST(request: NextRequest) {
       subscriptionInterval = "month",
       originalSessionId = null, // Original session ID from physical product purchase
       returnSessionId = null, // Session ID to return to on cancel (for upsell pages)
+      customerId = null, // Stripe customer ID to pre-fill checkout
     } = body;
 
     // Validate required fields
@@ -164,16 +165,23 @@ export async function POST(request: NextRequest) {
           ]
         : [];
 
-    // Determine success URL based on product type
+    // Determine success URL based on product type and context
     const baseUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
 
     // For digital products, pass through the original session ID so upsell-2 can show recommendations from the original purchase
     const originalSessionParam = originalSessionId ? `&original_session_id=${originalSessionId}` : '';
 
-    const successUrl =
-      productType === "digital"
-        ? `${baseUrl}/thank-you/upsell-2?session_id={CHECKOUT_SESSION_ID}${originalSessionParam}` // After subscription → Show product upsells
-        : `${baseUrl}/thank-you?session_id={CHECKOUT_SESSION_ID}`; // After main purchase → Show subscription upsell
+    let successUrl: string;
+    if (productType === "digital") {
+      // After digital product/subscription → Show product upsells
+      successUrl = `${baseUrl}/thank-you/upsell-2?session_id={CHECKOUT_SESSION_ID}${originalSessionParam}`;
+    } else if (returnSessionId) {
+      // Physical product from upsell page → Go to complete page (don't restart upsell flow)
+      successUrl = `${baseUrl}/thank-you/complete?session_id={CHECKOUT_SESSION_ID}`;
+    } else {
+      // Regular physical product (first purchase) → Show subscription upsell
+      successUrl = `${baseUrl}/thank-you?session_id={CHECKOUT_SESSION_ID}`;
+    }
 
     // Determine cancel URL based on context
     let cancelUrl: string;
@@ -198,7 +206,24 @@ export async function POST(request: NextRequest) {
       automatic_tax: {
         enabled: true,
       },
+      // Pre-fill customer info and show saved payment methods
+      ...(customerId && { customer: customerId }),
+      // Create customer if not provided (for first purchase)
+      ...(!customerId && { customer_creation: "always" }),
+      // Update customer info for tax calculation (when using existing customer)
+      ...(customerId && {
+        customer_update: productType === "physical"
+          ? { shipping: "auto", name: "auto", address: "auto" }
+          : { name: "auto" },
+      }),
     };
+
+    // Save payment method for future use (for one-time payments)
+    if (!isSubscription) {
+      sessionConfig.payment_intent_data = {
+        setup_future_usage: "off_session", // Save payment method for future charges
+      };
+    }
 
     // For subscriptions, add subscription-specific config
     if (isSubscription) {

@@ -68,6 +68,10 @@ export default async function ThankYouPage({
 
   const customerEmail = session.customer_details?.email;
   const customerName = session.customer_details?.name;
+  const customerId = session.customer as string; // Stripe customer ID for pre-filling checkout
+
+  console.log('[Thank You] Customer ID:', customerId);
+  console.log('[Thank You] Session:', session.id);
 
   return (
     <div className="min-h-screen bg-white">
@@ -165,6 +169,7 @@ export default async function ThankYouPage({
               customerEmail={customerEmail || ""}
               customerName={customerName || ""}
               sessionId={session_id}
+              customerId={customerId}
             />
           </Suspense>
         )}
@@ -172,7 +177,7 @@ export default async function ThankYouPage({
         {/* Skip link - goes to second upsell */}
         <div className="text-center mt-8">
           <a
-            href={`/thank-you/upsell-2?session_id=${session_id}`}
+            href={`/thank-you/upsell-2?session_id=${session_id}${customerId ? `&customer_id=${customerId}` : ''}`}
             className="text-gray-600 hover:text-[#e31e24] font-semibold underline transition-colors"
           >
             No thanks, show me other recommendations

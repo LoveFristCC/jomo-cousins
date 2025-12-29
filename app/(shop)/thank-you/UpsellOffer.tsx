@@ -11,6 +11,7 @@ interface UpsellOfferProps {
   customerEmail: string;
   customerName: string;
   sessionId?: string;
+  customerId?: string; // Stripe customer ID for pre-filling checkout
 }
 
 /**
@@ -22,6 +23,7 @@ export default function UpsellOffer({
   customerEmail,
   customerName,
   sessionId,
+  customerId,
 }: UpsellOfferProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -47,6 +49,7 @@ export default function UpsellOffer({
           isSubscription: product.isSubscription || false,
           subscriptionInterval: product.subscriptionInterval || 'month',
           originalSessionId: sessionId, // Pass through the original session ID
+          customerId: customerId, // Pass customer ID to pre-fill checkout
         }),
       });
 
@@ -67,7 +70,8 @@ export default function UpsellOffer({
   const handleDecline = () => {
     // Redirect to second upsell page (product recommendations)
     if (sessionId) {
-      window.location.href = `/thank-you/upsell-2?session_id=${sessionId}`;
+      const customerParam = customerId ? `&customer_id=${customerId}` : '';
+      window.location.href = `/thank-you/upsell-2?session_id=${sessionId}${customerParam}`;
     } else {
       window.location.href = "/thank-you/complete";
     }

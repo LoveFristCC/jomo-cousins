@@ -31,6 +31,7 @@ interface ProductUpsellsProps {
   upsells?: UpsellProduct[];
   headline?: string;
   currentSessionId?: string; // Pass through for cancel redirect
+  customerId?: string; // Stripe customer ID for pre-filling checkout
 }
 
 /**
@@ -41,6 +42,7 @@ export default function ProductUpsells({
   upsells,
   headline,
   currentSessionId,
+  customerId,
 }: ProductUpsellsProps) {
   const [loadingProduct, setLoadingProduct] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -74,6 +76,7 @@ export default function ProductUpsells({
           weight: product.weight || 16, // Default 1 lb
           stripePriceId: product.stripePriceId,
           returnSessionId: currentSessionId, // For cancel redirect on upsell pages
+          customerId: customerId, // Pass customer ID to pre-fill checkout
         }),
       });
 

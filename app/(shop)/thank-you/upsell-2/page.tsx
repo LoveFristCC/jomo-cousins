@@ -14,9 +14,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 export default async function UpsellTwoPage({
   searchParams,
 }: {
-  searchParams: Promise<{ session_id?: string; original_session_id?: string }>;
+  searchParams: Promise<{ session_id?: string; original_session_id?: string; customer_id?: string }>;
 }) {
-  const { session_id, original_session_id } = await searchParams;
+  const { session_id, original_session_id, customer_id } = await searchParams;
 
   if (!session_id) {
     notFound();
@@ -65,6 +65,8 @@ export default async function UpsellTwoPage({
   }
 
   const customerEmail = session.customer_details?.email;
+  // Get customer ID from URL param or from session
+  const customerId = customer_id || (session.customer as string);
 
   return (
     <div className="min-h-screen bg-white">
@@ -92,6 +94,7 @@ export default async function UpsellTwoPage({
         upsells={ upsellsToShow }
         headline="Complete Your Collection"
         currentSessionId={ session_id }
+        customerId={ customerId }
       />
 
       {/* Decline/Complete CTA */ }
@@ -101,7 +104,7 @@ export default async function UpsellTwoPage({
             Not interested in these products right now?
           </p>
           <a
-            href={`/thank-you/complete?session_id=${session_id}`}
+            href={`/thank-you/complete?session_id=${session_id}${customerId ? `&customer_id=${customerId}` : ''}`}
             className="inline-block px-10 py-4 bg-white border-2 border-gray-300 text-gray-700 rounded-lg font-bold text-lg hover:bg-gray-50 transition shadow-md"
           >
             No Thanks
