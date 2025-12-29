@@ -14,26 +14,40 @@ export default function ContactPage() {
   });
 
   const [ isSubmitting, setIsSubmitting ] = useState(false);
+  const [ isSubmitted, setIsSubmitted ] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // TODO: Integrate with actual email service or API
-    console.log("Form submitted:", formData);
-
-    // Simulate submission
-    setTimeout(() => {
-      alert("Thank you for contacting us! We'll get back to you soon.");
-      setFormData({
-        name: "",
-        email: "",
-        contactMethod: "",
-        phone: "",
-        message: "",
+    try {
+      const response = await fetch("/api/booking-request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          eventType: formData.contactMethod,
+          bookingType: "jomo-charmaine",
+        }),
       });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Failed to submit request");
+      }
+
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("Error submitting request:", error);
+      alert(error instanceof Error ? error.message : "There was an error submitting your request. Please try again.");
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   const handleChange = (
@@ -154,114 +168,149 @@ export default function ContactPage() {
                 Fill out the form below and we'll get back to you as soon as possible.
               </p>
 
-              <form onSubmit={ handleSubmit } className="space-y-6">
-                {/* Name */ }
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="mb-2 block font-semibold text-[#303030]"
+              { isSubmitted ? (
+                <div className="rounded-lg border-2 border-green-500 bg-green-50 p-8 text-center">
+                  <div className="mb-4 flex justify-center">
+                    <svg className="h-16 w-16 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="mb-4 text-2xl font-bold text-gray-800">
+                    Thank You!
+                  </h3>
+                  <p className="mb-6 text-lg text-gray-700">
+                    Your request has been received. We'll get back to you soon to schedule your appointment!
+                  </p>
+                  <button
+                    onClick={ () => {
+                      setIsSubmitted(false);
+                      setFormData({
+                        name: "",
+                        email: "",
+                        contactMethod: "",
+                        phone: "",
+                        message: "",
+                      });
+                    } }
+                    className="font-semibold text-[#ea8125] hover:underline"
                   >
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={ formData.name }
-                    onChange={ handleChange }
-                    className="w-full rounded-lg border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#ea8125] focus:outline-none"
-                    placeholder="Enter your name"
-                  />
+                    Submit Another Request
+                  </button>
                 </div>
+              ) : (
+                <form onSubmit={ handleSubmit } className="space-y-6">
+                  {/* Name */ }
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="mb-2 block font-semibold text-[#303030]"
+                    >
+                      Your Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      value={ formData.name }
+                      onChange={ handleChange }
+                      className="w-full rounded-lg border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#ea8125] focus:outline-none"
+                      placeholder="Enter your name"
+                    />
+                  </div>
 
-                {/* Email */ }
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="mb-2 block font-semibold text-[#303030]"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={ formData.email }
-                    onChange={ handleChange }
-                    className="w-full rounded-lg border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#ea8125] focus:outline-none"
-                    placeholder="your@email.com"
-                  />
-                </div>
+                  {/* Email */ }
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="mb-2 block font-semibold text-[#303030]"
+                    >
+                      Email *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      value={ formData.email }
+                      onChange={ handleChange }
+                      className="w-full rounded-lg border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#ea8125] focus:outline-none"
+                      placeholder="your@email.com"
+                    />
+                  </div>
 
-                {/* Preferred Contact Method */ }
-                <div>
-                  <label
-                    htmlFor="contactMethod"
-                    className="mb-2 block font-semibold text-[#303030]"
-                  >
-                    Preferred Contact Method
-                  </label>
-                  <select
-                    id="contactMethod"
-                    name="contactMethod"
-                    value={ formData.contactMethod }
-                    onChange={ handleChange }
-                    className="w-full rounded-lg border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#ea8125] focus:outline-none"
-                  >
-                    <option value="">Select an option</option>
-                    <option value="call">Call</option>
-                    <option value="message">Message</option>
-                    <option value="email">Email</option>
-                  </select>
-                </div>
+                  {/* Preferred Contact Method */ }
+                  <div>
+                    <label
+                      htmlFor="contactMethod"
+                      className="mb-2 block font-semibold text-[#303030]"
+                    >
+                      Preferred Contact Method
+                    </label>
+                    <select
+                      id="contactMethod"
+                      name="contactMethod"
+                      value={ formData.contactMethod }
+                      onChange={ handleChange }
+                      className="w-full rounded-lg border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#ea8125] focus:outline-none"
+                    >
+                      <option value="">Select an option</option>
+                      <option value="call">Call</option>
+                      <option value="message">Message</option>
+                      <option value="email">Email</option>
+                    </select>
+                  </div>
 
-                {/* Phone */ }
-                <div>
-                  <label
-                    htmlFor="phone"
-                    className="mb-2 block font-semibold text-[#303030]"
-                  >
-                    Contact No.
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={ formData.phone }
-                    onChange={ handleChange }
-                    className="w-full rounded-lg border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#ea8125] focus:outline-none"
-                    placeholder="(123) 456-7890"
-                  />
-                </div>
+                  {/* Phone */ }
+                  <div>
+                    <label
+                      htmlFor="phone"
+                      className="mb-2 block font-semibold text-[#303030]"
+                    >
+                      Contact No. *
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      required
+                      value={ formData.phone }
+                      onChange={ handleChange }
+                      className="w-full rounded-lg border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#ea8125] focus:outline-none"
+                      placeholder="(123) 456-7890"
+                    />
+                  </div>
 
-                {/* Message */ }
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="mb-2 block font-semibold text-[#303030]"
-                  >
-                    What do you need assistance with?
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={ formData.message }
-                    onChange={ handleChange }
-                    rows={ 6 }
-                    className="w-full rounded-lg border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#ea8125] focus:outline-none"
-                    placeholder="Tell us about what brings you here..."
-                  />
-                </div>
+                  {/* Message */ }
+                  <div>
+                    <label
+                      htmlFor="message"
+                      className="mb-2 block font-semibold text-[#303030]"
+                    >
+                      What do you need assistance with? *
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      required
+                      value={ formData.message }
+                      onChange={ handleChange }
+                      rows={ 6 }
+                      className="w-full rounded-lg border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#ea8125] focus:outline-none"
+                      placeholder="Tell us about what brings you here..."
+                    />
+                  </div>
 
-                {/* Submit Button */ }
-                <button
-                  type="submit"
-                  disabled={ isSubmitting }
-                  className="w-full rounded-lg bg-[#ea8125] py-4 font-bold text-white transition-all hover:bg-[#d67320] disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  { isSubmitting ? "Sending..." : "Send Message" }
-                </button>
-              </form>
+                  {/* Submit Button */ }
+                  <button
+                    type="submit"
+                    disabled={ isSubmitting }
+                    className="w-full rounded-lg bg-[#ea8125] py-4 font-bold text-white transition-all hover:bg-[#d67320] disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    { isSubmitting ? "Sending..." : "Send Message" }
+                  </button>
+                </form>
+              ) }
             </div>
 
             {/* Right - Contact Info & Social */ }

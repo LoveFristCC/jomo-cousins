@@ -545,7 +545,7 @@ export default function JomoAndCharmainePage() {
       </section>
 
       {/* Conversation Starters Section */ }
-      <section className="bg-white py-20 md:py-32">
+      <section id="free-ebook" className="bg-white py-20 md:py-32">
         <div className="container mx-auto px-5">
           <div className="grid items-center gap-12 md:grid-cols-2 lg:gap-20">
             {/* Left - eBook Image */ }
@@ -679,7 +679,7 @@ export default function JomoAndCharmainePage() {
                 Request an Appointment
               </a>
               <a
-                href="#"
+                href="#free-ebook"
                 className="inline-block rounded-lg border-2 border-white px-12 py-4 font-bold shadow-lg transition-all hover:bg-white hover:text-[#ea8125] hover:shadow-xl"
               >
                 Download Free eBook

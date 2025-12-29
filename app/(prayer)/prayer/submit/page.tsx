@@ -36,9 +36,19 @@ export default function SubmitPage() {
     setIsSubmitting(true);
 
     try {
-      // Here you would normally save to Sanity and send email
-      // For now, we'll simulate the submission
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Submit prayer request to API
+      const response = await fetch("/api/prayer-request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Failed to submit prayer request");
+      }
 
       // Fetch suggested prayers based on category
       if (formData.category) {
@@ -54,7 +64,7 @@ export default function SubmitPage() {
       setIsSubmitted(true);
     } catch (error) {
       console.error("Error submitting prayer request:", error);
-      alert("There was an error submitting your prayer request. Please try again.");
+      alert(error instanceof Error ? error.message : "There was an error submitting your prayer request. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -252,11 +262,13 @@ export default function SubmitPage() {
                   aria-label="Select prayer category"
                 >
                   <option value="">Select a category...</option>
+                  <option value="Accept Jesus as my savior">Accept Jesus as my savior</option>
                   { categories.map((cat) => (
                     <option key={ cat._id } value={ cat.title }>
                       { cat.title }
                     </option>
                   )) }
+                  <option value="Other">Other</option>
                 </select>
               </div>
 
@@ -330,19 +342,6 @@ export default function SubmitPage() {
                 { isSubmitting ? "Sending to Jomo..." : "Send to Jomo" }
               </button>
             </form>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonial */ }
-      <section className="border-t border-gray-200 bg-gray-50 py-16">
-        <div className="container mx-auto px-5">
-          <div className="mx-auto max-w-3xl rounded-xl bg-white p-8 shadow-lg">
-            <p className="mb-4 text-lg italic text-gray-700">
-              "Jomo's prayers have been a source of strength and comfort during
-              my darkest moments. Knowing he's praying with me gives me hope."
-            </p>
-            <p className="font-semibold text-[#3d3d3d]">— Sarah M., Atlanta</p>
           </div>
         </div>
       </section>

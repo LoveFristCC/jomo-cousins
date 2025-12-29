@@ -9,15 +9,42 @@ export default function ContactPage() {
     name: "",
     email: "",
     phone: "",
+    organization: "",
+    eventDate: "",
     eventType: "",
     message: "",
   });
+  const [ isSubmitting, setIsSubmitting ] = useState(false);
+  const [ isSubmitted, setIsSubmitted ] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission - you can integrate with your backend or email service
-    console.log("Form submitted:", formData);
-    alert("Thank you for your inquiry! We will get back to you soon.");
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/booking-request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          bookingType: "jomo",
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Failed to submit booking request");
+      }
+
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("Error submitting booking request:", error);
+      alert(error instanceof Error ? error.message : "There was an error submitting your request. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -75,108 +102,175 @@ export default function ContactPage() {
                 Fill out the form below and we'll get back to you as soon as
                 possible.
               </p>
-              <form onSubmit={ handleSubmit } className="space-y-6">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="mb-2 block font-semibold text-[#2d2d2d]"
+              { isSubmitted ? (
+                <div className="rounded-lg border-2 border-green-500 bg-green-50 p-8 text-center">
+                  <div className="mb-4 flex justify-center">
+                    <svg className="h-16 w-16 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="mb-4 text-2xl font-bold text-gray-800">
+                    Thank You!
+                  </h3>
+                  <p className="mb-6 text-lg text-gray-700">
+                    Your booking request has been received. We'll get back to you soon!
+                  </p>
+                  <button
+                    onClick={ () => {
+                      setIsSubmitted(false);
+                      setFormData({
+                        name: "",
+                        email: "",
+                        phone: "",
+                        organization: "",
+                        eventDate: "",
+                        eventType: "",
+                        message: "",
+                      });
+                    } }
+                    className="text-[#e31e24] hover:underline font-semibold"
                   >
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    value={ formData.name }
-                    onChange={ handleChange }
-                    className="w-full border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#e31e24] focus:outline-none"
-                    placeholder="Your Name"
-                  />
+                    Submit Another Request
+                  </button>
                 </div>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="mb-2 block font-semibold text-[#2d2d2d]"
+              ) : (
+                <form onSubmit={ handleSubmit } className="space-y-6">
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="mb-2 block font-semibold text-[#2d2d2d]"
+                    >
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      value={ formData.name }
+                      onChange={ handleChange }
+                      className="w-full border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#e31e24] focus:outline-none"
+                      placeholder="Your Name"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="mb-2 block font-semibold text-[#2d2d2d]"
+                    >
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      value={ formData.email }
+                      onChange={ handleChange }
+                      className="w-full border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#e31e24] focus:outline-none"
+                      placeholder="your@email.com"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="phone"
+                      className="mb-2 block font-semibold text-[#2d2d2d]"
+                    >
+                      Phone Number *
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      required
+                      value={ formData.phone }
+                      onChange={ handleChange }
+                      className="w-full border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#e31e24] focus:outline-none"
+                      placeholder="(123) 456-7890"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="organization"
+                      className="mb-2 block font-semibold text-[#2d2d2d]"
+                    >
+                      Organization
+                    </label>
+                    <input
+                      type="text"
+                      id="organization"
+                      name="organization"
+                      value={ formData.organization }
+                      onChange={ handleChange }
+                      className="w-full border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#e31e24] focus:outline-none"
+                      placeholder="Your Organization or Church"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="eventDate"
+                      className="mb-2 block font-semibold text-[#2d2d2d]"
+                    >
+                      Event Date
+                    </label>
+                    <input
+                      type="date"
+                      id="eventDate"
+                      name="eventDate"
+                      value={ formData.eventDate }
+                      onChange={ handleChange }
+                      className="w-full border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#e31e24] focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="eventType"
+                      className="mb-2 block font-semibold text-[#2d2d2d]"
+                    >
+                      Event Type
+                    </label>
+                    <select
+                      id="eventType"
+                      name="eventType"
+                      value={ formData.eventType }
+                      onChange={ handleChange }
+                      className="w-full border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#e31e24] focus:outline-none"
+                    >
+                      <option value="">Select Event Type</option>
+                      <option value="corporate">Corporate Event</option>
+                      <option value="church">Church Event</option>
+                      <option value="youth">Youth Program</option>
+                      <option value="financial">Financial Wealth Seminar</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="message"
+                      className="mb-2 block font-semibold text-[#2d2d2d]"
+                    >
+                      Message *
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      required
+                      value={ formData.message }
+                      onChange={ handleChange }
+                      rows={ 6 }
+                      className="w-full border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#e31e24] focus:outline-none"
+                      placeholder="Tell us about your event and how we can help..."
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={ isSubmitting }
+                    className="w-full bg-[#e31e24] py-4 font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#c41a1f] disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    value={ formData.email }
-                    onChange={ handleChange }
-                    className="w-full border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#e31e24] focus:outline-none"
-                    placeholder="your@email.com"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="phone"
-                    className="mb-2 block font-semibold text-[#2d2d2d]"
-                  >
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={ formData.phone }
-                    onChange={ handleChange }
-                    className="w-full border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#e31e24] focus:outline-none"
-                    placeholder="(123) 456-7890"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="eventType"
-                    className="mb-2 block font-semibold text-[#2d2d2d]"
-                  >
-                    Event Type *
-                  </label>
-                  <select
-                    id="eventType"
-                    name="eventType"
-                    required
-                    value={ formData.eventType }
-                    onChange={ handleChange }
-                    className="w-full border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#e31e24] focus:outline-none"
-                  >
-                    <option value="">Select Event Type</option>
-                    <option value="corporate">Corporate Event</option>
-                    <option value="church">Church Event</option>
-                    <option value="youth">Youth Program</option>
-                    <option value="financial">Financial Wealth Seminar</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="mb-2 block font-semibold text-[#2d2d2d]"
-                  >
-                    Message *
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    required
-                    value={ formData.message }
-                    onChange={ handleChange }
-                    rows={ 6 }
-                    className="w-full border-2 border-gray-300 px-4 py-3 transition-colors focus:border-[#e31e24] focus:outline-none"
-                    placeholder="Tell us about your event and how we can help..."
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full bg-[#e31e24] py-4 font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#c41a1f]"
-                >
-                  Send Message
-                </button>
-              </form>
+                    { isSubmitting ? "Sending..." : "Send Message" }
+                  </button>
+                </form>
+              ) }
             </div>
 
             {/* Contact Information */ }

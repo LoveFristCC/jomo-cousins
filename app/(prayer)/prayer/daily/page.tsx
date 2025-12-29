@@ -5,6 +5,7 @@ import { sanityFetch } from "@/sanity/lib/fetch";
 import { recentPrayersQuery } from "@/sanity/lib/queries";
 import { urlForImage } from "@/sanity/lib/utils";
 import { format, parseISO } from "date-fns";
+import LivestreamPlayer from "./LivestreamPlayer";
 
 // Enable ISR with revalidation every hour
 export const revalidate = 3600;
@@ -140,16 +141,7 @@ export default async function DailyPrayerPage() {
             </div>
 
             <div className="overflow-hidden rounded-2xl bg-white shadow-2xl">
-              <div className="relative aspect-video w-full">
-                <iframe
-                  src="https://www.youtube.com/embed/live_stream?channel=UCTE0GojjBjxsxB8ojlRc0ug"
-                  title="Live Prayer with Pastor Jomo Cousins"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="absolute inset-0 h-full w-full"
-                  aria-label="Live prayer and teaching stream with Pastor Jomo"
-                />
-              </div>
+              <LivestreamPlayer />
 
               <div className="bg-gray-50 p-6 text-center md:p-8">
                 <p className="text-gray-700">
