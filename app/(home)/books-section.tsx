@@ -1,15 +1,24 @@
 import Image from "next/image";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { newestBooksQuery } from "@/sanity/lib/queries";
+import { featuredBooksQuery, newestBooksQuery } from "@/sanity/lib/queries";
 import { urlForImage } from "@/sanity/lib/utils";
 import { SlideInTop, StaggerChildren, StaggerItem, FadeIn, FadeInUp } from "./animations";
 
 export default async function BooksSection() {
-  const books = await sanityFetch({
-    query: newestBooksQuery,
+  // Try to fetch featured books first
+  let books = await sanityFetch({
+    query: featuredBooksQuery,
     params: { limit: 3 },
   });
+
+  // If no featured books, fall back to newest books
+  if (!books || books.length === 0) {
+    books = await sanityFetch({
+      query: newestBooksQuery,
+      params: { limit: 3 },
+    });
+  }
 
   if (!books || books.length === 0) {
     return null;

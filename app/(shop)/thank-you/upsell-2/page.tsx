@@ -91,6 +91,7 @@ export default async function UpsellTwoPage({
       <ProductUpsells
         upsells={ upsellsToShow }
         headline="Complete Your Collection"
+        currentSessionId={ session_id }
       />
 
       {/* Decline/Complete CTA */ }
@@ -100,7 +101,7 @@ export default async function UpsellTwoPage({
             Not interested in these products right now?
           </p>
           <a
-            href="/thank-you/complete"
+            href={`/thank-you/complete?session_id=${session_id}`}
             className="inline-block px-10 py-4 bg-white border-2 border-gray-300 text-gray-700 rounded-lg font-bold text-lg hover:bg-gray-50 transition shadow-md"
           >
             No Thanks

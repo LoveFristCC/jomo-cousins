@@ -24,6 +24,7 @@ export default function CategoryFilters({ activeCategory }: CategoryFiltersProps
           <Link
             key={cat.id}
             href={cat.id ? `/products?category=${cat.id}` : "/products"}
+            scroll={false}
             className={`px-6 py-3 rounded-lg font-semibold transition-all ${
               isActive
                 ? "bg-[#e31e24] text-white shadow-lg scale-105"

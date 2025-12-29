@@ -38,6 +38,7 @@ export async function POST(request: NextRequest) {
       isSubscription = false,
       subscriptionInterval = "month",
       originalSessionId = null, // Original session ID from physical product purchase
+      returnSessionId = null, // Session ID to return to on cancel (for upsell pages)
     } = body;
 
     // Validate required fields
@@ -174,10 +175,18 @@ export async function POST(request: NextRequest) {
         ? `${baseUrl}/thank-you/upsell-2?session_id={CHECKOUT_SESSION_ID}${originalSessionParam}` // After subscription → Show product upsells
         : `${baseUrl}/thank-you?session_id={CHECKOUT_SESSION_ID}`; // After main purchase → Show subscription upsell
 
-    const cancelUrl =
-      productType === "digital"
-        ? `${baseUrl}/thank-you/upsell-2?session_id={CHECKOUT_SESSION_ID}${originalSessionParam}` // If cancel subscription → Still show product upsells
-        : `${baseUrl}/products`; // If cancel main purchase → Back to products
+    // Determine cancel URL based on context
+    let cancelUrl: string;
+    if (productType === "digital") {
+      // Digital product cancellation → Return to upsell-2
+      cancelUrl = `${baseUrl}/thank-you/upsell-2?session_id={CHECKOUT_SESSION_ID}${originalSessionParam}`;
+    } else if (returnSessionId) {
+      // Physical product from upsell page → Return to complete page with original session
+      cancelUrl = `${baseUrl}/thank-you/complete?session_id=${returnSessionId}`;
+    } else {
+      // Regular physical product → Back to products
+      cancelUrl = `${baseUrl}/products`;
+    }
 
     // Create Stripe Checkout session
     const sessionConfig: Stripe.Checkout.SessionCreateParams = {

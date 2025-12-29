@@ -348,6 +348,7 @@ export type Product = {
   lowStockThreshold?: number;
   trackInventory?: boolean;
   status?: "active" | "draft" | "archived";
+  featured?: boolean;
   isbn?: string;
   author?: string;
   publisher?: string;
@@ -1035,7 +1036,7 @@ export type PostQueryResult = {
   } | null;
 } | null;
 // Variable: allProductsQuery
-// Query: *[_type == "product" && status == "active"] | order(name asc) {      _id,  name,  "slug": slug.current,  description,  category,  images,  basePrice,  stripePriceId,  weight,  variants,  lowStockThreshold,  trackInventory,  status,  // Book-specific fields  isbn,  author,  publisher,  publicationDate,  pageCount,  previewChapter,  excerpt,  amazonLink,  audibleLink,  // Upsells  upsellHeadline,  "digitalUpsell": digitalUpsell-> {      _id,  name,  "slug": slug.current,  description,  price,  isSubscription,  subscriptionInterval,  firstMonthPrice,  stripePriceId,  kajabiWebhookUrl,  upsellPosition,  headline,  subheadline,  bulletPoints,  image,  discount,  ctaText,  status  },  "upsells": upsells[]-> {    _id,    name,    "slug": slug.current,    category,    images,    basePrice,    excerpt,    author,    status,    stripePriceId,    weight,    variants  }  }
+// Query: *[_type == "product" && status == "active"] | order(name asc) {      _id,  name,  "slug": slug.current,  description,  category,  images,  basePrice,  stripePriceId,  weight,  variants,  lowStockThreshold,  trackInventory,  status,  featured,  // Book-specific fields  isbn,  author,  publisher,  publicationDate,  pageCount,  previewChapter,  excerpt,  amazonLink,  audibleLink,  // Upsells  upsellHeadline,  "digitalUpsell": digitalUpsell-> {      _id,  name,  "slug": slug.current,  description,  price,  isSubscription,  subscriptionInterval,  firstMonthPrice,  stripePriceId,  kajabiWebhookUrl,  upsellPosition,  headline,  subheadline,  bulletPoints,  image,  discount,  ctaText,  status  },  "upsells": upsells[]-> {    _id,    name,    "slug": slug.current,    category,    images,    basePrice,    excerpt,    author,    status,    stripePriceId,    weight,    variants  }  }
 export type AllProductsQueryResult = Array<{
   _id: string;
   name: string | null;
@@ -1082,6 +1083,7 @@ export type AllProductsQueryResult = Array<{
   lowStockThreshold: number | null;
   trackInventory: boolean | null;
   status: "active" | "archived" | "draft" | null;
+  featured: boolean | null;
   isbn: string | null;
   author: string | null;
   publisher: string | null;
@@ -1193,7 +1195,7 @@ export type AllProductsQueryResult = Array<{
   }> | null;
 }>;
 // Variable: productBySlugQuery
-// Query: *[_type == "product" && slug.current == $slug && status == "active"] [0] {      _id,  name,  "slug": slug.current,  description,  category,  images,  basePrice,  stripePriceId,  weight,  variants,  lowStockThreshold,  trackInventory,  status,  // Book-specific fields  isbn,  author,  publisher,  publicationDate,  pageCount,  previewChapter,  excerpt,  amazonLink,  audibleLink,  // Upsells  upsellHeadline,  "digitalUpsell": digitalUpsell-> {      _id,  name,  "slug": slug.current,  description,  price,  isSubscription,  subscriptionInterval,  firstMonthPrice,  stripePriceId,  kajabiWebhookUrl,  upsellPosition,  headline,  subheadline,  bulletPoints,  image,  discount,  ctaText,  status  },  "upsells": upsells[]-> {    _id,    name,    "slug": slug.current,    category,    images,    basePrice,    excerpt,    author,    status,    stripePriceId,    weight,    variants  }  }
+// Query: *[_type == "product" && slug.current == $slug && status == "active"] [0] {      _id,  name,  "slug": slug.current,  description,  category,  images,  basePrice,  stripePriceId,  weight,  variants,  lowStockThreshold,  trackInventory,  status,  featured,  // Book-specific fields  isbn,  author,  publisher,  publicationDate,  pageCount,  previewChapter,  excerpt,  amazonLink,  audibleLink,  // Upsells  upsellHeadline,  "digitalUpsell": digitalUpsell-> {      _id,  name,  "slug": slug.current,  description,  price,  isSubscription,  subscriptionInterval,  firstMonthPrice,  stripePriceId,  kajabiWebhookUrl,  upsellPosition,  headline,  subheadline,  bulletPoints,  image,  discount,  ctaText,  status  },  "upsells": upsells[]-> {    _id,    name,    "slug": slug.current,    category,    images,    basePrice,    excerpt,    author,    status,    stripePriceId,    weight,    variants  }  }
 export type ProductBySlugQueryResult = {
   _id: string;
   name: string | null;
@@ -1240,6 +1242,7 @@ export type ProductBySlugQueryResult = {
   lowStockThreshold: number | null;
   trackInventory: boolean | null;
   status: "active" | "archived" | "draft" | null;
+  featured: boolean | null;
   isbn: string | null;
   author: string | null;
   publisher: string | null;
@@ -1351,7 +1354,7 @@ export type ProductBySlugQueryResult = {
   }> | null;
 } | null;
 // Variable: productsByCategoryQuery
-// Query: *[_type == "product" && category == $category && status == "active"] | order(name asc) {      _id,  name,  "slug": slug.current,  description,  category,  images,  basePrice,  stripePriceId,  weight,  variants,  lowStockThreshold,  trackInventory,  status,  // Book-specific fields  isbn,  author,  publisher,  publicationDate,  pageCount,  previewChapter,  excerpt,  amazonLink,  audibleLink,  // Upsells  upsellHeadline,  "digitalUpsell": digitalUpsell-> {      _id,  name,  "slug": slug.current,  description,  price,  isSubscription,  subscriptionInterval,  firstMonthPrice,  stripePriceId,  kajabiWebhookUrl,  upsellPosition,  headline,  subheadline,  bulletPoints,  image,  discount,  ctaText,  status  },  "upsells": upsells[]-> {    _id,    name,    "slug": slug.current,    category,    images,    basePrice,    excerpt,    author,    status,    stripePriceId,    weight,    variants  }  }
+// Query: *[_type == "product" && category == $category && status == "active"] | order(name asc) {      _id,  name,  "slug": slug.current,  description,  category,  images,  basePrice,  stripePriceId,  weight,  variants,  lowStockThreshold,  trackInventory,  status,  featured,  // Book-specific fields  isbn,  author,  publisher,  publicationDate,  pageCount,  previewChapter,  excerpt,  amazonLink,  audibleLink,  // Upsells  upsellHeadline,  "digitalUpsell": digitalUpsell-> {      _id,  name,  "slug": slug.current,  description,  price,  isSubscription,  subscriptionInterval,  firstMonthPrice,  stripePriceId,  kajabiWebhookUrl,  upsellPosition,  headline,  subheadline,  bulletPoints,  image,  discount,  ctaText,  status  },  "upsells": upsells[]-> {    _id,    name,    "slug": slug.current,    category,    images,    basePrice,    excerpt,    author,    status,    stripePriceId,    weight,    variants  }  }
 export type ProductsByCategoryQueryResult = Array<{
   _id: string;
   name: string | null;
@@ -1398,6 +1401,7 @@ export type ProductsByCategoryQueryResult = Array<{
   lowStockThreshold: number | null;
   trackInventory: boolean | null;
   status: "active" | "archived" | "draft" | null;
+  featured: boolean | null;
   isbn: string | null;
   author: string | null;
   publisher: string | null;
@@ -1509,7 +1513,7 @@ export type ProductsByCategoryQueryResult = Array<{
   }> | null;
 }>;
 // Variable: productByNameQuery
-// Query: *[_type == "product" && name == $name] [0] {      _id,  name,  "slug": slug.current,  description,  category,  images,  basePrice,  stripePriceId,  weight,  variants,  lowStockThreshold,  trackInventory,  status,  // Book-specific fields  isbn,  author,  publisher,  publicationDate,  pageCount,  previewChapter,  excerpt,  amazonLink,  audibleLink,  // Upsells  upsellHeadline,  "digitalUpsell": digitalUpsell-> {      _id,  name,  "slug": slug.current,  description,  price,  isSubscription,  subscriptionInterval,  firstMonthPrice,  stripePriceId,  kajabiWebhookUrl,  upsellPosition,  headline,  subheadline,  bulletPoints,  image,  discount,  ctaText,  status  },  "upsells": upsells[]-> {    _id,    name,    "slug": slug.current,    category,    images,    basePrice,    excerpt,    author,    status,    stripePriceId,    weight,    variants  }  }
+// Query: *[_type == "product" && name == $name] [0] {      _id,  name,  "slug": slug.current,  description,  category,  images,  basePrice,  stripePriceId,  weight,  variants,  lowStockThreshold,  trackInventory,  status,  featured,  // Book-specific fields  isbn,  author,  publisher,  publicationDate,  pageCount,  previewChapter,  excerpt,  amazonLink,  audibleLink,  // Upsells  upsellHeadline,  "digitalUpsell": digitalUpsell-> {      _id,  name,  "slug": slug.current,  description,  price,  isSubscription,  subscriptionInterval,  firstMonthPrice,  stripePriceId,  kajabiWebhookUrl,  upsellPosition,  headline,  subheadline,  bulletPoints,  image,  discount,  ctaText,  status  },  "upsells": upsells[]-> {    _id,    name,    "slug": slug.current,    category,    images,    basePrice,    excerpt,    author,    status,    stripePriceId,    weight,    variants  }  }
 export type ProductByNameQueryResult = {
   _id: string;
   name: string | null;
@@ -1556,6 +1560,7 @@ export type ProductByNameQueryResult = {
   lowStockThreshold: number | null;
   trackInventory: boolean | null;
   status: "active" | "archived" | "draft" | null;
+  featured: boolean | null;
   isbn: string | null;
   author: string | null;
   publisher: string | null;
@@ -1771,6 +1776,47 @@ export type DigitalProductBySlugQueryResult = {
 // Variable: newestBooksQuery
 // Query: *[_type == "product" && category == "books" && status == "active"] | order(_createdAt desc) [0...$limit] {      _id,  name,  "slug": slug.current,  description,  images,  basePrice,  category  }
 export type NewestBooksQueryResult = Array<{
+  _id: string;
+  name: string | null;
+  slug: string | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  images: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }> | null;
+  basePrice: number | null;
+  category: "accessories" | "books" | "hoodies" | "other" | "tshirts" | null;
+}>;
+// Variable: featuredBooksQuery
+// Query: *[_type == "product" && category == "books" && status == "active" && featured == true] | order(_createdAt desc) [0...$limit] {      _id,  name,  "slug": slug.current,  description,  images,  basePrice,  category  }
+export type FeaturedBooksQueryResult = Array<{
   _id: string;
   name: string | null;
   slug: string | null;
@@ -2410,13 +2456,14 @@ declare module "@sanity/client" {
     "\n  *[_type == \"post\" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {\n    content,\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n\n  }\n": HeroQueryResult;
     "\n  *[_type == \"post\" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n\n  }\n": MoreStoriesQueryResult;
     "\n  *[_type == \"post\" && slug.current == $slug] [0] {\n    content,\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n\n  }\n": PostQueryResult;
-    "\n  *[_type == \"product\" && status == \"active\"] | order(name asc) {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  category,\n  images,\n  basePrice,\n  stripePriceId,\n  weight,\n  variants,\n  lowStockThreshold,\n  trackInventory,\n  status,\n  // Book-specific fields\n  isbn,\n  author,\n  publisher,\n  publicationDate,\n  pageCount,\n  previewChapter,\n  excerpt,\n  amazonLink,\n  audibleLink,\n  // Upsells\n  upsellHeadline,\n  \"digitalUpsell\": digitalUpsell-> {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  price,\n  isSubscription,\n  subscriptionInterval,\n  firstMonthPrice,\n  stripePriceId,\n  kajabiWebhookUrl,\n  upsellPosition,\n  headline,\n  subheadline,\n  bulletPoints,\n  image,\n  discount,\n  ctaText,\n  status\n\n  },\n  \"upsells\": upsells[]-> {\n    _id,\n    name,\n    \"slug\": slug.current,\n    category,\n    images,\n    basePrice,\n    excerpt,\n    author,\n    status,\n    stripePriceId,\n    weight,\n    variants\n  }\n\n  }\n": AllProductsQueryResult;
-    "\n  *[_type == \"product\" && slug.current == $slug && status == \"active\"] [0] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  category,\n  images,\n  basePrice,\n  stripePriceId,\n  weight,\n  variants,\n  lowStockThreshold,\n  trackInventory,\n  status,\n  // Book-specific fields\n  isbn,\n  author,\n  publisher,\n  publicationDate,\n  pageCount,\n  previewChapter,\n  excerpt,\n  amazonLink,\n  audibleLink,\n  // Upsells\n  upsellHeadline,\n  \"digitalUpsell\": digitalUpsell-> {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  price,\n  isSubscription,\n  subscriptionInterval,\n  firstMonthPrice,\n  stripePriceId,\n  kajabiWebhookUrl,\n  upsellPosition,\n  headline,\n  subheadline,\n  bulletPoints,\n  image,\n  discount,\n  ctaText,\n  status\n\n  },\n  \"upsells\": upsells[]-> {\n    _id,\n    name,\n    \"slug\": slug.current,\n    category,\n    images,\n    basePrice,\n    excerpt,\n    author,\n    status,\n    stripePriceId,\n    weight,\n    variants\n  }\n\n  }\n": ProductBySlugQueryResult;
-    "\n  *[_type == \"product\" && category == $category && status == \"active\"] | order(name asc) {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  category,\n  images,\n  basePrice,\n  stripePriceId,\n  weight,\n  variants,\n  lowStockThreshold,\n  trackInventory,\n  status,\n  // Book-specific fields\n  isbn,\n  author,\n  publisher,\n  publicationDate,\n  pageCount,\n  previewChapter,\n  excerpt,\n  amazonLink,\n  audibleLink,\n  // Upsells\n  upsellHeadline,\n  \"digitalUpsell\": digitalUpsell-> {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  price,\n  isSubscription,\n  subscriptionInterval,\n  firstMonthPrice,\n  stripePriceId,\n  kajabiWebhookUrl,\n  upsellPosition,\n  headline,\n  subheadline,\n  bulletPoints,\n  image,\n  discount,\n  ctaText,\n  status\n\n  },\n  \"upsells\": upsells[]-> {\n    _id,\n    name,\n    \"slug\": slug.current,\n    category,\n    images,\n    basePrice,\n    excerpt,\n    author,\n    status,\n    stripePriceId,\n    weight,\n    variants\n  }\n\n  }\n": ProductsByCategoryQueryResult;
-    "\n  *[_type == \"product\" && name == $name] [0] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  category,\n  images,\n  basePrice,\n  stripePriceId,\n  weight,\n  variants,\n  lowStockThreshold,\n  trackInventory,\n  status,\n  // Book-specific fields\n  isbn,\n  author,\n  publisher,\n  publicationDate,\n  pageCount,\n  previewChapter,\n  excerpt,\n  amazonLink,\n  audibleLink,\n  // Upsells\n  upsellHeadline,\n  \"digitalUpsell\": digitalUpsell-> {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  price,\n  isSubscription,\n  subscriptionInterval,\n  firstMonthPrice,\n  stripePriceId,\n  kajabiWebhookUrl,\n  upsellPosition,\n  headline,\n  subheadline,\n  bulletPoints,\n  image,\n  discount,\n  ctaText,\n  status\n\n  },\n  \"upsells\": upsells[]-> {\n    _id,\n    name,\n    \"slug\": slug.current,\n    category,\n    images,\n    basePrice,\n    excerpt,\n    author,\n    status,\n    stripePriceId,\n    weight,\n    variants\n  }\n\n  }\n": ProductByNameQueryResult;
+    "\n  *[_type == \"product\" && status == \"active\"] | order(name asc) {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  category,\n  images,\n  basePrice,\n  stripePriceId,\n  weight,\n  variants,\n  lowStockThreshold,\n  trackInventory,\n  status,\n  featured,\n  // Book-specific fields\n  isbn,\n  author,\n  publisher,\n  publicationDate,\n  pageCount,\n  previewChapter,\n  excerpt,\n  amazonLink,\n  audibleLink,\n  // Upsells\n  upsellHeadline,\n  \"digitalUpsell\": digitalUpsell-> {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  price,\n  isSubscription,\n  subscriptionInterval,\n  firstMonthPrice,\n  stripePriceId,\n  kajabiWebhookUrl,\n  upsellPosition,\n  headline,\n  subheadline,\n  bulletPoints,\n  image,\n  discount,\n  ctaText,\n  status\n\n  },\n  \"upsells\": upsells[]-> {\n    _id,\n    name,\n    \"slug\": slug.current,\n    category,\n    images,\n    basePrice,\n    excerpt,\n    author,\n    status,\n    stripePriceId,\n    weight,\n    variants\n  }\n\n  }\n": AllProductsQueryResult;
+    "\n  *[_type == \"product\" && slug.current == $slug && status == \"active\"] [0] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  category,\n  images,\n  basePrice,\n  stripePriceId,\n  weight,\n  variants,\n  lowStockThreshold,\n  trackInventory,\n  status,\n  featured,\n  // Book-specific fields\n  isbn,\n  author,\n  publisher,\n  publicationDate,\n  pageCount,\n  previewChapter,\n  excerpt,\n  amazonLink,\n  audibleLink,\n  // Upsells\n  upsellHeadline,\n  \"digitalUpsell\": digitalUpsell-> {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  price,\n  isSubscription,\n  subscriptionInterval,\n  firstMonthPrice,\n  stripePriceId,\n  kajabiWebhookUrl,\n  upsellPosition,\n  headline,\n  subheadline,\n  bulletPoints,\n  image,\n  discount,\n  ctaText,\n  status\n\n  },\n  \"upsells\": upsells[]-> {\n    _id,\n    name,\n    \"slug\": slug.current,\n    category,\n    images,\n    basePrice,\n    excerpt,\n    author,\n    status,\n    stripePriceId,\n    weight,\n    variants\n  }\n\n  }\n": ProductBySlugQueryResult;
+    "\n  *[_type == \"product\" && category == $category && status == \"active\"] | order(name asc) {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  category,\n  images,\n  basePrice,\n  stripePriceId,\n  weight,\n  variants,\n  lowStockThreshold,\n  trackInventory,\n  status,\n  featured,\n  // Book-specific fields\n  isbn,\n  author,\n  publisher,\n  publicationDate,\n  pageCount,\n  previewChapter,\n  excerpt,\n  amazonLink,\n  audibleLink,\n  // Upsells\n  upsellHeadline,\n  \"digitalUpsell\": digitalUpsell-> {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  price,\n  isSubscription,\n  subscriptionInterval,\n  firstMonthPrice,\n  stripePriceId,\n  kajabiWebhookUrl,\n  upsellPosition,\n  headline,\n  subheadline,\n  bulletPoints,\n  image,\n  discount,\n  ctaText,\n  status\n\n  },\n  \"upsells\": upsells[]-> {\n    _id,\n    name,\n    \"slug\": slug.current,\n    category,\n    images,\n    basePrice,\n    excerpt,\n    author,\n    status,\n    stripePriceId,\n    weight,\n    variants\n  }\n\n  }\n": ProductsByCategoryQueryResult;
+    "\n  *[_type == \"product\" && name == $name] [0] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  category,\n  images,\n  basePrice,\n  stripePriceId,\n  weight,\n  variants,\n  lowStockThreshold,\n  trackInventory,\n  status,\n  featured,\n  // Book-specific fields\n  isbn,\n  author,\n  publisher,\n  publicationDate,\n  pageCount,\n  previewChapter,\n  excerpt,\n  amazonLink,\n  audibleLink,\n  // Upsells\n  upsellHeadline,\n  \"digitalUpsell\": digitalUpsell-> {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  price,\n  isSubscription,\n  subscriptionInterval,\n  firstMonthPrice,\n  stripePriceId,\n  kajabiWebhookUrl,\n  upsellPosition,\n  headline,\n  subheadline,\n  bulletPoints,\n  image,\n  discount,\n  ctaText,\n  status\n\n  },\n  \"upsells\": upsells[]-> {\n    _id,\n    name,\n    \"slug\": slug.current,\n    category,\n    images,\n    basePrice,\n    excerpt,\n    author,\n    status,\n    stripePriceId,\n    weight,\n    variants\n  }\n\n  }\n": ProductByNameQueryResult;
     "\n  *[_type == \"digitalProduct\" && upsellPosition == $position && status == \"active\"] [0] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  price,\n  isSubscription,\n  subscriptionInterval,\n  firstMonthPrice,\n  stripePriceId,\n  kajabiWebhookUrl,\n  upsellPosition,\n  headline,\n  subheadline,\n  bulletPoints,\n  image,\n  discount,\n  ctaText,\n  status\n\n  }\n": DigitalProductByPositionQueryResult;
     "\n  *[_type == \"digitalProduct\" && slug.current == $slug && status == \"active\"] [0] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  price,\n  isSubscription,\n  subscriptionInterval,\n  firstMonthPrice,\n  stripePriceId,\n  kajabiWebhookUrl,\n  upsellPosition,\n  headline,\n  subheadline,\n  bulletPoints,\n  image,\n  discount,\n  ctaText,\n  status\n\n  }\n": DigitalProductBySlugQueryResult;
     "\n  *[_type == \"product\" && category == \"books\" && status == \"active\"] | order(_createdAt desc) [0...$limit] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  images,\n  basePrice,\n  category\n\n  }\n": NewestBooksQueryResult;
+    "\n  *[_type == \"product\" && category == \"books\" && status == \"active\" && featured == true] | order(_createdAt desc) [0...$limit] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  images,\n  basePrice,\n  category\n\n  }\n": FeaturedBooksQueryResult;
     "\n  *[_type == \"couplesCornerPost\"] | order(publishedAt desc) {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": AllCouplesCornerPostsQueryResult;
     "\n  *[_type == \"couplesCornerPost\" && featured == true] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": FeaturedCouplesCornerPostsQueryResult;
     "\n  *[_type == \"couplesCornerPost\" && category == $category] | order(publishedAt desc) {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": CouplesCornerPostsByCategoryQueryResult;

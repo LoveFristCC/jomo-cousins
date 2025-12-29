@@ -65,9 +65,15 @@ export default async function ProductsPage({
   });
 
   // Filter products based on selected category
-  const products = category
+  const filteredProducts = category
     ? allProducts.filter((p) => p.category?.toLowerCase() === category.toLowerCase())
     : allProducts;
+
+  // Separate featured and regular products
+  const featuredProducts = filteredProducts.filter((p) => p.featured);
+  const regularProducts = filteredProducts.filter((p) => !p.featured).sort((a, b) =>
+    (a.name || '').localeCompare(b.name || '')
+  );
 
   return (
     <div className="min-h-screen bg-white">
@@ -118,20 +124,44 @@ export default async function ProductsPage({
           </div>
         ) }
 
+        {/* Featured Products Section */ }
+        { featuredProducts.length > 0 && (
+          <section className="mb-16">
+            <div className="mb-8 flex items-center gap-3">
+              <svg className="h-8 w-8 text-[#e31e24]" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <h2 className="text-3xl font-bold text-[#2d2d2d]">
+                Featured <span className="text-[#e31e24]">Products</span>
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-4">
+              { featuredProducts.map((product) => (
+                <FeaturedProductCard key={ product._id } product={ product } />
+              )) }
+            </div>
+            <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-12"></div>
+          </section>
+        ) }
+
         {/* Products count */ }
         <div className="mb-8 text-gray-600">
-          Showing <span className="font-semibold text-[#2d2d2d]">{ products.length }</span> product{ products.length !== 1 ? 's' : '' }
+          { featuredProducts.length > 0 && (
+            <span className="font-semibold text-[#2d2d2d]">{ featuredProducts.length }</span>
+          ) }
+          { featuredProducts.length > 0 && ' featured · ' }
+          <span className="font-semibold text-[#2d2d2d]">{ regularProducts.length }</span> other product{ regularProducts.length !== 1 ? 's' : '' }
         </div>
 
-        {/* Products grid */ }
+        {/* Regular Products grid */ }
         <Suspense fallback={ <ProductsGridSkeleton /> }>
-          { products.length > 0 ? (
+          { regularProducts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              { products.map((product) => (
+              { regularProducts.map((product) => (
                 <ProductCard key={ product._id } product={ product } />
               )) }
             </div>
-          ) : (
+          ) : featuredProducts.length === 0 ? (
             <div className="text-center py-20">
               <div className="mb-4">
                 <svg className="h-20 w-20 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -151,10 +181,110 @@ export default async function ProductsPage({
                 </Link>
               ) }
             </div>
-          ) }
+          ) : null }
         </Suspense>
       </div>
     </div>
+  );
+}
+
+/**
+ * Featured product card component with enhanced styling
+ */
+function FeaturedProductCard({ product }: { product: AllProductsQueryResult[ number ] }) {
+  // Calculate total inventory across all variants
+  const totalInventory = product.variants?.reduce(
+    (sum, variant) => sum + (variant.inventory || 0),
+    0
+  ) || 0;
+
+  // Determine stock status
+  const isLowStock =
+    product.trackInventory && totalInventory <= product.lowStockThreshold;
+  const isOutOfStock = product.trackInventory && totalInventory === 0;
+
+  // Get the first product image
+  const imageUrl = product.images?.[ 0 ]
+    ? urlForImage(product.images[ 0 ])?.width(1200).url()
+    : null;
+
+  return (
+    <Link
+      href={ `/products/${product.slug || ''}` }
+      className="group bg-gradient-to-br from-white to-gray-50 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-[#e31e24]/20"
+    >
+      {/* Product image */ }
+      <div className="relative aspect-square bg-white overflow-hidden">
+        { imageUrl ? (
+          <Image
+            src={ imageUrl }
+            alt={ product.images[ 0 ].alt || product.name }
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            quality={ 95 }
+            className="object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-gray-400">
+            <svg className="w-20 h-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+        ) }
+
+        {/* Featured badge */ }
+        <div className="absolute top-4 right-4 bg-gradient-to-r from-[#e31e24] to-[#c41a1f] text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
+          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          Featured
+        </div>
+
+        {/* Stock status badge */ }
+        { isOutOfStock && (
+          <div className="absolute top-16 right-4 bg-[#e31e24] text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg">
+            Out of Stock
+          </div>
+        ) }
+        { !isOutOfStock && isLowStock && (
+          <div className="absolute top-16 right-4 bg-yellow-500 text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg">
+            Low Stock
+          </div>
+        ) }
+
+        {/* Category badge */ }
+        <div className="absolute top-4 left-4 bg-[#2d2d2d] text-white px-4 py-2 rounded-full text-xs font-semibold uppercase">
+          { product.category }
+        </div>
+      </div>
+
+      {/* Product info */ }
+      <div className="p-6">
+        <h3 className="font-bold text-2xl mb-3 text-[#2d2d2d] group-hover:text-[#e31e24] transition-colors line-clamp-2">
+          { product.name || 'Untitled' }
+        </h3>
+
+        <div className="flex items-center justify-between mt-4">
+          <span className="text-3xl font-bold text-[#e31e24]">
+            ${ (product.basePrice || 0).toFixed(2) }
+          </span>
+
+          { product.variants && product.variants.length > 0 && (
+            <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+              { product.variants.length } option{ product.variants.length > 1 ? "s" : "" }
+            </span>
+          ) }
+        </div>
+
+        {/* View Details button */ }
+        <div className="mt-6 flex items-center justify-center bg-[#e31e24] text-white font-semibold text-sm py-3 px-6 rounded-lg group-hover:bg-[#c41a1f] transition-colors">
+          View Details
+          <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+      </div>
+    </Link>
   );
 }
 

@@ -70,6 +70,7 @@ const productFields = /* groq */ `
   lowStockThreshold,
   trackInventory,
   status,
+  featured,
   // Book-specific fields
   isbn,
   author,
@@ -150,6 +151,12 @@ const bookFields = /* groq */ `
 
 export const newestBooksQuery = defineQuery(`
   *[_type == "product" && category == "books" && status == "active"] | order(_createdAt desc) [0...$limit] {
+    ${bookFields}
+  }
+`);
+
+export const featuredBooksQuery = defineQuery(`
+  *[_type == "product" && category == "books" && status == "active" && featured == true] | order(_createdAt desc) [0...$limit] {
     ${bookFields}
   }
 `);

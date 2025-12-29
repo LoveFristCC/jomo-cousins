@@ -305,6 +305,13 @@ export default defineType({
       initialValue: "active",
       validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: "featured",
+      title: "Featured Product",
+      type: "boolean",
+      description: "Featured products appear first on the products page and homepage (recommend max 3 for homepage)",
+      initialValue: false,
+    }),
     // Book-specific fields for SEO
     defineField({
       name: "isbn",

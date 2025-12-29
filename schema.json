@@ -2522,6 +2522,13 @@
         },
         "optional": true
       },
+      "featured": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
       "isbn": {
         "type": "objectAttribute",
         "value": {
