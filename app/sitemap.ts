@@ -81,25 +81,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Marriage site static pages
   const marriageStaticPages: MetadataRoute.Sitemap = [
     {
-      url: `${baseUrl}/jomo-and-charmaine`,
+      url: `${baseUrl}/marriage`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/jomo-and-charmaine/about`,
+      url: `${baseUrl}/marriage/about`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/jomo-and-charmaine/contact`,
+      url: `${baseUrl}/marriage/contact`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.6,
     },
     {
-      url: `${baseUrl}/jomo-and-charmaine/couples-corner`,
+      url: `${baseUrl}/marriage/blog`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
@@ -142,7 +142,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Dynamic couples corner post pages
   const couplesCornerPages: MetadataRoute.Sitemap = couplesCornerPosts.map((post: any) => ({
-    url: `${baseUrl}/jomo-and-charmaine/couples-corner/${post.slug}`,
+    url: `${baseUrl}/marriage/blog/${post.slug}`,
     lastModified: post.publishedAt ? new Date(post.publishedAt) : new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.7,

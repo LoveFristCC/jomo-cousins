@@ -9,23 +9,23 @@ export default function JomoAndCharmainePage() {
     "@graph": [
       {
         "@type": "Organization",
-        "@id": "https://www.jomocousins.com/jomo-and-charmaine/#organization",
+        "@id": "https://www.jomocousins.com/marriage/#organization",
         "name": "Jomo & Charmaine Ministries",
-        "url": "https://www.jomocousins.com/jomo-and-charmaine",
-        "logo": "https://www.jomocousins.com/images/jomo-and-charmaine/main-page/Jomo-and-Charmaine-logo.png",
+        "url": "https://www.jomocousins.com/marriage",
+        "logo": "https://www.jomocousins.com/images/marriage/main-page/Jomo-and-Charmaine-logo.png",
         "description": "Marriage counseling ministry led by Dr. Jomo and Dr. Charmaine Cousins, Senior Pastors helping couples thrive together through faith-based counseling and relationship coaching.",
         "founder": [
           {
             "@type": "Person",
             "name": "Dr. Jomo Cousins",
             "jobTitle": "Senior Pastor & Marriage Counselor",
-            "url": "https://www.jomocousins.com/jomo-and-charmaine/about"
+            "url": "https://www.jomocousins.com/marriage/about"
           },
           {
             "@type": "Person",
             "name": "Dr. Charmaine Cousins",
             "jobTitle": "Senior Pastor & Marriage Counselor",
-            "url": "https://www.jomocousins.com/jomo-and-charmaine/about"
+            "url": "https://www.jomocousins.com/marriage/about"
           }
         ],
         "address": {
@@ -44,11 +44,11 @@ export default function JomoAndCharmainePage() {
       },
       {
         "@type": "ProfessionalService",
-        "@id": "https://www.jomocousins.com/jomo-and-charmaine/#service",
+        "@id": "https://www.jomocousins.com/marriage/#service",
         "name": "Jomo & Charmaine Marriage Counseling",
         "description": "Faith-based marriage counseling and relationship coaching by experienced Senior Pastors",
         "provider": {
-          "@id": "https://www.jomocousins.com/jomo-and-charmaine/#organization"
+          "@id": "https://www.jomocousins.com/marriage/#organization"
         },
         "serviceType": [
           "Marriage Counseling",
@@ -82,7 +82,7 @@ export default function JomoAndCharmainePage() {
       <section className="relative h-[600px] md:h-[700px] lg:h-[800px]">
         {/* Background Image */ }
         <Image
-          src="/images/jomo-and-charmaine/contact/contact-hero.jpg"
+          src="/images/marriage/contact/contact-hero.jpg"
           alt="Jomo and Charmaine Cousins"
           fill
           className="object-cover object-top"
@@ -178,7 +178,7 @@ export default function JomoAndCharmainePage() {
             {/* Left Image */ }
             <div className="relative">
               <Image
-                src="/images/jomo-and-charmaine/main-page/Cousins-Together-Main-page.png"
+                src="/images/marriage/main-page/Cousins-Together-Main-page.png"
                 alt="Drs. Jomo and Charmaine Cousins"
                 width={ 600 }
                 height={ 700 }
@@ -202,7 +202,7 @@ export default function JomoAndCharmainePage() {
                 We've been married for 24 years and have three lovely children. Our goal is to create a community of people who aspire to enjoy life together as a couple. With a strong foundation in Christ, we hope to inspire and motivate those who may need a little guidance on their journey.
               </p>
               <Link
-                href="/jomo-and-charmaine/about"
+                href="/marriage/about"
                 className="inline-block rounded-lg bg-[#ea8125] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
               >
                 About Us
@@ -306,7 +306,7 @@ export default function JomoAndCharmainePage() {
             <div className="grid items-center gap-8 md:grid-cols-2 lg:gap-16">
               <div className="relative">
                 <Image
-                  src="/images/jomo-and-charmaine/main-page/reading-marriage-book.jpg"
+                  src="/images/marriage/main-page/reading-marriage-book.jpg"
                   alt="The Mechanics of Marriage"
                   width={ 600 }
                   height={ 500 }
@@ -334,7 +334,7 @@ export default function JomoAndCharmainePage() {
             <div className="grid items-center gap-8 md:grid-cols-2 lg:gap-16">
               <div className="relative">
                 <Image
-                  src="/images/jomo-and-charmaine/main-page/tym-book.jpg"
+                  src="/images/marriage/main-page/tym-book.jpg"
                   alt="Transform Your Mind Transform Your Marriage"
                   width={ 600 }
                   height={ 500 }
@@ -379,7 +379,7 @@ export default function JomoAndCharmainePage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/jomo-and-charmaine/main-page/communication.jpg"
+                  src="/images/marriage/main-page/communication.jpg"
                   alt="Communication Issues"
                   width={ 800 }
                   height={ 800 }
@@ -394,7 +394,7 @@ export default function JomoAndCharmainePage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/jomo-and-charmaine/main-page/pre-marriage.jpg"
+                  src="/images/marriage/main-page/pre-marriage.jpg"
                   alt="Premarital Counseling"
                   width={ 800 }
                   height={ 800 }
@@ -409,7 +409,7 @@ export default function JomoAndCharmainePage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/jomo-and-charmaine/main-page/sexual-issues.jpg"
+                  src="/images/marriage/main-page/sexual-issues.jpg"
                   alt="Sexual Issues"
                   width={ 800 }
                   height={ 800 }
@@ -424,7 +424,7 @@ export default function JomoAndCharmainePage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/jomo-and-charmaine/main-page/cheating.jpg"
+                  src="/images/marriage/main-page/cheating.jpg"
                   alt="Infidelity & Unfaithfulness"
                   width={ 800 }
                   height={ 800 }
@@ -439,7 +439,7 @@ export default function JomoAndCharmainePage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/jomo-and-charmaine/main-page/trust.jpg"
+                  src="/images/marriage/main-page/trust.jpg"
                   alt="Trust Issues"
                   width={ 800 }
                   height={ 800 }
@@ -454,7 +454,7 @@ export default function JomoAndCharmainePage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/jomo-and-charmaine/main-page/blended-family.jpg"
+                  src="/images/marriage/main-page/blended-family.jpg"
                   alt="Blended Family Support"
                   width={ 800 }
                   height={ 800 }
@@ -525,7 +525,7 @@ export default function JomoAndCharmainePage() {
                   From dating ideas, to prayers for your marriage, get tips and resources that will help strengthen your bond.
                 </p>
               </div>
-              <Link href="/jomo-and-charmaine/couples-corner" className="text-sm font-bold uppercase tracking-wider text-[#ea8125] border-b-2 border-[#ea8125] hover:opacity-80">
+              <Link href="/marriage/blog" className="text-sm font-bold uppercase tracking-wider text-[#ea8125] border-b-2 border-[#ea8125] hover:opacity-80">
                 Explore
               </Link>
             </div>
@@ -540,7 +540,7 @@ export default function JomoAndCharmainePage() {
             {/* Left - eBook Image */ }
             <div className="relative flex justify-center">
               <Image
-                src="/images/jomo-and-charmaine/main-page/conversation-staters.png"
+                src="/images/marriage/main-page/conversation-staters.png"
                 alt="Conversation Starters for Couples"
                 width={ 500 }
                 height={ 500 }
@@ -598,7 +598,7 @@ export default function JomoAndCharmainePage() {
               <div className="text-center">
                 <div className="relative mx-auto mb-3 h-20 w-20 overflow-hidden rounded-full">
                   <Image
-                    src="/images/jomo-and-charmaine/main-page/jac-testimonial-1.jpg"
+                    src="/images/marriage/main-page/jac-testimonial-1.jpg"
                     alt="B. & F. Simmons"
                     fill
                     className="object-cover"
@@ -628,7 +628,7 @@ export default function JomoAndCharmainePage() {
               <div className="text-center">
                 <div className="relative mx-auto mb-3 h-20 w-20 overflow-hidden rounded-full">
                   <Image
-                    src="/images/jomo-and-charmaine/main-page/jac-testimonial-2.jpg"
+                    src="/images/marriage/main-page/jac-testimonial-2.jpg"
                     alt="J. and W. Brushier"
                     fill
                     className="object-cover"
@@ -658,7 +658,7 @@ export default function JomoAndCharmainePage() {
               <div className="text-center">
                 <div className="relative mx-auto mb-3 h-20 w-20 overflow-hidden rounded-full">
                   <Image
-                    src="/images/jomo-and-charmaine/main-page/jac-testimonial-3.jpg"
+                    src="/images/marriage/main-page/jac-testimonial-3.jpg"
                     alt="M. McKenny"
                     fill
                     className="object-cover"
@@ -706,17 +706,17 @@ export const metadata = {
   title: "Marriage Counseling & Relationship Coaching",
   description: "Drs. Jomo & Charmaine Cousins help couples thrive together through faith-based marriage counseling. Senior Pastors with 24 years of marriage, serving 1,000+ couples at Love First Christian Center. Expert guidance for communication, intimacy, trust, infidelity, and blended families.",
   alternates: {
-    canonical: "https://www.jomocousins.com/jomo-and-charmaine",
+    canonical: "https://www.jomocousins.com/marriage",
   },
   openGraph: {
     type: "website",
     siteName: "Dr. Jomo Cousins",
     title: "Jomo & Charmaine - Marriage Counseling Ministry",
     description: "Senior Pastors helping couples build stronger marriages. 24 years married, 1,000+ couples counseled.",
-    url: "https://www.jomocousins.com/jomo-and-charmaine",
+    url: "https://www.jomocousins.com/marriage",
     images: [
       {
-        url: "/images/jomo-and-charmaine/main-page/Cousins-Together-Main-page.png",
+        url: "/images/marriage/main-page/Cousins-Together-Main-page.png",
         width: 1200,
         height: 630,
         alt: "Dr. Jomo and Dr. Charmaine Cousins - Marriage Counseling Pastors",
@@ -727,6 +727,6 @@ export const metadata = {
     card: "summary_large_image",
     title: "Jomo & Charmaine - Marriage Counseling Ministry",
     description: "Senior Pastors helping couples build stronger marriages. 24 years married, 1,000+ couples counseled.",
-    images: [ "/images/jomo-and-charmaine/main-page/Cousins-Together-Main-page.png" ],
+    images: [ "/images/marriage/main-page/Cousins-Together-Main-page.png" ],
   },
 };

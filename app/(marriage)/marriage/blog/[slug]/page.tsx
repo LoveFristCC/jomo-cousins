@@ -142,7 +142,7 @@ export default async function BlogPostPage({
           {/* Breadcrumb */}
           <div className="mb-8 flex items-center gap-2 text-sm">
             <Link
-              href="/jomo-and-charmaine/couples-corner"
+              href="/marriage/blog"
               className="text-gray-600 transition-colors hover:text-[#ea8125]"
             >
               Couples Corner
@@ -261,7 +261,7 @@ export default async function BlogPostPage({
 
             {/* Share Section */}
             <ShareButtons
-              shareUrl={`https://www.jomocousins.com/jomo-and-charmaine/couples-corner/${slug}`}
+              shareUrl={`https://www.jomocousins.com/marriage/blog/${slug}`}
               shareTitle={post.title}
             />
           </div>
@@ -288,7 +288,7 @@ export default async function BlogPostPage({
                   return (
                     <Link
                       key={relatedPost._id}
-                      href={`/jomo-and-charmaine/couples-corner/${relatedPost.slug}`}
+                      href={`/marriage/blog/${relatedPost.slug}`}
                       className="group"
                     >
                       <article className="overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-xl">
@@ -330,7 +330,7 @@ export default async function BlogPostPage({
             {/* Left - eBook Image */}
             <div className="relative flex justify-center">
               <Image
-                src="/images/jomo-and-charmaine/main-page/conversation-staters.png"
+                src="/images/marriage/main-page/conversation-staters.png"
                 alt="Conversation Starters for Couples"
                 width={500}
                 height={500}
@@ -374,7 +374,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: post.seo?.metaDescription || post.excerpt,
     keywords: post.seo?.keywords || post.tags,
     alternates: {
-      canonical: `https://www.jomocousins.com/jomo-and-charmaine/couples-corner/${slug}`,
+      canonical: `https://www.jomocousins.com/marriage/blog/${slug}`,
     },
     openGraph: {
       title: post.title,

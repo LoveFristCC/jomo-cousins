@@ -61,7 +61,7 @@ export default function Nav() {
               {/* The "Subtle Bridge" Link */ }
               <div className="mr-6 flex items-center border-l border-white/20 pl-6">
                 <Link
-                  href="/jomo-and-charmaine"
+                  href="/marriage"
                   className="group flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 transition-all hover:text-white"
                 >
                   <span className="text-[#ea8125]">J&C</span>
@@ -131,7 +131,7 @@ export default function Nav() {
 
           <div className="mt-4 border-t border-white/10 pt-8">
             <Link
-              href="/jomo-and-charmaine"
+              href="/marriage"
               onClick={ () => setMobileMenuOpen(false) }
               className="flex items-center gap-3 text-lg font-bold text-[#ea8125]"
             >

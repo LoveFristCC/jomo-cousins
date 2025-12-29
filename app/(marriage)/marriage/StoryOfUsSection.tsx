@@ -18,7 +18,7 @@ export default function StoryOfUsSection() {
         >
           <div className="relative w-full">
             <Image
-              src="/images/jomo-and-charmaine/main-page/The-Story-of-Us-7.png"
+              src="/images/marriage/main-page/The-Story-of-Us-7.png"
               alt="The Story of Us - Jomo and Charmaine"
               width={1920}
               height={400}

@@ -31,7 +31,7 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li>
                 <Link
-                  href="/jomo-and-charmaine/about"
+                  href="/marriage/about"
                   className="text-gray-700 transition-colors hover:text-[#ea8125]"
                 >
                   About Us
@@ -39,7 +39,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/jomo-and-charmaine/couples-corner"
+                  href="/marriage/blog"
                   className="text-gray-700 transition-colors hover:text-[#ea8125]"
                 >
                   Couples' Corner
@@ -55,7 +55,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/jomo-and-charmaine/contact"
+                  href="/marriage/contact"
                   className="text-gray-700 transition-colors hover:text-[#ea8125]"
                 >
                   Contact Us
@@ -63,7 +63,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/jomo-and-charmaine/contact"
+                  href="/marriage/contact"
                   className="text-gray-700 transition-colors hover:text-[#ea8125]"
                 >
                   Request an Appointment
@@ -104,7 +104,7 @@ export default function Footer() {
 
             {/* CTA Button */ }
             <Link
-              href="/jomo-and-charmaine/contact"
+              href="/marriage/contact"
               className="mb-6 block rounded-lg bg-[#ea8125] px-6 py-3 text-center text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
             >
               Request an Appointment

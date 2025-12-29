@@ -67,7 +67,7 @@ export default function ContactPage() {
       <section className="relative h-[400px] md:h-[500px]">
         {/* Background Image */ }
         <Image
-          src="/images/jomo-and-charmaine/contact/contact-hero.jpg"
+          src="/images/marriage/contact/contact-hero.jpg"
           alt="Contact Jomo and Charmaine"
           fill
           className="object-cover object-center"
@@ -379,13 +379,13 @@ export default function ContactPage() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link
-                href="/jomo-and-charmaine/couples-corner"
+                href="/marriage/blog"
                 className="inline-block rounded-lg bg-white px-8 py-4 font-bold text-[#ea8125] shadow-lg transition-all hover:scale-105 hover:shadow-xl"
               >
                 Explore Resources
               </Link>
               <a
-                href="/jomo-and-charmaine/about"
+                href="/marriage/about"
                 className="inline-block rounded-lg border-2 border-white px-8 py-4 font-bold text-white transition-all hover:bg-white hover:text-[#ea8125]"
               >
                 Learn More About Us

@@ -8,7 +8,7 @@ import { format, parseISO } from "date-fns";
 import JCNewsletterForm from "../JCNewsletterForm";
 
 export default async function CouplesCornerPage() {
-  const [allPosts, featuredPosts] = await Promise.all([
+  const [ allPosts, featuredPosts ] = await Promise.all([
     sanityFetch({
       query: allCouplesCornerPostsQuery,
     }),
@@ -27,22 +27,22 @@ export default async function CouplesCornerPage() {
 
   return (
     <div className="bg-white">
-      {/* Hero Section */}
+      {/* Hero Section */ }
       <section className="relative h-[400px] md:h-[500px]">
-        {/* Background Image */}
+        {/* Background Image */ }
         <Image
-          src="/images/jomo-and-charmaine/couples-corner/couple-corner-hero.jpg"
+          src="/images/marriage/blog/couple-corner-hero.jpg"
           alt="Couples' Corner"
           fill
           className="object-cover object-center"
           priority
-          quality={100}
+          quality={ 100 }
         />
 
-        {/* Dark Overlay for text readability */}
+        {/* Dark Overlay for text readability */ }
         <div className="absolute inset-0 bg-black/40" />
 
-        {/* Content */}
+        {/* Content */ }
         <div className="relative flex h-full items-center justify-center">
           <div className="container mx-auto px-5">
             <h1 className="text-center text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">
@@ -52,8 +52,8 @@ export default async function CouplesCornerPage() {
         </div>
       </section>
 
-      {/* Featured Posts */}
-      {featuredPosts.length > 0 && (
+      {/* Featured Posts */ }
+      { featuredPosts.length > 0 && (
         <section className="bg-white py-20">
           <div className="container mx-auto px-5">
             <h2 className="mb-12 text-3xl font-bold text-[#303030] md:text-4xl">
@@ -61,55 +61,55 @@ export default async function CouplesCornerPage() {
             </h2>
 
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {featuredPosts.map((post) => {
+              { featuredPosts.map((post) => {
                 const imageUrl = post.coverImage
                   ? urlForImage(post.coverImage)?.width(800).height(600).url()
                   : null;
 
                 return (
                   <Link
-                    key={post._id}
-                    href={`/jomo-and-charmaine/couples-corner/${post.slug}`}
+                    key={ post._id }
+                    href={ `/marriage/blog/${post.slug}` }
                     className="group"
                   >
                     <article className="overflow-hidden rounded-2xl bg-white shadow-lg transition-all hover:shadow-2xl">
-                      {/* Featured Badge */}
+                      {/* Featured Badge */ }
                       <div className="relative">
-                        {imageUrl && (
+                        { imageUrl && (
                           <div className="relative aspect-[4/3] overflow-hidden">
                             <Image
-                              src={imageUrl}
-                              alt={post.coverImage.alt || post.title}
+                              src={ imageUrl }
+                              alt={ post.coverImage.alt || post.title }
                               fill
                               className="object-cover transition-transform duration-300 group-hover:scale-105"
                             />
                           </div>
-                        )}
+                        ) }
                         <div className="absolute right-4 top-4 rounded-full bg-[#ea8125] px-4 py-2 text-xs font-bold text-white shadow-lg">
                           ⭐ Featured
                         </div>
                       </div>
 
                       <div className="p-6">
-                        {/* Category & Date */}
+                        {/* Category & Date */ }
                         <div className="mb-3 flex items-center gap-3 text-sm">
                           <span className="rounded-full bg-[#0E6BB7]/10 px-3 py-1 font-semibold text-[#0E6BB7]">
-                            {post.category}
+                            { post.category }
                           </span>
                           <span className="text-gray-500">
-                            {format(parseISO(post.publishedAt), "MMM d, yyyy")}
+                            { format(parseISO(post.publishedAt), "MMM d, yyyy") }
                           </span>
                         </div>
 
-                        {/* Title */}
+                        {/* Title */ }
                         <h3 className="mb-3 text-xl font-bold text-[#303030] transition-colors group-hover:text-[#ea8125]">
-                          {post.title}
+                          { post.title }
                         </h3>
 
-                        {/* Excerpt */}
-                        <p className="line-clamp-3 text-gray-600">{post.excerpt}</p>
+                        {/* Excerpt */ }
+                        <p className="line-clamp-3 text-gray-600">{ post.excerpt }</p>
 
-                        {/* Read More */}
+                        {/* Read More */ }
                         <div className="mt-4 flex items-center font-semibold text-[#ea8125]">
                           Read More
                           <svg
@@ -121,7 +121,7 @@ export default async function CouplesCornerPage() {
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
-                              strokeWidth={2}
+                              strokeWidth={ 2 }
                               d="M9 5l7 7-7 7"
                             />
                           </svg>
@@ -130,13 +130,13 @@ export default async function CouplesCornerPage() {
                     </article>
                   </Link>
                 );
-              })}
+              }) }
             </div>
           </div>
         </section>
-      )}
+      ) }
 
-      {/* Resources Section */}
+      {/* Resources Section */ }
       <section className="bg-white py-20 md:py-32">
         <div className="container mx-auto px-5">
           <div className="mb-16 text-center">
@@ -149,11 +149,11 @@ export default async function CouplesCornerPage() {
           </div>
 
           <div className="grid gap-12 md:grid-cols-2 max-w-4xl mx-auto">
-            {/* Podcast */}
+            {/* Podcast */ }
             <div className="text-center">
               <div className="mb-8 flex justify-center">
                 <svg className="h-16 w-16 text-gray-700" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-12.5c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5zm0 5.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/>
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-12.5c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5zm0 5.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z" />
                 </svg>
               </div>
               <h3 className="mb-6 text-2xl font-bold text-[#303030]">Podcast</h3>
@@ -168,11 +168,11 @@ export default async function CouplesCornerPage() {
               </a>
             </div>
 
-            {/* YouTube */}
+            {/* YouTube */ }
             <div className="text-center">
               <div className="mb-8 flex justify-center">
                 <svg className="h-16 w-16 text-gray-700" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/>
+                  <path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z" />
                 </svg>
               </div>
               <h3 className="mb-6 text-2xl font-bold text-[#303030]">YouTube</h3>
@@ -190,7 +190,7 @@ export default async function CouplesCornerPage() {
         </div>
       </section>
 
-      {/* All Posts */}
+      {/* All Posts */ }
       <section className="bg-gradient-to-br from-[#FAFCFE] to-white py-20">
         <div className="container mx-auto px-5">
           <div className="mb-12 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
@@ -198,66 +198,66 @@ export default async function CouplesCornerPage() {
               All <span className="text-[#ea8125]">Articles</span>
             </h2>
 
-            {/* Category Filter */}
-            {categories.length > 0 && (
+            {/* Category Filter */ }
+            { categories.length > 0 && (
               <div className="flex flex-wrap gap-2">
-                {categories.slice(0, 5).map((category) => (
+                { categories.slice(0, 5).map((category) => (
                   <span
-                    key={category}
+                    key={ category }
                     className="cursor-pointer rounded-full border-2 border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 transition-all hover:border-[#ea8125] hover:text-[#ea8125]"
                   >
-                    {category}
+                    { category }
                   </span>
-                ))}
+                )) }
               </div>
-            )}
+            ) }
           </div>
 
-          {nonFeaturedPosts.length > 0 ? (
+          { nonFeaturedPosts.length > 0 ? (
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {nonFeaturedPosts.map((post) => {
+              { nonFeaturedPosts.map((post) => {
                 const imageUrl = post.coverImage
                   ? urlForImage(post.coverImage)?.width(800).height(600).url()
                   : null;
 
                 return (
                   <Link
-                    key={post._id}
-                    href={`/jomo-and-charmaine/couples-corner/${post.slug}`}
+                    key={ post._id }
+                    href={ `/marriage/blog/${post.slug}` }
                     className="group"
                   >
                     <article className="overflow-hidden rounded-2xl bg-white shadow-md transition-all hover:shadow-xl">
-                      {imageUrl && (
+                      { imageUrl && (
                         <div className="relative aspect-[4/3] overflow-hidden">
                           <Image
-                            src={imageUrl}
-                            alt={post.coverImage.alt || post.title}
+                            src={ imageUrl }
+                            alt={ post.coverImage.alt || post.title }
                             fill
                             className="object-cover transition-transform duration-300 group-hover:scale-105"
                           />
                         </div>
-                      )}
+                      ) }
 
                       <div className="p-6">
-                        {/* Category & Date */}
+                        {/* Category & Date */ }
                         <div className="mb-3 flex items-center gap-3 text-sm">
                           <span className="rounded-full bg-[#0E6BB7]/10 px-3 py-1 font-semibold text-[#0E6BB7]">
-                            {post.category}
+                            { post.category }
                           </span>
                           <span className="text-gray-500">
-                            {format(parseISO(post.publishedAt), "MMM d, yyyy")}
+                            { format(parseISO(post.publishedAt), "MMM d, yyyy") }
                           </span>
                         </div>
 
-                        {/* Title */}
+                        {/* Title */ }
                         <h3 className="mb-3 text-xl font-bold text-[#303030] transition-colors group-hover:text-[#ea8125]">
-                          {post.title}
+                          { post.title }
                         </h3>
 
-                        {/* Excerpt */}
-                        <p className="line-clamp-3 text-gray-600">{post.excerpt}</p>
+                        {/* Excerpt */ }
+                        <p className="line-clamp-3 text-gray-600">{ post.excerpt }</p>
 
-                        {/* Read More */}
+                        {/* Read More */ }
                         <div className="mt-4 flex items-center font-semibold text-[#ea8125]">
                           Read More
                           <svg
@@ -269,7 +269,7 @@ export default async function CouplesCornerPage() {
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
-                              strokeWidth={2}
+                              strokeWidth={ 2 }
                               d="M9 5l7 7-7 7"
                             />
                           </svg>
@@ -278,7 +278,7 @@ export default async function CouplesCornerPage() {
                     </article>
                   </Link>
                 );
-              })}
+              }) }
             </div>
           ) : (
             <div className="py-20 text-center">
@@ -286,27 +286,27 @@ export default async function CouplesCornerPage() {
                 No blog posts yet. Check back soon for relationship insights!
               </p>
             </div>
-          )}
+          ) }
         </div>
       </section>
 
-      {/* Conversation Starters Section */}
+      {/* Conversation Starters Section */ }
       <section className="bg-white py-20 md:py-32">
         <div className="container mx-auto px-5">
           <div className="grid items-center gap-12 md:grid-cols-2 lg:gap-20">
-            {/* Left - eBook Image */}
+            {/* Left - eBook Image */ }
             <div className="relative flex justify-center">
               <Image
-                src="/images/jomo-and-charmaine/main-page/conversation-staters.png"
+                src="/images/marriage/main-page/conversation-staters.png"
                 alt="Conversation Starters for Couples"
-                width={500}
-                height={500}
+                width={ 500 }
+                height={ 500 }
                 className="w-full max-w-md h-auto"
-                quality={100}
+                quality={ 100 }
               />
             </div>
 
-            {/* Right - Form */}
+            {/* Right - Form */ }
             <div>
               <JCNewsletterForm />
             </div>
@@ -321,17 +321,17 @@ export const metadata = {
   title: "Couples' Corner - Marriage & Relationship Blog",
   description: "Expert marriage advice and relationship tips from Drs. Jomo & Charmaine Cousins. Discover practical guidance on communication, intimacy, trust, dating ideas, prayers for marriage, and building stronger relationships. Faith-based wisdom from experienced Senior Pastors.",
   alternates: {
-    canonical: "https://www.jomocousins.com/jomo-and-charmaine/couples-corner",
+    canonical: "https://www.jomocousins.com/marriage/blog",
   },
   openGraph: {
     type: "website",
     siteName: "Dr. Jomo Cousins",
     title: "Couples' Corner - Marriage Advice from Jomo & Charmaine",
     description: "Relationship resources, dating ideas, marriage prayers, and expert counseling tips from experienced Senior Pastors.",
-    url: "https://www.jomocousins.com/jomo-and-charmaine/couples-corner",
+    url: "https://www.jomocousins.com/marriage/blog",
     images: [
       {
-        url: "/images/jomo-and-charmaine/couples-corner/couple-corner-hero.jpg",
+        url: "/images/marriage/blog/couple-corner-hero.jpg",
         width: 1200,
         height: 630,
         alt: "Couples' Corner - Marriage and Relationship Blog",
@@ -342,6 +342,6 @@ export const metadata = {
     card: "summary_large_image",
     title: "Couples' Corner - Marriage Advice from Jomo & Charmaine",
     description: "Relationship resources, dating ideas, marriage prayers, and expert counseling tips from experienced Senior Pastors.",
-    images: ["/images/jomo-and-charmaine/couples-corner/couple-corner-hero.jpg"],
+    images: [ "/images/marriage/blog/couple-corner-hero.jpg" ],
   },
 };

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   alternates: {
-    canonical: "https://www.jomocousins.com/jomo-and-charmaine",
+    canonical: "https://www.jomocousins.com/marriage",
   },
   keywords: [
     "Jomo and Charmaine",
@@ -46,15 +46,15 @@ export const metadata: Metadata = {
     "Christian relationship coaching",
   ],
   authors: [
-    { name: "Dr. Jomo Cousins", url: "https://www.jomocousins.com/jomo-and-charmaine/about" },
-    { name: "Dr. Charmaine Cousins", url: "https://www.jomocousins.com/jomo-and-charmaine/about" }
+    { name: "Dr. Jomo Cousins", url: "https://www.jomocousins.com/marriage/about" },
+    { name: "Dr. Charmaine Cousins", url: "https://www.jomocousins.com/marriage/about" }
   ],
   creator: "Dr. Jomo and Dr. Charmaine Cousins",
   publisher: "Jomo & Charmaine Ministries",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://www.jomocousins.com/jomo-and-charmaine",
+    url: "https://www.jomocousins.com/marriage",
     siteName: "Dr. Jomo Cousins",
     title: "Jomo & Charmaine - Christian Pastors Helping Couples Thrive",
     description: "Senior Pastors with 24 years of marriage experience. Helping couples build stronger relationships through faith-based counseling and coaching. Over 1,000 couples counseled at Love First Christian Center.",

@@ -13,10 +13,10 @@ export default function Nav() {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const navLinks = [
-    { name: "HOME", href: "/jomo-and-charmaine" },
-    { name: "ABOUT US", href: "/jomo-and-charmaine/about" },
-    { name: "COUPLES' CORNER", href: "/jomo-and-charmaine/couples-corner" },
-    // { name: "CONTACT US", href: "/jomo-and-charmaine/contact" },
+    { name: "HOME", href: "/marriage" },
+    { name: "ABOUT US", href: "/marriage/about" },
+    { name: "COUPLES' CORNER", href: "/marriage/blog" },
+    // { name: "CONTACT US", href: "/marriage/contact" },
   ];
 
   return (
@@ -26,7 +26,7 @@ export default function Nav() {
           <div className="flex h-20 items-center justify-between">
 
             {/* Logo */ }
-            <Link href="/jomo-and-charmaine" className="flex items-center">
+            <Link href="/marriage" className="flex items-center">
               <Image
                 src="/images/jomo-and-charmaine/main-page/Jomo-and-Charmaine-logo.png"
                 alt="Jomo & Charmaine"
@@ -42,7 +42,7 @@ export default function Nav() {
               <div className="flex items-center gap-10 mr-8">
                 { navLinks.map((link) => {
                   // For home, only match exact path. For others, match exact or nested routes
-                  const isActive = link.href === "/jomo-and-charmaine"
+                  const isActive = link.href === "/marriage"
                     ? pathname === link.href
                     : pathname === link.href || pathname.startsWith(link.href + "/");
                   return (
@@ -72,7 +72,7 @@ export default function Nav() {
               </div>
 
               <Link
-                href="/jomo-and-charmaine/contact"
+                href="/marriage/contact"
                 className="rounded-lg bg-[#ea8125] px-8 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
               >
                 Request an Appointment
@@ -119,7 +119,7 @@ export default function Nav() {
 
             { navLinks.map((link) => {
               // For home, only match exact path. For others, match exact or nested routes
-              const isActive = link.href === "/jomo-and-charmaine"
+              const isActive = link.href === "/marriage"
                 ? pathname === link.href
                 : pathname === link.href || pathname.startsWith(link.href + "/");
               return (
@@ -150,7 +150,7 @@ export default function Nav() {
             </div>
 
             <Link
-              href="/jomo-and-charmaine/contact"
+              href="/marriage/contact"
               onClick={ () => setIsOpen(false) }
               className="rounded-xl bg-[#ea8125] py-4 text-center text-lg font-bold text-white shadow-lg shadow-orange-100"
             >

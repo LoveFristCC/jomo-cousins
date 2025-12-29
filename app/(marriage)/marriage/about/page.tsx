@@ -9,7 +9,7 @@ export default function AboutPage() {
       <section className="relative h-[600px] md:h-[500px]">
         {/* Background Image */ }
         <Image
-          src="/images/jomo-and-charmaine/about/about-hero.jpg"
+          src="/images/marriage/about/about-hero.jpg"
           alt="About Drs. Jomo and Charmaine Cousins"
           fill
           className="object-cover object-top"
@@ -37,7 +37,7 @@ export default function AboutPage() {
             {/* Left Image */ }
             <div className="relative">
               <Image
-                src="/images/jomo-and-charmaine/about/about-us.png"
+                src="/images/marriage/about/about-us.png"
                 alt="Dr. Jomo and Dr. Charmaine Cousins"
                 width={ 600 }
                 height={ 700 }
@@ -61,7 +61,7 @@ export default function AboutPage() {
               </div>
               <div className="mt-8">
                 <Link
-                  href="/jomo-and-charmaine/contact"
+                  href="/marriage/contact"
                   className="inline-block rounded-lg bg-[#ea8125] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
                 >
                   Request an Appointment
@@ -99,7 +99,7 @@ export default function AboutPage() {
               </div>
               <div className="mt-8">
                 <Link
-                  href="/jomo-and-charmaine/contact"
+                  href="/marriage/contact"
                   className="inline-block rounded-lg bg-[#ea8125] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
                 >
                   Request an Appointment
@@ -110,7 +110,7 @@ export default function AboutPage() {
             {/* Right Image */ }
             <div className="relative">
               <Image
-                src="/images/jomo-and-charmaine/about/helping-couples.jpg"
+                src="/images/marriage/about/helping-couples.jpg"
                 alt="Jomo and Charmaine helping couples"
                 width={ 600 }
                 height={ 700 }
@@ -129,7 +129,7 @@ export default function AboutPage() {
             {/* Left Image */ }
             <div className="relative">
               <Image
-                src="/images/jomo-and-charmaine/about/why-choose-us.png"
+                src="/images/marriage/about/why-choose-us.png"
                 alt="Dr. Jomo and Dr. Charmaine Cousins"
                 width={ 1000 }
                 height={ 700 }
@@ -195,7 +195,7 @@ export default function AboutPage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/jomo-and-charmaine/main-page/communication.jpg"
+                  src="/images/marriage/main-page/communication.jpg"
                   alt="Communication Issues"
                   width={ 800 }
                   height={ 800 }
@@ -210,7 +210,7 @@ export default function AboutPage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/jomo-and-charmaine/main-page/pre-marriage.jpg"
+                  src="/images/marriage/main-page/pre-marriage.jpg"
                   alt="Premarital Counseling"
                   width={ 800 }
                   height={ 800 }
@@ -225,7 +225,7 @@ export default function AboutPage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/jomo-and-charmaine/main-page/sexual-issues.jpg"
+                  src="/images/marriage/main-page/sexual-issues.jpg"
                   alt="Sexual Issues"
                   width={ 800 }
                   height={ 800 }
@@ -240,7 +240,7 @@ export default function AboutPage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/jomo-and-charmaine/main-page/cheating.jpg"
+                  src="/images/marriage/main-page/cheating.jpg"
                   alt="Infidelity & Unfaithfulness"
                   width={ 800 }
                   height={ 800 }
@@ -255,7 +255,7 @@ export default function AboutPage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/jomo-and-charmaine/main-page/trust.jpg"
+                  src="/images/marriage/main-page/trust.jpg"
                   alt="Trust Issues"
                   width={ 800 }
                   height={ 800 }
@@ -270,7 +270,7 @@ export default function AboutPage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/jomo-and-charmaine/main-page/blended-family.jpg"
+                  src="/images/marriage/main-page/blended-family.jpg"
                   alt="Blended Family Support"
                   width={ 800 }
                   height={ 800 }
@@ -295,7 +295,7 @@ export default function AboutPage() {
               Let's work together to build the relationship you've always wanted.
             </p>
             <Link
-              href="/jomo-and-charmaine/contact"
+              href="/marriage/contact"
               className="inline-block rounded-lg bg-white px-12 py-4 font-bold text-[#ea8125] shadow-lg transition-all hover:scale-105 hover:shadow-xl"
             >
               Request an Appointment
@@ -311,17 +311,17 @@ export const metadata = {
   title: "About Us - Senior Pastors & Marriage Counselors",
   description: "Meet Dr. Jomo and Dr. Charmaine Cousins, Senior Pastors at Love First Christian Center. Married 24 years with 3 children, they've counseled over 1,000 couples. Their ministry helps couples thrive together through faith-based relationship coaching, premarital counseling, and marriage counseling in Riverview, FL.",
   alternates: {
-    canonical: "https://www.jomocousins.com/jomo-and-charmaine/about",
+    canonical: "https://www.jomocousins.com/marriage/about",
   },
   openGraph: {
     type: "website",
     siteName: "Dr. Jomo Cousins",
     title: "About Jomo & Charmaine - Senior Pastors & Marriage Counselors",
     description: "Senior Pastors at Love First Christian Center. 24 years married, 1,000+ couples counseled. Helping relationships thrive through faith-based ministry.",
-    url: "https://www.jomocousins.com/jomo-and-charmaine/about",
+    url: "https://www.jomocousins.com/marriage/about",
     images: [
       {
-        url: "/images/jomo-and-charmaine/about/about-us.png",
+        url: "/images/marriage/about/about-us.png",
         width: 1200,
         height: 630,
         alt: "Dr. Jomo and Dr. Charmaine Cousins - About Us",
@@ -332,6 +332,6 @@ export const metadata = {
     card: "summary_large_image",
     title: "About Jomo & Charmaine - Senior Pastors & Marriage Counselors",
     description: "Senior Pastors at Love First Christian Center. 24 years married, 1,000+ couples counseled.",
-    images: ["/images/jomo-and-charmaine/about/about-us.png"],
+    images: ["/images/marriage/about/about-us.png"],
   },
 };
