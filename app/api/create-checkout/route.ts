@@ -40,6 +40,7 @@ export async function POST(request: NextRequest) {
       originalSessionId = null, // Original session ID from physical product purchase
       returnSessionId = null, // Session ID to return to on cancel (for upsell pages)
       customerId = null, // Stripe customer ID to pre-fill checkout
+      firstMonthPrice = null, // Special first month price for subscriptions
     } = body;
 
     // Validate required fields
@@ -87,6 +88,11 @@ export async function POST(request: NextRequest) {
     if (size) metadata.size = sanitizeMetadata(size);
     if (color) metadata.color = sanitizeMetadata(color);
     if (kajabiWebhookUrl) metadata.kajabiWebhookUrl = sanitizeMetadata(kajabiWebhookUrl);
+    if (firstMonthPrice !== null) {
+      metadata.firstMonthPrice = firstMonthPrice.toString();
+      metadata.regularPrice = price.toString(); // Store regular price for subscription schedule
+      console.log(`[Checkout] Trial pricing enabled: $${firstMonthPrice} → $${price}`);
+    }
 
     // Build line items (sanitize size/color for description)
     const description =
@@ -96,9 +102,20 @@ export async function POST(request: NextRequest) {
             .join(" - ") || undefined
         : undefined;
 
+    // For subscriptions with trial pricing, create a temporary price
+    let priceToUse = stripePriceId;
+    if (isSubscription && firstMonthPrice && !stripePriceId) {
+      // We need to use price_data with the firstMonthPrice for the initial checkout
+      // The webhook will handle upgrading to the regular price after 30 days
+      console.log(`[Checkout] Creating trial price checkout: $${firstMonthPrice} for first month`);
+    }
+
+    // For trial pricing, we must use price_data (can't use existing stripePriceId)
+    const useTrialPricing = isSubscription && firstMonthPrice;
+
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
       {
-        price_data: stripePriceId
+        price_data: (stripePriceId && !useTrialPricing)
           ? undefined
           : {
               currency: "usd",
@@ -106,14 +123,15 @@ export async function POST(request: NextRequest) {
                 name: productName,
                 ...(description && { description }), // Only include if not empty
               },
-              unit_amount: Math.round(price * 100), // Convert to cents
+              // Use firstMonthPrice if it's a subscription with trial pricing
+              unit_amount: Math.round((useTrialPricing ? firstMonthPrice : price) * 100),
               ...(isSubscription && {
                 recurring: {
                   interval: subscriptionInterval as "month" | "year",
                 },
               }),
             },
-        price: stripePriceId || undefined,
+        price: (stripePriceId && !useTrialPricing) ? stripePriceId : undefined,
         quantity: parseInt(quantity),
       },
     ];

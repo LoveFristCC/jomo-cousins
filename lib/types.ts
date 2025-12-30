@@ -92,6 +92,8 @@ export interface CheckoutMetadata {
   weight: string;
   productType: "physical" | "digital";
   kajabiWebhookUrl?: string;
+  firstMonthPrice?: string; // Special first month price for subscriptions
+  regularPrice?: string; // Regular subscription price (used with firstMonthPrice)
 }
 
 /**

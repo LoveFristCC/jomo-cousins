@@ -50,6 +50,7 @@ export default function UpsellOffer({
           subscriptionInterval: product.subscriptionInterval || 'month',
           originalSessionId: sessionId, // Pass through the original session ID
           customerId: customerId, // Pass customer ID to pre-fill checkout
+          firstMonthPrice: product.firstMonthPrice || null, // Special first month pricing
         }),
       });
 

@@ -48,16 +48,28 @@ export async function POST(request: NextRequest) {
       console.log(`[Webhook] Processing completed session: ${session.id}`);
 
       const metadata = session.metadata as unknown as CheckoutMetadata;
+      console.log(`[Webhook] DEBUG - productType: ${metadata.productType}, mode: ${session.mode}`);
 
       // Handle physical product orders
       if (metadata.productType === "physical") {
         await handlePhysicalProductOrder(session, metadata);
+        console.log("[Webhook] DEBUG - Physical product handler completed");
       }
 
       // Handle digital product orders (one-time payments only)
       // For subscriptions, we wait for invoice.paid event
       if (metadata.productType === "digital" && session.mode === "payment") {
         await handleDigitalProductOrder(session, metadata);
+        console.log("[Webhook] DEBUG - Digital product handler completed");
+      }
+
+      // Handle subscription creation with trial pricing
+      console.log(`[Webhook] Checking for trial pricing - Mode: ${session.mode}, firstMonthPrice: ${metadata.firstMonthPrice}`);
+      if (session.mode === "subscription" && metadata.firstMonthPrice) {
+        console.log("[Webhook] Trial pricing detected, setting up schedule...");
+        await handleSubscriptionWithTrialPricing(session, metadata);
+      } else {
+        console.log("[Webhook] No trial pricing needed");
       }
     }
 
@@ -121,6 +133,94 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
+  }
+}
+
+/**
+ * Handle subscription with trial pricing (e.g., $1 first month, then regular price)
+ */
+async function handleSubscriptionWithTrialPricing(
+  session: Stripe.Checkout.Session,
+  metadata: CheckoutMetadata
+) {
+  try {
+    const { firstMonthPrice, regularPrice } = metadata;
+
+    if (!firstMonthPrice || !regularPrice) {
+      console.log("[Webhook] Missing pricing data for trial subscription");
+      return;
+    }
+
+    const subscriptionId = session.subscription as string;
+    if (!subscriptionId) {
+      console.error("[Webhook] No subscription ID found in session");
+      return;
+    }
+
+    console.log(
+      `[Webhook] Setting up trial pricing: $${firstMonthPrice} (paid) → $${regularPrice}/month (in 30 days)`
+    );
+
+    // Retrieve the subscription
+    const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+
+    const productId = subscription.items.data[0].price.product as string;
+
+    // Create the regular price in Stripe for future billing
+    const regularPriceObj = await stripe.prices.create({
+      currency: 'usd',
+      product: productId,
+      recurring: {
+        interval: 'month',
+      },
+      unit_amount: Math.round(parseFloat(regularPrice) * 100),
+    });
+
+    console.log(`[Webhook] Created regular price: ${regularPriceObj.id} ($${regularPrice})`);
+
+    // Calculate when to switch to regular pricing (30 days from now)
+    const now = Math.floor(Date.now() / 1000);
+    const thirtyDaysFromNow = now + (30 * 24 * 60 * 60);
+
+    // Get the current trial price ID (what was just charged)
+    const trialPriceId = subscription.items.data[0].price.id;
+
+    // Create subscription schedule with two phases
+    const schedule = await stripe.subscriptionSchedules.create({
+      from_subscription: subscriptionId,
+      phases: [
+        {
+          // Phase 1: Keep current trial price for 30 days (already paid)
+          items: [
+            {
+              price: trialPriceId,
+              quantity: 1,
+            },
+          ],
+          end_date: thirtyDaysFromNow,
+        },
+        {
+          // Phase 2: Switch to regular pricing after 30 days
+          items: [
+            {
+              price: regularPriceObj.id,
+              quantity: 1,
+            },
+          ],
+          // No end_date = runs indefinitely
+        },
+      ],
+    } as any); // Type assertion to work around Stripe SDK type issues
+
+    console.log(
+      `[Webhook] ✓ Subscription schedule created: ${schedule.id}`
+    );
+    console.log(
+      `[Webhook] Customer paid $${firstMonthPrice} today. Next charge will be $${regularPrice} on ${new Date(thirtyDaysFromNow * 1000).toLocaleDateString()}`
+    );
+  } catch (error) {
+    console.error("[Webhook] Error setting up trial pricing:", error);
+    // Don't throw - let the subscription continue even if schedule fails
   }
 }
 
