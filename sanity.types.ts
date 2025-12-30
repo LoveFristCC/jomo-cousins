@@ -1855,6 +1855,32 @@ export type FeaturedBooksQueryResult = Array<{
   basePrice: number | null;
   category: "accessories" | "books" | "hoodies" | "other" | "tshirts" | null;
 }>;
+// Variable: booksWithPreviewsQuery
+// Query: *[_type == "product" && category == "books" && status == "active" && defined(previewChapter.content)] | order(name asc) {    _id,    name,    "slug": slug.current,    author,    images,    previewChapter {      title,      chapterNumber    }  }
+export type BooksWithPreviewsQueryResult = Array<{
+  _id: string;
+  name: string | null;
+  slug: string | null;
+  author: string | null;
+  images: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }> | null;
+  previewChapter: {
+    title: string | null;
+    chapterNumber: number | null;
+  } | null;
+}>;
 // Variable: allCouplesCornerPostsQuery
 // Query: *[_type == "couplesCornerPost"] | order(publishedAt desc) {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
 export type AllCouplesCornerPostsQueryResult = Array<{
@@ -2464,6 +2490,7 @@ declare module "@sanity/client" {
     "\n  *[_type == \"digitalProduct\" && slug.current == $slug && status == \"active\"] [0] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  price,\n  isSubscription,\n  subscriptionInterval,\n  firstMonthPrice,\n  stripePriceId,\n  kajabiWebhookUrl,\n  upsellPosition,\n  headline,\n  subheadline,\n  bulletPoints,\n  image,\n  discount,\n  ctaText,\n  status\n\n  }\n": DigitalProductBySlugQueryResult;
     "\n  *[_type == \"product\" && category == \"books\" && status == \"active\"] | order(_createdAt desc) [0...$limit] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  images,\n  basePrice,\n  category\n\n  }\n": NewestBooksQueryResult;
     "\n  *[_type == \"product\" && category == \"books\" && status == \"active\" && featured == true] | order(_createdAt desc) [0...$limit] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  images,\n  basePrice,\n  category\n\n  }\n": FeaturedBooksQueryResult;
+    "\n  *[_type == \"product\" && category == \"books\" && status == \"active\" && defined(previewChapter.content)] | order(name asc) {\n    _id,\n    name,\n    \"slug\": slug.current,\n    author,\n    images,\n    previewChapter {\n      title,\n      chapterNumber\n    }\n  }\n": BooksWithPreviewsQueryResult;
     "\n  *[_type == \"couplesCornerPost\"] | order(publishedAt desc) {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": AllCouplesCornerPostsQueryResult;
     "\n  *[_type == \"couplesCornerPost\" && featured == true] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": FeaturedCouplesCornerPostsQueryResult;
     "\n  *[_type == \"couplesCornerPost\" && category == $category] | order(publishedAt desc) {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": CouplesCornerPostsByCategoryQueryResult;

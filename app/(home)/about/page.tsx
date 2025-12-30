@@ -42,6 +42,7 @@ export const metadata: Metadata = {
     title: "About Dr. Jomo Cousins | NFL Veteran & Motivational Speaker",
     description: "From NFL to ministry: Dr. Jomo Cousins' inspiring journey of faith, resilience, and transformation.",
     creator: "@pastorjomo",
+    site: "@pastorjomo",
     images: ["/images/jc-color-pics/aboutProfilePictures.jpg"],
   },
 };

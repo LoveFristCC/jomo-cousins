@@ -727,6 +727,8 @@ export const metadata = {
     card: "summary_large_image",
     title: "Jomo & Charmaine - Marriage Counseling Ministry",
     description: "Senior Pastors helping couples build stronger marriages. 24 years married, 1,000+ couples counseled.",
+    creator: "@JomoCharmaine",
+    site: "@JomoCharmaine",
     images: [ "/images/marriage/main-page/Cousins-Together-Main-page.png" ],
   },
 };

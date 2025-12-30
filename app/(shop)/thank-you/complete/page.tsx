@@ -171,6 +171,36 @@ export default function CompletePage() {
 }
 
 export const metadata = {
-  title: "Order Complete - Thank You",
-  description: "Your order has been successfully processed",
+  title: "Order Complete - Thank You | Dr. Jomo Cousins",
+  description: "Your order has been successfully processed. Thank you for shopping with Dr. Jomo Cousins!",
+  robots: {
+    index: false,
+    follow: false,
+  },
+  alternates: {
+    canonical: "https://www.jomocousins.com/thank-you/complete",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://www.jomocousins.com/thank-you/complete",
+    siteName: "Dr. Jomo Cousins",
+    title: "Order Complete - Thank You",
+    description: "Your order has been successfully processed. Thank you for your purchase!",
+    images: [
+      {
+        url: "https://www.jomocousins.com/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Thank You for Your Order",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Order Complete - Thank You",
+    description: "Your order has been successfully processed. Thank you for your purchase!",
+    images: ["https://www.jomocousins.com/images/og-image.jpg"],
+    creator: "@pastorjomo",
+  },
 };

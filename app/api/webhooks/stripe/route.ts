@@ -85,11 +85,14 @@ export async function POST(request: NextRequest) {
         );
 
         // Check if this subscription needs to upgrade from trial to regular pricing
-        if (subscription.metadata.upgradeAfterFirstBilling === 'true' &&
-            subscription.metadata.regularPriceId &&
-            invoice.billing_reason === 'subscription_cycle') {
-
-          console.log(`[Webhook] Upgrading subscription ${subscriptionId} from trial to regular pricing...`);
+        if (
+          subscription.metadata.upgradeAfterFirstBilling === "true" &&
+          subscription.metadata.regularPriceId &&
+          invoice.billing_reason === "subscription_cycle"
+        ) {
+          console.log(
+            `[Webhook] Upgrading subscription ${subscriptionId} from trial to regular pricing...`
+          );
 
           await stripe.subscriptions.update(subscriptionId, {
             items: [
@@ -98,10 +101,10 @@ export async function POST(request: NextRequest) {
                 price: subscription.metadata.regularPriceId,
               },
             ],
-            proration_behavior: 'none',
+            proration_behavior: "none",
             metadata: {
               ...subscription.metadata,
-              upgradeAfterFirstBilling: 'false', // Mark as upgraded
+              upgradeAfterFirstBilling: "false", // Mark as upgraded
             },
           });
 
@@ -179,25 +182,27 @@ async function handleSubscriptionWithTrialPricing(
     const subscription = await stripe.subscriptions.retrieve(subscriptionId);
 
     // Use existing Stripe product ID from metadata
-    const productId = metadata.stripeProductId || subscription.items.data[0].price.product as string;
+    const productId =
+      metadata.stripeProductId ||
+      (subscription.items.data[0].price.product as string);
 
     // Create BOTH prices as active prices in Stripe using existing product
     // Create the trial price
     const trialPriceObj = await stripe.prices.create({
-      currency: 'usd',
+      currency: "usd",
       product: productId,
       recurring: {
-        interval: 'month',
+        interval: "month",
       },
       unit_amount: Math.round(parseFloat(firstMonthPrice) * 100),
     });
 
     // Create the regular price for future billing
     const regularPriceObj = await stripe.prices.create({
-      currency: 'usd',
+      currency: "usd",
       product: productId,
       recurring: {
-        interval: 'month',
+        interval: "month",
       },
       unit_amount: Math.round(parseFloat(regularPrice) * 100),
     });
@@ -210,7 +215,7 @@ async function handleSubscriptionWithTrialPricing(
           price: trialPriceObj.id,
         },
       ],
-      proration_behavior: 'none', // Don't prorate the change
+      proration_behavior: "none", // Don't prorate the change
     });
 
     // Store the regular price ID in subscription metadata
@@ -220,7 +225,7 @@ async function handleSubscriptionWithTrialPricing(
         ...subscription.metadata,
         regularPriceId: regularPriceObj.id,
         trialPriceId: trialPriceObj.id,
-        upgradeAfterFirstBilling: 'true',
+        upgradeAfterFirstBilling: "true",
       },
     });
 
@@ -280,13 +285,12 @@ async function handlePhysicalProductOrder(
 
     // 3. Create ShipStation order
     try {
-      // const shipstationOrder = await createShipStationOrder(session);
-      // if (shipstationOrder) {
-      console.log(
-        // `[Webhook] ✓ ShipStation order created: ${shipstationOrder.orderId}`
-        `[Webhook] ✓ ShipStation order created: `
-      );
-      // }
+      const shipstationOrder = await createShipStationOrder(session);
+      if (shipstationOrder) {
+        console.log(
+          `[Webhook] ✓ ShipStation order created: ${shipstationOrder.orderId}`
+        );
+      }
     } catch (shipstationError) {
       console.error(
         "[Webhook] Failed to create ShipStation order:",

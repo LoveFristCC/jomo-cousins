@@ -207,6 +207,36 @@ function UpsellSkeleton() {
 }
 
 export const metadata = {
-  title: "Thank You - Order Confirmed",
-  description: "Your order has been confirmed",
+  title: "Thank You - Order Confirmed | Dr. Jomo Cousins",
+  description: "Your order has been confirmed and will be shipped soon. Thank you for your purchase from Dr. Jomo Cousins.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+  alternates: {
+    canonical: "https://www.jomocousins.com/thank-you",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://www.jomocousins.com/thank-you",
+    siteName: "Dr. Jomo Cousins",
+    title: "Thank You - Order Confirmed",
+    description: "Your order has been confirmed. Check your email for order details.",
+    images: [
+      {
+        url: "https://www.jomocousins.com/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Thank You for Your Order",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Thank You - Order Confirmed",
+    description: "Your order has been confirmed. Check your email for order details.",
+    images: ["https://www.jomocousins.com/images/og-image.jpg"],
+    creator: "@pastorjomo",
+  },
 };

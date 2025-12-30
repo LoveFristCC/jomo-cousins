@@ -116,6 +116,36 @@ export default async function UpsellTwoPage({
 }
 
 export const metadata = {
-  title: "Special Offer - Complete Your Collection",
-  description: "Hand-picked recommendations just for you",
+  title: "Special Offer - Complete Your Collection | Dr. Jomo Cousins",
+  description: "Hand-picked product recommendations just for you. Complete your collection with these special offers.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+  alternates: {
+    canonical: "https://www.jomocousins.com/thank-you/upsell-2",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://www.jomocousins.com/thank-you/upsell-2",
+    siteName: "Dr. Jomo Cousins",
+    title: "Special Offer - Complete Your Collection",
+    description: "Hand-picked product recommendations curated for you.",
+    images: [
+      {
+        url: "https://www.jomocousins.com/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Special Product Offers",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Special Offer - Complete Your Collection",
+    description: "Hand-picked product recommendations curated for you.",
+    images: ["https://www.jomocousins.com/images/og-image.jpg"],
+    creator: "@pastorjomo",
+  },
 };

@@ -161,6 +161,20 @@ export const featuredBooksQuery = defineQuery(`
   }
 `);
 
+export const booksWithPreviewsQuery = defineQuery(`
+  *[_type == "product" && category == "books" && status == "active" && defined(previewChapter.content)] | order(name asc) {
+    _id,
+    name,
+    "slug": slug.current,
+    author,
+    images,
+    previewChapter {
+      title,
+      chapterNumber
+    }
+  }
+`);
+
 // Couples Corner Blog queries
 const couplesCornerFields = /* groq */ `
   _id,

@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://www.jomocousins.com/marriage",
-    siteName: "Dr. Jomo Cousins",
+    siteName: "Jomo & Charmaine",
     title: "Jomo & Charmaine - Christian Pastors Helping Couples Thrive",
     description: "Senior Pastors with 24 years of marriage experience. Helping couples build stronger relationships through faith-based counseling and coaching. Over 1,000 couples counseled at Love First Christian Center.",
     images: [
@@ -73,6 +73,7 @@ export const metadata: Metadata = {
     description: "Senior Pastors helping couples thrive together. 24 years married, 1,000+ couples counseled.",
     creator: "@JomoCharmaine",
     site: "@JomoCharmaine",
+    images: [ "/images/jomo-and-charmaine/main-page/Jomo-and-Charmaine-logo.png" ],
   },
   robots: {
     index: true,

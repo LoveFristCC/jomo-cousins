@@ -38,6 +38,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Pray With Jomo Cousins",
     description: "Daily prayer videos and spiritual guidance. Jomo is praying with you.",
+    creator: "@pastorjomo",
+    site: "@pastorjomo",
     images: [ "/images/logos/Asset 1.png" ],
   },
 };

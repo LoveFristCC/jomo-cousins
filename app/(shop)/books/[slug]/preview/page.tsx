@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { productBySlugQuery } from "@/sanity/lib/queries";
+import { productBySlugQuery, booksWithPreviewsQuery } from "@/sanity/lib/queries";
 import { urlForImage } from "@/sanity/lib/utils";
 import CustomPortableText from "@/app/(home)/portable-text";
 
@@ -33,6 +33,16 @@ export default async function BookPreviewPage({
 
   const { previewChapter } = product;
 
+  // Fetch all other books with preview chapters for interlinking
+  const allBooksWithPreviews = await sanityFetch({
+    query: booksWithPreviewsQuery,
+  });
+
+  // Filter out the current book
+  const otherPreviews = allBooksWithPreviews.filter(
+    (book: any) => book.slug !== slug
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header with book info and CTA */ }
@@ -47,7 +57,7 @@ export default async function BookPreviewPage({
                     src={ urlForImage(product.images[ 0 ])?.width(100).url() || "" }
                     alt={ product.name || "" }
                     fill
-                    className="object-cover"
+                    className="object-cover object-top"
                   />
                 </div>
               ) }
@@ -203,6 +213,94 @@ export default async function BookPreviewPage({
             </Link>
           </div>
 
+          {/* Other Free Previews - Interlinking */ }
+          { otherPreviews.length > 0 && (
+            <div className="mt-12 bg-gradient-to-br from-blue-50 to-white rounded-xl shadow-lg p-8">
+              <div className="text-center mb-8">
+                <h3 className="text-2xl md:text-3xl font-bold text-[#2d2d2d] mb-2">
+                  📚 Read More Free Previews
+                </h3>
+                <p className="text-gray-600">
+                  Discover other books by Dr. Jomo Cousins with free preview chapters
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                { otherPreviews.map((book: any) => (
+                  <Link
+                    key={ book._id }
+                    href={ `/books/${book.slug}/preview` }
+                    className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-transparent hover:border-[#e31e24]"
+                  >
+                    { book.images?.[ 0 ] && (
+                      <div className="relative h-64 md:aspect-[2/3] md:h-auto w-full bg-gray-100">
+                        <Image
+                          src={ urlForImage(book.images[ 0 ])?.width(400).height(600).url() || "" }
+                          alt={ book.name || "" }
+                          fill
+                          className="object-contain md:object-cover group-hover:scale-105 transition-transform duration-300 object-top"
+                        />
+                      </div>
+                    ) }
+                    <div className="p-5">
+                      <h4 className="font-bold text-lg text-[#2d2d2d] mb-2 group-hover:text-[#e31e24] transition-colors line-clamp-2">
+                        { book.name }
+                      </h4>
+                      <p className="text-sm text-gray-600 mb-3">
+                        by { book.author || "Dr. Jomo Cousins" }
+                      </p>
+                      { book.previewChapter && (
+                        <div className="bg-blue-50 rounded px-3 py-2 mb-3">
+                          <p className="text-xs text-blue-900 font-semibold">
+                            Preview Chapter{ book.previewChapter.chapterNumber ? ` ${book.previewChapter.chapterNumber}` : "" }:
+                          </p>
+                          <p className="text-sm text-blue-800 line-clamp-1">
+                            { book.previewChapter.title }
+                          </p>
+                        </div>
+                      ) }
+                      <div className="flex items-center text-[#e31e24] font-semibold text-sm group-hover:gap-2 transition-all">
+                        Read Free Preview
+                        <svg
+                          className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"
+                          fill="none"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path d="M9 5l7 7-7 7"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </Link>
+                )) }
+              </div>
+
+              {/* Link to all books */ }
+              <div className="text-center mt-8 pt-6 border-t border-gray-200">
+                <Link
+                  href="/products?category=books"
+                  className="inline-flex items-center gap-2 text-[#e31e24] font-bold hover:underline"
+                >
+                  View All Books
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                  </svg>
+                </Link>
+              </div>
+            </div>
+          ) }
+
           {/* SEO-friendly hidden content */ }
           <div className="sr-only">
             <p>
@@ -213,6 +311,19 @@ export default async function BookPreviewPage({
               { product.pageCount && ` The book contains ${product.pageCount} pages.` }
               Purchase the full book to access all chapters and transform your life today.
             </p>
+            { otherPreviews.length > 0 && (
+              <p>
+                You may also enjoy reading free preview chapters from other books by Dr. Jomo Cousins:
+                { otherPreviews.map((book: any, index: number) => (
+                  <span key={ book._id }>
+                    { index > 0 && (index === otherPreviews.length - 1 ? ", and " : ", ") }
+                    "{ book.name }"
+                    { book.previewChapter?.title && ` featuring "${book.previewChapter.title}"` }
+                  </span>
+                )) }.
+                All preview chapters are available for free and provide valuable insights from Dr. Cousins' teachings.
+              </p>
+            ) }
           </div>
         </div>
       </article>
@@ -242,6 +353,14 @@ export async function generateMetadata({
     };
   }
 
+  // Fetch other previews for metadata keywords
+  const allBooksWithPreviews = await sanityFetch({
+    query: booksWithPreviewsQuery,
+  });
+  const otherBookNames = allBooksWithPreviews
+    .filter((book: any) => book.slug !== slug)
+    .map((book: any) => book.name);
+
   const baseUrl = "https://www.jomocousins.com";
   const previewUrl = `${baseUrl}/books/${slug}/preview`;
   const { previewChapter } = product;
@@ -268,6 +387,7 @@ export async function generateMetadata({
       "personal development",
       "faith",
       "inspiration",
+      ...otherBookNames,
     ].filter(Boolean),
     authors: [ { name: product.author || "Dr. Jomo Cousins" } ],
     openGraph: {
