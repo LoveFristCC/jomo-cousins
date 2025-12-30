@@ -22,34 +22,52 @@ export async function createShipStationOrder(
     }
 
     if (!session.customer_details?.email) {
-      console.error("[ShipStation] No customer email found in session:", session.id);
+      console.error(
+        "[ShipStation] No customer email found in session:",
+        session.id
+      );
       throw new Error("No customer email found in session");
     }
 
     // In Stripe API 2025-12-15.clover, shipping address is in shipping_cost.shipping_address
     // Check both old and new locations for compatibility
-    const shippingDetails = (session as any).shipping_details || (session as any).shipping_cost;
-    const shippingAddress = shippingDetails?.address || shippingDetails?.shipping_address;
+    const shippingDetails =
+      (session as any).shipping_details || (session as any).customer_details;
+    const shippingAddress =
+      shippingDetails?.address || shippingDetails?.shipping_address;
 
     if (!shippingAddress) {
       console.error(
         "[ShipStation] No shipping address found in session:",
         session.id,
         "Available shipping data:",
-        JSON.stringify({
-          id: session.id,
-          hasCustomerDetails: !!session.customer_details,
-          hasShippingDetails: !!(session as any).shipping_details,
-          hasShippingCost: !!(session as any).shipping_cost,
-          shippingCostKeys: (session as any).shipping_cost ? Object.keys((session as any).shipping_cost) : [],
-          shippingDetailsKeys: (session as any).shipping_details ? Object.keys((session as any).shipping_details) : [],
-        }, null, 2)
+        JSON.stringify(
+          {
+            id: session.id,
+            hasCustomerDetails: !!session.customer_details,
+            hasShippingDetails: !!(session as any).shipping_details,
+            hasShippingCost: !!(session as any).shipping_cost,
+            shippingCostKeys: (session as any).shipping_cost
+              ? Object.keys((session as any).shipping_cost)
+              : [],
+            shippingDetailsKeys: (session as any).shipping_details
+              ? Object.keys((session as any).shipping_details)
+              : [],
+          },
+          null,
+          2
+        )
       );
-      throw new Error(`No shipping address found in session ${session.id}. Make sure shipping address collection is enabled in Stripe Checkout.`);
+      throw new Error(
+        `No shipping address found in session ${session.id}. Make sure shipping address collection is enabled in Stripe Checkout.`
+      );
     }
 
     const customerDetails = session.customer_details;
-    const shippingName = shippingDetails?.name || (session as any).shipping_details?.name || customerDetails.name;
+    const shippingName =
+      shippingDetails?.name ||
+      (session as any).shipping_details?.name ||
+      customerDetails.name;
 
     // Build the ShipStation order object
     const order: ShipStationOrder = {

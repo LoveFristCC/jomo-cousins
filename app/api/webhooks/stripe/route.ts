@@ -45,22 +45,29 @@ export async function POST(request: NextRequest) {
     // Handle checkout.session.completed event
     if (event.type === "checkout.session.completed") {
       const sessionFromEvent = event.data.object as Stripe.Checkout.Session;
-      console.log(`[Webhook] Processing completed session: ${sessionFromEvent.id}`);
+      console.log(
+        `[Webhook] Processing completed session: ${sessionFromEvent.id}`
+      );
 
       // Retrieve full session with shipping details (not included in webhook by default)
-      const session = await stripe.checkout.sessions.retrieve(sessionFromEvent.id, {
-        expand: ['line_items', 'customer'],
-      });
+      const session = await stripe.checkout.sessions.retrieve(
+        sessionFromEvent.id,
+        {
+          expand: ["line_items", "customer"],
+        }
+      );
 
-      // Debug: Log session details to understand what's available
-      console.log('[Webhook] Session details:', {
+      // Debug: Log ALL session keys to find where shipping address is stored
+      console.log("[Webhook] Full session structure:", {
         id: session.id,
         mode: session.mode,
-        hasShippingDetails: !!(session as any).shipping_details,
-        hasShippingCost: !!(session as any).shipping_cost,
-        hasCustomerDetails: !!session.customer_details,
-        shippingAddressCollection: (session as any).shipping_address_collection,
-        availableKeys: Object.keys(session).filter(k => k.toLowerCase().includes('ship')),
+        allKeys: Object.keys(session),
+        customerDetails: session.customer_details,
+        shippingAddressCollection:
+          (session as any).shipping_details?.address ||
+          (session as any).customer_details?.address ||
+          null,
+        shippingCost: (session as any).shipping_cost,
         metadata: session.metadata,
       });
 
