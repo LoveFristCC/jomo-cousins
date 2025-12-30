@@ -205,13 +205,13 @@ async function handleSubscriptionWithTrialPricing(
       phases: [
         {
           // Phase 1: Trial price for 30 days (already paid at checkout)
+          // Don't set start_date - it's already active
           items: [
             {
               price: trialPriceObj.id,
               quantity: 1,
             },
           ],
-          start_date: now,
           end_date: thirtyDaysFromNow,
         },
         {
@@ -222,7 +222,6 @@ async function handleSubscriptionWithTrialPricing(
               quantity: 1,
             },
           ],
-          start_date: thirtyDaysFromNow,
           // No end_date = runs indefinitely
         },
       ],
