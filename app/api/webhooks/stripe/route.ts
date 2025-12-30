@@ -166,7 +166,20 @@ async function handleSubscriptionWithTrialPricing(
 
     const productId = subscription.items.data[0].price.product as string;
 
-    // Create the regular price in Stripe for future billing
+    // Create BOTH prices as active prices in Stripe
+    // Create the trial price
+    const trialPriceObj = await stripe.prices.create({
+      currency: 'usd',
+      product: productId,
+      recurring: {
+        interval: 'month',
+      },
+      unit_amount: Math.round(parseFloat(firstMonthPrice) * 100),
+    });
+
+    console.log(`[Webhook] Created trial price: ${trialPriceObj.id} ($${firstMonthPrice})`);
+
+    // Create the regular price for future billing
     const regularPriceObj = await stripe.prices.create({
       currency: 'usd',
       product: productId,
@@ -182,38 +195,19 @@ async function handleSubscriptionWithTrialPricing(
     const now = Math.floor(Date.now() / 1000);
     const thirtyDaysFromNow = now + (30 * 24 * 60 * 60);
 
-    // Get the current trial price ID (what was just charged)
-    const trialPriceId = subscription.items.data[0].price.id;
-
-    // Update the subscription to switch prices after 30 days
-    // Use schedule_update to change the price at a specific time
-    await stripe.subscriptions.update(subscriptionId, {
-      items: [
-        {
-          id: subscription.items.data[0].id,
-          price: trialPriceId, // Keep current price for now
-        },
-      ],
-      metadata: {
-        ...subscription.metadata,
-        scheduledPriceChange: regularPriceObj.id,
-        priceChangeDate: thirtyDaysFromNow.toString(),
-      },
-    });
-
     // Create a subscription schedule to handle the price change
     const schedule = await stripe.subscriptionSchedules.create({
       from_subscription: subscriptionId,
     } as any);
 
-    // Update the schedule with phases
+    // Update the schedule with phases using the newly created active prices
     await stripe.subscriptionSchedules.update(schedule.id, {
       phases: [
         {
-          // Phase 1: Keep current trial price for 30 days (already paid)
+          // Phase 1: Trial price for 30 days (already paid at checkout)
           items: [
             {
-              price: trialPriceId,
+              price: trialPriceObj.id,
               quantity: 1,
             },
           ],
