@@ -48,28 +48,21 @@ export async function POST(request: NextRequest) {
       console.log(`[Webhook] Processing completed session: ${session.id}`);
 
       const metadata = session.metadata as unknown as CheckoutMetadata;
-      console.log(`[Webhook] DEBUG - productType: ${metadata.productType}, mode: ${session.mode}`);
 
       // Handle physical product orders
       if (metadata.productType === "physical") {
         await handlePhysicalProductOrder(session, metadata);
-        console.log("[Webhook] DEBUG - Physical product handler completed");
       }
 
       // Handle digital product orders (one-time payments only)
       // For subscriptions, we wait for invoice.paid event
       if (metadata.productType === "digital" && session.mode === "payment") {
         await handleDigitalProductOrder(session, metadata);
-        console.log("[Webhook] DEBUG - Digital product handler completed");
       }
 
       // Handle subscription creation with trial pricing
-      console.log(`[Webhook] Checking for trial pricing - Mode: ${session.mode}, firstMonthPrice: ${metadata.firstMonthPrice}`);
       if (session.mode === "subscription" && metadata.firstMonthPrice) {
-        console.log("[Webhook] Trial pricing detected, setting up schedule...");
         await handleSubscriptionWithTrialPricing(session, metadata);
-      } else {
-        console.log("[Webhook] No trial pricing needed");
       }
     }
 
@@ -90,6 +83,31 @@ export async function POST(request: NextRequest) {
         const subscription = await stripe.subscriptions.retrieve(
           subscriptionId
         );
+
+        // Check if this subscription needs to upgrade from trial to regular pricing
+        if (subscription.metadata.upgradeAfterFirstBilling === 'true' &&
+            subscription.metadata.regularPriceId &&
+            invoice.billing_reason === 'subscription_cycle') {
+
+          console.log(`[Webhook] Upgrading subscription ${subscriptionId} from trial to regular pricing...`);
+
+          await stripe.subscriptions.update(subscriptionId, {
+            items: [
+              {
+                id: subscription.items.data[0].id,
+                price: subscription.metadata.regularPriceId,
+              },
+            ],
+            proration_behavior: 'none',
+            metadata: {
+              ...subscription.metadata,
+              upgradeAfterFirstBilling: 'false', // Mark as upgraded
+            },
+          });
+
+          console.log(`[Webhook] ✓ Subscription upgraded to regular pricing`);
+          // Don't return - continue with normal invoice processing
+        }
 
         // Get metadata from the subscription or checkout session
         const metadata = subscription.metadata as unknown as CheckoutMetadata;
@@ -157,16 +175,11 @@ async function handleSubscriptionWithTrialPricing(
       return;
     }
 
-    console.log(
-      `[Webhook] Setting up trial pricing: $${firstMonthPrice} (paid) → $${regularPrice}/month (in 30 days)`
-    );
-
     // Retrieve the subscription
     const subscription = await stripe.subscriptions.retrieve(subscriptionId);
 
     // Use existing Stripe product ID from metadata
     const productId = metadata.stripeProductId || subscription.items.data[0].price.product as string;
-    console.log(`[Webhook] Using Stripe product: ${productId}`);
 
     // Create BOTH prices as active prices in Stripe using existing product
     // Create the trial price
@@ -179,8 +192,6 @@ async function handleSubscriptionWithTrialPricing(
       unit_amount: Math.round(parseFloat(firstMonthPrice) * 100),
     });
 
-    console.log(`[Webhook] Created trial price: ${trialPriceObj.id} ($${firstMonthPrice})`);
-
     // Create the regular price for future billing
     const regularPriceObj = await stripe.prices.create({
       currency: 'usd',
@@ -190,12 +201,6 @@ async function handleSubscriptionWithTrialPricing(
       },
       unit_amount: Math.round(parseFloat(regularPrice) * 100),
     });
-
-    console.log(`[Webhook] Created regular price: ${regularPriceObj.id} ($${regularPrice})`);
-
-    // Calculate when to switch to regular pricing (30 days from now)
-    const now = Math.floor(Date.now() / 1000);
-    const thirtyDaysFromNow = now + (30 * 24 * 60 * 60);
 
     // Update subscription item to use trial price, then schedule price change
     await stripe.subscriptions.update(subscriptionId, {
@@ -208,30 +213,19 @@ async function handleSubscriptionWithTrialPricing(
       proration_behavior: 'none', // Don't prorate the change
     });
 
-    console.log(`[Webhook] Updated subscription to trial price`);
-
-    // Create a subscription schedule with the price change
-    const schedule = await stripe.subscriptionSchedules.create({
-      from_subscription: subscriptionId,
-      end_behavior: 'release', // Release back to normal subscription after schedule
-      phases: [
-        {
-          items: [
-            {
-              price: regularPriceObj.id,
-              quantity: 1,
-            },
-          ],
-          start_date: thirtyDaysFromNow, // Start the regular price in 30 days
-        },
-      ],
-    } as any);
+    // Store the regular price ID in subscription metadata
+    // We'll check this on the NEXT invoice and update the price
+    await stripe.subscriptions.update(subscriptionId, {
+      metadata: {
+        ...subscription.metadata,
+        regularPriceId: regularPriceObj.id,
+        trialPriceId: trialPriceObj.id,
+        upgradeAfterFirstBilling: 'true',
+      },
+    });
 
     console.log(
-      `[Webhook] ✓ Subscription schedule created: ${schedule.id}`
-    );
-    console.log(
-      `[Webhook] Customer paid $${firstMonthPrice} today. Next charge will be $${regularPrice} on ${new Date(thirtyDaysFromNow * 1000).toLocaleDateString()}`
+      `[Webhook] ✓ Trial pricing: $${firstMonthPrice} now → $${regularPrice}/month after 30 days`
     );
   } catch (error) {
     console.error("[Webhook] Error setting up trial pricing:", error);
