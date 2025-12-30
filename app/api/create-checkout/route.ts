@@ -36,12 +36,18 @@ export async function POST(request: NextRequest) {
       kajabiWebhookUrl,
       stripePriceId,
       isSubscription = false,
-      subscriptionInterval = "month",
+      subscriptionInterval: rawInterval = "month",
       originalSessionId = null, // Original session ID from physical product purchase
       returnSessionId = null, // Session ID to return to on cancel (for upsell pages)
       customerId = null, // Stripe customer ID to pre-fill checkout
       firstMonthPrice = null, // Special first month price for subscriptions
     } = body;
+
+    // Validate subscription interval - ensure it's one of Stripe's accepted values
+    const validIntervals = ["month", "year", "week", "day"];
+    const subscriptionInterval = validIntervals.includes(rawInterval)
+      ? (rawInterval as "month" | "year" | "week" | "day")
+      : "month";
 
     // Validate required fields
     if (productType === "physical" && !variantSku) {
@@ -132,7 +138,7 @@ export async function POST(request: NextRequest) {
               unit_amount: Math.round((useTrialPricing ? firstMonthPrice : price) * 100),
               ...(isSubscription && {
                 recurring: {
-                  interval: subscriptionInterval as "month" | "year",
+                  interval: subscriptionInterval as "month" | "year" | "week" | "day",
                 },
               }),
             },
