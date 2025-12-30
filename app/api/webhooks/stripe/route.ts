@@ -57,20 +57,6 @@ export async function POST(request: NextRequest) {
         }
       );
 
-      // Debug: Log ALL session keys to find where shipping address is stored
-      console.log("[Webhook] Full session structure:", {
-        id: session.id,
-        mode: session.mode,
-        allKeys: Object.keys(session),
-        customerDetails: session.customer_details,
-        shippingAddressCollection:
-          (session as any).shipping_details?.address ||
-          (session as any).customer_details?.address ||
-          null,
-        shippingCost: (session as any).shipping_cost,
-        metadata: session.metadata,
-      });
-
       const metadata = session.metadata as unknown as CheckoutMetadata;
 
       // Handle physical product orders
