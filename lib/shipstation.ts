@@ -22,11 +22,23 @@ export async function createShipStationOrder(
     }
 
     if (!session.customer_details?.email) {
+      console.error("[ShipStation] No customer email found in session:", session.id);
       throw new Error("No customer email found in session");
     }
 
     if (!session?.shipping_details?.address) {
-      throw new Error("No shipping address found in session");
+      console.error(
+        "[ShipStation] No shipping address found in session:",
+        session.id,
+        "Session object:",
+        JSON.stringify({
+          id: session.id,
+          hasCustomerDetails: !!session.customer_details,
+          hasShippingDetails: !!session.shipping_details,
+          shippingDetailsKeys: session.shipping_details ? Object.keys(session.shipping_details) : [],
+        })
+      );
+      throw new Error(`No shipping address found in session ${session.id}. Make sure shipping address collection is enabled in Stripe Checkout.`);
     }
 
     const shippingAddress = session?.shipping_details?.address;

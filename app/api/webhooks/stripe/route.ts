@@ -44,8 +44,13 @@ export async function POST(request: NextRequest) {
 
     // Handle checkout.session.completed event
     if (event.type === "checkout.session.completed") {
-      const session = event.data.object as Stripe.Checkout.Session;
-      console.log(`[Webhook] Processing completed session: ${session.id}`);
+      const sessionFromEvent = event.data.object as Stripe.Checkout.Session;
+      console.log(`[Webhook] Processing completed session: ${sessionFromEvent.id}`);
+
+      // Retrieve full session with shipping details (not included in webhook by default)
+      const session = await stripe.checkout.sessions.retrieve(sessionFromEvent.id, {
+        expand: ['line_items'],
+      });
 
       const metadata = session.metadata as unknown as CheckoutMetadata;
 
