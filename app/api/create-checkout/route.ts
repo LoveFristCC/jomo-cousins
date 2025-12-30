@@ -94,6 +94,13 @@ export async function POST(request: NextRequest) {
       console.log(`[Checkout] Trial pricing enabled: $${firstMonthPrice} → $${price}`);
     }
 
+    // Store stripe product ID for creating prices in webhook
+    if (isSubscription && stripePriceId) {
+      // Get product ID from the existing price
+      const existingPrice = await stripe.prices.retrieve(stripePriceId);
+      metadata.stripeProductId = existingPrice.product as string;
+    }
+
     // Build line items (sanitize size/color for description)
     const description =
       productType === "physical"

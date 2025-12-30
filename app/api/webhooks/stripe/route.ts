@@ -164,9 +164,11 @@ async function handleSubscriptionWithTrialPricing(
     // Retrieve the subscription
     const subscription = await stripe.subscriptions.retrieve(subscriptionId);
 
-    const productId = subscription.items.data[0].price.product as string;
+    // Use existing Stripe product ID from metadata
+    const productId = metadata.stripeProductId || subscription.items.data[0].price.product as string;
+    console.log(`[Webhook] Using Stripe product: ${productId}`);
 
-    // Create BOTH prices as active prices in Stripe
+    // Create BOTH prices as active prices in Stripe using existing product
     // Create the trial price
     const trialPriceObj = await stripe.prices.create({
       currency: 'usd',

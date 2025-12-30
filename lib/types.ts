@@ -94,6 +94,7 @@ export interface CheckoutMetadata {
   kajabiWebhookUrl?: string;
   firstMonthPrice?: string; // Special first month price for subscriptions
   regularPrice?: string; // Regular subscription price (used with firstMonthPrice)
+  stripeProductId?: string; // Existing Stripe product ID for creating prices
 }
 
 /**
