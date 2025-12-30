@@ -49,7 +49,19 @@ export async function POST(request: NextRequest) {
 
       // Retrieve full session with shipping details (not included in webhook by default)
       const session = await stripe.checkout.sessions.retrieve(sessionFromEvent.id, {
-        expand: ['line_items'],
+        expand: ['line_items', 'customer'],
+      });
+
+      // Debug: Log session details to understand what's available
+      console.log('[Webhook] Session details:', {
+        id: session.id,
+        mode: session.mode,
+        hasShippingDetails: !!(session as any).shipping_details,
+        hasShippingCost: !!(session as any).shipping_cost,
+        hasCustomerDetails: !!session.customer_details,
+        shippingAddressCollection: (session as any).shipping_address_collection,
+        availableKeys: Object.keys(session).filter(k => k.toLowerCase().includes('ship')),
+        metadata: session.metadata,
       });
 
       const metadata = session.metadata as unknown as CheckoutMetadata;

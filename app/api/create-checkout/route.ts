@@ -267,11 +267,16 @@ export async function POST(request: NextRequest) {
         allowed_countries: ["US", "CA"],
       };
       sessionConfig.shipping_options = shippingOptions;
+      console.log(`[Checkout] Shipping address collection enabled for physical product`);
     }
 
     const session = await stripe.checkout.sessions.create(sessionConfig);
 
-    console.log(`[Checkout] Created session: ${session.id} for ${productName}`);
+    console.log(`[Checkout] Created session: ${session.id} for ${productName}`, {
+      productType,
+      hasShippingCollection: !!sessionConfig.shipping_address_collection,
+      hasShippingOptions: (sessionConfig.shipping_options?.length || 0) > 0,
+    });
 
     return NextResponse.json({
       url: session.url,
