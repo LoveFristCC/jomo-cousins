@@ -185,9 +185,29 @@ async function handleSubscriptionWithTrialPricing(
     // Get the current trial price ID (what was just charged)
     const trialPriceId = subscription.items.data[0].price.id;
 
-    // Create subscription schedule with two phases
+    // Update the subscription to switch prices after 30 days
+    // Use schedule_update to change the price at a specific time
+    await stripe.subscriptions.update(subscriptionId, {
+      items: [
+        {
+          id: subscription.items.data[0].id,
+          price: trialPriceId, // Keep current price for now
+        },
+      ],
+      metadata: {
+        ...subscription.metadata,
+        scheduledPriceChange: regularPriceObj.id,
+        priceChangeDate: thirtyDaysFromNow.toString(),
+      },
+    });
+
+    // Create a subscription schedule to handle the price change
     const schedule = await stripe.subscriptionSchedules.create({
       from_subscription: subscriptionId,
+    } as any);
+
+    // Update the schedule with phases
+    await stripe.subscriptionSchedules.update(schedule.id, {
       phases: [
         {
           // Phase 1: Keep current trial price for 30 days (already paid)
@@ -197,6 +217,7 @@ async function handleSubscriptionWithTrialPricing(
               quantity: 1,
             },
           ],
+          start_date: now,
           end_date: thirtyDaysFromNow,
         },
         {
@@ -207,10 +228,11 @@ async function handleSubscriptionWithTrialPricing(
               quantity: 1,
             },
           ],
+          start_date: thirtyDaysFromNow,
           // No end_date = runs indefinitely
         },
       ],
-    } as any); // Type assertion to work around Stripe SDK type issues
+    } as any);
 
     console.log(
       `[Webhook] ✓ Subscription schedule created: ${schedule.id}`
