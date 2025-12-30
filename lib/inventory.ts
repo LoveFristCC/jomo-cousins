@@ -28,10 +28,6 @@ export async function decrementInventory(
   quantity: number
 ): Promise<InventoryUpdateResult> {
   try {
-    console.log(
-      `[Inventory] Attempting to decrement ${quantity} units for SKU: ${sku}`
-    );
-
     // Find the product containing this variant SKU
     const product = await sanityWriteClient.fetch(
       `*[
@@ -56,9 +52,6 @@ export async function decrementInventory(
     }
 
     if (!product.trackInventory) {
-      console.log(
-        `[Inventory] Inventory tracking disabled for product: ${product.name}`
-      );
       return {
         success: true,
         sku,
@@ -83,10 +76,6 @@ export async function decrementInventory(
     const currentInventory = product.variants[variantIndex].inventory;
     const newInventory = Math.max(0, currentInventory - quantity);
 
-    console.log(
-      `[Inventory] Current: ${currentInventory}, Decrementing: ${quantity}, New: ${newInventory}`
-    );
-
     // Use PATCH to atomically update the inventory
     await sanityWriteClient
       .patch(product._id)
@@ -94,8 +83,6 @@ export async function decrementInventory(
         [`variants[${variantIndex}].inventory`]: newInventory,
       })
       .commit();
-
-    console.log(`[Inventory] ✓ Successfully updated inventory for SKU: ${sku}`);
 
     return {
       success: true,
@@ -121,7 +108,6 @@ export async function decrementInventory(
 export async function checkLowStock(
   sku: string
 ): Promise<LowStockAlert | null> {
-  console.log("🚀 ~ sku:", sku);
   try {
     const product = await sanityWriteClient.fetch(
       `*[
@@ -206,7 +192,6 @@ export async function sendLowStockAlert(
     };
 
     await transporter.sendMail(mailOptions);
-    console.log(`[Inventory] ✓ Low stock alert sent for SKU: ${alertData.sku}`);
     return true;
   } catch (error) {
     console.error(`[Inventory] Error sending low stock alert:`, error);
@@ -223,8 +208,6 @@ export async function reserveInventory(
   quantity: number
 ): Promise<InventoryUpdateResult> {
   try {
-    console.log(`[Inventory] Reserving ${quantity} units for SKU: ${sku}`);
-
     const product = await sanityWriteClient.fetch(
       `*[
     _type == "product" &&
@@ -266,8 +249,6 @@ export async function reserveInventory(
         [`variants[${variantIndex}].reservedInventory`]: newReserved,
       })
       .commit();
-
-    console.log(`[Inventory] ✓ Reserved inventory for SKU: ${sku}`);
 
     return {
       success: true,

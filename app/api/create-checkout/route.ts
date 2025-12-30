@@ -91,7 +91,6 @@ export async function POST(request: NextRequest) {
     if (firstMonthPrice !== null) {
       metadata.firstMonthPrice = firstMonthPrice.toString();
       metadata.regularPrice = price.toString(); // Store regular price for subscription schedule
-      console.log(`[Checkout] Trial pricing enabled: $${firstMonthPrice} → $${price}`);
     }
 
     // Store stripe product ID for creating prices in webhook
@@ -114,7 +113,6 @@ export async function POST(request: NextRequest) {
     if (isSubscription && firstMonthPrice && !stripePriceId) {
       // We need to use price_data with the firstMonthPrice for the initial checkout
       // The webhook will handle upgrading to the regular price after 30 days
-      console.log(`[Checkout] Creating trial price checkout: $${firstMonthPrice} for first month`);
     }
 
     // For trial pricing, we must use price_data (can't use existing stripePriceId)
@@ -270,8 +268,6 @@ export async function POST(request: NextRequest) {
     }
 
     const session = await stripe.checkout.sessions.create(sessionConfig);
-
-    console.log(`[Checkout] Created session: ${session.id} for ${productName}`);
 
     return NextResponse.json({
       url: session.url,

@@ -21,15 +21,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log(`[Sanity Webhook] Received ${_type} update for ${_id}`);
-
     // Sync the product to Stripe
     try {
       const result = await syncProductToStripe(_id);
-
-      console.log(
-        `[Sanity Webhook] Successfully synced ${result.productName} to Stripe`
-      );
 
       return NextResponse.json({
         success: true,

@@ -105,6 +105,15 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 border-t border-gray-700 pt-8 text-center text-sm text-gray-400">
+          <div className="mb-4 flex flex-wrap items-center justify-center gap-4">
+            <Link href="/privacy" className="transition-colors hover:text-white">
+              Privacy Policy
+            </Link>
+            <span>•</span>
+            <Link href="/terms" className="transition-colors hover:text-white">
+              Terms of Service
+            </Link>
+          </div>
           <p>&copy; 2025-{ new Date().getFullYear() } Dr. Jomo Cousins. All rights reserved.</p>
         </div>
       </div>

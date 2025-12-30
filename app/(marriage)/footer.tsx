@@ -159,6 +159,19 @@ export default function Footer() {
             </div>
           </div>
         </div>
+
+        <div className="mt-8 border-t border-gray-300 pt-8 text-center text-sm text-gray-600">
+          <div className="mb-4 flex flex-wrap items-center justify-center gap-4">
+            <Link href="/privacy" className="transition-colors hover:text-[#ea8125]">
+              Privacy Policy
+            </Link>
+            <span>•</span>
+            <Link href="/terms" className="transition-colors hover:text-[#ea8125]">
+              Terms of Service
+            </Link>
+          </div>
+          <p>&copy; {new Date().getFullYear()} Jomo & Charmaine. All rights reserved.</p>
+        </div>
       </div>
 
     </footer>

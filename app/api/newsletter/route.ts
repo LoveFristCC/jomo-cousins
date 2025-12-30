@@ -53,8 +53,6 @@ export async function POST(request: NextRequest) {
       }
     );
 
-    console.log(`🚀 ~ Newsletter (${type}) - Kajabi response:`, kajabiResponse.status);
-
     if (!kajabiResponse.ok) {
       console.error("Kajabi submission failed:", await kajabiResponse.text());
       return NextResponse.json(

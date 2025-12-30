@@ -151,12 +151,8 @@ export async function syncProductToStripe(sanityProductId: string) {
             category: sanitizedCategory,
           },
         });
-        console.log(`[Stripe Sync] Updated product: ${stripeProduct.id}`);
       } catch (error) {
         // Product doesn't exist, create new one
-        console.log(
-          `[Stripe Sync] Product ${product.stripeProductId} not found, creating new one`
-        );
         stripeProduct = await createStripeProduct(
           sanitizedName,
           sanitizedDescription,
@@ -192,9 +188,6 @@ export async function syncProductToStripe(sanityProductId: string) {
             stripePrice.recurring?.interval !== subscriptionInterval);
 
         if (priceAmountChanged || subscriptionChanged) {
-          console.log(
-            `[Stripe Sync] Price or subscription settings changed, creating new price for ${product.name}`
-          );
           stripePrice = await createStripePrice(
             stripeProduct.id,
             productPrice,
@@ -224,10 +217,6 @@ export async function syncProductToStripe(sanityProductId: string) {
     // Sync variants if they exist
     const variantUpdates: Record<string, string> = {};
     if (product.variants && product.variants.length > 0) {
-      console.log(
-        `[Stripe Sync] Syncing ${product.variants.length} variants...`
-      );
-
       for (const variant of product.variants) {
         const variantPrice = await syncVariantToStripe(
           stripeProduct.id,
@@ -261,17 +250,10 @@ export async function syncProductToStripe(sanityProductId: string) {
 
     try {
       await patchOperation.commit();
-      console.log(
-        `[Stripe Sync] ✓ Successfully updated Sanity with Stripe IDs`
-      );
     } catch (writeError) {
       console.error(`[Stripe Sync] ❌ Failed to update Sanity:`, writeError);
       throw new Error(`Stripe sync succeeded but Sanity update failed: ${writeError instanceof Error ? writeError.message : 'Unknown error'}`);
     }
-
-    console.log(
-      `[Stripe Sync] Successfully synced product: ${product.name} (${stripeProduct.id})`
-    );
 
     return {
       success: true,
@@ -304,7 +286,6 @@ async function createStripeProduct(
     },
   });
 
-  console.log(`[Stripe Sync] Created product: ${stripeProduct.id}`);
   return stripeProduct;
 }
 
@@ -331,10 +312,6 @@ async function createStripePrice(
   }
 
   const stripePrice = await stripe.prices.create(priceData);
-
-  console.log(
-    `[Stripe Sync] Created ${isSubscription ? "subscription" : "one-time"} price: ${stripePrice.id}`
-  );
   return stripePrice;
 }
 
@@ -386,9 +363,6 @@ async function syncVariantToStripe(
           currency: "usd",
           metadata,
         });
-        console.log(
-          `[Stripe Sync] Created variant price: ${stripePrice.id} for ${variant.sku}`
-        );
       } else {
         // Price unchanged, but update metadata if needed
         const needsMetadataUpdate =
@@ -400,25 +374,16 @@ async function syncVariantToStripe(
           stripePrice = await stripe.prices.update(variant.stripePriceId, {
             metadata,
           });
-          console.log(
-            `[Stripe Sync] Updated variant metadata: ${stripePrice.id} for ${variant.sku}`
-          );
         }
       }
     } catch (error) {
       // Price doesn't exist, create new one
-      console.log(
-        `[Stripe Sync] Variant price ${variant.stripePriceId} not found, creating new one`
-      );
       stripePrice = await stripe.prices.create({
         product: stripeProductId,
         unit_amount: Math.round(variantPrice * 100),
         currency: "usd",
         metadata,
       });
-      console.log(
-        `[Stripe Sync] Created variant price: ${stripePrice.id} for ${variant.sku}`
-      );
     }
   } else {
     // Create new price for variant
@@ -428,9 +393,6 @@ async function syncVariantToStripe(
       currency: "usd",
       metadata,
     });
-    console.log(
-      `[Stripe Sync] Created variant price: ${stripePrice.id} for ${variant.sku}`
-    );
   }
 
   return stripePrice;

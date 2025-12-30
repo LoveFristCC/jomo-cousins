@@ -40,14 +40,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
     }
 
-    console.log(`[Webhook] Received event: ${event.type}`);
-
     // Handle checkout.session.completed event
     if (event.type === "checkout.session.completed") {
       const sessionFromEvent = event.data.object as Stripe.Checkout.Session;
-      console.log(
-        `[Webhook] Processing completed session: ${sessionFromEvent.id}`
-      );
 
       // Retrieve full session with shipping details (not included in webhook by default)
       const session = await stripe.checkout.sessions.retrieve(
@@ -79,7 +74,6 @@ export async function POST(request: NextRequest) {
     // Handle subscription invoice payment (for recurring subscriptions)
     if (event.type === "invoice.paid") {
       const invoice = event.data.object as Stripe.Invoice;
-      console.log(`[Webhook] Processing paid invoice: ${invoice.id}`);
 
       // Only process subscription invoices
       // The subscription field is either a string ID or an expanded Subscription object
@@ -100,10 +94,6 @@ export async function POST(request: NextRequest) {
           subscription.metadata.regularPriceId &&
           invoice.billing_reason === "subscription_cycle"
         ) {
-          console.log(
-            `[Webhook] Upgrading subscription ${subscriptionId} from trial to regular pricing...`
-          );
-
           await stripe.subscriptions.update(subscriptionId, {
             items: [
               {
@@ -117,8 +107,6 @@ export async function POST(request: NextRequest) {
               upgradeAfterFirstBilling: "false", // Mark as upgraded
             },
           });
-
-          console.log(`[Webhook] ✓ Subscription upgraded to regular pricing`);
           // Don't return - continue with normal invoice processing
         }
 
@@ -143,14 +131,12 @@ export async function POST(request: NextRequest) {
     // Handle subscription creation (for initial subscription setup)
     if (event.type === "customer.subscription.created") {
       const subscription = event.data.object as Stripe.Subscription;
-      console.log(`[Webhook] Subscription created: ${subscription.id}`);
       // Additional logic can be added here if needed
     }
 
     // Handle subscription cancellation (optional, for future use)
     if (event.type === "customer.subscription.deleted") {
       const subscription = event.data.object as Stripe.Subscription;
-      console.log(`[Webhook] Subscription cancelled: ${subscription.id}`);
       // Future: Handle Kajabi unenrollment if needed
     }
 
@@ -238,10 +224,6 @@ async function handleSubscriptionWithTrialPricing(
         upgradeAfterFirstBilling: "true",
       },
     });
-
-    console.log(
-      `[Webhook] ✓ Trial pricing: $${firstMonthPrice} now → $${regularPrice}/month after 30 days`
-    );
   } catch (error) {
     console.error("[Webhook] Error setting up trial pricing:", error);
     // Don't throw - let the subscription continue even if schedule fails
@@ -258,10 +240,6 @@ async function handlePhysicalProductOrder(
   try {
     const { variantSku, quantity, productName } = metadata;
 
-    console.log(
-      `[Webhook] Processing physical order - SKU: ${variantSku}, Qty: ${quantity}`
-    );
-
     // 1. Decrement inventory in Sanity
     const inventoryResult = await decrementInventory(
       variantSku,
@@ -274,10 +252,6 @@ async function handlePhysicalProductOrder(
       );
       // Don't fail the webhook - log for manual review
     } else {
-      console.log(
-        `[Webhook] ✓ Inventory decremented. New count: ${inventoryResult.newInventory}`
-      );
-
       // 2. Check for low stock and send alert
       if (
         inventoryResult.newInventory !== undefined &&
@@ -285,9 +259,6 @@ async function handlePhysicalProductOrder(
       ) {
         const lowStockAlert = await checkLowStock(variantSku);
         if (lowStockAlert) {
-          console.log(
-            `[Webhook] Low stock detected for SKU: ${variantSku} (${lowStockAlert.currentInventory} remaining)`
-          );
           await sendLowStockAlert(lowStockAlert);
         }
       }
@@ -296,11 +267,6 @@ async function handlePhysicalProductOrder(
     // 3. Create ShipStation order
     try {
       const shipstationOrder = await createShipStationOrder(session);
-      if (shipstationOrder) {
-        console.log(
-          `[Webhook] ✓ ShipStation order created: ${shipstationOrder.orderId}`
-        );
-      }
     } catch (shipstationError) {
       console.error(
         "[Webhook] Failed to create ShipStation order:",
@@ -308,10 +274,6 @@ async function handlePhysicalProductOrder(
       );
       // Don't fail the webhook - log for manual fulfillment
     }
-
-    console.log(
-      `[Webhook] ✓ Physical product order processed successfully: ${productName}`
-    );
   } catch (error) {
     console.error("[Webhook] Error handling physical product order:", error);
     throw error;
@@ -333,10 +295,6 @@ async function handleDigitalProductOrder(
       return;
     }
 
-    console.log(
-      `[Webhook] Processing digital product order - Kajabi Webhook: ${kajabiWebhookUrl}`
-    );
-
     const customerEmail = session.customer_details?.email;
     const customerName = session.customer_details?.name || "Customer";
 
@@ -346,8 +304,6 @@ async function handleDigitalProductOrder(
     }
 
     // Call Kajabi webhook to enroll customer
-    console.log(`[Webhook] Calling Kajabi webhook for ${customerEmail}...`);
-
     const kajabiResponse = await fetch(kajabiWebhookUrl, {
       method: "POST",
       headers: {
@@ -366,7 +322,7 @@ async function handleDigitalProductOrder(
       try {
         errorJson = JSON.parse(errorText);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
 
       const emailErrors = errorJson?.errors?.email ?? [];
@@ -384,10 +340,6 @@ async function handleDigitalProductOrder(
         throw new Error(`Kajabi webhook error: ${kajabiResponse.status}`);
       }
     }
-
-    console.log(
-      `[Webhook] ✓ Kajabi webhook successful for ${productName} (${customerEmail})`
-    );
   } catch (error) {
     console.error("[Webhook] Error handling digital product order:", error);
     throw error;

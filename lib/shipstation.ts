@@ -17,7 +17,6 @@ export async function createShipStationOrder(
 
     // Only create ShipStation orders for physical products
     if (metadata.productType === "digital") {
-      console.log("[ShipStation] Skipping digital product order");
       return null;
     }
 
@@ -137,11 +136,6 @@ export async function createShipStationOrder(
     }
 
     const shipstationOrder: ShipStationOrderResponse = await response.json();
-
-    console.log(
-      `[ShipStation] ✓ Order created successfully. ShipStation Order ID: ${shipstationOrder.orderId}`
-    );
-
     return shipstationOrder;
   } catch (error) {
     console.error("[ShipStation] Error creating order:", error);
