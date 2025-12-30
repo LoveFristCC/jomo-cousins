@@ -195,33 +195,32 @@ async function handleSubscriptionWithTrialPricing(
     const now = Math.floor(Date.now() / 1000);
     const thirtyDaysFromNow = now + (30 * 24 * 60 * 60);
 
-    // Create a subscription schedule to handle the price change
+    // Update subscription item to use trial price, then schedule price change
+    await stripe.subscriptions.update(subscriptionId, {
+      items: [
+        {
+          id: subscription.items.data[0].id,
+          price: trialPriceObj.id,
+        },
+      ],
+      proration_behavior: 'none', // Don't prorate the change
+    });
+
+    console.log(`[Webhook] Updated subscription to trial price`);
+
+    // Create a subscription schedule with the price change
     const schedule = await stripe.subscriptionSchedules.create({
       from_subscription: subscriptionId,
-    } as any);
-
-    // Update the schedule with phases using iterations
-    await stripe.subscriptionSchedules.update(schedule.id, {
+      end_behavior: 'release', // Release back to normal subscription after schedule
       phases: [
         {
-          // Phase 1: Trial price for 1 billing cycle (30 days)
-          items: [
-            {
-              price: trialPriceObj.id,
-              quantity: 1,
-            },
-          ],
-          iterations: 1, // Run for exactly 1 billing cycle
-        },
-        {
-          // Phase 2: Regular pricing ongoing (starts automatically after Phase 1)
           items: [
             {
               price: regularPriceObj.id,
               quantity: 1,
             },
           ],
-          // No iterations = runs indefinitely
+          start_date: thirtyDaysFromNow, // Start the regular price in 30 days
         },
       ],
     } as any);
