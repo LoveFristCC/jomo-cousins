@@ -26,23 +26,30 @@ export async function createShipStationOrder(
       throw new Error("No customer email found in session");
     }
 
-    if (!session?.shipping_details?.address) {
+    // In Stripe API 2025-12-15.clover, shipping address is in shipping_cost.shipping_address
+    // Check both old and new locations for compatibility
+    const shippingDetails = (session as any).shipping_details || (session as any).shipping_cost;
+    const shippingAddress = shippingDetails?.address || shippingDetails?.shipping_address;
+
+    if (!shippingAddress) {
       console.error(
         "[ShipStation] No shipping address found in session:",
         session.id,
-        "Session object:",
+        "Available shipping data:",
         JSON.stringify({
           id: session.id,
           hasCustomerDetails: !!session.customer_details,
-          hasShippingDetails: !!session.shipping_details,
-          shippingDetailsKeys: session.shipping_details ? Object.keys(session.shipping_details) : [],
-        })
+          hasShippingDetails: !!(session as any).shipping_details,
+          hasShippingCost: !!(session as any).shipping_cost,
+          shippingCostKeys: (session as any).shipping_cost ? Object.keys((session as any).shipping_cost) : [],
+          shippingDetailsKeys: (session as any).shipping_details ? Object.keys((session as any).shipping_details) : [],
+        }, null, 2)
       );
       throw new Error(`No shipping address found in session ${session.id}. Make sure shipping address collection is enabled in Stripe Checkout.`);
     }
 
-    const shippingAddress = session?.shipping_details?.address;
     const customerDetails = session.customer_details;
+    const shippingName = shippingDetails?.name || (session as any).shipping_details?.name || customerDetails.name;
 
     // Build the ShipStation order object
     const order: ShipStationOrder = {
@@ -65,8 +72,7 @@ export async function createShipStationOrder(
 
       // Shipping address
       shipTo: {
-        name:
-          session?.shipping_details?.name || customerDetails.name || "Customer",
+        name: shippingName || "Customer",
         street1: shippingAddress.line1 || "",
         street2: shippingAddress.line2 || undefined,
         city: shippingAddress.city || "",

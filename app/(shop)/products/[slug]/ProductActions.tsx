@@ -144,6 +144,7 @@ export default function ProductActions({ product }: ProductActionsProps) {
           size: selectedVariant.size,
           color: selectedVariant.color,
           weight: product.weight || 0,
+          productType: "physical", // Explicitly set as physical product
         }),
       });
 
