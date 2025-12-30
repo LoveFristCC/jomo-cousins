@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 
 import Footer from "../(home)/footer";
 import Nav from "../(home)/nav";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -92,6 +93,7 @@ export default function ShopLayout({
   return (
     <html lang="en" className={ `${inter.variable} bg-[#3d3d3d] text-black` }>
       <body className="min-h-screen flex flex-col">
+        <GoogleAnalytics />
         <div className="pointer-events-none relative z-10 flex-grow flex flex-col">
           <div className="pointer-events-auto">
             <Nav />

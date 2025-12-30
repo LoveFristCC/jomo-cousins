@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import Nav from "../(home)/nav";
 import PrayerSubNav from "./prayer-subnav";
 import Footer from "../(home)/footer";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.jomocousins.com"),
@@ -97,6 +98,7 @@ export default function PrayerLayout({
   return (
     <html lang="en" className={ `${inter.variable} bg-white text-black` }>
       <body>
+        <GoogleAnalytics />
         <Nav />
         <PrayerSubNav />
         <main>{ children }</main>

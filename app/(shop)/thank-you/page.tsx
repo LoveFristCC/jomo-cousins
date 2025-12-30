@@ -4,6 +4,7 @@ import Stripe from "stripe";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { productByNameQuery } from "@/sanity/lib/queries";
 import UpsellOffer from "./UpsellOffer";
+import PurchaseTracker from "./PurchaseTracker";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-12-15.clover",
@@ -73,8 +74,25 @@ export default async function ThankYouPage({
   console.log('[Thank You] Customer ID:', customerId);
   console.log('[Thank You] Session:', session.id);
 
+  // Prepare purchase data for GA4 tracking
+  const purchaseItems = session.line_items?.data.map((item: any) => ({
+    item_id: item.price?.product as string || item.id,
+    item_name: item.description || 'Unknown Product',
+    price: (item.amount_total || 0) / 100,
+    quantity: item.quantity || 1,
+  })) || [];
+
+  const totalValue = (session.amount_total || 0) / 100;
+
   return (
     <div className="min-h-screen bg-white">
+      {/* Track purchase conversion in Google Analytics */}
+      <PurchaseTracker
+        transactionId={session.id}
+        totalValue={totalValue}
+        items={purchaseItems}
+        currency="USD"
+      />
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-[#2d2d2d] to-[#1a1a1a] text-white">
         <div className="container mx-auto px-4 py-16">

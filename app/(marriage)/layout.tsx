@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Nav from "./nav";
 import Footer from "./footer";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.jomocousins.com"),
@@ -107,6 +108,7 @@ export default function JomoAndCharmaineLayout({
   return (
     <html lang="en" className={ `${inter.variable} bg-white text-black` }>
       <body>
+        <GoogleAnalytics />
         {/* Simple Navigation */ }
         <Nav />
 

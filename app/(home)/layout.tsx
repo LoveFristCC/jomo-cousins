@@ -8,6 +8,7 @@ import { Inter } from "next/font/google";
 import Footer from "./footer";
 import Nav from "./nav";
 import StructuredData from "./structured-data";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
@@ -125,6 +126,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className={ `${inter.variable} bg-[#3d3d3d] text-black` }>
       <body>
+        <GoogleAnalytics />
         <StructuredData />
         <div className="pointer-events-none relative z-10">
           <div className="pointer-events-auto">

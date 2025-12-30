@@ -1,6 +1,7 @@
 import "../globals.css";
 
 import { Inter } from "next/font/google";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -17,7 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="min-h-screen">{children}</body>
+      <body className="min-h-screen">
+        <GoogleAnalytics />
+        {children}
+      </body>
     </html>
   );
 }
