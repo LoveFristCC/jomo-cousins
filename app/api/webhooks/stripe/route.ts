@@ -200,29 +200,28 @@ async function handleSubscriptionWithTrialPricing(
       from_subscription: subscriptionId,
     } as any);
 
-    // Update the schedule with phases using the newly created active prices
+    // Update the schedule with phases using iterations
     await stripe.subscriptionSchedules.update(schedule.id, {
       phases: [
         {
-          // Phase 1: Trial price for 30 days (already paid at checkout)
-          // Don't set start_date - it's already active
+          // Phase 1: Trial price for 1 billing cycle (30 days)
           items: [
             {
               price: trialPriceObj.id,
               quantity: 1,
             },
           ],
-          end_date: thirtyDaysFromNow,
+          iterations: 1, // Run for exactly 1 billing cycle
         },
         {
-          // Phase 2: Switch to regular pricing after 30 days
+          // Phase 2: Regular pricing ongoing (starts automatically after Phase 1)
           items: [
             {
               price: regularPriceObj.id,
               quantity: 1,
             },
           ],
-          // No end_date = runs indefinitely
+          // No iterations = runs indefinitely
         },
       ],
     } as any);
