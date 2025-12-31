@@ -67,7 +67,7 @@ export default function ContactPage() {
       <section className="relative h-[400px] md:h-[500px]">
         {/* Background Image */ }
         <Image
-          src="/images/marriage/contact/contact-hero.jpg"
+          src="/images/marriage/contact/contact-hero.webp"
           alt="Contact Jomo and Charmaine"
           fill
           className="object-cover object-center"

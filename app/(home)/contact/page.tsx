@@ -60,12 +60,15 @@ export default function ContactPage() {
 
   return (
     <div className="bg-white">
+      {/* Preload background image */}
+      <link rel="preload" as="image" href="/images/backgrounds/P1122237B_edited.webp" />
+
       {/* Hero Section with Background Image */ }
       <section className="relative overflow-hidden">
         {/* Background Image */ }
         <div className="absolute inset-0">
           <Image
-            src="/images/jc-bw-pics/JC_APAEvent BW Edit208.jpg"
+            src="/images/jc-bw-pics/JC_APAEvent BW Edit208.webp"
             alt="Contact Background"
             fill
             className="object-cover"
@@ -422,7 +425,7 @@ export default function ContactPage() {
       {/* Trusted By Section */ }
       <section className="relative py-20 overflow-hidden">
         {/* Background Image - Fixed on desktop */ }
-        <div className="absolute inset-0 bg-cover bg-center bg-fixed" style={ { backgroundImage: "url('/images/backgrounds/P1122237B_edited.png')" } }></div>
+        <div className="absolute inset-0 bg-cover bg-center bg-fixed" style={ { backgroundImage: "url('/images/backgrounds/P1122237B_edited.webp')" } }></div>
         {/* Light overlay for readability */ }
         <div className="absolute inset-0 bg-white/65"></div>
 
@@ -439,7 +442,7 @@ export default function ContactPage() {
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 md:gap-12 items-center">
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
-                  src="/images/clients/_00Logos_JC_01.png"
+                  src="/images/clients/_00Logos_JC_01.webp"
                   alt="Client Logo"
                   width={ 150 }
                   height={ 80 }
@@ -449,7 +452,7 @@ export default function ContactPage() {
 
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
-                  src="/images/clients/_00Logos_JC_02.png"
+                  src="/images/clients/_00Logos_JC_02.webp"
                   alt="Client Logo"
                   width={ 150 }
                   height={ 80 }
@@ -459,7 +462,7 @@ export default function ContactPage() {
 
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
-                  src="/images/clients/_00Logos_JC_03.png"
+                  src="/images/clients/_00Logos_JC_03.webp"
                   alt="Client Logo"
                   width={ 150 }
                   height={ 80 }
@@ -469,7 +472,7 @@ export default function ContactPage() {
 
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
-                  src="/images/clients/_00Logos_JC_04.png"
+                  src="/images/clients/_00Logos_JC_04.webp"
                   alt="Client Logo"
                   width={ 150 }
                   height={ 80 }
@@ -479,7 +482,7 @@ export default function ContactPage() {
 
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
-                  src="/images/clients/_00Logos_JC_05.png"
+                  src="/images/clients/_00Logos_JC_05.webp"
                   alt="Client Logo"
                   width={ 150 }
                   height={ 80 }
@@ -489,7 +492,7 @@ export default function ContactPage() {
 
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
-                  src="/images/clients/_00Logos_JC_06.png"
+                  src="/images/clients/_00Logos_JC_06.webp"
                   alt="Client Logo"
                   width={ 150 }
                   height={ 80 }
@@ -499,7 +502,7 @@ export default function ContactPage() {
 
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
-                  src="/images/clients/_00Logos_JC_07.png"
+                  src="/images/clients/_00Logos_JC_07.webp"
                   alt="Client Logo"
                   width={ 150 }
                   height={ 80 }
@@ -509,7 +512,7 @@ export default function ContactPage() {
 
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
-                  src="/images/clients/_00Logos_JC_08.png"
+                  src="/images/clients/_00Logos_JC_08.webp"
                   alt="Client Logo"
                   width={ 150 }
                   height={ 80 }
@@ -519,7 +522,7 @@ export default function ContactPage() {
 
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
-                  src="/images/clients/_00Logos_JC_09.png"
+                  src="/images/clients/_00Logos_JC_09.webp"
                   alt="Client Logo"
                   width={ 150 }
                   height={ 80 }
@@ -529,7 +532,7 @@ export default function ContactPage() {
 
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
-                  src="/images/clients/_00Logos_JC_10.png"
+                  src="/images/clients/_00Logos_JC_10.webp"
                   alt="Client Logo"
                   width={ 150 }
                   height={ 80 }
@@ -539,7 +542,7 @@ export default function ContactPage() {
 
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
-                  src="/images/clients/_00Logos_JC_11.png"
+                  src="/images/clients/_00Logos_JC_11.webp"
                   alt="Client Logo"
                   width={ 150 }
                   height={ 80 }
@@ -549,7 +552,7 @@ export default function ContactPage() {
 
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
-                  src="/images/clients/_00Logos_JC_12.png"
+                  src="/images/clients/_00Logos_JC_12.webp"
                   alt="Client Logo"
                   width={ 150 }
                   height={ 80 }

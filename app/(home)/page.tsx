@@ -5,10 +5,13 @@ import { FadeInUp, FadeInLeft, FadeInRight, ScaleIn, StaggerChildren, StaggerIte
 import BooksSection from "./books-section";
 import NewsletterSection from "./NewsLetterSection";
 
-
 export default function HomePage() {
   return (
     <div className="bg-white">
+      {/* Preload background images */}
+      <link rel="preload" as="image" href="/images/jc-color-pics/main-page-about.webp" />
+      <link rel="preload" as="image" href="/images/backgrounds/empowersbackground.webp" />
+
       {/* Hero Section */ }
       <section
         id="home"
@@ -17,7 +20,7 @@ export default function HomePage() {
         {/* Background Image */ }
         <div className="absolute inset-0">
           <Image
-            src="/images/backgrounds/herobackground.jpg"
+            src="/images/backgrounds/herobackground.webp"
             alt="Background"
             fill
             className="object-cover opacity-20"
@@ -34,7 +37,7 @@ export default function HomePage() {
             <div className="self-center text-center md:text-left">
               <h1 className="mb-6 text-4xl font-bold leading-tight text-[#2d2d2d] md:text-5xl lg:text-6xl">
                 <Image
-                  src="/images/icons/hearts.png"
+                  src="/images/icons/hearts.webp"
                   alt="Heart Icon"
                   width={ 184 }
                   height={ 178 }
@@ -65,7 +68,7 @@ export default function HomePage() {
             {/* <FadeInRight delay={0.2}> */ }
             <div className="relative w-full max-w-[600px]">
               <Image
-                src="/images/jc-png/heroJomo.png"
+                src="/images/jc-png/heroJomo.webp"
                 alt="Dr. Jomo Cousins"
                 width={ 600 }
                 height={ 700 }
@@ -82,12 +85,12 @@ export default function HomePage() {
       {/* About Section */ }
       <section id="about" className="relative bg-gray-50 py-20 md:py-32">
         {/* Background Image - Fixed on desktop, not on mobile */ }
-        <div className="absolute inset-0 bg-cover bg-top" style={ { backgroundImage: "url('/images/jc-color-pics/main-page-about.jpg')", backgroundAttachment: "scroll" } }>
+        <div className="absolute inset-0 bg-cover bg-top" style={ { backgroundImage: "url('/images/jc-color-pics/main-page-about.webp')", backgroundAttachment: "scroll" } }>
           {/* Overlay - only on mobile */ }
           <div className="absolute inset-0 bg-black/50 md:bg-transparent"></div>
         </div>
         {/* Fixed background for desktop only */ }
-        <div className="hidden md:block absolute inset-0 bg-cover bg-top bg-fixed" style={ { backgroundImage: "url('/images/jc-color-pics/main-page-about.jpg')" } }>
+        <div className="hidden md:block absolute inset-0 bg-cover bg-top bg-fixed" style={ { backgroundImage: "url('/images/jc-color-pics/main-page-about.webp')" } }>
           <div className="absolute inset-0 bg-transparent"></div>
         </div>
 
@@ -98,7 +101,7 @@ export default function HomePage() {
                 <h2 className="mb-8 text-4xl font-bold text-white md:text-5xl">
                   <div className="flex items-center justify-center gap-3 md:justify-start">
                     <Image
-                      src="/images/icons/_JC01.png"
+                      src="/images/icons/_JC01.webp"
                       alt="Icon"
                       width={ 184 }
                       height={ 177 }
@@ -154,7 +157,7 @@ export default function HomePage() {
         {/* Background Image */ }
         <div className="absolute inset-0">
           <Image
-            src="/images/backgrounds/iriebackground.jpg"
+            src="/images/backgrounds/iriebackground.webp"
             alt="Background"
             fill
             className="object-cover opacity-30"
@@ -260,12 +263,12 @@ export default function HomePage() {
       {/* Spiritually Empowers Section */ }
       <section className="relative bg-[#2d2d2d] py-40 md:py-40">
         {/* Background Image - Fixed on desktop, not on mobile */ }
-        <div className="absolute inset-0 bg-cover bg-top" style={ { backgroundImage: "url('/images/backgrounds/empowersbackground.jpg')", backgroundAttachment: "scroll" } }>
+        <div className="absolute inset-0 bg-cover bg-top" style={ { backgroundImage: "url('/images/backgrounds/empowersbackground.webp')", backgroundAttachment: "scroll" } }>
           {/* Dark Overlay */ }
           <div className="absolute inset-0 bg-black/20"></div>
         </div>
         {/* Fixed background for desktop only */ }
-        <div className="hidden md:block absolute inset-0 bg-cover bg-top bg-fixed" style={ { backgroundImage: "url('/images/backgrounds/empowersbackground.jpg')" } }>
+        <div className="hidden md:block absolute inset-0 bg-cover bg-top bg-fixed" style={ { backgroundImage: "url('/images/backgrounds/empowersbackground.webp')" } }>
           <div className="absolute inset-0 bg-black/20"></div>
         </div>
 
@@ -312,7 +315,7 @@ export default function HomePage() {
         {/* Background Image - covers entire section, positioned left */ }
         <div className="absolute inset-0">
           <Image
-            src="/images/backgrounds/inspirebackground.jpg"
+            src="/images/backgrounds/inspirebackground.webp"
             alt="Inspire Background"
             fill
             className="object-cover"
@@ -473,7 +476,7 @@ export default function HomePage() {
             <div className="flex flex-col items-center justify-center gap-12 p-12">
               <div className="grayscale transition-all hover:opacity-100 hover:grayscale-0">
                 <Image
-                  src="/images/clients/hc-logo2.png"
+                  src="/images/clients/hc-logo2.webp"
                   alt="Hillsborough County Florida"
                   width={ 200 }
                   height={ 80 }
@@ -482,7 +485,7 @@ export default function HomePage() {
               </div>
               <div className="grayscale transition-all hover:opacity-100 hover:grayscale-0">
                 <Image
-                  src="/images/clients/_00Logos_JC_09.png"
+                  src="/images/clients/_00Logos_JC_09.webp"
                   alt="Hillsborough County Public Schools"
                   width={ 200 }
                   height={ 80 }
@@ -526,7 +529,7 @@ export default function HomePage() {
           <div className="grid grid-cols-2 gap-8 p-12">
             <div className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
               <Image
-                src="/images/clients/_00Logos_JC_18.png"
+                src="/images/clients/_00Logos_JC_18.webp"
                 alt="UNCF"
                 width={ 150 }
                 height={ 80 }
@@ -535,7 +538,7 @@ export default function HomePage() {
             </div>
             <div className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
               <Image
-                src="/images/clients/_00Logos_JC_07.png"
+                src="/images/clients/_00Logos_JC_07.webp"
                 alt="Keller Williams"
                 width={ 150 }
                 height={ 80 }
@@ -544,7 +547,7 @@ export default function HomePage() {
             </div>
             <div className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
               <Image
-                src="/images/clients/_00Logos_JC_14.png"
+                src="/images/clients/_00Logos_JC_14.webp"
                 alt="Boys & Girls Club"
                 width={ 150 }
                 height={ 80 }
@@ -553,7 +556,7 @@ export default function HomePage() {
             </div>
             <div className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
               <Image
-                src="/images/clients/_00Logos_JC_05.png"
+                src="/images/clients/_00Logos_JC_05.webp"
                 alt="RE/MAX"
                 width={ 150 }
                 height={ 80 }

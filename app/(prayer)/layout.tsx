@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     description: "Experience intimate, powerful prayer with Pastor Jomo. Find personalized prayer videos for every area of your life. Hope, healing, and transformation through prayer.",
     images: [
       {
-        url: "/images/logos/Asset 1.png",
+        url: "/images/logos/Asset 1.webp",
         width: 1200,
         height: 630,
         alt: "Pray with Pastor Jomo Cousins",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     description: "Experience powerful, intimate prayer with Pastor Jomo. Find personalized prayer videos for every area of your life.",
     creator: "@pastorjomo",
     site: "@pastorjomo",
-    images: [ "/images/logos/Asset 1.png" ],
+    images: [ "/images/logos/Asset 1.webp" ],
   },
   robots: {
     index: true,
@@ -79,8 +79,8 @@ export const metadata: Metadata = {
   },
   category: "Prayer & Spiritual Ministry",
   icons: {
-    icon: "/images/logos/Asset 1.png",
-    apple: "/images/logos/Asset 1.png",
+    icon: "/images/logos/Asset 1.webp",
+    apple: "/images/logos/Asset 1.webp",
   },
 };
 

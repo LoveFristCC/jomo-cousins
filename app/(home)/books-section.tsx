@@ -81,21 +81,21 @@ export default async function BooksSection() {
         <FadeIn delay={ 0.4 }>
           <div className="mt-16 flex flex-wrap items-center justify-center gap-8 opacity-60">
             <Image
-              src="/images/site-files/image (23).png"
+              src="/images/site-files/image (23).webp"
               alt="Audible"
               width={ 120 }
               height={ 40 }
               className="h-10 w-auto"
             />
             <Image
-              src="/images/site-files/image (24).png"
+              src="/images/site-files/image (24).webp"
               alt="Audible"
               width={ 120 }
               height={ 40 }
               className="h-10 w-auto"
             />
             <Image
-              src="/images/site-files/image (22).png"
+              src="/images/site-files/image (22).webp"
               alt="iTunes"
               width={ 120 }
               height={ 40 }

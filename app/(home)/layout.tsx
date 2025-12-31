@@ -74,7 +74,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: plainDescription,
       images: ogImage ? [ ogImage ] : [
         {
-          url: "/images/logos/JomoCousins Logo18.png",
+          url: "/images/logos/JomoCousins Logo18.webp",
           width: 1200,
           height: 630,
           alt: "Dr. Jomo Cousins - Motivational Speaker",
@@ -87,7 +87,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: plainDescription,
       creator: "@pastorjomo",
       site: "@pastorjomo",
-      images: ogImage ? [ ogImage ] : [ "/images/logos/JomoCousins Logo18.png" ],
+      images: ogImage ? [ ogImage ] : [ "/images/logos/JomoCousins Logo18.webp" ],
     },
     robots: {
       index: true,
@@ -101,8 +101,8 @@ export async function generateMetadata(): Promise<Metadata> {
       },
     },
     icons: {
-      icon: "/images/logos/Asset 1.png",
-      apple: "/images/logos/Asset 1.png",
+      icon: "/images/logos/Asset 1.webp",
+      apple: "/images/logos/Asset 1.webp",
     },
 
   };

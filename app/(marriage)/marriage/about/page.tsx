@@ -9,7 +9,7 @@ export default function AboutPage() {
       <section className="relative h-[600px] md:h-[500px]">
         {/* Background Image */ }
         <Image
-          src="/images/marriage/about/about-hero.jpg"
+          src="/images/marriage/about/about-hero.webp"
           alt="About Drs. Jomo and Charmaine Cousins"
           fill
           className="object-cover object-top"
@@ -37,7 +37,7 @@ export default function AboutPage() {
             {/* Left Image */ }
             <div className="relative">
               <Image
-                src="/images/marriage/about/about-us.png"
+                src="/images/marriage/about/about-us.webp"
                 alt="Dr. Jomo and Dr. Charmaine Cousins"
                 width={ 600 }
                 height={ 700 }
@@ -110,7 +110,7 @@ export default function AboutPage() {
             {/* Right Image */ }
             <div className="relative">
               <Image
-                src="/images/marriage/about/helping-couples.jpg"
+                src="/images/marriage/about/helping-couples.webp"
                 alt="Jomo and Charmaine helping couples"
                 width={ 600 }
                 height={ 700 }
@@ -129,7 +129,7 @@ export default function AboutPage() {
             {/* Left Image */ }
             <div className="relative">
               <Image
-                src="/images/marriage/about/why-choose-us.png"
+                src="/images/marriage/about/why-choose-us.webp"
                 alt="Dr. Jomo and Dr. Charmaine Cousins"
                 width={ 1000 }
                 height={ 700 }
@@ -195,7 +195,7 @@ export default function AboutPage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/marriage/main-page/communication.jpg"
+                  src="/images/marriage/main-page/communication.webp"
                   alt="Communication Issues"
                   width={ 800 }
                   height={ 800 }
@@ -210,7 +210,7 @@ export default function AboutPage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/marriage/main-page/pre-marriage.jpg"
+                  src="/images/marriage/main-page/pre-marriage.webp"
                   alt="Premarital Counseling"
                   width={ 800 }
                   height={ 800 }
@@ -225,7 +225,7 @@ export default function AboutPage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/marriage/main-page/sexual-issues.jpg"
+                  src="/images/marriage/main-page/sexual-issues.webp"
                   alt="Sexual Issues"
                   width={ 800 }
                   height={ 800 }
@@ -240,7 +240,7 @@ export default function AboutPage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/marriage/main-page/cheating.jpg"
+                  src="/images/marriage/main-page/cheating.webp"
                   alt="Infidelity & Unfaithfulness"
                   width={ 800 }
                   height={ 800 }
@@ -255,7 +255,7 @@ export default function AboutPage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/marriage/main-page/trust.jpg"
+                  src="/images/marriage/main-page/trust.webp"
                   alt="Trust Issues"
                   width={ 800 }
                   height={ 800 }
@@ -270,7 +270,7 @@ export default function AboutPage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/marriage/main-page/blended-family.jpg"
+                  src="/images/marriage/main-page/blended-family.webp"
                   alt="Blended Family Support"
                   width={ 800 }
                   height={ 800 }
@@ -321,7 +321,7 @@ export const metadata = {
     url: "https://www.jomocousins.com/marriage/about",
     images: [
       {
-        url: "/images/marriage/about/about-us.png",
+        url: "/images/marriage/about/about-us.webp",
         width: 1200,
         height: 630,
         alt: "Dr. Jomo and Dr. Charmaine Cousins - About Us",
@@ -332,6 +332,6 @@ export const metadata = {
     card: "summary_large_image",
     title: "About Jomo & Charmaine - Senior Pastors & Marriage Counselors",
     description: "Senior Pastors at Love First Christian Center. 24 years married, 1,000+ couples counseled.",
-    images: ["/images/marriage/about/about-us.png"],
+    images: ["/images/marriage/about/about-us.webp"],
   },
 };

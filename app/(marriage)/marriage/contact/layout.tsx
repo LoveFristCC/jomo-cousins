@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     description: "Schedule an appointment with Jomo and Charmaine for couples counseling, marriage therapy, or premarital counseling. Expert guidance for your relationship journey.",
     images: [
       {
-        url: "https://www.jomocousins.com/images/marriage/contact/contact-hero.jpg",
+        url: "https://www.jomocousins.com/images/marriage/contact/contact-hero.webp",
         width: 1200,
         height: 630,
         alt: "Contact Jomo & Charmaine for Marriage Counseling",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Contact Jomo & Charmaine | Marriage Counseling & Coaching",
     description: "Schedule an appointment for couples counseling, marriage therapy, or premarital counseling with Jomo and Charmaine.",
-    images: ["https://www.jomocousins.com/images/marriage/contact/contact-hero.jpg"],
+    images: ["https://www.jomocousins.com/images/marriage/contact/contact-hero.webp"],
     creator: "@JomoCharmaine",
   },
 };

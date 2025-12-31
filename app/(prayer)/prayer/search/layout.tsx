@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     description: "Search Dr. Jomo Cousins' library of prayer videos by topic, category, or keyword. Find the perfect prayer for your spiritual needs.",
     images: [
       {
-        url: "https://www.jomocousins.com/images/og-prayer.jpg",
+        url: "https://www.jomocousins.com/images/og-prayer.webp",
         width: 1200,
         height: 630,
         alt: "Search Prayer Videos by Dr. Jomo Cousins",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Search Prayers | Find Prayer Videos by Topic",
     description: "Search Dr. Jomo Cousins' library of prayer videos by topic, category, or keyword.",
-    images: ["https://www.jomocousins.com/images/og-prayer.jpg"],
+    images: ["https://www.jomocousins.com/images/og-prayer.webp"],
     creator: "@pastorjomo",
     site: "@pastorjomo",
   },

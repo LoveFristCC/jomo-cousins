@@ -10,7 +10,7 @@ export default function Footer() {
           <div>
             <div className="mb-6">
               <Image
-                src="/images/jomo-and-charmaine/main-page/Jomo-and-Charmaine-logo.png"
+                src="/images/jomo-and-charmaine/main-page/Jomo-and-Charmaine-logo.webp"
                 alt="Jomo & Charmaine"
                 width={ 250 }
                 height={ 100 }

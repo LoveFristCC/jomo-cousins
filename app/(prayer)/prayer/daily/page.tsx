@@ -170,7 +170,7 @@ export default async function DailyPrayerPage() {
               <div className="relative">
                 <div className="aspect-square overflow-hidden rounded-2xl shadow-xl">
                   <Image
-                    src="/images/jc-color-pics/JC_NewPhotos Edit539_edited.jpg"
+                    src="/images/jc-color-pics/JC_NewPhotos Edit539_edited.webp"
                     alt="Jomo Cousins praying"
                     width={ 500 }
                     height={ 500 }

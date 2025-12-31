@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     description: "Book Dr. Jomo Cousins for your next event. Former NFL player, pastor, and motivational speaker available for corporate events, church services, youth programs, and seminars.",
     images: [
       {
-        url: "https://www.jomocousins.com/images/jc-bw-pics/JC_APAEvent BW Edit208.jpg",
+        url: "https://www.jomocousins.com/images/jc-bw-pics/JC_APAEvent BW Edit208.webp",
         width: 1200,
         height: 630,
         alt: "Contact Dr. Jomo Cousins",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Contact Dr. Jomo Cousins | Book for Speaking Engagements",
     description: "Book Dr. Jomo Cousins for your next event. Available for corporate events, church services, youth programs, and financial seminars.",
-    images: ["https://www.jomocousins.com/images/jc-bw-pics/JC_APAEvent BW Edit208.jpg"],
+    images: ["https://www.jomocousins.com/images/jc-bw-pics/JC_APAEvent BW Edit208.webp"],
     creator: "@pastorjomo",
     site: "@pastorjomo",
   },

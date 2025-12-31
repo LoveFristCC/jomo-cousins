@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     siteName: "Dr. Jomo Cousins",
     images: [
       {
-        url: "/images/backgrounds/P1122310B_edited.jpg",
+        url: "/images/backgrounds/P1122310B_edited.webp",
         width: 1200,
         height: 630,
         alt: "Shop Dr. Jomo Cousins Products",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     title: "Shop Dr. Jomo Cousins Books & Products",
     description: "Books, apparel, and resources for personal growth and spiritual development.",
     creator: "@pastorjomo",
-    images: ["/images/backgrounds/P1122310B_edited.jpg"],
+    images: ["/images/backgrounds/P1122310B_edited.webp"],
   },
 };
 
@@ -82,7 +82,7 @@ export default async function ProductsPage({
         {/* Background Image with Overlay */ }
         <div className="absolute inset-0">
           <Image
-            src="/images/backgrounds/P1122310B_edited.jpg"
+            src="/images/backgrounds/P1122310B_edited.webp"
             alt="Shop Background"
             fill
             className="object-cover opacity-40 object-top"

@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: "Dr. Jomo Cousins",
     images: [
       {
-        url: "/images/logos/Asset 1.png",
+        url: "/images/logos/Asset 1.webp",
         width: 1200,
         height: 630,
         alt: "Pray with Jomo Cousins",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     description: "Daily prayer videos and spiritual guidance. Jomo is praying with you.",
     creator: "@pastorjomo",
     site: "@pastorjomo",
-    images: [ "/images/logos/Asset 1.png" ],
+    images: [ "/images/logos/Asset 1.webp" ],
   },
 };
 
@@ -154,7 +154,7 @@ export default async function PrayerPage() {
             <div className="relative">
               <div className="aspect-square overflow-hidden rounded-2xl">
                 <Image
-                  src="/images/jc-png/_JC_NewPhotos Edit240.png"
+                  src="/images/jc-png/_JC_NewPhotos Edit240.webp"
                   alt="Pray with Jomo Cousins"
                   width={ 600 }
                   height={ 600 }
@@ -313,7 +313,7 @@ export default async function PrayerPage() {
             <div className="relative">
               <div className="aspect-square overflow-hidden rounded-2xl">
                 <Image
-                  src="/images/jc-png/Instagram post 2_Master_Pic.png"
+                  src="/images/jc-png/Instagram post 2_Master_Pic.webp"
                   alt="Jomo Cousins"
                   width={ 500 }
                   height={ 500 }

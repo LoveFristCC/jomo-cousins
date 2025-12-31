@@ -9,7 +9,7 @@ export default function StructuredData() {
         url: "https://www.jomocousins.com",
         image: {
           "@type": "ImageObject",
-          url: "https://www.jomocousins.com/images/jc-color-pics/JC_NewPhotos Edit477.jpg",
+          url: "https://www.jomocousins.com/images/jc-color-pics/JC_NewPhotos Edit477.webp",
           width: 800,
           height: 800,
         },
@@ -63,7 +63,7 @@ export default function StructuredData() {
         url: "https://www.jomocousins.com",
         logo: {
           "@type": "ImageObject",
-          url: "https://www.jomocousins.com/images/logos/Asset 1.png",
+          url: "https://www.jomocousins.com/images/logos/Asset 1.webp",
         },
         founder: {
           "@id": "https://www.jomocousins.com/#person",

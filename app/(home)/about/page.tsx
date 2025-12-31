@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     siteName: "Dr. Jomo Cousins",
     images: [
       {
-        url: "/images/jc-color-pics/aboutProfilePictures.jpg",
+        url: "/images/jc-color-pics/aboutProfilePictures.webp",
         width: 1200,
         height: 630,
         alt: "Dr. Jomo Cousins - Motivational Speaker and Pastor",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     description: "From NFL to ministry: Dr. Jomo Cousins' inspiring journey of faith, resilience, and transformation.",
     creator: "@pastorjomo",
     site: "@pastorjomo",
-    images: ["/images/jc-color-pics/aboutProfilePictures.jpg"],
+    images: ["/images/jc-color-pics/aboutProfilePictures.webp"],
   },
 };
 
@@ -57,7 +57,7 @@ export default function AboutPage() {
     alternateName: "Jomo Cousins",
     description: "NFL veteran, pastor, motivational speaker, author, and cancer survivor. Founder of Love First Christian Center.",
     url: "https://www.jomocousins.com",
-    image: "https://www.jomocousins.com/images/jc-color-pics/aboutProfilePictures.jpg",
+    image: "https://www.jomocousins.com/images/jc-color-pics/aboutProfilePictures.webp",
     jobTitle: ["Pastor", "Motivational Speaker", "Author", "Business Coach"],
     hasOccupation: [
       {
@@ -128,6 +128,9 @@ export default function AboutPage() {
 
   return (
     <div className="bg-white">
+      {/* Preload background image */}
+      <link rel="preload" as="image" href="/images/jc-color-pics/JC_NewPhotos Edit623_edited.webp" />
+
       {/* Structured Data */}
       <script
         type="application/ld+json"
@@ -139,7 +142,7 @@ export default function AboutPage() {
         {/* Background Image */ }
         <div className="absolute inset-0">
           <Image
-            src="/images/backgrounds/aboutBackground.jpg"
+            src="/images/backgrounds/aboutBackground.webp"
             alt="About Background"
             fill
             className="object-cover"
@@ -174,7 +177,7 @@ export default function AboutPage() {
             {/* Right side - Hero Image */ }
             <div className="relative h-[500px] md:h-[650px] flex items-end">
               <Image
-                src="/images/jc-png/aboutHeroJomo.png"
+                src="/images/jc-png/aboutHeroJomo.webp"
                 alt="Dr. Jomo Cousins"
                 fill
                 className="object-contain object-bottom"
@@ -191,7 +194,7 @@ export default function AboutPage() {
           {/* Left side - Large Portrait */ }
           <div className="relative h-[500px] md:h-auto bg-[#141414]">
             <Image
-              src="/images/jc-color-pics/aboutProfilePictures.jpg"
+              src="/images/jc-color-pics/aboutProfilePictures.webp"
               alt="Dr. Jomo Cousins Portrait"
               fill
               className="object-cover object-center"
@@ -204,7 +207,7 @@ export default function AboutPage() {
             <div className="mb-8 flex justify-center">
               <div className="relative w-24 h-24">
                 <Image
-                  src="/images/logos/JomoCousins Logo15.png"
+                  src="/images/logos/JomoCousins Logo15.webp"
                   alt="Dr. Jomo Cousins Logo"
                   fill
                   className="object-contain"
@@ -263,7 +266,7 @@ export default function AboutPage() {
               <div className="text-center">
                 <div className="relative w-56 h-56 mx-auto mb-6 rounded-full overflow-hidden bg-white">
                   <Image
-                    src="/images/jc-png/_JC_NewPhotos Edit358_BW.png"
+                    src="/images/jc-png/_JC_NewPhotos Edit358_BW.webp"
                     alt="Motivational Speaking"
                     fill
                     className="object-cover object-top"
@@ -282,7 +285,7 @@ export default function AboutPage() {
               <div className="text-center">
                 <div className="relative w-56 h-56 mx-auto mb-6 rounded-full overflow-hidden bg-white">
                   <Image
-                    src="/images/jc-png/_JC_NewPhotos Edit334_BW.png"
+                    src="/images/jc-png/_JC_NewPhotos Edit334_BW.webp"
                     alt="Financial Seminars"
                     fill
                     className="object-cover object-top"
@@ -301,7 +304,7 @@ export default function AboutPage() {
               <div className="text-center">
                 <div className="relative w-56 h-56 mx-auto mb-6 rounded-full overflow-hidden bg-white">
                   <Image
-                    src="/images/jc-png/_JC_NewPhotos Edit414_edited.png"
+                    src="/images/jc-png/_JC_NewPhotos Edit414_edited.webp"
                     alt="Youth Programs"
                     fill
                     className="object-cover object-top"
@@ -323,7 +326,7 @@ export default function AboutPage() {
       {/* Survivor Section - Screenshot 4 */ }
       <section className="py-20 md:py-32 relative">
         {/* Background Image - Fixed on desktop */ }
-        <div className="absolute inset-0 bg-cover bg-top bg-fixed" style={{ backgroundImage: "url('/images/jc-color-pics/JC_NewPhotos Edit623_edited.jpg')" }}></div>
+        <div className="absolute inset-0 bg-cover bg-top bg-fixed" style={{ backgroundImage: "url('/images/jc-color-pics/JC_NewPhotos Edit623_edited.webp')" }}></div>
         {/* Dark overlay for text readability */ }
         <div className="absolute inset-0 bg-gradient-to-br from-gray-800/80 to-gray-900/80"></div>
 
@@ -374,7 +377,7 @@ export default function AboutPage() {
             {/* Ribbon – Bottom Background */ }
             <div className="absolute bottom-16 md:bottom-[-100px] left-1/2 -translate-x-1/2 w-[220%] md:w-[170%] h-[25vh] md:h-[600px] z-10 pointer-events-none">
               <Image
-                src="/images/icons/Jomo Cancer_03.png"
+                src="/images/icons/Jomo Cancer_03.webp"
                 alt="Cancer Awareness Ribbon"
                 fill
                 priority
@@ -385,7 +388,7 @@ export default function AboutPage() {
             {/* Foreground Image – Dr. Cousins */ }
             <div className="absolute bottom-0 right-1/2 translate-x-1/2 md:right-0 md:translate-x-0 w-[72%] md:w-[46%] h-[50vh] md:h-[700px] z-20 drop-shadow-[0_40px_80px_rgba(0,0,0,0.6)]">
               <Image
-                src="/images/jc-png/_JC_NewPhotos Edit515_edited.png"
+                src="/images/jc-png/_JC_NewPhotos Edit515_edited.webp"
                 alt="Dr. Jomo Cousins - Cancer Free"
                 fill
                 priority

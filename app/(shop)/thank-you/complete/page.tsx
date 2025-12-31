@@ -189,7 +189,7 @@ export const metadata = {
     description: "Your order has been successfully processed. Thank you for your purchase!",
     images: [
       {
-        url: "https://www.jomocousins.com/images/og-image.jpg",
+        url: "https://www.jomocousins.com/images/og-image.webp",
         width: 1200,
         height: 630,
         alt: "Thank You for Your Order",
@@ -200,7 +200,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Order Complete - Thank You",
     description: "Your order has been successfully processed. Thank you for your purchase!",
-    images: ["https://www.jomocousins.com/images/og-image.jpg"],
+    images: ["https://www.jomocousins.com/images/og-image.webp"],
     creator: "@pastorjomo",
   },
 };

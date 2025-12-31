@@ -316,7 +316,7 @@ export default async function PrayerVideoPage({ params }: Props) {
                 <div className="mb-3 flex items-center gap-3">
                   <div className="h-12 w-12 overflow-hidden rounded-full">
                     <Image
-                      src="/images/jomo-profile.jpg"
+                      src="/images/jomo-profile.webp"
                       alt="Jomo Cousins"
                       width={ 48 }
                       height={ 48 }
@@ -434,7 +434,7 @@ export default async function PrayerVideoPage({ params }: Props) {
           <div className="mx-auto max-w-4xl rounded-2xl bg-gradient-to-r from-[#3d3d3d] to-[#2d2d2d] p-12 text-center text-white shadow-2xl">
             <div className="mx-auto mb-6 h-24 w-24 overflow-hidden rounded-full border-4 border-white">
               <Image
-                src="/images/jc-color-pics/_JC_NewPhotos Edit141.jpg"
+                src="/images/jc-color-pics/_JC_NewPhotos Edit141.webp"
                 alt="Jomo Cousins"
                 width={ 96 }
                 height={ 96 }

@@ -134,7 +134,7 @@ export const metadata = {
     description: "Hand-picked product recommendations curated for you.",
     images: [
       {
-        url: "https://www.jomocousins.com/images/og-image.jpg",
+        url: "https://www.jomocousins.com/images/og-image.webp",
         width: 1200,
         height: 630,
         alt: "Special Product Offers",
@@ -145,7 +145,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Special Offer - Complete Your Collection",
     description: "Hand-picked product recommendations curated for you.",
-    images: ["https://www.jomocousins.com/images/og-image.jpg"],
+    images: ["https://www.jomocousins.com/images/og-image.webp"],
     creator: "@pastorjomo",
   },
 };

@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     description: "Submit your prayer request to Dr. Jomo Cousins. Join the prayer community for spiritual support and guidance.",
     images: [
       {
-        url: "https://www.jomocousins.com/images/og-prayer.jpg",
+        url: "https://www.jomocousins.com/images/og-prayer.webp",
         width: 1200,
         height: 630,
         alt: "Submit Prayer Request to Dr. Jomo Cousins",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Submit Prayer Request | Pray with Pastor Jomo",
     description: "Submit your prayer request to Dr. Jomo Cousins for spiritual support and guidance.",
-    images: ["https://www.jomocousins.com/images/og-prayer.jpg"],
+    images: ["https://www.jomocousins.com/images/og-prayer.webp"],
     creator: "@pastorjomo",
     site: "@pastorjomo",
   },

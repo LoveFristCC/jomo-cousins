@@ -31,7 +31,7 @@ export default async function CouplesCornerPage() {
       <section className="relative h-[400px] md:h-[500px]">
         {/* Background Image */ }
         <Image
-          src="/images/marriage/blog/couple-corner-hero.jpg"
+          src="/images/marriage/blog/couple-corner-hero.webp"
           alt="Couples' Corner"
           fill
           className="object-cover object-center"
@@ -301,7 +301,7 @@ export default async function CouplesCornerPage() {
             {/* Left - eBook Image */ }
             <div className="relative flex justify-center">
               <Image
-                src="/images/marriage/main-page/conversation-staters.png"
+                src="/images/marriage/main-page/conversation-staters.webp"
                 alt="Conversation Starters for Couples"
                 width={ 500 }
                 height={ 500 }
@@ -335,7 +335,7 @@ export const metadata = {
     url: "https://www.jomocousins.com/marriage/blog",
     images: [
       {
-        url: "/images/marriage/blog/couple-corner-hero.jpg",
+        url: "/images/marriage/blog/couple-corner-hero.webp",
         width: 1200,
         height: 630,
         alt: "Couples' Corner - Marriage and Relationship Blog",
@@ -346,6 +346,6 @@ export const metadata = {
     card: "summary_large_image",
     title: "Couples' Corner - Marriage Advice from Jomo & Charmaine",
     description: "Relationship resources, dating ideas, marriage prayers, and expert counseling tips from experienced Senior Pastors.",
-    images: [ "/images/marriage/blog/couple-corner-hero.jpg" ],
+    images: [ "/images/marriage/blog/couple-corner-hero.webp" ],
   },
 };

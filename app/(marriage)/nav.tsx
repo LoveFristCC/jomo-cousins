@@ -28,7 +28,7 @@ export default function Nav() {
             {/* Logo */ }
             <Link href="/marriage" className="flex items-center">
               <Image
-                src="/images/jomo-and-charmaine/main-page/Jomo-and-Charmaine-logo.png"
+                src="/images/jomo-and-charmaine/main-page/Jomo-and-Charmaine-logo.webp"
                 alt="Jomo & Charmaine"
                 width={ 220 }
                 height={ 70 }

@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     description: "Shop for books, apparel, and accessories from Dr. Jomo Cousins",
     images: [
       {
-        url: "/images/logos/JomoCousins Logo18.png",
+        url: "/images/logos/JomoCousins Logo18.webp",
         width: 1200,
         height: 630,
         alt: "Dr. Jomo Cousins Shop",
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     description: "Shop for books, apparel, and accessories from Dr. Jomo Cousins",
     creator: "@pastorjomo",
     site: "@pastorjomo",
-    images: [ "/images/logos/JomoCousins Logo18.png" ],
+    images: [ "/images/logos/JomoCousins Logo18.webp" ],
   },
   robots: {
     index: true,
@@ -80,8 +80,8 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/images/logos/Asset 1.png",
-    apple: "/images/logos/Asset 1.png",
+    icon: "/images/logos/Asset 1.webp",
+    apple: "/images/logos/Asset 1.webp",
   },
 };
 

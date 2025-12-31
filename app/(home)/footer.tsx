@@ -10,7 +10,7 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <Link href="/" className="group mb-6 inline-flex items-center gap-3">
               <Image
-                src="/images/logos/Asset 1.png"
+                src="/images/logos/Asset 1.webp"
                 alt="Jomo Cousins Logo"
                 width={48}
                 height={48}

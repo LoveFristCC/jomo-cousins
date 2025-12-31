@@ -32,7 +32,7 @@ export default function Nav() {
             {/* Logo */ }
             <Link href="/" className="group flex items-center gap-3">
               <Image
-                src="/images/logos/Asset 1.png"
+                src="/images/logos/Asset 1.webp"
                 alt="Logo"
                 width={ 40 }
                 height={ 40 }

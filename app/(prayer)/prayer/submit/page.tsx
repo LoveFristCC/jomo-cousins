@@ -90,7 +90,7 @@ export default function SubmitPage() {
             <div className="mx-auto max-w-3xl text-center">
               <div className="mx-auto mb-6 h-24 w-24 overflow-hidden rounded-full border-4 border-white">
                 <Image
-                  src="/images/jc-color-pics/_JC_NewPhotos Edit141.jpg"
+                  src="/images/jc-color-pics/_JC_NewPhotos Edit141.webp"
                   alt="Jomo Cousins"
                   width={ 96 }
                   height={ 96 }
@@ -175,7 +175,7 @@ export default function SubmitPage() {
             <div className="mb-8 text-center">
               <div className="mx-auto mb-6 h-24 w-24 overflow-hidden rounded-full border-4 border-white">
                 <Image
-                  src="/images/jc-color-pics/_JC_NewPhotos Edit141.jpg"
+                  src="/images/jc-color-pics/_JC_NewPhotos Edit141.webp"
                   alt="Jomo Cousins"
                   width={ 96 }
                   height={ 96 }

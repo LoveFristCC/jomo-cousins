@@ -330,7 +330,7 @@ export default async function BlogPostPage({
             {/* Left - eBook Image */}
             <div className="relative flex justify-center">
               <Image
-                src="/images/marriage/main-page/conversation-staters.png"
+                src="/images/marriage/main-page/conversation-staters.webp"
                 alt="Conversation Starters for Couples"
                 width={500}
                 height={500}

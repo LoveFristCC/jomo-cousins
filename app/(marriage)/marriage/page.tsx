@@ -12,7 +12,7 @@ export default function JomoAndCharmainePage() {
         "@id": "https://www.jomocousins.com/marriage/#organization",
         "name": "Jomo & Charmaine Ministries",
         "url": "https://www.jomocousins.com/marriage",
-        "logo": "https://www.jomocousins.com/images/marriage/main-page/Jomo-and-Charmaine-logo.png",
+        "logo": "https://www.jomocousins.com/images/marriage/main-page/Jomo-and-Charmaine-logo.webp",
         "description": "Marriage counseling ministry led by Dr. Jomo and Dr. Charmaine Cousins, Senior Pastors helping couples thrive together through faith-based counseling and relationship coaching.",
         "founder": [
           {
@@ -82,7 +82,7 @@ export default function JomoAndCharmainePage() {
       <section className="relative h-[600px] md:h-[700px] lg:h-[800px]">
         {/* Background Image */ }
         <Image
-          src="/images/marriage/contact/contact-hero.jpg"
+          src="/images/marriage/contact/contact-hero.webp"
           alt="Jomo and Charmaine Cousins"
           fill
           className="object-cover object-top"
@@ -178,7 +178,7 @@ export default function JomoAndCharmainePage() {
             {/* Left Image */ }
             <div className="relative">
               <Image
-                src="/images/marriage/main-page/Cousins-Together-Main-page.png"
+                src="/images/marriage/main-page/Cousins-Together-Main-page.webp"
                 alt="Drs. Jomo and Charmaine Cousins"
                 width={ 600 }
                 height={ 700 }
@@ -306,7 +306,7 @@ export default function JomoAndCharmainePage() {
             <div className="grid items-center gap-8 md:grid-cols-2 lg:gap-16">
               <div className="relative">
                 <Image
-                  src="/images/marriage/main-page/reading-marriage-book.jpg"
+                  src="/images/marriage/main-page/reading-marriage-book.webp"
                   alt="The Mechanics of Marriage"
                   width={ 600 }
                   height={ 500 }
@@ -334,7 +334,7 @@ export default function JomoAndCharmainePage() {
             <div className="grid items-center gap-8 md:grid-cols-2 lg:gap-16">
               <div className="relative">
                 <Image
-                  src="/images/marriage/main-page/tym-book.jpg"
+                  src="/images/marriage/main-page/tym-book.webp"
                   alt="Transform Your Mind Transform Your Marriage"
                   width={ 600 }
                   height={ 500 }
@@ -379,7 +379,7 @@ export default function JomoAndCharmainePage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/marriage/main-page/communication.jpg"
+                  src="/images/marriage/main-page/communication.webp"
                   alt="Communication Issues"
                   width={ 800 }
                   height={ 800 }
@@ -394,7 +394,7 @@ export default function JomoAndCharmainePage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/marriage/main-page/pre-marriage.jpg"
+                  src="/images/marriage/main-page/pre-marriage.webp"
                   alt="Premarital Counseling"
                   width={ 800 }
                   height={ 800 }
@@ -409,7 +409,7 @@ export default function JomoAndCharmainePage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/marriage/main-page/sexual-issues.jpg"
+                  src="/images/marriage/main-page/sexual-issues.webp"
                   alt="Sexual Issues"
                   width={ 800 }
                   height={ 800 }
@@ -424,7 +424,7 @@ export default function JomoAndCharmainePage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/marriage/main-page/cheating.jpg"
+                  src="/images/marriage/main-page/cheating.webp"
                   alt="Infidelity & Unfaithfulness"
                   width={ 800 }
                   height={ 800 }
@@ -439,7 +439,7 @@ export default function JomoAndCharmainePage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/marriage/main-page/trust.jpg"
+                  src="/images/marriage/main-page/trust.webp"
                   alt="Trust Issues"
                   width={ 800 }
                   height={ 800 }
@@ -454,7 +454,7 @@ export default function JomoAndCharmainePage() {
             <div className="group cursor-pointer">
               <div className="relative mb-4 overflow-hidden">
                 <Image
-                  src="/images/marriage/main-page/blended-family.jpg"
+                  src="/images/marriage/main-page/blended-family.webp"
                   alt="Blended Family Support"
                   width={ 800 }
                   height={ 800 }
@@ -550,7 +550,7 @@ export default function JomoAndCharmainePage() {
             {/* Left - eBook Image */ }
             <div className="relative flex justify-center">
               <Image
-                src="/images/marriage/main-page/conversation-staters.png"
+                src="/images/marriage/main-page/conversation-staters.webp"
                 alt="Conversation Starters for Couples"
                 width={ 500 }
                 height={ 500 }
@@ -608,7 +608,7 @@ export default function JomoAndCharmainePage() {
               <div className="text-center">
                 <div className="relative mx-auto mb-3 h-20 w-20 overflow-hidden rounded-full">
                   <Image
-                    src="/images/marriage/main-page/jac-testimonial-1.jpg"
+                    src="/images/marriage/main-page/jac-testimonial-1.webp"
                     alt="B. & F. Simmons"
                     fill
                     className="object-cover"
@@ -638,7 +638,7 @@ export default function JomoAndCharmainePage() {
               <div className="text-center">
                 <div className="relative mx-auto mb-3 h-20 w-20 overflow-hidden rounded-full">
                   <Image
-                    src="/images/marriage/main-page/jac-testimonial-2.jpg"
+                    src="/images/marriage/main-page/jac-testimonial-2.webp"
                     alt="J. and W. Brushier"
                     fill
                     className="object-cover"
@@ -668,7 +668,7 @@ export default function JomoAndCharmainePage() {
               <div className="text-center">
                 <div className="relative mx-auto mb-3 h-20 w-20 overflow-hidden rounded-full">
                   <Image
-                    src="/images/marriage/main-page/jac-testimonial-3.jpg"
+                    src="/images/marriage/main-page/jac-testimonial-3.webp"
                     alt="M. McKenny"
                     fill
                     className="object-cover"
@@ -726,7 +726,7 @@ export const metadata = {
     url: "https://www.jomocousins.com/marriage",
     images: [
       {
-        url: "/images/marriage/main-page/Cousins-Together-Main-page.png",
+        url: "/images/marriage/main-page/Cousins-Together-Main-page.webp",
         width: 1200,
         height: 630,
         alt: "Dr. Jomo and Dr. Charmaine Cousins - Marriage Counseling Pastors",
@@ -739,6 +739,6 @@ export const metadata = {
     description: "Senior Pastors helping couples build stronger marriages. 24 years married, 1,000+ couples counseled.",
     creator: "@JomoCharmaine",
     site: "@JomoCharmaine",
-    images: [ "/images/marriage/main-page/Cousins-Together-Main-page.png" ],
+    images: [ "/images/marriage/main-page/Cousins-Together-Main-page.webp" ],
   },
 };
