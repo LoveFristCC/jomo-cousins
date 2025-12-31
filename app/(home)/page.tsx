@@ -22,6 +22,8 @@ export default function HomePage() {
             fill
             className="object-cover opacity-20"
             priority
+            sizes="100vw"
+            quality={75}
           />
         </div>
 
@@ -34,9 +36,9 @@ export default function HomePage() {
                 <Image
                   src="/images/icons/hearts.png"
                   alt="Heart Icon"
-                  width={ 64 }
-                  height={ 64 }
-                  className="mb-6 hidden h-16 w-16 md:block"
+                  width={ 184 }
+                  height={ 178 }
+                  className="mb-6 hidden h-16 w-auto md:block"
                   priority
                 />
                 UNLOCK THE
@@ -69,6 +71,7 @@ export default function HomePage() {
                 height={ 700 }
                 className="mx-auto w-full h-auto"
                 priority
+                sizes="(max-width: 768px) 100vw, 600px"
               />
             </div>
             {/* </FadeInRight> */ }
@@ -97,9 +100,9 @@ export default function HomePage() {
                     <Image
                       src="/images/icons/_JC01.png"
                       alt="Icon"
-                      width={ 80 }
-                      height={ 80 }
-                      className="h-16 w-16"
+                      width={ 184 }
+                      height={ 177 }
+                      className="h-16 w-auto"
                     />
                     About
                   </div>
