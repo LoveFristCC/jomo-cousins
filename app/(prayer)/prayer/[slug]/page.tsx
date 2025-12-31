@@ -12,6 +12,20 @@ import { getYouTubeVideoId } from "@/lib/youtube";
 import YouTubePlayer from "@/components/YouTubePlayer";
 import DownloadPrayerPDFButton from "@/components/DownloadPrayerPDFButton";
 
+// Convert Portable Text to plain text for structured data
+function portableTextToPlainText(blocks: any[]): string {
+  if (!blocks || !Array.isArray(blocks)) return "";
+
+  return blocks
+    .map((block) => {
+      if (block._type !== "block" || !block.children) {
+        return "";
+      }
+      return block.children.map((child: any) => child.text).join("");
+    })
+    .join("\n\n");
+}
+
 type Props = {
   params: Promise<{ slug: string }>;
 };
@@ -169,7 +183,7 @@ export default async function PrayerVideoPage({ params }: Props) {
           jobTitle: "Pastor & Spiritual Leader",
           url: "https://jomocousins.com",
         },
-        ...(prayer.fullTranscript && { transcript: prayer.fullTranscript }),
+        ...(prayer.fullTranscript && { transcript: portableTextToPlainText(prayer.fullTranscript) }),
       },
       {
         "@type": "Article",
@@ -180,7 +194,7 @@ export default async function PrayerVideoPage({ params }: Props) {
           jobTitle: "Pastor & Spiritual Leader",
         },
         datePublished: prayer.publishedAt,
-        ...(prayer.fullTranscript && { articleBody: prayer.fullTranscript }),
+        ...(prayer.fullTranscript && { articleBody: portableTextToPlainText(prayer.fullTranscript) }),
       },
       {
         "@type": "Person",
