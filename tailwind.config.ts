@@ -8,6 +8,10 @@ export default {
       fontFamily: {
         sans: ["var(--font-inter)"],
       },
+      transitionDuration: {
+        '600': '600ms',
+        '800': '800ms',
+      },
     },
   },
   future: {
