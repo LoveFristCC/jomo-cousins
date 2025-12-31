@@ -18,7 +18,7 @@ export default function HomePage() {
       {/* Hero Section */ }
       <section
         id="home"
-        className="relative overflow-hidden min-h-screen"
+        className="relative overflow-hidden py-12 md:py-20"
       >
         {/* Background Image - Load after LCP */ }
         <div className="absolute inset-0">
