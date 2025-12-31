@@ -331,6 +331,7 @@ export default function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex h-12 w-12 items-center justify-center bg-[#e31e24] text-white transition-colors hover:bg-[#c41a1f]"
+                    aria-label="Visit Pastor Jomo on Instagram"
                   >
                     <svg
                       className="h-6 w-6"
@@ -345,6 +346,7 @@ export default function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex h-12 w-12 items-center justify-center bg-[#e31e24] text-white transition-colors hover:bg-[#c41a1f]"
+                    aria-label="Visit Pastor Jomo on X (Twitter)"
                   >
                     <svg
                       className="h-6 w-6"
@@ -359,6 +361,7 @@ export default function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex h-12 w-12 items-center justify-center bg-[#e31e24] text-white transition-colors hover:bg-[#c41a1f]"
+                    aria-label="Visit Pastor Jomo on YouTube"
                   >
                     <svg
                       className="h-6 w-6"
@@ -373,6 +376,7 @@ export default function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex h-12 w-12 items-center justify-center bg-[#e31e24] text-white transition-colors hover:bg-[#c41a1f]"
+                    aria-label="Visit Pastor Jomo on Facebook"
                   >
                     <svg
                       className="h-6 w-6"

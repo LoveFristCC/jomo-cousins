@@ -90,6 +90,7 @@ export default function Nav() {
             <button
               onClick={ () => setMobileMenuOpen(true) }
               className="rounded-lg p-2 transition-colors hover:bg-white/10 lg:hidden"
+              aria-label="Open navigation menu"
             >
               <Menu size={ 28 } />
             </button>
@@ -111,6 +112,7 @@ export default function Nav() {
         <button
           onClick={ () => setMobileMenuOpen(false) }
           className="absolute right-6 top-6 text-gray-400 hover:text-white"
+          aria-label="Close navigation menu"
         >
           <X size={ 32 } />
         </button>

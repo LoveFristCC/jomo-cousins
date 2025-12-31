@@ -83,7 +83,7 @@ export default function Nav() {
             <button
               className="rounded-lg p-2 text-[#303030] md:hidden hover:bg-gray-100"
               onClick={ toggleMenu }
-              aria-label="Toggle menu"
+              aria-label="Open navigation menu"
             >
               <Menu size={ 28 } />
             </button>
@@ -107,6 +107,7 @@ export default function Nav() {
         <button
           onClick={ () => setIsOpen(false) }
           className="absolute right-6 top-6 p-2 text-gray-500 hover:text-black"
+          aria-label="Close navigation menu"
         >
           <X size={ 28 } />
         </button>
