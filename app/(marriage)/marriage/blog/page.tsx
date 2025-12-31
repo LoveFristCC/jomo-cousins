@@ -161,7 +161,9 @@ export default async function CouplesCornerPage() {
                 Listen to Relationship Tips & Advice on Jomo & Charmaine Podcast.
               </p>
               <a
-                href="#"
+                href="https://www.youtube.com/jomocharmaine"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-block rounded-lg bg-[#ea8125] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
               >
                 Listen Now
@@ -180,7 +182,9 @@ export default async function CouplesCornerPage() {
                 Our channel will provide you with relationship advice, marriage tools, and dating goals for the modern couple.
               </p>
               <a
-                href="#"
+                href="https://www.youtube.com/jomocharmaine"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-block rounded-lg bg-[#ea8125] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
               >
                 Watch Now

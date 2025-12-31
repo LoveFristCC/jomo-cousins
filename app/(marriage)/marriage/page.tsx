@@ -494,7 +494,12 @@ export default function JomoAndCharmainePage() {
                   Listen to Relationship Tips & Advice on Jomo & Charmaine Podcast.
                 </p>
               </div>
-              <a href="#" className="text-sm font-bold uppercase tracking-wider text-[#ea8125] border-b-2 border-[#ea8125] hover:opacity-80">
+              <a
+                href="https://www.youtube.com/jomocharmaine"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-bold uppercase tracking-wider text-[#ea8125] border-b-2 border-[#ea8125] hover:opacity-80"
+              >
                 Listen Now
               </a>
             </div>
@@ -512,7 +517,12 @@ export default function JomoAndCharmainePage() {
                   Our channel will provide you with relationship advice, marriage tools, and dating goals for the modern couple.
                 </p>
               </div>
-              <a href="#" className="text-sm font-bold uppercase tracking-wider text-white border-b-2 border-white hover:opacity-80">
+              <a
+                href="https://www.youtube.com/jomocharmaine"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-bold uppercase tracking-wider text-white border-b-2 border-white hover:opacity-80"
+              >
                 Watch Now
               </a>
             </div>
@@ -682,12 +692,12 @@ export default function JomoAndCharmainePage() {
               Take the first step toward a stronger, healthier relationship today.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-              <a
-                href="#"
+              <Link
+                href="/marriage/contact"
                 className="inline-block rounded-lg bg-white px-12 py-4 font-bold text-[#ea8125] shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl"
               >
                 Request an Appointment
-              </a>
+              </Link>
               <a
                 href="#free-ebook"
                 className="inline-block rounded-lg border-2 border-white px-12 py-4 font-bold shadow-lg transition-all hover:bg-white hover:text-[#ea8125] hover:shadow-xl"

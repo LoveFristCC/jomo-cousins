@@ -45,16 +45,16 @@ export default function SearchPage() {
   const resultsPerPage = 12;
 
   // Popular search terms for suggestions
-  const popularSearches = [
-    "healing",
-    "anxiety",
-    "financial breakthrough",
-    "relationship",
-    "guidance",
-    "peace",
-    "strength",
-    "forgiveness",
-  ];
+  // const popularSearches = [
+  //   "healing",
+  //   "anxiety",
+  //   "financial breakthrough",
+  //   "relationship",
+  //   "guidance",
+  //   "peace",
+  //   "strength",
+  //   "forgiveness",
+  // ];
 
   // Fetch prayers and categories on mount
   useEffect(() => {
@@ -377,7 +377,7 @@ export default function SearchPage() {
       </section>
 
       {/* Popular Searches */ }
-      { !searchQuery && (
+      {/* { !searchQuery && (
         <section className="border-t border-gray-200 bg-gray-50 py-12">
           <div className="container mx-auto px-5">
             <div className="mx-auto max-w-4xl">
@@ -398,7 +398,7 @@ export default function SearchPage() {
             </div>
           </div>
         </section>
-      ) }
+      ) } */}
     </div>
   );
 }

@@ -123,20 +123,19 @@ export default async function DailyPrayerPage() {
         </div>
       </section>
 
-      {/* Live Prayer Stream */ }
+      {/* Latest Prayer/Teaching Video */ }
       <section className="border-b border-gray-200 bg-gradient-to-b from-gray-50 to-white py-16 md:py-20">
         <div className="container mx-auto px-5">
           <div className="mx-auto max-w-5xl">
             <div className="mb-8 text-center">
               <span className="mb-2 inline-block rounded-full bg-red-600 px-4 py-1 text-sm font-bold uppercase tracking-wider text-white">
-                <span className="mr-2 inline-block h-2 w-2 animate-pulse rounded-full bg-white"></span>
-                Live Stream
+                Latest Video
               </span>
               <h2 className="mt-4 text-3xl font-bold text-[#3d3d3d] md:text-4xl">
-                Join Pastor Jomo Live
+                Most Recent Prayer or Teaching
               </h2>
               <p className="mt-3 text-lg text-gray-600">
-                Monday through Friday at 6:30 AM (EST)
+                Watch the latest from Pastor Jomo's daily prayer sessions
               </p>
             </div>
 
@@ -145,7 +144,7 @@ export default async function DailyPrayerPage() {
 
               <div className="bg-gray-50 p-6 text-center md:p-8">
                 <p className="text-gray-700">
-                  Join Pastor Jomo every weekday morning for live prayer and teaching.{ " " }
+                  Join Pastor Jomo live for prayer Monday-Friday at 6:30 AM (EST).{ " " }
                   <a
                     href="https://www.youtube.com/@PASTORJOMO?sub_confirmation=1"
                     target="_blank"
@@ -154,7 +153,7 @@ export default async function DailyPrayerPage() {
                   >
                     Subscribe on YouTube
                   </a>
-                  { " " }to get notified when Pastor Jomo goes live.
+                  { " " }and turn on notifications to join live or catch up on past prayers.
                 </p>
               </div>
             </div>
@@ -183,20 +182,19 @@ export default async function DailyPrayerPage() {
 
               <div>
                 <h2 className="mb-6 text-3xl font-bold text-[#3d3d3d] md:text-4xl">
-                  Pray with Pastor Jomo Live Every Morning
+                  Pray with Pastor Jomo Every Morning
                 </h2>
                 <div className="space-y-4 text-gray-700">
                   <p>
-                    Every weekday morning at 6:30 AM, I go live to pray with you
+                    Every weekday morning at 6:30 AM (EST), I go live to pray with you
                     and share a word of encouragement. These aren't just prayers -
                     they're personal moments where I'm inviting you to join me in
                     real-time conversation with our Father.
                   </p>
                   <p>
-                    Whether you're facing challenges, seeking guidance, or
-                    simply wanting to grow closer to God, I believe that
-                    starting your day in prayer changes everything. And there's
-                    something powerful about praying together as a community.
+                    Can't make it live? No problem! All prayers are saved so you can
+                    watch them anytime. Whether you're facing challenges, seeking guidance, or
+                    simply wanting to grow closer to God, starting your day in prayer changes everything.
                   </p>
                 </div>
               </div>
@@ -205,10 +203,10 @@ export default async function DailyPrayerPage() {
             {/* Subscribe Section */ }
             <div className="rounded-2xl border-2 border-gray-200 bg-white p-8 text-center md:p-12">
               <h3 className="mb-4 text-2xl font-bold text-[#3d3d3d] md:text-3xl">
-                Never Miss a Live Prayer
+                Join the Daily Prayer Community
               </h3>
               <p className="mb-8 text-lg text-gray-600">
-                Subscribe and turn on notifications to join Pastor Jomo live Monday-Friday at 6:30 AM
+                Subscribe and turn on notifications to join Pastor Jomo live Monday-Friday at 6:30 AM (EST)
               </p>
 
               <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-center">
