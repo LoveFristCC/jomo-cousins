@@ -7,14 +7,6 @@ import NewsletterSection from "./NewsLetterSection";
 export default function HomePage() {
   return (
     <div className="bg-white">
-      {/* Preload LCP image - the background is the largest contentful paint on mobile */ }
-      <link
-        rel="preload"
-        as="image"
-        href="/images/backgrounds/herobackground.webp"
-        fetchPriority="high"
-      />
-
       {/* Hero Section */ }
       <section
         id="home"
