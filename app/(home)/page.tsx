@@ -18,7 +18,7 @@ export default function HomePage() {
       {/* Hero Section */ }
       <section
         id="home"
-        className="relative overflow-hidden py-12 md:py-20"
+        className="relative overflow-hidden pt-12 md:pt-20"
       >
         {/* Background Image - This is the LCP element */ }
         <div className="absolute inset-0">
