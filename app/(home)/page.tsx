@@ -23,7 +23,7 @@ export default function HomePage() {
             className="object-cover opacity-20"
             priority
             sizes="100vw"
-            quality={75}
+            quality={ 75 }
           />
         </div>
 
@@ -516,7 +516,7 @@ export default function HomePage() {
                 href="/contact"
                 className="inline-block border-b-2 border-white pb-1 font-bold uppercase tracking-wide transition-all hover:border-[#e31e24] hover:text-[#e31e24] hover:translate-x-1"
               >
-                See More
+                Contact Me Today
               </Link>
             </div>
           </FadeIn>

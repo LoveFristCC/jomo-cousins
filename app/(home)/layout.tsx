@@ -125,6 +125,10 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={ `${inter.variable} bg-[#3d3d3d] text-black` }>
+      <head>
+        <link rel="preconnect" href="https://o451059184212377.ingest.us.sentry.io" />
+        <link rel="dns-prefetch" href="https://o451059184212377.ingest.us.sentry.io" />
+      </head>
       <body>
         <GoogleAnalytics />
         <StructuredData />
