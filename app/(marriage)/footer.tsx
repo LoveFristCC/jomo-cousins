@@ -10,7 +10,7 @@ export default function Footer() {
           <div>
             <div className="mb-6">
               <Image
-                src="/images/jomo-and-charmaine/main-page/Jomo-and-Charmaine-logo.webp"
+                src="/images/marriage/main-page/Jomo-and-Charmaine-logo.webp"
                 alt="Jomo & Charmaine"
                 width={ 250 }
                 height={ 100 }
@@ -24,7 +24,7 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Links */ }
           <div>
             <h3 className="mb-2 text-xl font-bold">Quick Links</h3>
             <div className="mb-6 h-[2px] w-16 bg-[#ea8125]"></div>
@@ -68,7 +68,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Services */}
+          {/* Services */ }
           <div>
             <h3 className="mb-2 text-xl font-bold">Services</h3>
             <div className="mb-6 h-[2px] w-16 bg-[#ea8125]"></div>
@@ -100,12 +100,12 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Connect & Resources */}
+          {/* Connect & Resources */ }
           <div>
             <h3 className="mb-2 text-xl font-bold">Connect & Resources</h3>
             <div className="mb-6 h-[2px] w-16 bg-[#ea8125]"></div>
 
-            {/* Other Sites */}
+            {/* Other Sites */ }
             <ul className="space-y-3 text-sm mb-6">
               <li>
                 <Link
@@ -127,7 +127,7 @@ export default function Footer() {
               </li>
             </ul>
 
-            {/* CTA Button */}
+            {/* CTA Button */ }
             <Link
               href="/marriage/contact"
               className="mb-6 block rounded-lg bg-[#ea8125] px-6 py-3 text-center text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl hover:scale-105"
@@ -135,7 +135,7 @@ export default function Footer() {
               Request an Appointment
             </Link>
 
-            {/* Social Media */}
+            {/* Social Media */ }
             <div className="flex justify-center gap-4">
               <a
                 href="https://www.youtube.com/jomocharmaine"
@@ -195,7 +195,7 @@ export default function Footer() {
               Terms of Service
             </Link>
           </div>
-          <p>&copy; {new Date().getFullYear()} Jomo & Charmaine. All rights reserved.</p>
+          <p>&copy; { new Date().getFullYear() } Jomo & Charmaine. All rights reserved.</p>
         </div>
       </div>
 
