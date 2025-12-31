@@ -7,11 +7,11 @@ import NewsletterSection from "./NewsLetterSection";
 export default function HomePage() {
   return (
     <div className="bg-white">
-      {/* Preload LCP image - the hero image is the largest contentful paint */ }
+      {/* Preload LCP image - the background is the largest contentful paint on mobile */ }
       <link
         rel="preload"
         as="image"
-        href="/images/jc-png/heroJomo.webp"
+        href="/images/backgrounds/herobackground.webp"
         fetchPriority="high"
       />
 
@@ -20,16 +20,16 @@ export default function HomePage() {
         id="home"
         className="relative overflow-hidden py-12 md:py-20"
       >
-        {/* Background Image - Load after LCP */ }
+        {/* Background Image - This is the LCP element */ }
         <div className="absolute inset-0">
           <Image
             src="/images/backgrounds/herobackground.webp"
-            alt="Background"
+            alt=""
             fill
             className="object-cover opacity-20"
-            loading="lazy"
+            priority
             sizes="100vw"
-            quality={ 60 }
+            quality={ 75 }
           />
         </div>
 
@@ -71,7 +71,6 @@ export default function HomePage() {
                 height={ 700 }
                 className="mx-auto w-full h-auto"
                 priority
-                fetchPriority="high"
                 sizes="(max-width: 768px) 100vw, 600px"
               />
             </div>
