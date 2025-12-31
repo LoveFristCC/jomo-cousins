@@ -65,41 +65,46 @@ export default function ProductStructuredData({
   };
 
   // For books, use Book schema instead
-  const bookSchema =
-    product.category === "books"
-      ? {
-          "@type": "Book",
-          "@id": productUrl,
-          name: product.name,
-          description: product.excerpt || description,
-          image: imageUrl,
+  // Check if this is a book by category or presence of book-specific fields
+  const isBook =
+    product.category?.toLowerCase() === "books" ||
+    product.category?.toLowerCase() === "book" ||
+    !!(product.isbn || product.author || product.pageCount || product.publisher);
+
+  const bookSchema = isBook
+    ? {
+        "@type": "Book",
+        "@id": productUrl,
+        name: product.name,
+        description: product.excerpt || description,
+        image: imageUrl,
+        url: productUrl,
+        author: {
+          "@type": "Person",
+          name: product.author || "Dr. Jomo Cousins",
+          url: baseUrl,
+        },
+        ...(product.isbn && { isbn: product.isbn }),
+        ...(product.publisher && { publisher: product.publisher }),
+        ...(product.publicationDate && {
+          datePublished: product.publicationDate,
+        }),
+        ...(product.pageCount && { numberOfPages: product.pageCount }),
+        bookFormat: "https://schema.org/Paperback",
+        inLanguage: "en-US",
+        offers: {
+          "@type": "Offer",
           url: productUrl,
-          author: {
+          priceCurrency: "USD",
+          price: product.basePrice.toFixed(2),
+          availability: "https://schema.org/InStock",
+          seller: {
             "@type": "Person",
-            name: product.author || "Dr. Jomo Cousins",
-            url: baseUrl,
+            name: "Dr. Jomo Cousins",
           },
-          ...(product.isbn && { isbn: product.isbn }),
-          ...(product.publisher && { publisher: product.publisher }),
-          ...(product.publicationDate && {
-            datePublished: product.publicationDate,
-          }),
-          ...(product.pageCount && { numberOfPages: product.pageCount }),
-          bookFormat: "https://schema.org/Paperback",
-          inLanguage: "en-US",
-          offers: {
-            "@type": "Offer",
-            url: productUrl,
-            priceCurrency: "USD",
-            price: product.basePrice.toFixed(2),
-            availability: "https://schema.org/InStock",
-            seller: {
-              "@type": "Person",
-              name: "Dr. Jomo Cousins",
-            },
-          },
-        }
-      : null;
+        },
+      }
+    : null;
 
   // Breadcrumb schema
   const breadcrumbSchema = {

@@ -75,8 +75,65 @@ export default async function ProductsPage({
     (a.name || '').localeCompare(b.name || '')
   );
 
+  // Structured Data for product listing
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://www.jomocousins.com",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Products",
+            item: "https://www.jomocousins.com/products",
+          },
+        ],
+      },
+      {
+        "@type": "CollectionPage",
+        "@id": "https://www.jomocousins.com/products",
+        url: "https://www.jomocousins.com/products",
+        name: "Shop Dr. Jomo Cousins Books & Products",
+        description: "Browse books, apparel, and inspirational products by Dr. Jomo Cousins.",
+        mainEntity: {
+          "@type": "ItemList",
+          numberOfItems: filteredProducts.length,
+          itemListElement: filteredProducts.slice(0, 20).map((product, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            item: {
+              "@type": product.category === "books" ? "Book" : "Product",
+              "@id": `https://www.jomocousins.com/products/${product.slug}`,
+              name: product.name,
+              url: `https://www.jomocousins.com/products/${product.slug}`,
+              image: product.images?.[0] ? urlForImage(product.images[0])?.width(1200).url() : undefined,
+              offers: {
+                "@type": "Offer",
+                priceCurrency: "USD",
+                price: (product.basePrice || 0).toFixed(2),
+                availability: "https://schema.org/InStock",
+              },
+            },
+          })),
+        },
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-white">
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       {/* Hero Section with Background Image */ }
       <div className="relative bg-[#2d2d2d] text-white overflow-hidden">
         {/* Background Image with Overlay */ }

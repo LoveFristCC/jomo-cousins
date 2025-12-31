@@ -43,8 +43,118 @@ export default async function BookPreviewPage({
     (book: any) => book.slug !== slug
   );
 
+  // Structured Data for book preview
+  const baseUrl = "https://www.jomocousins.com";
+  const previewUrl = `${baseUrl}/books/${slug}/preview`;
+  const productUrl = `${baseUrl}/products/${slug}`;
+  const imageUrl = product.images?.[0]
+    ? urlForImage(product.images[0])?.width(1200).height(1200).url()
+    : undefined;
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: baseUrl,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Products",
+            item: `${baseUrl}/products`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: product.name,
+            item: productUrl,
+          },
+          {
+            "@type": "ListItem",
+            position: 4,
+            name: "Preview Chapter",
+            item: previewUrl,
+          },
+        ],
+      },
+      {
+        "@type": "Book",
+        "@id": productUrl,
+        name: product.name,
+        author: {
+          "@type": "Person",
+          name: product.author || "Dr. Jomo Cousins",
+          url: baseUrl,
+        },
+        ...(product.isbn && { isbn: product.isbn }),
+        ...(product.publisher && { publisher: product.publisher }),
+        ...(product.publicationDate && { datePublished: product.publicationDate }),
+        ...(product.pageCount && { numberOfPages: product.pageCount }),
+        bookFormat: "https://schema.org/Paperback",
+        inLanguage: "en-US",
+        url: productUrl,
+        image: imageUrl,
+        description: product.excerpt || product.description?.[0]?.children?.[0]?.text || "",
+        offers: {
+          "@type": "Offer",
+          url: productUrl,
+          priceCurrency: "USD",
+          price: (product.basePrice || 0).toFixed(2),
+          availability: "https://schema.org/InStock",
+          seller: {
+            "@type": "Person",
+            name: "Dr. Jomo Cousins",
+          },
+        },
+      },
+      {
+        "@type": "WebPage",
+        "@id": previewUrl,
+        url: previewUrl,
+        name: `${previewChapter.title} - Free Preview Chapter from ${product.name}`,
+        description: `Read a free preview chapter from "${product.name}" by ${product.author || "Dr. Jomo Cousins"}.`,
+        isPartOf: {
+          "@type": "Book",
+          "@id": productUrl,
+        },
+        about: {
+          "@type": "Book",
+          "@id": productUrl,
+        },
+      },
+      {
+        "@type": "Article",
+        headline: previewChapter.title,
+        name: `${previewChapter.chapterNumber ? `Chapter ${previewChapter.chapterNumber}: ` : ""}${previewChapter.title}`,
+        author: {
+          "@type": "Person",
+          name: product.author || "Dr. Jomo Cousins",
+          url: baseUrl,
+        },
+        isPartOf: {
+          "@type": "Book",
+          "@id": productUrl,
+          name: product.name,
+        },
+        url: previewUrl,
+        image: imageUrl,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       {/* Header with book info and CTA */ }
       <div className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 py-4">
