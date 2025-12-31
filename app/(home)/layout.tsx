@@ -124,12 +124,12 @@ export default async function RootLayout({
   // const { isEnabled: isDraftMode } = await draftMode();
 
   return (
-    <html lang="en" className={ `${inter.variable} bg-[#3d3d3d] text-black` }>
+    <html lang="en" className={ `${inter.variable} bg-[#3d3d3d] text-black overflow-x-hidden` }>
       <head>
         <link rel="preconnect" href="https://o451059184212377.ingest.us.sentry.io" />
         <link rel="dns-prefetch" href="https://o451059184212377.ingest.us.sentry.io" />
       </head>
-      <body>
+      <body className="overflow-x-hidden">
         <GoogleAnalytics />
         <StructuredData />
         <div className="pointer-events-none relative z-10">

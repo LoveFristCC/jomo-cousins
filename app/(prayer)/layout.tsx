@@ -96,12 +96,12 @@ export default function PrayerLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={ `${inter.variable} bg-white text-black` }>
+    <html lang="en" className={ `${inter.variable} bg-white text-black overflow-x-hidden` }>
       <head>
         <link rel="preconnect" href="https://o451059184212377.ingest.us.sentry.io" />
         <link rel="dns-prefetch" href="https://o451059184212377.ingest.us.sentry.io" />
       </head>
-      <body>
+      <body className="overflow-x-hidden">
         <GoogleAnalytics />
         <Nav />
         <PrayerSubNav />
