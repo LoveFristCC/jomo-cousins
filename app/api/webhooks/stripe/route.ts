@@ -7,6 +7,7 @@ import {
 } from "@/lib/inventory";
 import { createShipStationOrder } from "@/lib/shipstation";
 import { CheckoutMetadata } from "@/lib/types";
+import { sendPurchaseThankYouEmail } from "@/lib/purchase-emails";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-12-15.clover",
@@ -274,6 +275,43 @@ async function handlePhysicalProductOrder(
       );
       // Don't fail the webhook - log for manual fulfillment
     }
+
+    // 4. Send thank you email
+    try {
+      const customerEmail = session.customer_details?.email;
+      const customerName = session.customer_details?.name || "Customer";
+
+      if (customerEmail) {
+        // Extract line items
+        const items = session.line_items?.data.map((item) => ({
+          name: item.description || productName,
+          quantity: item.quantity || 1,
+          size: metadata.size,
+          color: metadata.color,
+        })) || [{ name: productName, quantity: parseInt(quantity) }];
+
+        await sendPurchaseThankYouEmail({
+          customerEmail,
+          customerName,
+          orderNumber: session.id,
+          items,
+          productType: "physical",
+          shippingAddress: session.shipping_details?.address
+            ? {
+                line1: session.shipping_details.address.line1 || "",
+                line2: session.shipping_details.address.line2 || undefined,
+                city: session.shipping_details.address.city || "",
+                state: session.shipping_details.address.state || "",
+                postal_code: session.shipping_details.address.postal_code || "",
+                country: session.shipping_details.address.country || "",
+              }
+            : undefined,
+        });
+      }
+    } catch (emailError) {
+      console.error("[Webhook] Failed to send thank you email:", emailError);
+      // Don't fail the webhook - email is nice-to-have
+    }
   } catch (error) {
     console.error("[Webhook] Error handling physical product order:", error);
     throw error;
@@ -339,6 +377,28 @@ async function handleDigitalProductOrder(
         console.error("[Webhook] Status:", kajabiResponse.status);
         throw new Error(`Kajabi webhook error: ${kajabiResponse.status}`);
       }
+    }
+
+    // Send thank you email with Kajabi login link
+    try {
+      if (customerEmail) {
+        // Extract line items if available
+        const items = [{ name: productName || "Digital Product", quantity: 1 }];
+
+        await sendPurchaseThankYouEmail({
+          customerEmail,
+          customerName,
+          orderNumber: session.id,
+          items,
+          productType: "digital",
+        });
+      }
+    } catch (emailError) {
+      console.error(
+        "[Webhook] Failed to send thank you email for digital product:",
+        emailError
+      );
+      // Don't fail the webhook - email is nice-to-have
     }
   } catch (error) {
     console.error("[Webhook] Error handling digital product order:", error);
