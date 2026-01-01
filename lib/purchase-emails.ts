@@ -26,8 +26,8 @@ interface EmailData {
 export async function sendPurchaseThankYouEmail(data: EmailData) {
   const transporter = nodemailer.createTransport({
     host: process.env.MAIL_HOST,
-    port: Number(process.env.MAIL_PORT),
-    secure: true,
+    port: parseInt(process.env.MAIL_PORT || "587"),
+    secure: false,
     auth: {
       user: process.env.GOOGLE_EMAIL,
       pass: process.env.GOOGLE_EMAIL_PASSWORD,
