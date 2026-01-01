@@ -192,11 +192,13 @@ export default async function ProductsPage({
                 Featured <span className="text-[#e31e24]">Products</span>
               </h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-4">
+            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-4">
               { featuredProducts.map((product) => (
-                <FeaturedProductCard key={ product._id } product={ product } />
+                <li key={ product._id }>
+                  <FeaturedProductCard product={ product } />
+                </li>
               )) }
-            </div>
+            </ul>
             <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-12"></div>
           </section>
         ) }
@@ -213,11 +215,13 @@ export default async function ProductsPage({
         {/* Regular Products grid */ }
         <Suspense fallback={ <ProductsGridSkeleton /> }>
           { regularProducts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               { regularProducts.map((product) => (
-                <ProductCard key={ product._id } product={ product } />
+                <li key={ product._id }>
+                  <ProductCard product={ product } />
+                </li>
               )) }
-            </div>
+            </ul>
           ) : featuredProducts.length === 0 ? (
             <div className="text-center py-20">
               <div className="mb-4">

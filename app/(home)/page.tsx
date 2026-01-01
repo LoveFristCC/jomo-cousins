@@ -438,8 +438,8 @@ export default function HomePage() {
       <section className="py-20 md:py-20">
         <div className="grid items-stretch gap-0 md:grid-cols-3">
           {/* Left Panel - Client Logos */ }
-          <div className="flex flex-col items-center justify-center gap-12 p-12">
-            <div className="grayscale transition-all hover:opacity-100 hover:grayscale-0">
+          <ul className="flex flex-col items-center justify-center gap-12 p-12">
+            <li className="grayscale transition-all hover:opacity-100 hover:grayscale-0">
               <Image
                 src="/images/clients/hc-logo2.webp"
                 alt="Hillsborough County Florida"
@@ -447,8 +447,8 @@ export default function HomePage() {
                 height={ 80 }
                 className="h-auto w-48"
               />
-            </div>
-            <div className="grayscale transition-all hover:opacity-100 hover:grayscale-0">
+            </li>
+            <li className="grayscale transition-all hover:opacity-100 hover:grayscale-0">
               <Image
                 src="/images/clients/_00Logos_JC_09.webp"
                 alt="Hillsborough County Public Schools"
@@ -456,8 +456,8 @@ export default function HomePage() {
                 height={ 80 }
                 className="h-auto w-48"
               />
-            </div>
-          </div>
+            </li>
+          </ul>
 
           {/* Center Panel - Call to Action */ }
           <div className="bg-[#2d2d2d] p-12 text-center text-white">
@@ -487,8 +487,8 @@ export default function HomePage() {
           </div>
 
           {/* Right Panel - Client Logos */ }
-          <div className="grid grid-cols-2 gap-8 p-12">
-            <div className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
+          <ul className="grid grid-cols-2 gap-8 p-12">
+            <li className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
               <Image
                 src="/images/clients/_00Logos_JC_18.webp"
                 alt="UNCF"
@@ -496,8 +496,8 @@ export default function HomePage() {
                 height={ 80 }
                 className="h-auto w-32"
               />
-            </div>
-            <div className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
+            </li>
+            <li className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
               <Image
                 src="/images/clients/_00Logos_JC_07.webp"
                 alt="Keller Williams"
@@ -505,8 +505,8 @@ export default function HomePage() {
                 height={ 80 }
                 className="h-auto w-32"
               />
-            </div>
-            <div className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
+            </li>
+            <li className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
               <Image
                 src="/images/clients/_00Logos_JC_14.webp"
                 alt="Boys & Girls Club"
@@ -514,8 +514,8 @@ export default function HomePage() {
                 height={ 80 }
                 className="h-auto w-32"
               />
-            </div>
-            <div className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
+            </li>
+            <li className="flex items-center justify-center grayscale transition-all hover:opacity-100 hover:grayscale-0">
               <Image
                 src="/images/clients/_00Logos_JC_05.webp"
                 alt="RE/MAX"
@@ -523,8 +523,8 @@ export default function HomePage() {
                 height={ 80 }
                 className="h-auto w-32"
               />
-            </div>
-          </div>
+            </li>
+          </ul>
         </div>
       </section>
 

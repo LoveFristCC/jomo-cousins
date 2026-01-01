@@ -255,11 +255,13 @@ export default async function PrayerVideoPage({ params }: Props) {
         </div>
       </div>
 
-      {/* Prayer Header */ }
-      <section
-        id="main-content"
-        className="border-b border-gray-200 bg-white py-8"
-      >
+      {/* Prayer Article - Main Content */ }
+      <article>
+        {/* Prayer Header */ }
+        <header
+          id="main-content"
+          className="border-b border-gray-200 bg-white py-8"
+        >
         <div className="container mx-auto px-5">
           <div className="mx-auto max-w-5xl">
             <h1 className="mb-4 text-3xl font-bold text-[#3d3d3d] md:text-4xl lg:text-5xl">
@@ -289,7 +291,7 @@ export default async function PrayerVideoPage({ params }: Props) {
             ) }
           </div>
         </div>
-      </section>
+      </header>
 
       {/* Video Section */ }
       <section className="bg-gradient-to-b from-gray-50 to-white py-12">
@@ -383,6 +385,7 @@ export default async function PrayerVideoPage({ params }: Props) {
           </div>
         </section>
       ) }
+      </article>
 
       {/* Related Prayers Section */ }
       { relatedPrayers && relatedPrayers.length > 0 && (

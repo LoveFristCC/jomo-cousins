@@ -52,7 +52,7 @@ export default function AboutPage() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
-    "@id": "https://www.jomocousins.com/#jomo",
+    "@id": "https://www.jomocousins.com/#person",
     name: "Dr. Jomo Cousins",
     alternateName: "Jomo Cousins",
     description: "NFL veteran, pastor, motivational speaker, author, and cancer survivor. Founder of Love First Christian Center.",

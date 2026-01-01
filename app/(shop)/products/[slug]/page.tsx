@@ -40,16 +40,24 @@ export default async function ProductPage({
       <ProductStructuredData product={ product } />
 
       <div className="container mx-auto px-4 py-8 md:py-12">
-        {/* Breadcrumb */ }
-        <div className="mb-8 flex items-center gap-2 text-sm">
-          <Link href="/products" className="text-gray-600 hover:text-[#e31e24] transition-colors">
-            Products
-          </Link>
-          <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 5l7 7-7 7" />
-          </svg>
-          <span className="text-[#2d2d2d] font-semibold">{ product.name }</span>
-        </div>
+        {/* Breadcrumb Navigation */ }
+        <nav aria-label="Breadcrumb" className="mb-8">
+          <ol className="flex items-center gap-2 text-sm">
+            <li>
+              <Link href="/products" className="text-gray-600 hover:text-[#e31e24] transition-colors">
+                Products
+              </Link>
+            </li>
+            <li aria-hidden="true">
+              <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 5l7 7-7 7" />
+              </svg>
+            </li>
+            <li aria-current="page">
+              <span className="text-[#2d2d2d] font-semibold">{ product.name }</span>
+            </li>
+          </ol>
+        </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Product Images */ }

@@ -16,10 +16,7 @@ export default function JomoAndCharmainePage() {
         "description": "Marriage counseling ministry led by Dr. Jomo and Dr. Charmaine Cousins, Senior Pastors helping couples thrive together through faith-based counseling and relationship coaching.",
         "founder": [
           {
-            "@type": "Person",
-            "name": "Dr. Jomo Cousins",
-            "jobTitle": "Senior Pastor & Marriage Counselor",
-            "url": "https://www.jomocousins.com/marriage/about"
+            "@id": "https://www.jomocousins.com/#person"
           },
           {
             "@type": "Person",
@@ -104,7 +101,7 @@ export default function JomoAndCharmainePage() {
                 We show you how you can learn more about one another and have a better relationship through our counseling services.
               </p>
               <Link
-                href="#contact"
+                href="/marriage/contact"
                 className="inline-block rounded-lg bg-[#ea8125] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
               >
                 Schedule an Appointment

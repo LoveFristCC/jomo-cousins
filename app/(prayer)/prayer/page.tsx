@@ -58,7 +58,7 @@ export default async function PrayerPage() {
     "@graph": [
       {
         "@type": "Person",
-        "@id": "https://www.jomocousins.com/#jomo",
+        "@id": "https://www.jomocousins.com/#person",
         name: "Jomo Cousins",
         jobTitle: "Pastor & Spiritual Leader",
         description: "Pastor Jomo Cousins leads daily prayer and provides spiritual guidance through personal prayer videos.",
@@ -74,7 +74,7 @@ export default async function PrayerPage() {
         "@id": "https://www.jomocousins.com/prayer/#organization",
         name: "Pray with Jomo Prayer Ministry",
         founder: {
-          "@id": "https://www.jomocousins.com/#jomo",
+          "@id": "https://www.jomocousins.com/#person",
         },
         url: "https://www.jomocousins.com/prayer",
         description: "Personal prayer ministry led by Pastor Jomo Cousins, offering daily prayers and spiritual guidance.",
