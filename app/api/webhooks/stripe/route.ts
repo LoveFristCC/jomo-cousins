@@ -290,20 +290,26 @@ async function handlePhysicalProductOrder(
           color: metadata.color,
         })) || [{ name: productName, quantity: parseInt(quantity) }];
 
+        // Get shipping address (check both old and new API locations)
+        const shippingDetails =
+          (session as any).shipping_details || (session as any).customer_details;
+        const shippingAddress =
+          shippingDetails?.address || shippingDetails?.shipping_address;
+
         await sendPurchaseThankYouEmail({
           customerEmail,
           customerName,
           orderNumber: session.id,
           items,
           productType: "physical",
-          shippingAddress: session.shipping_details?.address
+          shippingAddress: shippingAddress
             ? {
-                line1: session.shipping_details.address.line1 || "",
-                line2: session.shipping_details.address.line2 || undefined,
-                city: session.shipping_details.address.city || "",
-                state: session.shipping_details.address.state || "",
-                postal_code: session.shipping_details.address.postal_code || "",
-                country: session.shipping_details.address.country || "",
+                line1: shippingAddress.line1 || "",
+                line2: shippingAddress.line2 || undefined,
+                city: shippingAddress.city || "",
+                state: shippingAddress.state || "",
+                postal_code: shippingAddress.postal_code || "",
+                country: shippingAddress.country || "",
               }
             : undefined,
         });
