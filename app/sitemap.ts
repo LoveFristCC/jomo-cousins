@@ -4,7 +4,7 @@ import {
   allProductsQuery,
   recentPrayersQuery,
   prayerCategoriesQuery,
-  allCouplesCornerPostsQuery
+  allCouplesCornerPostsQuery,
 } from "@/sanity/lib/queries";
 
 /**
@@ -15,12 +15,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.jomocousins.com";
 
   // Fetch all dynamic content in parallel
-  const [products, prayers, prayerCategories, couplesCornerPosts] = await Promise.all([
-    sanityFetch({ query: allProductsQuery }),
-    sanityFetch({ query: recentPrayersQuery, params: { limit: 1000 } }),
-    sanityFetch({ query: prayerCategoriesQuery }),
-    sanityFetch({ query: allCouplesCornerPostsQuery }),
-  ]);
+  const [products, prayers, prayerCategories, couplesCornerPosts] =
+    await Promise.all([
+      sanityFetch({ query: allProductsQuery }),
+      sanityFetch({ query: recentPrayersQuery, params: { limit: 1000 } }),
+      sanityFetch({ query: prayerCategoriesQuery }),
+      sanityFetch({ query: allCouplesCornerPostsQuery }),
+    ]);
 
   // Static pages - Main site
   const staticPages: MetadataRoute.Sitemap = [
@@ -66,6 +67,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/prayer/search`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/prayer/category`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.7,
@@ -127,26 +134,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic prayer video pages
   const prayerPages: MetadataRoute.Sitemap = prayers.map((prayer: any) => ({
     url: `${baseUrl}/prayer/${prayer.slug}`,
-    lastModified: prayer.publishedAt ? new Date(prayer.publishedAt) : new Date(),
+    lastModified: prayer.publishedAt
+      ? new Date(prayer.publishedAt)
+      : new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
 
   // Dynamic prayer category pages
-  const prayerCategoryPages: MetadataRoute.Sitemap = prayerCategories.map((category: any) => ({
-    url: `${baseUrl}/prayer/category/${category.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.8,
-  }));
+  const prayerCategoryPages: MetadataRoute.Sitemap = prayerCategories.map(
+    (category: any) => ({
+      url: `${baseUrl}/prayer/category/${category.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    })
+  );
 
   // Dynamic couples corner post pages
-  const couplesCornerPages: MetadataRoute.Sitemap = couplesCornerPosts.map((post: any) => ({
-    url: `${baseUrl}/marriage/blog/${post.slug}`,
-    lastModified: post.publishedAt ? new Date(post.publishedAt) : new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
+  const couplesCornerPages: MetadataRoute.Sitemap = couplesCornerPosts.map(
+    (post: any) => ({
+      url: `${baseUrl}/marriage/blog/${post.slug}`,
+      lastModified: post.publishedAt ? new Date(post.publishedAt) : new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })
+  );
 
   return [
     ...staticPages,
