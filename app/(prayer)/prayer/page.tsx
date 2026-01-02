@@ -224,7 +224,7 @@ export default async function PrayerPage() {
 
             <div className="mt-10 text-center">
               <Link
-                href="/prayer/search"
+                href="/prayer/category"
                 className="inline-block font-bold text-[#e31e24] transition-colors hover:text-[#c41a1f]"
               >
                 View All Categories →

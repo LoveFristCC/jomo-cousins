@@ -3,7 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { prayerBySlugQuery, relatedPrayersQuery } from "@/sanity/lib/queries";
+import {
+  prayerBySlugQuery,
+  relatedPrayersQuery,
+  nextPrayerQuery,
+  previousPrayerQuery
+} from "@/sanity/lib/queries";
 import { urlForImage } from "@/sanity/lib/utils";
 import CustomPortableText from "../../../(home)/portable-text";
 import { format, parseISO } from "date-fns";
@@ -106,15 +111,25 @@ export default async function PrayerVideoPage({ params }: Props) {
   // Get category IDs for related prayers
   const categoryIds = prayer.categories?.map((cat: any) => cat._ref) || [];
 
-  // Fetch related prayers
-  const relatedPrayers = await sanityFetch({
-    query: relatedPrayersQuery,
-    params: {
-      excludeId: prayer._id,
-      categoryIds,
-      limit: 4,
-    },
-  });
+  // Fetch all related content in parallel
+  const [relatedPrayers, nextPrayer, previousPrayer] = await Promise.all([
+    sanityFetch({
+      query: relatedPrayersQuery,
+      params: {
+        excludeId: prayer._id,
+        categoryIds,
+        limit: 4,
+      },
+    }),
+    sanityFetch({
+      query: nextPrayerQuery,
+      params: { currentDate: prayer.publishedAt },
+    }),
+    sanityFetch({
+      query: previousPrayerQuery,
+      params: { currentDate: prayer.publishedAt },
+    }),
+  ]);
 
   // Get primary category for breadcrumb
   const primaryCategory = prayer.categories?.[ 0 ];
@@ -381,6 +396,48 @@ export default async function PrayerVideoPage({ params }: Props) {
               <div className="prose prose-lg max-w-none">
                 <CustomPortableText value={ prayer.fullTranscript } />
               </div>
+            </div>
+          </div>
+        </section>
+      ) }
+
+      {/* Next/Previous Prayer Navigation */ }
+      { (previousPrayer || nextPrayer) && (
+        <section className="border-t border-gray-200 bg-white py-8">
+          <div className="container mx-auto px-5">
+            <div className="mx-auto flex max-w-4xl items-center justify-between gap-4">
+              { previousPrayer ? (
+                <Link
+                  href={ `/prayer/${previousPrayer.slug}` }
+                  className="group flex items-center gap-2 text-[#3d3d3d] transition-colors hover:text-[#e31e24]"
+                >
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M15 19l-7-7 7-7" />
+                  </svg>
+                  <div className="text-left">
+                    <div className="text-xs uppercase text-gray-500">Previous Prayer</div>
+                    <div className="font-semibold group-hover:underline">{ previousPrayer.title }</div>
+                  </div>
+                </Link>
+              ) : (
+                <div />
+              ) }
+              { nextPrayer ? (
+                <Link
+                  href={ `/prayer/${nextPrayer.slug}` }
+                  className="group flex items-center gap-2 text-[#3d3d3d] transition-colors hover:text-[#e31e24]"
+                >
+                  <div className="text-right">
+                    <div className="text-xs uppercase text-gray-500">Next Prayer</div>
+                    <div className="font-semibold group-hover:underline">{ nextPrayer.title }</div>
+                  </div>
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              ) : (
+                <div />
+              ) }
             </div>
           </div>
         </section>

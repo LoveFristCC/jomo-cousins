@@ -6,14 +6,14 @@ export default function Footer() {
     <footer className="relative bg-gradient-to-b from-[#2d2d2d] to-[#1a1a1a] py-16 text-white">
       <div className="container mx-auto px-5">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          {/* Logo & About */}
+          {/* Logo & About */ }
           <div className="lg:col-span-1">
             <Link href="/" className="group mb-6 inline-flex items-center gap-3">
               <Image
                 src="/images/logos/Asset 1.webp"
                 alt="Jomo Cousins Logo"
-                width={48}
-                height={48}
+                width={ 48 }
+                height={ 48 }
                 className="h-12 w-12 transition-transform duration-300 group-hover:scale-110"
               />
               <span className="text-xl font-black tracking-wider transition-colors group-hover:text-[#e31e24]">
@@ -60,7 +60,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Links */ }
           <div>
             <h3 className="mb-6 text-sm font-black uppercase tracking-wider text-gray-500">Quick Links</h3>
             <ul className="space-y-3 text-sm">
@@ -91,7 +91,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Other Sites */}
+          {/* Other Sites */ }
           <div>
             <h3 className="mb-6 text-sm font-black uppercase tracking-wider text-gray-500">More Resources</h3>
             <ul className="space-y-3 text-sm">
@@ -121,13 +121,13 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Contact Info */ }
           <div>
             <h3 className="mb-6 text-sm font-black uppercase tracking-wider text-gray-500">Contact</h3>
             <ul className="space-y-3 text-sm text-gray-400">
               <li className="flex items-start gap-2">
                 <svg className="mt-0.5 h-5 w-5 text-[#e31e24]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 <a href="mailto:bookjomocousins@gmail.com" className="transition-colors hover:text-white">
                   bookjomocousins@gmail.com
@@ -135,16 +135,16 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-2">
                 <svg className="mt-0.5 h-5 w-5 text-[#e31e24]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                Tampa, FL
+                Riverview, FL
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Bar */}
+        {/* Bottom Bar */ }
         <div className="mt-12 border-t border-white/10 pt-8">
           <div className="flex flex-col items-center justify-between gap-4 text-sm text-gray-400 md:flex-row">
             <div className="flex flex-wrap items-center justify-center gap-4">
@@ -156,7 +156,7 @@ export default function Footer() {
                 Terms of Service
               </Link>
             </div>
-            <p>&copy; {new Date().getFullYear()} Dr. Jomo Cousins. All rights reserved.</p>
+            <p>&copy; { new Date().getFullYear() } Dr. Jomo Cousins. All rights reserved.</p>
           </div>
         </div>
       </div>

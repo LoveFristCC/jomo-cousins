@@ -331,6 +331,31 @@ export const relatedPrayersQuery = defineQuery(`
   }
 `);
 
+// Next prayer (chronologically newer)
+export const nextPrayerQuery = defineQuery(`
+  *[_type == "prayerVideo" && publishedAt > $currentDate] | order(publishedAt asc) [0] {
+    _id,
+    title,
+    "slug": slug.current
+  }
+`);
+
+// Previous prayer (chronologically older)
+export const previousPrayerQuery = defineQuery(`
+  *[_type == "prayerVideo" && publishedAt < $currentDate] | order(publishedAt desc) [0] {
+    _id,
+    title,
+    "slug": slug.current
+  }
+`);
+
+// Related marriage blog posts (by matching tags)
+export const relatedMarriageBlogPostsQuery = defineQuery(`
+  *[_type == "couplesCornerPost" && count(tags[@ in $tags]) > 0] | order(publishedAt desc) [0...$limit] {
+    ${couplesCornerFields}
+  }
+`);
+
 // Category-specific testimonials
 export const testimonialsByCategoryQuery = defineQuery(`
   *[_type == "prayerTestimonial" && isApproved == true && category._ref == $categoryId] | order(submittedAt desc) [0...$limit] {

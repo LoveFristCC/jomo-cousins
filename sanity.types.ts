@@ -2464,6 +2464,55 @@ export type RelatedPrayersQueryResult = Array<{
   personalNote: string | null;
   viewCount: number | null;
 }>;
+// Variable: nextPrayerQuery
+// Query: *[_type == "prayerVideo" && publishedAt > $currentDate] | order(publishedAt asc) [0] {    _id,    title,    "slug": slug.current  }
+export type NextPrayerQueryResult = {
+  _id: string;
+  title: string | null;
+  slug: string | null;
+} | null;
+// Variable: previousPrayerQuery
+// Query: *[_type == "prayerVideo" && publishedAt < $currentDate] | order(publishedAt desc) [0] {    _id,    title,    "slug": slug.current  }
+export type PreviousPrayerQueryResult = {
+  _id: string;
+  title: string | null;
+  slug: string | null;
+} | null;
+// Variable: relatedMarriageBlogPostsQuery
+// Query: *[_type == "couplesCornerPost" && count(tags[@ in $tags]) > 0] | order(publishedAt desc) [0...$limit] {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
+export type RelatedMarriageBlogPostsQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  excerpt: string | null;
+  coverImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  category: "communication" | "conflict-resolution" | "dating-courtship" | "faith-relationships" | "general" | "intimacy" | "marriage" | "parenting" | "premarital" | "self-care" | "trust-forgiveness" | null;
+  tags: Array<string> | null;
+  youtubeVideo: {
+    url?: string;
+    title?: string;
+    placement?: "bottom" | "top";
+  } | null;
+  publishedAt: string;
+  featured: boolean | null;
+  seo: {
+    metaTitle?: string;
+    metaDescription?: string;
+    keywords?: Array<string>;
+  } | null;
+}>;
 // Variable: testimonialsByCategoryQuery
 // Query: *[_type == "prayerTestimonial" && isApproved == true && category._ref == $categoryId] | order(submittedAt desc) [0...$limit] {    _id,    name,    testimonialText,    location,    submittedAt  }
 export type TestimonialsByCategoryQueryResult = Array<{
@@ -2505,6 +2554,9 @@ declare module "@sanity/client" {
     "\n  *[_type == \"prayerVideo\" && references($categoryId)] | order(viewCount desc) [0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n,\n    fullTranscript\n  }\n": FeaturedPrayerByCategoryQueryResult;
     "\n  *[_type == \"prayerVideo\" && slug.current == $slug] [0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n,\n    fullTranscript,\n    \"pdfDownloadUrl\": pdfDownloadUrl.asset->url,\n    seoMetadata\n  }\n": PrayerBySlugQueryResult;
     "\n  *[_type == \"prayerVideo\" && _id != $excludeId && count((prayerCategories[]._ref)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n\n  }\n": RelatedPrayersQueryResult;
+    "\n  *[_type == \"prayerVideo\" && publishedAt > $currentDate] | order(publishedAt asc) [0] {\n    _id,\n    title,\n    \"slug\": slug.current\n  }\n": NextPrayerQueryResult;
+    "\n  *[_type == \"prayerVideo\" && publishedAt < $currentDate] | order(publishedAt desc) [0] {\n    _id,\n    title,\n    \"slug\": slug.current\n  }\n": PreviousPrayerQueryResult;
+    "\n  *[_type == \"couplesCornerPost\" && count(tags[@ in $tags]) > 0] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": RelatedMarriageBlogPostsQueryResult;
     "\n  *[_type == \"prayerTestimonial\" && isApproved == true && category._ref == $categoryId] | order(submittedAt desc) [0...$limit] {\n    _id,\n    name,\n    testimonialText,\n    location,\n    submittedAt\n  }\n": TestimonialsByCategoryQueryResult;
   }
 }
