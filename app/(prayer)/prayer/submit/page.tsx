@@ -288,7 +288,7 @@ export default function SubmitPage() {
                   }
                   required
                   rows={ 6 }
-                  placeholder="Share what's on your heart. Jomo is listening..."
+                  placeholder="Share what's on your heart."
                   className="w-full rounded-lg border-2 border-gray-300 px-4 py-3 focus:border-[#e31e24] focus:outline-none"
                   aria-required="true"
                 />
