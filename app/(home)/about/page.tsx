@@ -72,8 +72,12 @@ export default function AboutPage() {
         "@type": "Occupation",
         name: "Pastor",
         occupationLocation: {
-          "@type": "Place",
-          name: "Love First Christian Center"
+          "@type": "City",
+          name: "Riverview",
+          containedInPlace: {
+            "@type": "State",
+            name: "Florida"
+          }
         }
       }
     ],
@@ -83,11 +87,19 @@ export default function AboutPage() {
         name: "Florida A&M University"
       },
       {
-        "@type": "EducationalOrganization",
-        name: "Tabernacle Bible College",
-        degree: "PhD"
+        "@type": "CollegeOrUniversity",
+        name: "Tabernacle Bible College"
       }
     ],
+    hasCredential: {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "degree",
+      educationalLevel: "PhD",
+      recognizedBy: {
+        "@type": "CollegeOrUniversity",
+        name: "Tabernacle Bible College"
+      }
+    },
     memberOf: [
       {
         "@type": "SportsTeam",
@@ -100,7 +112,12 @@ export default function AboutPage() {
         sport: "American Football"
       }
     ],
-    founder: {
+    affiliation: {
+      "@type": "Organization",
+      name: "Love First Christian Center",
+      url: "https://www.lfcc.tv"
+    },
+    worksFor: {
       "@type": "Organization",
       name: "Love First Christian Center",
       url: "https://www.lfcc.tv"
