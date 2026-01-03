@@ -86,6 +86,9 @@ const productFields = /* groq */ `
   "digitalUpsell": digitalUpsell-> {
     ${digitalProductFields}
   },
+  "digitalUpsells": digitalUpsells[]-> {
+    ${digitalProductFields}
+  },
   "upsells": upsells[]-> {
     _id,
     name,

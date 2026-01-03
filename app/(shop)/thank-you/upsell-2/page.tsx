@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { allProductsQuery } from "@/sanity/lib/queries";
 import ProductUpsells from "../ProductUpsells";
+import DigitalProductUpsell from "../DigitalProductUpsell";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-12-15.clover",
@@ -42,25 +43,52 @@ export default async function UpsellTwoPage({
     query: allProductsQuery,
   });
 
+  // Safety check: if no products found, redirect to complete page
+  if (!allProducts || !Array.isArray(allProducts) || allProducts.length === 0) {
+    redirect(`/thank-you/complete?session_id=${session_id}`);
+  }
+
   // Get upsells from purchased products
   const purchasedProductNames = session.line_items?.data.map((item: any) => item.description) || [];
-  const upsellsToShow: any[] = [];
+  const physicalUpsells: any[] = [];
+  const digitalUpsells: any[] = [];
 
   // Find matching products and collect their upsells
   purchasedProductNames.forEach((productName: string) => {
     const matchedProduct = allProducts?.find((p: any) => p.name === productName);
-    if (matchedProduct?.upsells) {
+
+    // Skip if no matched product found
+    if (!matchedProduct) return;
+
+    // Collect physical product upsells
+    if (matchedProduct.upsells && Array.isArray(matchedProduct.upsells)) {
       matchedProduct.upsells.forEach((upsell: any) => {
-        // Avoid duplicates
-        if (!upsellsToShow.find((u) => u._id === upsell._id)) {
-          upsellsToShow.push(upsell);
+        // Skip null/undefined references (deleted products)
+        if (!upsell || !upsell._id) return;
+
+        // Avoid duplicates and ensure active status
+        if (!physicalUpsells.find((u) => u._id === upsell._id) && upsell.status === "active") {
+          physicalUpsells.push(upsell);
+        }
+      });
+    }
+
+    // Collect additional digital product upsells from digitalUpsells array
+    if (matchedProduct.digitalUpsells && Array.isArray(matchedProduct.digitalUpsells)) {
+      matchedProduct.digitalUpsells.forEach((digitalProduct: any) => {
+        // Skip null/undefined references (deleted products)
+        if (!digitalProduct || !digitalProduct._id) return;
+
+        // Avoid duplicates and ensure active status
+        if (!digitalUpsells.find((u) => u._id === digitalProduct._id) && digitalProduct.status === "active") {
+          digitalUpsells.push(digitalProduct);
         }
       });
     }
   });
 
-  // If no product upsells, redirect to complete page
-  if (upsellsToShow.length === 0) {
+  // If no upsells at all, redirect to complete page
+  if (physicalUpsells.length === 0 && digitalUpsells.length === 0) {
     redirect(`/thank-you/complete?session_id=${session_id}`);
   }
 
@@ -89,13 +117,31 @@ export default async function UpsellTwoPage({
         </div>
       </div>
 
-      {/* Product Upsells */ }
-      <ProductUpsells
-        upsells={ upsellsToShow }
-        headline="Complete Your Collection"
-        currentSessionId={ session_id }
-        customerId={ customerId }
-      />
+      {/* Digital Product Upsells - Show these first */ }
+      { digitalUpsells.length > 0 && (
+        <section className="bg-white py-16">
+          <div className="container mx-auto px-4 space-y-12">
+            { digitalUpsells.map((digitalProduct) => (
+              <DigitalProductUpsell
+                key={ digitalProduct._id }
+                product={ digitalProduct }
+                currentSessionId={ session_id }
+                customerId={ customerId }
+              />
+            )) }
+          </div>
+        </section>
+      ) }
+
+      {/* Physical Product Upsells */ }
+      { physicalUpsells.length > 0 && (
+        <ProductUpsells
+          upsells={ physicalUpsells }
+          headline="Complete Your Collection"
+          currentSessionId={ session_id }
+          customerId={ customerId }
+        />
+      ) }
 
       {/* Decline/Complete CTA */ }
       <div className="container mx-auto px-4 max-w-4xl">

@@ -447,6 +447,20 @@ export default defineType({
         "Select which digital product (course, coaching, etc.) to show on the thank-you page after purchasing this product",
     }),
     defineField({
+      name: "digitalUpsells",
+      title: "Additional Digital Upsells",
+      type: "array",
+      description:
+        "Additional digital products to show on the second upsell page (upsell-2). These appear after the primary digital upsell.",
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "digitalProduct" }],
+        },
+      ],
+      validation: (rule) => rule.max(3),
+    }),
+    defineField({
       name: "upsells",
       title: "Upsell Products",
       type: "array",
