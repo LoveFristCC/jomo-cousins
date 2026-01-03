@@ -63,6 +63,7 @@ export default async function PrayerCategoriesPage() {
     "@graph": [
       {
         "@type": "BreadcrumbList",
+        "@id": "https://www.jomocousins.com/prayer/category#breadcrumb",
         itemListElement: [
           {
             "@type": "ListItem",
@@ -102,7 +103,7 @@ export default async function PrayerCategoriesPage() {
           })),
         },
         breadcrumb: {
-          "@id": "https://www.jomocousins.com/prayer/category",
+          "@id": "https://www.jomocousins.com/prayer/category#breadcrumb",
         },
         about: {
           "@type": "Person",
