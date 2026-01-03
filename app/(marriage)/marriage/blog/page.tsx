@@ -25,8 +25,79 @@ export default async function CouplesCornerPage() {
   const featuredPostIds = new Set(featuredPosts.map((post) => post._id));
   const nonFeaturedPosts = allPosts.filter((post) => !featuredPostIds.has(post._id));
 
+  // Structured Data for SEO
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://www.jomocousins.com/marriage/blog#breadcrumb",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://www.jomocousins.com",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Marriage Counseling",
+            item: "https://www.jomocousins.com/marriage",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: "Couples' Corner Blog",
+            item: "https://www.jomocousins.com/marriage/blog",
+          },
+        ],
+      },
+      {
+        "@type": "Blog",
+        "@id": "https://www.jomocousins.com/marriage/blog",
+        name: "Couples' Corner",
+        description: "Marriage advice and relationship tips from Drs. Jomo & Charmaine Cousins",
+        url: "https://www.jomocousins.com/marriage/blog",
+        breadcrumb: {
+          "@id": "https://www.jomocousins.com/marriage/blog#breadcrumb",
+        },
+        author: [
+          {
+            "@type": "Person",
+            name: "Dr. Jomo Cousins",
+            url: "https://www.jomocousins.com",
+          },
+          {
+            "@type": "Person",
+            name: "Dr. Charmaine Cousins",
+          },
+        ],
+        publisher: {
+          "@type": "Organization",
+          name: "Jomo & Charmaine Ministries",
+          url: "https://www.jomocousins.com/marriage",
+        },
+        blogPost: allPosts.slice(0, 10).map((post) => ({
+          "@type": "BlogPosting",
+          "@id": `https://www.jomocousins.com/marriage/blog/${post.slug}`,
+          headline: post.title,
+          url: `https://www.jomocousins.com/marriage/blog/${post.slug}`,
+          datePublished: post.publishedAt,
+          description: post.excerpt,
+        })),
+      },
+    ],
+  };
+
   return (
     <div className="bg-white">
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+
       {/* Hero Section */ }
       <section className="relative h-[400px] md:h-[500px]">
         {/* Background Image */ }
