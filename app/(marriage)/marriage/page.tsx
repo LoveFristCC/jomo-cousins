@@ -21,7 +21,7 @@ export default function JomoAndCharmainePage() {
           {
             "@type": "Person",
             "name": "Dr. Charmaine Cousins",
-            "jobTitle": "Senior Pastor & Marriage Counselor",
+            "jobTitle": "Senior Pastor",
             "url": "https://www.jomocousins.com/marriage/about"
           }
         ],
@@ -43,24 +43,24 @@ export default function JomoAndCharmainePage() {
         "@type": "ProfessionalService",
         "@id": "https://www.jomocousins.com/marriage/#service",
         "name": "Jomo & Charmaine Marriage Counseling",
-        "description": "Faith-based marriage counseling and relationship coaching by experienced Senior Pastors",
+        "description": "Faith-based marriage counseling and relationship coaching by experienced Senior Pastors. Services include marriage counseling, pastoral counseling, premarital counseling, relationship coaching, Christian counseling, and couples ministry.",
         "provider": {
           "@id": "https://www.jomocousins.com/marriage/#organization"
         },
-        "serviceType": [
-          "Marriage Counseling",
-          "Pastoral Counseling",
-          "Premarital Counseling",
-          "Relationship Coaching",
-          "Christian Counseling",
-          "Couples Ministry"
-        ],
         "areaServed": {
           "@type": "City",
           "name": "Riverview",
           "containedIn": {
             "@type": "State",
             "name": "Florida"
+          }
+        },
+        "offers": {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Marriage and Relationship Counseling Services",
+            "description": "Comprehensive counseling including marriage counseling, premarital counseling, pastoral counseling, and relationship coaching"
           }
         }
       }
