@@ -40,7 +40,7 @@ export default function JomoAndCharmainePage() {
         ]
       },
       {
-        "@type": "ProfessionalService",
+        "@type": "Service",
         "@id": "https://www.jomocousins.com/marriage/#service",
         "name": "Jomo & Charmaine Marriage Counseling",
         "description": "Faith-based marriage counseling and relationship coaching by experienced Senior Pastors. Services include marriage counseling, pastoral counseling, premarital counseling, relationship coaching, Christian counseling, and couples ministry.",
@@ -55,14 +55,7 @@ export default function JomoAndCharmainePage() {
             "name": "Florida"
           }
         },
-        "offers": {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Marriage and Relationship Counseling Services",
-            "description": "Comprehensive counseling including marriage counseling, premarital counseling, pastoral counseling, and relationship coaching"
-          }
-        }
+        "serviceType": "Marriage Counseling"
       }
     ]
   };
