@@ -59,9 +59,6 @@ export default async function CouplesCornerPage() {
         name: "Couples' Corner",
         description: "Marriage advice and relationship tips from Drs. Jomo & Charmaine Cousins",
         url: "https://www.jomocousins.com/marriage/blog",
-        breadcrumb: {
-          "@id": "https://www.jomocousins.com/marriage/blog#breadcrumb",
-        },
         author: [
           {
             "@type": "Person",
