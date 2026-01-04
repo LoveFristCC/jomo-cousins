@@ -322,10 +322,12 @@ export default async function BookPreviewPage({
               Learn more about Dr. Jomo Cousins →
             </Link>
           </div>
+        </div>
 
-          {/* Other Free Previews - Interlinking */ }
-          { otherPreviews.length > 0 && (
-            <div className="mt-12 bg-gradient-to-br from-blue-50 to-white rounded-xl shadow-lg p-8">
+        {/* Other Free Previews - Interlinking (Wider Section) */ }
+        { otherPreviews.length > 0 && (
+          <div className="max-w-7xl mx-auto mt-12">
+            <div className="bg-gradient-to-br from-blue-50 to-white rounded-xl shadow-lg p-8">
               <div className="text-center mb-8">
                 <h3 className="text-2xl md:text-3xl font-bold text-[#2d2d2d] mb-2">
                   📚 Read More Free Previews
@@ -335,7 +337,7 @@ export default async function BookPreviewPage({
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 { otherPreviews.map((book: any) => (
                   <Link
                     key={ book._id }
@@ -409,9 +411,11 @@ export default async function BookPreviewPage({
                 </Link>
               </div>
             </div>
-          ) }
+          </div>
+        ) }
 
-          {/* SEO-friendly hidden content */ }
+        {/* SEO-friendly hidden content */ }
+        <div className="max-w-3xl mx-auto">
           <div className="sr-only">
             <p>
               This is a free preview chapter from "{ product.name }" by { product.author || "Dr. Jomo Cousins" }.
