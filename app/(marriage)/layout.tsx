@@ -1,5 +1,5 @@
 import "../globals.css";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import Script from "next/script";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Nav from "./nav";
@@ -112,16 +112,34 @@ export default function JomoAndCharmaineLayout({
         <link rel="dns-prefetch" href="https://o451059184212377.ingest.us.sentry.io" />
       </head>
       <body className="overflow-x-hidden">
-        <GoogleAnalytics />
-        {/* Simple Navigation */ }
         <Nav />
-
-        {/* Main Content */ }
         <main>{ children }</main>
-
-        {/* Footer */ }
         <Footer />
-        <SpeedInsights />
+        <GoogleAnalytics />
+        <Script
+          id="fb-pixel-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={ {
+            __html: `
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window,document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '3053545348126120'); 
+              fbq('track', 'PageView');`,
+          } }
+        />
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            src="https://www.facebook.com/tr?id=3053545348126120&ev=PageView&noscript=1"
+          />
+        </noscript>
       </body>
     </html>
   );
