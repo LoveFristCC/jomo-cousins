@@ -14,6 +14,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (!email) {
+      return NextResponse.json({ error: "Email is required" }, { status: 400 });
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { error: "Invalid email format" },
+        { status: 400 }
+      );
+    }
+
     if (!anonymous && !name) {
       return NextResponse.json(
         { error: "Name is required when not submitting anonymously" },

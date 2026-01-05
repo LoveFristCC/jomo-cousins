@@ -50,6 +50,33 @@ export default function SubmitPage() {
         throw new Error(data.error || "Failed to submit prayer request");
       }
 
+      // Submit to Kajabi via newsletter API
+      try {
+        const newsletterResponse = await fetch("/api/newsletter", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            name: formData.anonymous ? "Anonymous" : formData.name,
+            formId: "2149399091",
+            customFields: {
+              custom_1: formData.category || "",
+            },
+          }),
+        });
+
+        if (newsletterResponse.ok) {
+          console.log("✅ Prayer request submitted to Kajabi successfully");
+        } else {
+          console.error("⚠️ Kajabi submission failed:", await newsletterResponse.text());
+        }
+      } catch (kajabiError) {
+        console.error("⚠️ Error submitting to Kajabi:", kajabiError);
+        // Don't fail the whole request if Kajabi submission fails
+      }
+
       // Fetch suggested prayers based on category
       if (formData.category) {
         const category = categories.find((c) => c.title === formData.category);
@@ -116,7 +143,7 @@ export default function SubmitPage() {
             <div className="container mx-auto px-5">
               <div className="mx-auto max-w-5xl">
                 <h2 className="mb-8 text-center text-3xl font-bold text-[#3d3d3d]">
-                  While you wait, you might find comfort in these prayers:
+                  You might find comfort in these prayers:
                 </h2>
                 <div className="grid gap-6 md:grid-cols-3">
                   { suggestedPrayers.map((prayer) => (
@@ -228,10 +255,7 @@ export default function SubmitPage() {
                   htmlFor="email"
                   className="mb-2 block font-semibold text-[#3d3d3d]"
                 >
-                  Email Address{ " " }
-                  <span className="text-sm font-normal text-gray-600">
-                    (optional - if you'd like prayer updates)
-                  </span>
+                  Email Address <span className="text-[#e31e24]">*</span>
                 </label>
                 <input
                   type="email"
@@ -240,7 +264,9 @@ export default function SubmitPage() {
                   onChange={ (e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
+                  required
                   className="w-full rounded-lg border-2 border-gray-300 px-4 py-3 focus:border-[#e31e24] focus:outline-none"
+                  aria-required="true"
                 />
               </div>
 

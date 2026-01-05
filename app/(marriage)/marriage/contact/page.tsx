@@ -41,6 +41,30 @@ export default function ContactPage() {
         throw new Error(data.error || "Failed to submit request");
       }
 
+      // Submit to Kajabi via newsletter API
+      try {
+        const newsletterResponse = await fetch("/api/newsletter", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            name: formData.name,
+            formId: "2149399763",
+          }),
+        });
+
+        if (newsletterResponse.ok) {
+          console.log("✅ Contact form submitted to Kajabi successfully");
+        } else {
+          console.error("⚠️ Kajabi submission failed:", await newsletterResponse.text());
+        }
+      } catch (kajabiError) {
+        console.error("⚠️ Error submitting to Kajabi:", kajabiError);
+        // Don't fail the whole request if Kajabi submission fails
+      }
+
       setIsSubmitted(true);
     } catch (error) {
       console.error("Error submitting request:", error);

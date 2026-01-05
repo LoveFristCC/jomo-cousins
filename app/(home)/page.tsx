@@ -559,6 +559,7 @@ export default function HomePage() {
         </div>
       </section>
 
+
       {/* Newsletter Section - Homepage Only */ }
       <NewsletterSection />
     </div>
