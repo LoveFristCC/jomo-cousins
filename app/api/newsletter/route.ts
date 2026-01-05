@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
     // Custom success messages based on type
     const successMessages = {
       main: "Successfully subscribed!",
-      "jomo-charmaine": "Successfully subscribed! Check your email for the free eBook.",
+      "jomo-charmaine": "Successfully subscribed! Download the book now. ",
     };
 
     return NextResponse.json(

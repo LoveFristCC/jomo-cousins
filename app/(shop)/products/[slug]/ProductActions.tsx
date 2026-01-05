@@ -268,8 +268,7 @@ export default function ProductActions({ product }: ProductActionsProps) {
         </div>
       ) }
 
-      {/* Stock status */ }
-      { stockStatus && (
+      {/* { stockStatus && (
         <div className={ `px-4 py-3 rounded-lg font-semibold ${stockStatus.className} ${stockStatus.message.includes("Out")
           ? "bg-red-50 border border-red-200"
           : stockStatus.message.includes("Low")
@@ -278,7 +277,7 @@ export default function ProductActions({ product }: ProductActionsProps) {
           }` }>
           { stockStatus.message }
         </div>
-      ) }
+      ) } */}
 
       {/* Quantity selector */ }
       <div className="flex flex-col items-center justify-center">

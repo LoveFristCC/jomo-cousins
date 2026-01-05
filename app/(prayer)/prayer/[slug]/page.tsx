@@ -7,7 +7,8 @@ import {
   prayerBySlugQuery,
   relatedPrayersQuery,
   nextPrayerQuery,
-  previousPrayerQuery
+  previousPrayerQuery,
+  productBySlugQuery
 } from "@/sanity/lib/queries";
 import { urlForImage } from "@/sanity/lib/utils";
 import CustomPortableText from "../../../(home)/portable-text";
@@ -112,7 +113,7 @@ export default async function PrayerVideoPage({ params }: Props) {
   const categoryIds = prayer.categories?.map((cat: any) => cat._ref) || [];
 
   // Fetch all related content in parallel
-  const [relatedPrayers, nextPrayer, previousPrayer] = await Promise.all([
+  const [ relatedPrayers, nextPrayer, previousPrayer, prayerBook ] = await Promise.all([
     sanityFetch({
       query: relatedPrayersQuery,
       params: {
@@ -128,6 +129,10 @@ export default async function PrayerVideoPage({ params }: Props) {
     sanityFetch({
       query: previousPrayerQuery,
       params: { currentDate: prayer.publishedAt },
+    }),
+    sanityFetch({
+      query: productBySlugQuery,
+      params: { slug: "prayer-life-the-conversation" },
     }),
   ]);
 
@@ -277,171 +282,171 @@ export default async function PrayerVideoPage({ params }: Props) {
           id="main-content"
           className="border-b border-gray-200 bg-white py-8"
         >
-        <div className="container mx-auto px-5">
-          <div className="mx-auto max-w-5xl">
-            <h1 className="mb-4 text-3xl font-bold text-[#3d3d3d] md:text-4xl lg:text-5xl">
-              { prayer.title }
-            </h1>
-            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
-              <span className="font-semibold">Led by Pastor Jomo Cousins</span>
-              { prayer.publishedAt && (
-                <span>{ format(parseISO(prayer.publishedAt), "MMMM d, yyyy") }</span>
+          <div className="container mx-auto px-5">
+            <div className="mx-auto max-w-5xl">
+              <h1 className="mb-4 text-3xl font-bold text-[#3d3d3d] md:text-4xl lg:text-5xl">
+                { prayer.title }
+              </h1>
+              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+                <span className="font-semibold">Led by Pastor Jomo Cousins</span>
+                { prayer.publishedAt && (
+                  <span>{ format(parseISO(prayer.publishedAt), "MMMM d, yyyy") }</span>
+                ) }
+                { prayer.duration && <span>{ prayer.duration }</span> }
+              </div>
+              {/* Category Tags */ }
+              { prayer.categories && prayer.categories.length > 0 && (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  { prayer.categories.map((category: any) => (
+                    <Link
+                      key={ category.slug }
+                      href={ `/prayer/category/${category.slug}` }
+                      className="rounded-full bg-gray-100 px-4 py-1 text-sm font-semibold text-[#3d3d3d] transition-colors hover:bg-[#e31e24] hover:text-white"
+                      aria-label={ `View all ${category.title} prayers` }
+                    >
+                      { category.title }
+                    </Link>
+                  )) }
+                </div>
               ) }
-              { prayer.duration && <span>{ prayer.duration }</span> }
             </div>
-            {/* Category Tags */ }
-            { prayer.categories && prayer.categories.length > 0 && (
-              <div className="mt-4 flex flex-wrap gap-2">
-                { prayer.categories.map((category: any) => (
-                  <Link
-                    key={ category.slug }
-                    href={ `/prayer/category/${category.slug}` }
-                    className="rounded-full bg-gray-100 px-4 py-1 text-sm font-semibold text-[#3d3d3d] transition-colors hover:bg-[#e31e24] hover:text-white"
-                    aria-label={ `View all ${category.title} prayers` }
-                  >
-                    { category.title }
-                  </Link>
-                )) }
-              </div>
-            ) }
           </div>
-        </div>
-      </header>
+        </header>
 
-      {/* Video Section */ }
-      <section className="bg-gradient-to-b from-gray-50 to-white py-12">
-        <div className="container mx-auto px-5">
-          <div className="mx-auto max-w-5xl">
-            { videoId ? (
-              <div className="overflow-hidden rounded-2xl shadow-2xl ring-1 ring-gray-200">
-                <YouTubePlayer
-                  videoId={ videoId }
-                  title={ prayer.title }
-                  thumbnailUrl={ prayer.featuredImage ? urlForImage(prayer.featuredImage)?.url() : undefined }
-                />
-              </div>
-            ) : (
-              <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-gray-100 flex items-center justify-center shadow-xl">
-                <p className="text-gray-500">Video not available</p>
-              </div>
-            ) }
-          </div>
-        </div>
-      </section>
-
-      {/* Prayer Description & Personal Note */ }
-      <section className="py-12">
-        <div className="container mx-auto px-5">
-          <div className="mx-auto max-w-4xl">
-            { prayer.excerpt && (
-              <div className="mb-8">
-                <p className="text-xl leading-relaxed text-gray-700">
-                  { prayer.excerpt }
-                </p>
-              </div>
-            ) }
-
-            {/* Jomo's Personal Note */ }
-            { prayer.personalNote && Array.isArray(prayer.personalNote) && (
-              <div className="mb-8 rounded-xl border-l-4 border-[#e31e24] bg-gray-50 p-6 md:p-8">
-                <div className="mb-3 flex items-center gap-3">
-                  <div className="h-12 w-12 overflow-hidden rounded-full">
-                    <Image
-                      src="/images/jomo-profile.webp"
-                      alt="Jomo Cousins"
-                      width={ 48 }
-                      height={ 48 }
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <p className="font-bold text-[#3d3d3d]">A Note from Pastor Jomo</p>
-                  </div>
+        {/* Video Section */ }
+        <section className="bg-gradient-to-b from-gray-50 to-white py-12">
+          <div className="container mx-auto px-5">
+            <div className="mx-auto max-w-5xl">
+              { videoId ? (
+                <div className="overflow-hidden rounded-2xl shadow-2xl ring-1 ring-gray-200">
+                  <YouTubePlayer
+                    videoId={ videoId }
+                    title={ prayer.title }
+                    thumbnailUrl={ prayer.featuredImage ? urlForImage(prayer.featuredImage)?.url() : undefined }
+                  />
                 </div>
-                <div className="prose max-w-none">
-                  <CustomPortableText value={ prayer.personalNote } />
+              ) : (
+                <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-gray-100 flex items-center justify-center shadow-xl">
+                  <p className="text-gray-500">Video not available</p>
                 </div>
-              </div>
-            ) }
+              ) }
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Action Bar */ }
-      <section className="border-y border-gray-200 bg-gray-50 py-6">
-        <div className="container mx-auto px-5">
-          <div className="mx-auto flex max-w-4xl flex-col items-center justify-center gap-4 sm:flex-row sm:justify-between">
-            {/* Share Buttons */ }
-            <ShareButtons shareUrl={ shareUrl } shareTitle={ shareTitle } />
-
-            {/* Download PDF */ }
-            { prayer.fullTranscript && (
-              <DownloadPrayerPDFButton
-                slug={ prayer.slug }
-                title={ prayer.title }
-              />
-            ) }
-          </div>
-        </div>
-      </section>
-
-      {/* Full Prayer Text */ }
-      { prayer.fullTranscript && (
-        <section className="py-16">
+        {/* Prayer Description & Personal Note */ }
+        <section className="py-12">
           <div className="container mx-auto px-5">
             <div className="mx-auto max-w-4xl">
-              <h2 className="mb-8 text-3xl font-bold text-[#3d3d3d]">
-                Full Prayer Text
-              </h2>
-              <div className="prose prose-lg max-w-none">
-                <CustomPortableText value={ prayer.fullTranscript } />
+              { prayer.excerpt && (
+                <div className="mb-8">
+                  <p className="text-xl leading-relaxed text-gray-700">
+                    { prayer.excerpt }
+                  </p>
+                </div>
+              ) }
+
+              {/* Jomo's Personal Note */ }
+              { prayer.personalNote && Array.isArray(prayer.personalNote) && (
+                <div className="mb-8 rounded-xl border-l-4 border-[#e31e24] bg-gray-50 p-6 md:p-8">
+                  <div className="mb-3 flex items-center gap-3">
+                    <div className="h-12 w-12 overflow-hidden rounded-full">
+                      <Image
+                        src="/images/jomo-profile.webp"
+                        alt="Jomo Cousins"
+                        width={ 48 }
+                        height={ 48 }
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <p className="font-bold text-[#3d3d3d]">A Note from Pastor Jomo</p>
+                    </div>
+                  </div>
+                  <div className="prose max-w-none">
+                    <CustomPortableText value={ prayer.personalNote } />
+                  </div>
+                </div>
+              ) }
+            </div>
+          </div>
+        </section>
+
+        {/* Action Bar */ }
+        <section className="border-y border-gray-200 bg-gray-50 py-6">
+          <div className="container mx-auto px-5">
+            <div className="mx-auto flex max-w-4xl flex-col items-center justify-center gap-4 sm:flex-row sm:justify-between">
+              {/* Share Buttons */ }
+              <ShareButtons shareUrl={ shareUrl } shareTitle={ shareTitle } />
+
+              {/* Download PDF */ }
+              { prayer.fullTranscript && (
+                <DownloadPrayerPDFButton
+                  slug={ prayer.slug }
+                  title={ prayer.title }
+                />
+              ) }
+            </div>
+          </div>
+        </section>
+
+        {/* Full Prayer Text */ }
+        { prayer.fullTranscript && (
+          <section className="py-16">
+            <div className="container mx-auto px-5">
+              <div className="mx-auto max-w-4xl">
+                <h2 className="mb-8 text-3xl font-bold text-[#3d3d3d]">
+                  Full Prayer Text
+                </h2>
+                <div className="prose prose-lg max-w-none">
+                  <CustomPortableText value={ prayer.fullTranscript } />
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-      ) }
+          </section>
+        ) }
 
-      {/* Next/Previous Prayer Navigation */ }
-      { (previousPrayer || nextPrayer) && (
-        <section className="border-t border-gray-200 bg-white py-8">
-          <div className="container mx-auto px-5">
-            <div className="mx-auto flex max-w-4xl items-center justify-between gap-4">
-              { previousPrayer ? (
-                <Link
-                  href={ `/prayer/${previousPrayer.slug}` }
-                  className="group flex items-center gap-2 text-[#3d3d3d] transition-colors hover:text-[#e31e24]"
-                >
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M15 19l-7-7 7-7" />
-                  </svg>
-                  <div className="text-left">
-                    <div className="text-xs uppercase text-gray-500">Previous Prayer</div>
-                    <div className="font-semibold group-hover:underline">{ previousPrayer.title }</div>
-                  </div>
-                </Link>
-              ) : (
-                <div />
-              ) }
-              { nextPrayer ? (
-                <Link
-                  href={ `/prayer/${nextPrayer.slug}` }
-                  className="group flex items-center gap-2 text-[#3d3d3d] transition-colors hover:text-[#e31e24]"
-                >
-                  <div className="text-right">
-                    <div className="text-xs uppercase text-gray-500">Next Prayer</div>
-                    <div className="font-semibold group-hover:underline">{ nextPrayer.title }</div>
-                  </div>
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              ) : (
-                <div />
-              ) }
+        {/* Next/Previous Prayer Navigation */ }
+        { (previousPrayer || nextPrayer) && (
+          <section className="border-t border-gray-200 bg-white py-8">
+            <div className="container mx-auto px-5">
+              <div className="mx-auto flex max-w-4xl items-center justify-between gap-4">
+                { previousPrayer ? (
+                  <Link
+                    href={ `/prayer/${previousPrayer.slug}` }
+                    className="group flex items-center gap-2 text-[#3d3d3d] transition-colors hover:text-[#e31e24]"
+                  >
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M15 19l-7-7 7-7" />
+                    </svg>
+                    <div className="text-left">
+                      <div className="text-xs uppercase text-gray-500">Previous Prayer</div>
+                      <div className="font-semibold group-hover:underline">{ previousPrayer.title }</div>
+                    </div>
+                  </Link>
+                ) : (
+                  <div />
+                ) }
+                { nextPrayer ? (
+                  <Link
+                    href={ `/prayer/${nextPrayer.slug}` }
+                    className="group flex items-center gap-2 text-[#3d3d3d] transition-colors hover:text-[#e31e24]"
+                  >
+                    <div className="text-right">
+                      <div className="text-xs uppercase text-gray-500">Next Prayer</div>
+                      <div className="font-semibold group-hover:underline">{ nextPrayer.title }</div>
+                    </div>
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                ) : (
+                  <div />
+                ) }
+              </div>
             </div>
-          </div>
-        </section>
-      ) }
+          </section>
+        ) }
       </article>
 
       {/* Related Prayers Section */ }
@@ -526,15 +531,90 @@ export default async function PrayerVideoPage({ params }: Props) {
                 Send Your Prayer Request to Pastor Jomo
               </Link>
               <Link
-                href="/prayer"
+                href="/prayer/daily"
                 className="rounded-lg border-2 border-white px-8 py-4 font-bold text-white transition-all hover:bg-white hover:text-[#3d3d3d]"
               >
-                Explore More Prayers
+                Pray Daily
               </Link>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Prayer Book Section */ }
+      { prayerBook && prayerBook.status === "active" && (
+        <section className="bg-gray-50 py-16">
+          <div className="container mx-auto px-5">
+            <div className="mx-auto max-w-4xl">
+              <div className="text-center mb-8">
+                <p className="text-sm uppercase tracking-wide text-[#e31e24] font-semibold mb-2">
+                  Continue Your Journey
+                </p>
+                <h2 className="text-3xl font-bold text-[#3d3d3d] mb-4">
+                  Deepen Your Prayer Life
+                </h2>
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                  Take the next step in your prayer journey with resources designed to help you grow closer to God.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div className="grid md:grid-cols-2 gap-8 p-8">
+                  {/* Book Image */ }
+                  <div className="flex items-center justify-center">
+                    { prayerBook.images && prayerBook.images.length > 0 && (
+                      <div className="relative w-full max-w-sm aspect-[3/4] rounded-lg overflow-hidden shadow-lg">
+                        <Image
+                          src={ urlForImage(prayerBook.images[ 0 ])?.url() || "" }
+                          alt={ prayerBook.name }
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                    ) }
+                  </div>
+
+                  {/* Book Details */ }
+                  <div className="flex flex-col justify-center">
+                    <h3 className="text-2xl font-bold text-[#3d3d3d] mb-4">
+                      { prayerBook.name }
+                    </h3>
+                    { prayerBook.excerpt && (
+                      <p className="text-gray-600 mb-6 leading-relaxed">
+                        { prayerBook.excerpt }
+                      </p>
+                    ) }
+
+                    {/* CTA Button */ }
+                    <Link
+                      href={ `/books/${prayerBook.slug}` }
+                      className="inline-block text-center rounded-lg bg-[#e31e24] px-8 py-4 font-bold text-white shadow-lg transition-all hover:bg-[#c41a1f] mb-6"
+                    >
+                      Transform Your Prayer Life
+                    </Link>
+
+                    {/* Trust Badges */ }
+                    <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                      <div className="flex items-center gap-2">
+                        <svg className="h-5 w-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span>Fast Shipping</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <svg className="h-5 w-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span>Secure Checkout</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      ) }
     </div>
   );
 }

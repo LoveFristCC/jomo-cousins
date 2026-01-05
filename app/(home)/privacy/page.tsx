@@ -201,8 +201,8 @@ export default function PrivacyPolicyPage() {
 
             <p className="text-gray-700 leading-relaxed mb-4">
               To exercise any of these rights, please contact us at{ ' ' }
-              <a href="mailto:bookjomocousins@gmail.com" className="text-[#e31e24] hover:underline">
-                bookjomocousins@gmail.com
+              <a href="mailto:support@pastorjomo.com" className="text-[#e31e24] hover:underline">
+                support@pastorjomo.com
               </a>. We will respond to your request within 30 days.
             </p>
           </section>
@@ -215,8 +215,8 @@ export default function PrivacyPolicyPage() {
             <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-2">
               <li>Clicking the "unsubscribe" link at the bottom of any promotional email</li>
               <li>Contacting us at{ ' ' }
-                <a href="mailto:bookjomocousins@gmail.com" className="text-[#e31e24] hover:underline">
-                  bookjomocousins@gmail.com
+                <a href="mailto:support@pastorjomo.com" className="text-[#e31e24] hover:underline">
+                  support@pastorjomo.com
                 </a>
               </li>
             </ul>
@@ -267,7 +267,7 @@ export default function PrivacyPolicyPage() {
             </p>
             <div className="bg-gray-50 p-6 rounded-lg">
               <p className="text-gray-700 mb-2"><strong>Dr. Jomo Cousins Ministries</strong></p>
-              <p className="text-gray-700 mb-2">Email: <a href="mailto:bookjomocousins@gmail.com" className="text-[#e31e24] hover:underline">bookjomocousins@gmail.com</a></p>
+              <p className="text-gray-700 mb-2">Email: <a href="mailto:support@pastorjomo.com" className="text-[#e31e24] hover:underline">support@pastorjomo.com</a></p>
               <p className="text-gray-700 mb-2">Phone: <a href="tel:+18136712009" className="text-[#e31e24] hover:underline">(813) 671-2009</a></p>
               <p className="text-gray-700">Website: <a href="https://www.jomocousins.com" className="text-[#e31e24] hover:underline">www.jomocousins.com</a></p>
             </div>

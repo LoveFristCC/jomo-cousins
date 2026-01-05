@@ -317,9 +317,12 @@ export default async function CategoryPage({ params }: Props) {
                     </div>
                     <Link
                       href={ `/prayer/${actualFeaturedPrayer.slug}` }
-                      className="mt-6 inline-block rounded-lg bg-[#e31e24] px-6 py-3 font-bold text-white transition-colors hover:bg-[#c41a1f]"
+                      className="mt-6 inline-flex items-center gap-2 rounded-lg bg-[#e31e24] px-6 py-3 font-bold text-white transition-colors hover:bg-[#c41a1f]"
                     >
-                      Pray Now
+                      Read Prayer Transcript
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
                     </Link>
                   </div>
                 </div>
