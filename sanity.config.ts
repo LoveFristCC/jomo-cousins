@@ -15,6 +15,7 @@ import { SyncToStripeAction } from "@/sanity/plugins/stripeSync";
 import { AutoStripeSyncAction } from "@/sanity/plugins/autoStripeSync";
 import { CleanOnPublishAction } from "@/sanity/plugins/cleanOnPublish";
 import { CleanDocumentAction } from "@/sanity/plugins/cleanDocument";
+import { CleanSyncPublishAction } from "@/sanity/plugins/cleanSyncPublish";
 import author from "@/sanity/schemas/documents/author";
 import post from "@/sanity/schemas/documents/post";
 import product, { productVariant } from "@/sanity/schemas/documents/product";
@@ -74,6 +75,7 @@ export default defineConfig({
           context.schemaType === "digitalProduct"
         ) {
           return [
+            CleanSyncPublishAction,
             CleanOnPublishAction,
             AutoStripeSyncAction,
             ...filteredActions,

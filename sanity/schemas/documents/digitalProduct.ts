@@ -49,7 +49,8 @@ export default defineType({
       name: "price",
       title: "Price",
       type: "number",
-      description: "Price in dollars (for one-time payment or monthly subscription price)",
+      description:
+        "Price in dollars (for one-time payment or monthly subscription price)",
       validation: (rule) => rule.required().positive(),
     }),
     defineField({
@@ -77,9 +78,11 @@ export default defineType({
       name: "firstMonthPrice",
       title: "First Month Price (Optional)",
       type: "number",
-      description: "Special price for the first month (e.g., $1 trial). Leave empty to charge full price from day 1.",
+      description:
+        "Special price for the first month (e.g., $1 trial). Leave empty to charge full price from day 1.",
       validation: (rule) => rule.positive(),
-      hidden: ({ document }) => !document?.isSubscription || document?.subscriptionInterval !== "month",
+      hidden: ({ document }) =>
+        !document?.isSubscription || document?.subscriptionInterval !== "month",
     }),
     defineField({
       name: "stripePriceId",
@@ -99,7 +102,8 @@ export default defineType({
       name: "kajabiWebhookUrl",
       title: "Kajabi Webhook URL",
       type: "url",
-      description: "Kajabi webhook URL to activate/enroll users (e.g., https://checkout.kajabi.com/webhooks/offers/xxx/xxx/activate)",
+      description:
+        "Kajabi webhook URL to activate/enroll users (e.g., https://checkout.kajabi.com/webhooks/offers/xxx/xxx/activate)",
       validation: (rule) => rule.required(),
     }),
     defineField({

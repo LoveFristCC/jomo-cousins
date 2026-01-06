@@ -309,7 +309,8 @@ export default defineType({
       name: "featured",
       title: "Featured Product",
       type: "boolean",
-      description: "Featured products appear first on the products page and homepage (recommend max 3 for homepage)",
+      description:
+        "Featured products appear first on the products page and homepage (recommend max 3 for homepage)",
       initialValue: false,
     }),
     // Book-specific fields for SEO
