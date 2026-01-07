@@ -11,7 +11,7 @@ import LivestreamPlayer from "./LivestreamPlayer";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Daily Prayer | Jomo Cousins",
+  title: "Daily Prayer | Pastor Jomo Cousins",
   description: "Join Pastor Jomo Cousins for daily prayer. Start each morning with spiritual encouragement, biblical guidance, and peace. Subscribe to pray with Jomo every day.",
   alternates: {
     canonical: "https://www.jomocousins.com/prayer/daily",
