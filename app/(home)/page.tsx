@@ -105,7 +105,7 @@ export default function HomePage() {
               </h2>
               <div className="space-y-6 text-lg leading-relaxed text-white">
                 <p>
-                  Dr. Cousins has been hailed as "a millennial leader of the Christian community" and "a beacon of faith" by both international and national media. A retired NFL defensive end for the New York Giants and the Arizona Cardinals, he has extended his reach within the community through self-motivation seminars, presentation competencies, financial wealth symposiums, and youth partnership programs.
+                  Dr. Jomo Cousins has been hailed as "a millennial leader of the Christian community" and "a beacon of faith" by both international and national media. A retired NFL defensive end for the New York Giants and the Arizona Cardinals, he has extended his reach within the community through self-motivation seminars, presentation competencies, financial wealth symposiums, and youth partnership programs.
                 </p>
                 <p className="flex items-start justify-center gap-3 md:justify-start">
                   <svg className="mt-1 h-6 w-6 flex-shrink-0 text-[#e31e24]" fill="currentColor" viewBox="0 0 20 20">
@@ -161,7 +161,7 @@ export default function HomePage() {
               THE <span className="text-[#e31e24]">I.R.I.E.</span> METHOD
             </h2>
             <p className="mx-auto max-w-3xl text-lg text-gray-700">
-              Dr. Cousins was born in Jamaica where "everything's irie." In other words, "it's all good." Staying true to his roots, he crafted the I.R.I.E. Method for motivational speaking.
+              Dr. Jomo Cousins was born in Jamaica where "everything's irie." In other words, "it's all good." Staying true to his roots, he crafted the I.R.I.E. Method for motivational speaking.
             </p>
           </div>
           <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-2 lg:grid-cols-4">
@@ -176,7 +176,7 @@ export default function HomePage() {
                 IMPACT
               </h3>
               <p className="text-gray-700">
-                Each engagement presents a new opportunity to make a lasting impact every time. Dr. Cousins is ready to make a lasting impact every time.
+                Each engagement presents a new opportunity to make a lasting impact every time. Dr. Jomo Cousins is ready to make a lasting impact every time.
               </p>
             </div>
 
@@ -191,7 +191,7 @@ export default function HomePage() {
                 RESONATE
               </h3>
               <p className="text-gray-700">
-                Authenticity? Check. Connecting with people on a human level? Check. Dr. Cousins is bound to resonate when these two things are present.
+                Authenticity? Check. Connecting with people on a human level? Check. Dr. Jomo Cousins is bound to resonate when these two things are present.
               </p>
             </div>
 
@@ -314,7 +314,7 @@ export default function HomePage() {
               </h2>
 
               <p className="mb-6 text-lg leading-relaxed text-gray-300">
-                Whether you're seeking personal growth, spiritual enlightenment, or a fresh perspective, Dr. Cousins has got you covered. If you haven't already, make sure to check out some of Dr. Cousins' most recent videos on YouTube. They are packed with life-changing insights, practical advice, and soul-stirring motivation.
+                Whether you're seeking personal growth, spiritual enlightenment, or a fresh perspective, Dr. Jomo Cousins has got you covered. If you haven't already, make sure to check out some of Dr. Jomo Cousins' most recent videos on YouTube. They are packed with life-changing insights, practical advice, and soul-stirring motivation.
               </p>
 
               <p className="mb-8 text-lg leading-relaxed text-gray-300">
@@ -411,7 +411,7 @@ export default function HomePage() {
               Join the <span className="text-[#e31e24]">6:30 AM Prayer Line</span>
             </h2>
             <p className="mb-6 text-xl leading-relaxed text-gray-700">
-              For nearly 11 years, Dr. Cousins has consistently hosted a 6:30 AM
+              For nearly 11 years, Dr. Jomo Cousins has consistently hosted a 6:30 AM
               weekday prayer line accessible via social media, touching lives around
               the world with daily devotions and prayers.
             </p>
