@@ -33,7 +33,7 @@ export default function Nav() {
             <Link href="/" className="group flex items-center gap-3">
               <Image
                 src="/images/logos/Asset 1.webp"
-                alt="Logo"
+                alt="Dr. Jomo Cousins Logo"
                 width={ 40 }
                 height={ 40 }
                 className="transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110"

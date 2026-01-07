@@ -16,7 +16,7 @@ export default function HomePage() {
         <div className="absolute inset-0">
           <Image
             src="/images/backgrounds/herobackground.webp"
-            alt=""
+            alt="Decorative background pattern"
             fill
             className="object-cover opacity-20"
             priority

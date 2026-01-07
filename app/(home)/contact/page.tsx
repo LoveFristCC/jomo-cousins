@@ -467,7 +467,7 @@ export default function ContactPage() {
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
                   src="/images/clients/_00Logos_JC_01.webp"
-                  alt="Client Logo"
+                  alt="Corporate client logo"
                   width={ 150 }
                   height={ 80 }
                   className="w-full h-auto object-contain"
@@ -477,7 +477,7 @@ export default function ContactPage() {
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
                   src="/images/clients/_00Logos_JC_02.webp"
-                  alt="Client Logo"
+                  alt="Corporate client logo"
                   width={ 150 }
                   height={ 80 }
                   className="w-full h-auto object-contain"
@@ -487,7 +487,7 @@ export default function ContactPage() {
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
                   src="/images/clients/_00Logos_JC_03.webp"
-                  alt="Client Logo"
+                  alt="Corporate client logo"
                   width={ 150 }
                   height={ 80 }
                   className="w-full h-auto object-contain"
@@ -497,7 +497,7 @@ export default function ContactPage() {
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
                   src="/images/clients/_00Logos_JC_04.webp"
-                  alt="Client Logo"
+                  alt="Corporate client logo"
                   width={ 150 }
                   height={ 80 }
                   className="w-full h-auto object-contain"
@@ -507,7 +507,7 @@ export default function ContactPage() {
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
                   src="/images/clients/_00Logos_JC_05.webp"
-                  alt="Client Logo"
+                  alt="RE/MAX"
                   width={ 150 }
                   height={ 80 }
                   className="w-full h-auto object-contain"
@@ -517,7 +517,7 @@ export default function ContactPage() {
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
                   src="/images/clients/_00Logos_JC_06.webp"
-                  alt="Client Logo"
+                  alt="Corporate client logo"
                   width={ 150 }
                   height={ 80 }
                   className="w-full h-auto object-contain"
@@ -527,7 +527,7 @@ export default function ContactPage() {
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
                   src="/images/clients/_00Logos_JC_07.webp"
-                  alt="Client Logo"
+                  alt="Keller Williams"
                   width={ 150 }
                   height={ 80 }
                   className="w-full h-auto object-contain"
@@ -537,7 +537,7 @@ export default function ContactPage() {
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
                   src="/images/clients/_00Logos_JC_08.webp"
-                  alt="Client Logo"
+                  alt="Corporate client logo"
                   width={ 150 }
                   height={ 80 }
                   className="w-full h-auto object-contain"
@@ -547,7 +547,7 @@ export default function ContactPage() {
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
                   src="/images/clients/_00Logos_JC_09.webp"
-                  alt="Client Logo"
+                  alt="Hillsborough County Public Schools"
                   width={ 150 }
                   height={ 80 }
                   className="w-full h-auto object-contain"
@@ -557,7 +557,7 @@ export default function ContactPage() {
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
                   src="/images/clients/_00Logos_JC_10.webp"
-                  alt="Client Logo"
+                  alt="Corporate client logo"
                   width={ 150 }
                   height={ 80 }
                   className="w-full h-auto object-contain"
@@ -567,7 +567,7 @@ export default function ContactPage() {
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
                   src="/images/clients/_00Logos_JC_11.webp"
-                  alt="Client Logo"
+                  alt="Corporate client logo"
                   width={ 150 }
                   height={ 80 }
                   className="w-full h-auto object-contain"
@@ -577,7 +577,7 @@ export default function ContactPage() {
               <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
                 <Image
                   src="/images/clients/_00Logos_JC_12.webp"
-                  alt="Client Logo"
+                  alt="Corporate client logo"
                   width={ 150 }
                   height={ 80 }
                   className="w-full h-auto object-contain"
