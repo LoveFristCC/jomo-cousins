@@ -587,7 +587,7 @@ export default async function PrayerVideoPage({ params }: Props) {
 
                     {/* CTA Button */ }
                     <Link
-                      href={ `/books/${prayerBook.slug}` }
+                      href={ `/products/${prayerBook.slug}` }
                       className="inline-block text-center rounded-lg bg-[#e31e24] px-8 py-4 font-bold text-white shadow-lg transition-all hover:bg-[#c41a1f] mb-6"
                     >
                       Transform Your Prayer Life
