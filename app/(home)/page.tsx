@@ -4,8 +4,9 @@ import { Suspense } from "react";
 import BooksSection from "./books-section";
 import NewsletterSection from "./NewsLetterSection";
 import { Metadata } from "next";
+
 export const metadata: Metadata = {
-  title: "Pastor, Author, NFL Veteran, & Motivational Speaker",
+  title: "Pastor, Author, & Motivational Speaker | Dr Jomo Cousins",
 };
 
 export default function HomePage() {
