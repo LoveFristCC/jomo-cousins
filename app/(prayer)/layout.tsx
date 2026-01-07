@@ -10,7 +10,7 @@ import GoogleAnalytics from "@/components/GoogleAnalytics";
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.jomocousins.com"),
   title: {
-    template: "%s | Pray with Pastor Jomo",
+    template: "%s",
     default: "Pray with Pastor Jomo Cousins | Personal Prayer Videos",
   },
   description: "Join Pastor Jomo Cousins in powerful prayer. Find personalized prayer videos for healing, finances, relationships, and more. Experience intimate, one-on-one prayer ministry that brings hope and transformation.",

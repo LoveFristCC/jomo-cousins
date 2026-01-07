@@ -9,7 +9,7 @@ import GoogleAnalytics from "@/components/GoogleAnalytics";
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.jomocousins.com"),
   title: {
-    template: "%s | Jomo & Charmaine",
+    template: "%s",
     default: "Jomo & Charmaine - Marriage Counseling & Relationship Coaching | Christian Pastors",
   },
   description: "Dr. Jomo and Dr. Charmaine Cousins are Senior Pastors helping couples thrive together through faith-based marriage counseling. With 24 years of marriage and 1,000+ couples counseled, they provide relationship coaching, premarital counseling, and marriage support at Love First Christian Center in Riverview, FL.",
