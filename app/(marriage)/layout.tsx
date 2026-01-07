@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: "%s",
     default: "Jomo & Charmaine - Marriage Counseling & Relationship Coaching | Christian Pastors",
   },
-  description: "Dr. Jomo and Dr. Charmaine Cousins are Senior Pastors helping couples thrive together through faith-based marriage counseling. With 24 years of marriage and 1,000+ couples counseled, they provide relationship coaching, premarital counseling, and marriage support at Love First Christian Center in Riverview, FL.",
+  description: "Senior Pastors with 24 years of marriage experience. Helping couples build stronger relationships through faith-based counseling and coaching. Over 1,000 couples counseled at Love First Christian Center.",
   applicationName: "Jomo & Charmaine Ministries",
   referrer: "origin-when-cross-origin",
   formatDetection: {

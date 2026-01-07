@@ -391,7 +391,7 @@ export default async function CouplesCornerPage() {
 
 export const metadata = {
   title: "Couples' Corner - Marriage & Relationship Blog",
-  description: "Expert marriage advice and relationship tips from Drs. Jomo & Charmaine Cousins. Discover practical guidance on communication, intimacy, trust, dating ideas, prayers for marriage, and building stronger relationships. Faith-based wisdom from experienced Senior Pastors.",
+  description: "Expert marriage advice and relationship tips from Drs. Jomo & Charmaine Cousins. Discover practical guidance on communication, intimacy, trust, dating ideas, prayers for marriage, and building stronger relationships.",
   alternates: {
     canonical: "https://www.jomocousins.com/marriage/blog",
   },

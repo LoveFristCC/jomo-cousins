@@ -704,7 +704,7 @@ export default function JomoAndCharmainePage() {
 
 export const metadata = {
   title: "Marriage Counseling & Relationship Coaching",
-  description: "Drs. Jomo & Charmaine Cousins help couples thrive together through faith-based marriage counseling. Senior Pastors with 24 years of marriage, serving 1,000+ couples at Love First Christian Center. Expert guidance for communication, intimacy, trust, infidelity, and blended families.",
+  description: "Drs. Jomo & Charmaine Cousins help couples thrive together through faith-based marriage counseling. Senior Pastors with 24 years of marriage, serving 1,000+ couples at Love First Christian Center.",
   alternates: {
     canonical: "https://www.jomocousins.com/marriage",
   },

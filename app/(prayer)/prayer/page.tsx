@@ -14,13 +14,13 @@ import { format, parseISO } from "date-fns";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Daily Prayer Videos",
+  title: "Prayer for Every Need | Pray With Pastor Jomo",
   description: "Join Pastor Jomo Cousins in prayer. Watch daily prayer videos, find prayers for healing, finances, anxiety, and more. Send your prayer request.",
   alternates: {
     canonical: "https://www.jomocousins.com/prayer",
   },
   openGraph: {
-    title: "Pray With Pastor Jomo | Daily Prayer Videos",
+    title: "Prayer for Every Need | Pray With Pastor Jomo",
     description: "Join Jomo in prayer. Daily prayer videos for healing, finances, anxiety, and more. You're not alone - Jomo is praying with you.",
     url: "https://www.jomocousins.com/prayer",
     type: "website",
@@ -125,7 +125,7 @@ export default async function PrayerPage() {
             {/* Left - Content */ }
             <div>
               <h1 className="mb-6 text-5xl font-bold leading-tight md:text-6xl lg:text-7xl">
-                Pray With Pastor Jomo
+                Prayer for Every Need
               </h1>
               <p className="mb-8 text-xl leading-relaxed text-gray-300 md:text-2xl">
                 Find peace, healing, and guidance through daily prayer. You're
@@ -214,7 +214,7 @@ export default async function PrayerPage() {
                     <span className="flex items-center gap-1 text-sm font-bold text-[#e31e24] transition-transform group-hover:translate-x-1">
                       View
                       <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 5l7 7-7 7" />
                       </svg>
                     </span>
                   </div>
