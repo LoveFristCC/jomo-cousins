@@ -453,6 +453,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title: post.title,
       description: post.excerpt,
       type: "article",
+      url: `https://www.jomocousins.com/marriage/blog/${slug}`,
       publishedTime: post.publishedAt,
       authors: [ "Dr. Jomo Cousins", "Dr. Charmaine Cousins" ],
       images: imageUrl ? [ { url: imageUrl } ] : [],

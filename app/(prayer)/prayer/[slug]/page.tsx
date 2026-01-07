@@ -75,6 +75,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: metaTitle,
       description: metaDescription,
       type: "video.other",
+      url: `https://www.jomocousins.com/prayer/${slug}`,
       videos: prayer.youtubeUrl ? [ prayer.youtubeUrl ] : [],
       images: prayer.featuredImage
         ? [
