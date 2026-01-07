@@ -81,6 +81,9 @@ export async function generateMetadata(): Promise<Metadata> {
         },
       ],
     },
+    alternates: {
+      canonical: "https://www.jomocousins.com/",
+    },
     twitter: {
       card: "summary_large_image",
       title: title,
