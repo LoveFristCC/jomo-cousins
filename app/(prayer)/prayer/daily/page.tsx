@@ -73,21 +73,21 @@ export default async function DailyPrayerPage() {
   };
 
   // Add ItemList for recent prayers
-  if (recentDailyPrayers && recentDailyPrayers.length > 0) {
-    (structuredData[ "@graph" ] as any[]).push({
-      "@type": "ItemList",
-      name: "Recent Daily Prayers",
-      itemListElement: recentDailyPrayers.map((prayer: any, index: number) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        item: {
-          "@type": "VideoObject",
-          name: prayer.title,
-          url: `https://jomocousins.com/prayer/${prayer.slug}`,
-        },
-      })),
-    });
-  }
+  // if (recentDailyPrayers && recentDailyPrayers.length > 0) {
+  //   (structuredData[ "@graph" ] as any[]).push({
+  //     "@type": "ItemList",
+  //     name: "Recent Daily Prayers",
+  //     itemListElement: recentDailyPrayers.map((prayer: any, index: number) => ({
+  //       "@type": "ListItem",
+  //       position: index + 1,
+  //       item: {
+  //         "@type": "VideoObject",
+  //         name: prayer.title,
+  //         url: `https://jomocousins.com/prayer/${prayer.slug}`,
+  //       },
+  //     })),
+  //   });
+  // }
 
   return (
     <div className="min-h-screen bg-white">
