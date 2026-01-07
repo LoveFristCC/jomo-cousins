@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | Dr. Jomo Cousins",
+  title: "Terms of Service",
   description: "Terms of Service for Dr. Jomo Cousins - Rules and guidelines for using our website and services.",
   robots: {
     index: true,

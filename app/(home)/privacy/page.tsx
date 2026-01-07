@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Dr. Jomo Cousins",
+  title: "Privacy Policy",
   description: "Privacy Policy for Dr. Jomo Cousins - How we collect, use, and protect your personal information.",
   robots: {
     index: true,

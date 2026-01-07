@@ -3,6 +3,10 @@ import Link from "next/link";
 import { Suspense } from "react";
 import BooksSection from "./books-section";
 import NewsletterSection from "./NewsLetterSection";
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Pastor, Author, NFL Veteran, & Motivational Speaker",
+};
 
 export default function HomePage() {
   return (
