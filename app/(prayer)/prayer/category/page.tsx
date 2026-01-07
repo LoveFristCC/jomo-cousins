@@ -9,7 +9,7 @@ import { urlForImage } from "@/sanity/lib/utils";
 export const revalidate = 43200;
 
 export const metadata: Metadata = {
-  title: "Prayer Categories | Browse All Prayer Topics with Pastor Jomo Cousins",
+  title: "Browse All Prayer Categories",
   description:
     "Explore all prayer categories with Pastor Jomo Cousins. Find prayers for healing, finances, relationships, anxiety, spiritual growth, and more. Jomo is praying with you.",
   keywords: [
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     canonical: "https://www.jomocousins.com/prayer/category",
   },
   openGraph: {
-    title: "All Prayer Categories | Pray with Pastor Jomo Cousins",
+    title: "Prayer Categories | Pastor Jomo Cousins",
     description:
       "Browse all prayer categories and find the spiritual guidance you need. Pastor Jomo Cousins offers prayers for every area of your life.",
     url: "https://www.jomocousins.com/prayer/category",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "All Prayer Categories | Pastor Jomo Cousins",
+    title: "Prayer Categories | Pastor Jomo Cousins",
     description:
       "Browse all prayer categories. Find prayers for healing, finances, relationships, and more.",
     creator: "@pastorjomo",

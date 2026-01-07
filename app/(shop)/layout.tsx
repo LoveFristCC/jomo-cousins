@@ -15,7 +15,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.jomocousins.com"),
   title: {
-    template: "%s | Dr. Jomo Cousins Shop",
+    template: "%s",
     default: "Shop | Dr. Jomo Cousins",
   },
   description: "Shop for books, apparel, and accessories from Dr. Jomo Cousins",

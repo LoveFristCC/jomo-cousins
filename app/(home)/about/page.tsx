@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Dr. Jomo Cousins | NFL Veteran, Pastor & Motivational Speaker",
+  title: "About | NFL Veteran, Pastor & Speaker",
   description: "Meet Dr. Jomo Cousins: NFL defensive end turned pastor, motivational speaker, and cancer survivor. Founder of Love First Christian Center and creator of The Gap success formula.",
   keywords: [
     "Dr. Jomo Cousins biography",

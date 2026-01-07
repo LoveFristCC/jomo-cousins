@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact Dr. Jomo Cousins | Book for Speaking Engagements",
+  title: "Book for Speaking Engagements",
   description: "Book Dr. Jomo Cousins for your next corporate event, church service, youth program, or financial wealth seminar. Former NFL player, pastor, and motivational speaker.",
   keywords: [
     "book Dr. Jomo Cousins",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://www.jomocousins.com/contact",
     siteName: "Dr. Jomo Cousins",
-    title: "Contact Dr. Jomo Cousins | Book for Speaking Engagements",
+    title: "Book Dr. Jomo Cousins | Motivational Speaker",
     description: "Book Dr. Jomo Cousins for your next event. Former NFL player, pastor, and motivational speaker available for corporate events, church services, youth programs, and seminars.",
     images: [
       {
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact Dr. Jomo Cousins | Book for Speaking Engagements",
+    title: "Book Dr. Jomo Cousins | Motivational Speaker",
     description: "Book Dr. Jomo Cousins for your next event. Available for corporate events, church services, youth programs, and financial seminars.",
     images: ["https://www.jomocousins.com/images/jc-bw-pics/JC_APAEvent BW Edit208.webp"],
     creator: "@pastorjomo",

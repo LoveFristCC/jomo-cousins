@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
     // Metadata should never contain stega
     stega: false,
   });
-  const title = settings?.title || "Dr. Jomo Cousins | Motivational Speaker, Pastor & Author";
+  const title = settings?.title || "Dr. Jomo Cousins";
   const description = settings?.description || demo.description;
   const plainDescription = toPlainText(description) || "Motivational speaker Dr. Jomo Cousins inspires transformation through powerful messages. Book for corporate events, church gatherings, and youth programs.";
   const ogImage = resolveOpenGraphImage(settings?.ogImage);

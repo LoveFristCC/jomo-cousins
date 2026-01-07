@@ -14,13 +14,13 @@ import { format, parseISO } from "date-fns";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Pray With Pastor Jomo | Daily Prayer & Spiritual Guidance",
+  title: "Daily Prayer Videos",
   description: "Join Pastor Jomo Cousins in prayer. Watch daily prayer videos, find prayers for healing, finances, anxiety, and more. Send your prayer request.",
   alternates: {
     canonical: "https://www.jomocousins.com/prayer",
   },
   openGraph: {
-    title: "Pray With Pastor Jomo | Daily Prayer Videos & Spiritual Guidance",
+    title: "Pray With Pastor Jomo | Daily Prayer Videos",
     description: "Join Jomo in prayer. Daily prayer videos for healing, finances, anxiety, and more. You're not alone - Jomo is praying with you.",
     url: "https://www.jomocousins.com/prayer",
     type: "website",
