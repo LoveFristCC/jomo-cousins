@@ -85,7 +85,12 @@ export default function ProductStructuredData({
           url: baseUrl,
         },
         ...(product.isbn && { isbn: product.isbn }),
-        ...(product.publisher && { publisher: product.publisher }),
+        ...(product.publisher && {
+          publisher: {
+            "@type": "Organization",
+            name: product.publisher,
+          },
+        }),
         ...(product.publicationDate && {
           datePublished: product.publicationDate,
         }),

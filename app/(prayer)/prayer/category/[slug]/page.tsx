@@ -58,6 +58,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: metaTitle,
       description: metaDescription,
       type: "website",
+      url: `https://www.jomocousins.com/prayer/category/${slug}`,
       images: category.featuredImage
         ? [
           {
