@@ -308,7 +308,7 @@ export default function AboutPage() {
 }
 
 export const metadata = {
-  title: "About Us - Senior Pastors & Marriage Counselors",
+  title: "About Us - Senior Pastors | Faith-based Relationship Coaching",
   description: "Meet Dr. Jomo and Dr. Charmaine Cousins, Senior Pastors at Love First Christian Center. Married 24 years with 3 children, they've counseled over 1,000 couples. Their ministry helps couples thrive together through faith-based relationship coaching, premarital counseling, and marriage counseling in Riverview, FL.",
   alternates: {
     canonical: "https://www.jomocousins.com/marriage/about",
@@ -316,7 +316,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     siteName: "Dr. Jomo Cousins",
-    title: "About Jomo & Charmaine - Senior Pastors & Marriage Counselors",
+    title: "About Jomo & Charmaine - Faith-based Relationship Coaching",
     description: "Senior Pastors at Love First Christian Center. 24 years married, 1,000+ couples counseled. Helping relationships thrive through faith-based ministry.",
     url: "https://www.jomocousins.com/marriage/about",
     images: [
@@ -330,8 +330,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "About Jomo & Charmaine - Senior Pastors & Marriage Counselors",
+    title: "About Jomo & Charmaine - Senior Pastors & Faith-based Relationship Coaching",
     description: "Senior Pastors at Love First Christian Center. 24 years married, 1,000+ couples counseled.",
-    images: ["/images/marriage/about/about-us.webp"],
+    images: [ "/images/marriage/about/about-us.webp" ],
   },
 };
