@@ -158,6 +158,17 @@ export default function Footer() {
             </div>
             <p>&copy; { new Date().getFullYear() } Dr. Jomo Cousins. All rights reserved.</p>
           </div>
+          <div className="mt-10 text-center text-xs text-gray-500">
+            Developed by{ " " }
+            <Link
+              href="https://www.khalstead.com"
+              className="transition-colors hover:text-gray-300"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Kevin Halstead (EliteWebWrxs)
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
