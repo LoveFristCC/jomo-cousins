@@ -138,6 +138,7 @@ export default function JomoAndCharmaineLayout({
             height="1"
             width="1"
             src="https://www.facebook.com/tr?id=3053545348126120&ev=PageView&noscript=1"
+            alt='facebook pixel'
           />
         </noscript>
       </body>
