@@ -224,6 +224,15 @@ export const recentCouplesCornerPostsQuery = defineQuery(`
   }
 `);
 
+export const relatedCouplesCornerPostsQuery = defineQuery(`
+  *[_type == "couplesCornerPost" && slug.current != $slug && (
+    category == $category ||
+    count((tags[])[@ in $tags]) > 0
+  )] | order(publishedAt desc) [0...$limit] {
+    ${couplesCornerFields}
+  }
+`);
+
 // Prayer Video queries
 const prayerVideoFields = /* groq */ `
   _id,

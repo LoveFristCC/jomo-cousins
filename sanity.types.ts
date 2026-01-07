@@ -2295,6 +2295,41 @@ export type RecentCouplesCornerPostsQueryResult = Array<{
     keywords?: Array<string>;
   } | null;
 }>;
+// Variable: relatedCouplesCornerPostsQuery
+// Query: *[_type == "couplesCornerPost" && slug.current != $slug && (    category == $category ||    count((tags[])[@ in $tags]) > 0  )] | order(publishedAt desc) [0...$limit] {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
+export type RelatedCouplesCornerPostsQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  excerpt: string | null;
+  coverImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  category: "communication" | "conflict-resolution" | "dating-courtship" | "faith-relationships" | "general" | "intimacy" | "marriage" | "parenting" | "premarital" | "self-care" | "trust-forgiveness" | null;
+  tags: Array<string> | null;
+  youtubeVideo: {
+    url?: string;
+    title?: string;
+    placement?: "bottom" | "top";
+  } | null;
+  publishedAt: string;
+  featured: boolean | null;
+  seo: {
+    metaTitle?: string;
+    metaDescription?: string;
+    keywords?: Array<string>;
+  } | null;
+}>;
 // Variable: prayerOfTheDayQuery
 // Query: *[_type == "prayerVideo" && isPrayerOfTheDay == true] | order(publishedAt desc) [0] {      _id,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount  }
 export type PrayerOfTheDayQueryResult = {
@@ -2748,6 +2783,7 @@ declare module "@sanity/client" {
     "\n  *[_type == \"couplesCornerPost\" && category == $category] | order(publishedAt desc) {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": CouplesCornerPostsByCategoryQueryResult;
     "\n  *[_type == \"couplesCornerPost\" && slug.current == $slug] [0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n,\n    content\n  }\n": CouplesCornerPostBySlugQueryResult;
     "\n  *[_type == \"couplesCornerPost\"] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": RecentCouplesCornerPostsQueryResult;
+    "\n  *[_type == \"couplesCornerPost\" && slug.current != $slug && (\n    category == $category ||\n    count((tags[])[@ in $tags]) > 0\n  )] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": RelatedCouplesCornerPostsQueryResult;
     "\n  *[_type == \"prayerVideo\" && isPrayerOfTheDay == true] | order(publishedAt desc) [0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n\n  }\n": PrayerOfTheDayQueryResult;
     "\n  *[_type == \"prayerVideo\"] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n\n  }\n": RecentPrayersQueryResult;
     "\n  *[_type == \"prayerCategory\"] | order(displayOrder asc) {\n    _id,\n    title,\n    \"slug\": slug.current,\n    description,\n    icon,\n    \"prayerCount\": count(*[_type == \"prayerVideo\" && references(^._id)])\n  }\n": PrayerCategoriesQueryResult;
