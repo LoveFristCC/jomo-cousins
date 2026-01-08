@@ -21,6 +21,14 @@ export const metadata: Metadata = {
     description: "Start each day grounded in prayer. Join Jomo for daily spiritual encouragement.",
     url: "https://www.jomocousins.com/prayer/daily",
     type: "website",
+    images: [
+      {
+        url: "/images/jc-color-pics/JC_NewPhotos Edit539_edited.webp",
+        width: 1200,
+        height: 630,
+        alt: "Prayer Categories - Pray with Jomo Cousins",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
