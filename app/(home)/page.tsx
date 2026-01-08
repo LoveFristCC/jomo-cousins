@@ -78,14 +78,10 @@ export default function HomePage() {
 
       {/* About Section */ }
       <section id="about" className="relative bg-gray-50 py-20 md:py-32">
-        {/* Background Image - Fixed on desktop, not on mobile */ }
-        <div className="absolute inset-0 bg-cover bg-top" style={ { backgroundImage: "url('/images/jc-color-pics/main-page-about.webp')", backgroundAttachment: "scroll" } }>
+        {/* Background Image - Fixed on desktop, scroll on mobile */ }
+        <div className="absolute inset-0 bg-cover bg-top md:bg-fixed" style={ { backgroundImage: "url('/images/jc-color-pics/main-page-about.webp')" } }>
           {/* Overlay - only on mobile */ }
           <div className="absolute inset-0 bg-black/50 md:bg-transparent"></div>
-        </div>
-        {/* Fixed background for desktop only */ }
-        <div className="hidden md:block absolute inset-0 bg-cover bg-top bg-fixed" style={ { backgroundImage: "url('/images/jc-color-pics/main-page-about.webp')" } }>
-          <div className="absolute inset-0 bg-transparent"></div>
         </div>
 
         <div className="container relative z-10 mx-auto px-5">
@@ -240,13 +236,9 @@ export default function HomePage() {
 
       {/* Spiritually Empowers Section */ }
       <section className="relative bg-[#2d2d2d] py-40 md:py-40">
-        {/* Background Image - Fixed on desktop, not on mobile */ }
-        <div className="absolute inset-0 bg-cover bg-top" style={ { backgroundImage: "url('/images/backgrounds/empowersbackground.webp')", backgroundAttachment: "scroll" } }>
+        {/* Background Image - Fixed on desktop, scroll on mobile */ }
+        <div className="absolute inset-0 bg-cover bg-top md:bg-fixed" style={ { backgroundImage: "url('/images/backgrounds/empowersbackground.webp')" } }>
           {/* Dark Overlay */ }
-          <div className="absolute inset-0 bg-black/20"></div>
-        </div>
-        {/* Fixed background for desktop only */ }
-        <div className="hidden md:block absolute inset-0 bg-cover bg-top bg-fixed" style={ { backgroundImage: "url('/images/backgrounds/empowersbackground.webp')" } }>
           <div className="absolute inset-0 bg-black/20"></div>
         </div>
 
