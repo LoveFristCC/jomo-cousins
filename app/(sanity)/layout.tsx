@@ -1,11 +1,11 @@
 import "../globals.css";
 
 import { Inter } from "next/font/google";
-import GoogleAnalytics from "@/components/GoogleAnalytics";
+// import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 const inter = Inter({
   variable: "--font-inter",
-  subsets: ["latin"],
+  subsets: [ "latin" ],
   display: "swap",
 });
 
@@ -17,10 +17,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={ inter.variable }>
       <body className="min-h-screen">
-        <GoogleAnalytics />
-        {children}
+        {/* <GoogleAnalytics /> */ }
+        { children }
       </body>
     </html>
   );
