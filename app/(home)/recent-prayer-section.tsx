@@ -14,7 +14,7 @@ export default async function RecentPrayerSection() {
     params: { limit: 1 },
   });
 
-  const recentPrayer = prayers?.[0];
+  const recentPrayer = prayers?.[ 0 ];
 
   if (!recentPrayer) {
     return null;
@@ -32,12 +32,12 @@ export default async function RecentPrayerSection() {
 
   return (
     <section className="relative bg-white py-20 md:py-32">
-      {/* Background Pattern */}
+      {/* Background Pattern */ }
       <div className="absolute inset-0 opacity-5">
-        <div className="h-full w-full" style={{
+        <div className="h-full w-full" style={ {
           backgroundImage: `repeating-linear-gradient(45deg, #e31e24 0, #e31e24 1px, transparent 0, transparent 50%)`,
           backgroundSize: '10px 10px'
-        }}></div>
+        } }></div>
       </div>
 
       <div className="container relative z-10 mx-auto px-5">
@@ -49,72 +49,72 @@ export default async function RecentPrayerSection() {
             Most Recent <span className="text-[#e31e24]">Prayer Video</span>
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-gray-600">
-            Join Pastor Jomo Cousins in prayer. Watch the latest prayer video and find spiritual guidance and encouragement.
+            Join Pastor Jomo in prayer. Watch the latest video.
           </p>
         </div>
 
         <div className="mx-auto max-w-5xl">
           <div className="overflow-hidden rounded-2xl bg-white shadow-2xl">
             <div className="grid md:grid-cols-2 md:items-stretch">
-              {/* Video Player - No padding, fills completely */}
+              {/* Video Player - No padding, fills completely */ }
               <div className="relative w-full md:h-full">
                 <PrayerVideoPlayer
-                  videoId={videoId}
-                  thumbnailUrl={thumbnailUrl}
-                  title={recentPrayer.title}
+                  videoId={ videoId }
+                  thumbnailUrl={ thumbnailUrl }
+                  title={ recentPrayer.title }
                 />
               </div>
 
-              {/* Prayer Details */}
+              {/* Prayer Details */ }
               <div className="flex flex-col justify-center p-8">
                 <h3 className="mb-4 text-2xl font-bold text-[#3d3d3d] md:text-3xl">
-                  {recentPrayer.title}
+                  { recentPrayer.title }
                 </h3>
 
-                {recentPrayer.excerpt && (
+                { recentPrayer.excerpt && (
                   <p className="mb-6 text-gray-700 leading-relaxed">
-                    {recentPrayer.excerpt}
+                    { recentPrayer.excerpt }
                   </p>
-                )}
+                ) }
 
-                {/* Meta Info */}
+                {/* Meta Info */ }
                 <div className="mb-6 flex flex-wrap items-center gap-4 text-sm text-gray-600">
-                  {recentPrayer.publishedAt && (
+                  { recentPrayer.publishedAt && (
                     <span className="flex items-center gap-2">
                       <svg className="h-4 w-4 text-[#e31e24]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
-                      {format(parseISO(recentPrayer.publishedAt), "MMMM d, yyyy")}
+                      { format(parseISO(recentPrayer.publishedAt), "MMMM d, yyyy") }
                     </span>
-                  )}
-                  {recentPrayer.duration && (
+                  ) }
+                  { recentPrayer.duration && (
                     <span className="flex items-center gap-2">
                       <svg className="h-4 w-4 text-[#e31e24]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      {recentPrayer.duration}
+                      { recentPrayer.duration }
                     </span>
-                  )}
+                  ) }
                 </div>
 
-                {/* Categories */}
-                {recentPrayer.categories && recentPrayer.categories.length > 0 && (
+                {/* Categories */ }
+                { recentPrayer.categories && recentPrayer.categories.length > 0 && (
                   <div className="mb-6 flex flex-wrap gap-2">
-                    {recentPrayer.categories.map((category: any) => (
+                    { recentPrayer.categories.map((category: any) => (
                       <span
-                        key={category.slug}
+                        key={ category.slug }
                         className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-[#3d3d3d]"
                       >
-                        {category.title}
+                        { category.title }
                       </span>
-                    ))}
+                    )) }
                   </div>
-                )}
+                ) }
 
-                {/* CTA Buttons */}
+                {/* CTA Buttons */ }
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <Link
-                    href={`/prayer/${recentPrayer.slug}`}
+                    href={ `/prayer/${recentPrayer.slug}` }
                     className="inline-block rounded-lg bg-[#e31e24] px-8 py-3 text-center font-bold uppercase tracking-wide text-white shadow-lg transition-all hover:scale-105 hover:bg-[#c41a1f] hover:shadow-xl"
                   >
                     Watch Full Prayer
