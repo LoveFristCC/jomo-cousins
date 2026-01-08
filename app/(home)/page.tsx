@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: "Pastor, Author, & Motivational Speaker | Dr Jomo Cousins",
 };
 
+// Revalidate every 20 minutes to match Sanity CDN caching
+export const revalidate = 1200;
+
 export default function HomePage() {
   return (
     <div className="bg-white">

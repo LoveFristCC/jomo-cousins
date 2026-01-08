@@ -52,7 +52,8 @@ export async function sanityFetch<const QueryString extends string>({
     // The `published` perspective is available on the API CDN
     useCdn: true,
     // Only enable Stega in production if it's a Vercel Preview Deployment, as the Vercel Toolbar supports Visual Editing
-    // When using the `published` perspective we use time-based revalidation to match the time-to-live on Sanity's API CDN (60 seconds)
-    next: { revalidate: 60 },
+    // When using the `published` perspective we use time-based revalidation
+    // Using longer cache time (20 minutes) to properly utilize Sanity CDN
+    next: { revalidate: 1200 },
   });
 }
