@@ -8,6 +8,9 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Pastor, Author, & Motivational Speaker | Dr Jomo Cousins",
+  alternates: {
+    canonical: "https://www.jomocousins.com/",
+  },
 };
 
 // Revalidate every 20 minutes to match Sanity CDN caching
