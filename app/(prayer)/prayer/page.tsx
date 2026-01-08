@@ -67,6 +67,7 @@ export default async function PrayerPage() {
           "https://www.facebook.com/pastorjomo",
           "https://www.instagram.com/pastorjomo",
           "https://www.youtube.com/@PASTORJOMO",
+          "https://www.linkedin.com/in/dr-jomo-cousins-277279138/",
         ],
       },
       {

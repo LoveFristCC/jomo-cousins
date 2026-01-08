@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     description: "From NFL to ministry: Dr. Jomo Cousins' inspiring journey of faith, resilience, and transformation.",
     creator: "@pastorjomo",
     site: "@pastorjomo",
-    images: ["/images/jc-color-pics/aboutProfilePictures.webp"],
+    images: [ "/images/jc-color-pics/aboutProfilePictures.webp" ],
   },
 };
 
@@ -58,7 +58,7 @@ export default function AboutPage() {
     description: "NFL veteran, pastor, motivational speaker, author, and cancer survivor. Founder of Love First Christian Center.",
     url: "https://www.jomocousins.com",
     image: "https://www.jomocousins.com/images/jc-color-pics/aboutProfilePictures.webp",
-    jobTitle: ["Pastor", "Motivational Speaker", "Author", "Business Coach"],
+    jobTitle: [ "Pastor", "Motivational Speaker", "Author", "Business Coach" ],
     hasOccupation: [
       {
         "@type": "Occupation",
@@ -130,7 +130,8 @@ export default function AboutPage() {
       "https://www.facebook.com/pastorjomo",
       "https://www.instagram.com/pastorjomo",
       "https://www.youtube.com/@PASTORJOMO",
-      "https://twitter.com/pastorjomo"
+      "https://twitter.com/pastorjomo",
+      "https://www.linkedin.com/in/dr-jomo-cousins-277279138/"
     ],
     award: "NFL Defensive End (Retired)",
     knowsAbout: [
@@ -145,13 +146,13 @@ export default function AboutPage() {
 
   return (
     <div className="bg-white">
-      {/* Preload background image */}
+      {/* Preload background image */ }
       <link rel="preload" as="image" href="/images/jc-color-pics/JC_NewPhotos Edit623_edited.webp" />
 
-      {/* Structured Data */}
+      {/* Structured Data */ }
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        dangerouslySetInnerHTML={ { __html: JSON.stringify(structuredData) } }
       />
 
       {/* Hero Section - Screenshot 1 */ }
@@ -343,7 +344,7 @@ export default function AboutPage() {
       {/* Survivor Section - Screenshot 4 */ }
       <section className="py-20 md:py-32 relative">
         {/* Background Image - Fixed on desktop */ }
-        <div className="absolute inset-0 bg-cover bg-top bg-fixed" style={{ backgroundImage: "url('/images/jc-color-pics/JC_NewPhotos Edit623_edited.webp')" }}></div>
+        <div className="absolute inset-0 bg-cover bg-top bg-fixed" style={ { backgroundImage: "url('/images/jc-color-pics/JC_NewPhotos Edit623_edited.webp')" } }></div>
         {/* Dark overlay for text readability */ }
         <div className="absolute inset-0 bg-gradient-to-br from-gray-800/80 to-gray-900/80"></div>
 

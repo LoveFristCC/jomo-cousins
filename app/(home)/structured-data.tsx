@@ -17,6 +17,7 @@ export default function StructuredData() {
           "https://www.facebook.com/pastorjomo/",
           "https://www.instagram.com/pastorjomo/",
           "https://www.youtube.com/@PASTORJOMO",
+          "https://www.linkedin.com/in/dr-jomo-cousins-277279138/",
         ],
         jobTitle: "Motivational Speaker, Pastor, Author",
         description: "Motivational speaker, pastor, author, business coach, and former NFL player inspiring transformation through powerful messages.",
@@ -72,6 +73,7 @@ export default function StructuredData() {
           "https://www.facebook.com/pastorjomo/",
           "https://www.instagram.com/pastorjomo/",
           "https://www.youtube.com/@PASTORJOMO",
+          "https://www.linkedin.com/in/dr-jomo-cousins-277279138/",
         ],
         contactPoint: {
           "@type": "ContactPoint",
@@ -85,7 +87,7 @@ export default function StructuredData() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      dangerouslySetInnerHTML={ { __html: JSON.stringify(structuredData) } }
     />
   );
 }
