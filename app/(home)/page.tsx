@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import BooksSection from "./books-section";
+import RecentPrayerSection from "./recent-prayer-section";
 import NewsletterSection from "./NewsLetterSection";
 import { Metadata } from "next";
 
@@ -387,6 +388,22 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Recent Prayer Video Section */ }
+      <Suspense fallback={
+        <section className="relative bg-white py-20 md:py-32">
+          <div className="container mx-auto px-5">
+            <div className="mb-12 text-center">
+              <h2 className="mb-4 text-4xl font-bold text-[#2d2d2d] md:text-5xl">
+                Most Recent <span className="text-[#e31e24]">Prayer Video</span>
+              </h2>
+              <p className="text-xl text-gray-600">Loading...</p>
+            </div>
+          </div>
+        </section>
+      }>
+        <RecentPrayerSection />
+      </Suspense>
 
       {/* Prayer Line Section */ }
       <section className="bg-gradient-to-br from-gray-100 to-gray-200 py-20 md:py-32">
