@@ -55,7 +55,7 @@ export default function HomePage() {
                 Whether at a school, an organization, or the general public, motivational speaker and pastor Dr. Jomo Cousins inspires you to transform your thoughts and maximize your potential.
               </p>
               <Link
-                href="#contact"
+                href="/contact"
                 className="inline-block rounded-lg bg-[#e31e24] px-8 py-3 text-sm font-bold uppercase tracking-wide text-white shadow-lg transition-all hover:scale-105 hover:bg-[#c41a1f] hover:shadow-xl"
               >
                 Book Now
