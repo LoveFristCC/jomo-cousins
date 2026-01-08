@@ -32,6 +32,30 @@ function portableTextToPlainText(blocks: any[]): string {
     .join("\n\n");
 }
 
+// Convert duration string to ISO 8601 format
+function convertToISO8601Duration(duration: string | undefined): string | undefined {
+  if (!duration) return undefined;
+
+  // Match patterns like "3:19", "1:30:45", "5 minutes", etc.
+  const timePattern = /(\d+):(\d+)(?::(\d+))?/;
+  const match = duration.match(timePattern);
+
+  if (match) {
+    const hours = match[3] ? parseInt(match[1]) : 0;
+    const minutes = match[3] ? parseInt(match[2]) : parseInt(match[1]);
+    const seconds = match[3] ? parseInt(match[3]) : parseInt(match[2]);
+
+    let iso = "PT";
+    if (hours > 0) iso += `${hours}H`;
+    if (minutes > 0) iso += `${minutes}M`;
+    if (seconds > 0) iso += `${seconds}S`;
+
+    return iso;
+  }
+
+  return undefined;
+}
+
 type Props = {
   params: Promise<{ slug: string }>;
 };
@@ -195,7 +219,7 @@ export default async function PrayerVideoPage({ params }: Props) {
           ? urlForImage(prayer.featuredImage)?.url()
           : undefined,
         uploadDate: prayer.publishedAt,
-        duration: prayer.duration,
+        ...(convertToISO8601Duration(prayer.duration) && { duration: convertToISO8601Duration(prayer.duration) }),
         contentUrl: prayer.youtubeUrl,
         embedUrl: videoId ? `https://www.youtube.com/embed/${videoId}` : undefined,
         author: {
