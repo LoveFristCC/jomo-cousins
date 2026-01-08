@@ -144,12 +144,6 @@ export default function PrivacyPolicyPage() {
                 </p>
               </div>
 
-              <div>
-                <h3 className="text-lg font-semibold text-[#3d3d3d] mb-2">Error Tracking</h3>
-                <p className="text-gray-700 leading-relaxed">
-                  <strong>Sentry:</strong> Monitors application errors and performance. We have configured Sentry to NOT collect personally identifiable information.
-                </p>
-              </div>
             </div>
 
             <p className="text-gray-700 leading-relaxed mt-4">

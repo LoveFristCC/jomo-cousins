@@ -107,10 +107,7 @@ export default function JomoAndCharmaineLayout({
 }) {
   return (
     <html lang="en" className={ `${inter.variable} bg-white text-black overflow-x-hidden` }>
-      <head>
-        <link rel="preconnect" href="https://o451059184212377.ingest.us.sentry.io" />
-        <link rel="dns-prefetch" href="https://o451059184212377.ingest.us.sentry.io" />
-      </head>
+      <head></head>
       <body className="overflow-x-hidden">
         <Nav />
         <main>{ children }</main>
