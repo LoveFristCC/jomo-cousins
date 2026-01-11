@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function ContactPage() {
   const [ formData, setFormData ] = useState({
@@ -15,9 +16,17 @@ export default function ContactPage() {
 
   const [ isSubmitting, setIsSubmitting ] = useState(false);
   const [ isSubmitted, setIsSubmitted ] = useState(false);
+  const [ recaptchaToken, setRecaptchaToken ] = useState<string | null>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!recaptchaToken) {
+      alert("Please complete the reCAPTCHA verification");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -33,6 +42,7 @@ export default function ContactPage() {
           message: formData.message,
           eventType: formData.contactMethod,
           bookingType: "jomo-charmaine",
+          recaptchaToken,
         }),
       });
 
@@ -66,9 +76,13 @@ export default function ContactPage() {
       }
 
       setIsSubmitted(true);
+      recaptchaRef.current?.reset();
+      setRecaptchaToken(null);
     } catch (error) {
       console.error("Error submitting request:", error);
       alert(error instanceof Error ? error.message : "There was an error submitting your request. Please try again.");
+      recaptchaRef.current?.reset();
+      setRecaptchaToken(null);
     } finally {
       setIsSubmitting(false);
     }
@@ -153,6 +167,8 @@ export default function ContactPage() {
                         phone: "",
                         message: "",
                       });
+                      setRecaptchaToken(null);
+                      recaptchaRef.current?.reset();
                     } }
                     className="inline-block rounded-lg bg-[#ea8125] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl"
                   >
@@ -265,10 +281,20 @@ export default function ContactPage() {
                     />
                   </div>
 
+                  {/* reCAPTCHA */}
+                  <div className="flex justify-center">
+                    <ReCAPTCHA
+                      ref={recaptchaRef}
+                      sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                      onChange={(token) => setRecaptchaToken(token)}
+                      onExpired={() => setRecaptchaToken(null)}
+                    />
+                  </div>
+
                   {/* Submit Button */ }
                   <button
                     type="submit"
-                    disabled={ isSubmitting }
+                    disabled={ isSubmitting || !recaptchaToken }
                     className="w-full rounded-lg bg-[#ea8125] py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#d67320] hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     { isSubmitting ? "Sending..." : "Send Request" }

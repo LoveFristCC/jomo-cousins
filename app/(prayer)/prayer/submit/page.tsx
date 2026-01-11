@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import ReCAPTCHA from "react-google-recaptcha";
 import { client } from "@/sanity/lib/client";
 import {
   prayerCategoriesQuery,
@@ -21,6 +22,8 @@ export default function SubmitPage() {
   const [ isSubmitted, setIsSubmitted ] = useState(false);
   const [ suggestedPrayers, setSuggestedPrayers ] = useState<any[]>([]);
   const [ categories, setCategories ] = useState<any[]>([]);
+  const [ recaptchaToken, setRecaptchaToken ] = useState<string | null>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   // Fetch categories on mount
   useEffect(() => {
@@ -33,6 +36,12 @@ export default function SubmitPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!recaptchaToken) {
+      alert("Please complete the reCAPTCHA verification");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -42,7 +51,10 @@ export default function SubmitPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          recaptchaToken,
+        }),
       });
 
       if (!response.ok) {
@@ -89,9 +101,13 @@ export default function SubmitPage() {
       }
 
       setIsSubmitted(true);
+      recaptchaRef.current?.reset();
+      setRecaptchaToken(null);
     } catch (error) {
       console.error("Error submitting prayer request:", error);
       alert(error instanceof Error ? error.message : "There was an error submitting your prayer request. Please try again.");
+      recaptchaRef.current?.reset();
+      setRecaptchaToken(null);
     } finally {
       setIsSubmitting(false);
     }
@@ -358,10 +374,20 @@ export default function SubmitPage() {
                 </p>
               </div>
 
+              {/* reCAPTCHA */}
+              <div className="flex justify-center">
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                  onChange={(token) => setRecaptchaToken(token)}
+                  onExpired={() => setRecaptchaToken(null)}
+                />
+              </div>
+
               {/* Submit Button */ }
               <button
                 type="submit"
-                disabled={ isSubmitting }
+                disabled={ isSubmitting || !recaptchaToken }
                 className="w-full rounded-lg bg-[#e31e24] px-8 py-4 text-lg font-bold text-white transition-colors hover:bg-[#c41a1f] disabled:cursor-not-allowed disabled:opacity-50"
                 aria-label="Submit prayer request"
               >

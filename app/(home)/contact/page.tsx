@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function ContactPage() {
   const [ formData, setFormData ] = useState({
@@ -16,9 +17,17 @@ export default function ContactPage() {
   });
   const [ isSubmitting, setIsSubmitting ] = useState(false);
   const [ isSubmitted, setIsSubmitted ] = useState(false);
+  const [ recaptchaToken, setRecaptchaToken ] = useState<string | null>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!recaptchaToken) {
+      alert("Please complete the reCAPTCHA verification");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -30,6 +39,7 @@ export default function ContactPage() {
         body: JSON.stringify({
           ...formData,
           bookingType: "jomo",
+          recaptchaToken,
         }),
       });
 
@@ -63,9 +73,13 @@ export default function ContactPage() {
       }
 
       setIsSubmitted(true);
+      recaptchaRef.current?.reset();
+      setRecaptchaToken(null);
     } catch (error) {
       console.error("Error submitting booking request:", error);
       alert(error instanceof Error ? error.message : "There was an error submitting your request. Please try again.");
+      recaptchaRef.current?.reset();
+      setRecaptchaToken(null);
     } finally {
       setIsSubmitting(false);
     }
@@ -154,6 +168,8 @@ export default function ContactPage() {
                         eventType: "",
                         message: "",
                       });
+                      setRecaptchaToken(null);
+                      recaptchaRef.current?.reset();
                     } }
                     className="text-[#e31e24] hover:underline font-semibold"
                   >
@@ -289,9 +305,20 @@ export default function ContactPage() {
                       placeholder="Tell us about your event and how we can help..."
                     />
                   </div>
+
+                  {/* reCAPTCHA */}
+                  <div className="flex justify-center">
+                    <ReCAPTCHA
+                      ref={recaptchaRef}
+                      sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                      onChange={(token) => setRecaptchaToken(token)}
+                      onExpired={() => setRecaptchaToken(null)}
+                    />
+                  </div>
+
                   <button
                     type="submit"
-                    disabled={ isSubmitting }
+                    disabled={ isSubmitting || !recaptchaToken }
                     className="w-full bg-[#e31e24] py-4 font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#c41a1f] disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     { isSubmitting ? "Sending..." : "Send Message" }
