@@ -170,10 +170,6 @@ export default function CTNAnnouncement() {
               name: "CTN (Christian Television Network) - Channel 22 Tampa / CTNOnline.com",
               url: "https://ctnonline.com",
             },
-            broadcastOfEvent: {
-              "@type": "Event",
-              name: "Come Home with Jen Mallan",
-            },
             publishedOn: {
               "@type": "BroadcastService",
               name: "CTN (Christian Television Network)",
