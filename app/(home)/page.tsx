@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import BooksSection from "./books-section";
 import RecentPrayerSection from "./recent-prayer-section";
 import NewsletterSection from "./NewsLetterSection";
+import CTNAnnouncement from "./ctn-announcement";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -82,6 +83,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* CTN TV Appearance Announcement */ }
+      <CTNAnnouncement />
 
       {/* About Section */ }
       <section id="about" className="relative bg-gray-50 py-20 md:py-32">
