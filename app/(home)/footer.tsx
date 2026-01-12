@@ -174,8 +174,6 @@ export default function Footer() {
             <Link
               href="https://www.khalstead.com"
               className="transition-colors hover:text-gray-300"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               Kevin Halstead, EliteWebWrxs
             </Link>
