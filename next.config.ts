@@ -13,6 +13,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/books",
+        destination: "/products",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
