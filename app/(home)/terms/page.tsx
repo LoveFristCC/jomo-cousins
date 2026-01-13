@@ -5,7 +5,6 @@ export const metadata: Metadata = {
   description: "Terms of Service for Dr. Jomo Cousins - Rules and guidelines for using our website and services.",
   robots: {
     index: false,
-    follow: false,
   },
 };
 

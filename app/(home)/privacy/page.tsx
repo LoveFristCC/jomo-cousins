@@ -5,7 +5,6 @@ export const metadata: Metadata = {
   description: "Privacy Policy for Dr. Jomo Cousins - How we collect, use, and protect your personal information.",
   robots: {
     index: false,
-    follow: false,
   },
 };
 
