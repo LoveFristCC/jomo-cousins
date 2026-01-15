@@ -29,9 +29,8 @@ export default async function ThankYouPage({
   let session: any; // Using any because Stripe types don't include shipping_details
   try {
     session = await stripe.checkout.sessions.retrieve(session_id, {
-      expand: ["line_items"],
+      expand: [ "line_items" ],
     });
-    console.log("[Thank You] Successfully retrieved session:", session.id);
   } catch (error) {
     console.error("[Thank You] ❌ Error fetching session:", error);
     console.error("[Thank You] Session ID:", session_id);
@@ -42,7 +41,7 @@ export default async function ThankYouPage({
   // Fetch the digital upsell based on purchased product
   let upsellProduct = null;
   let purchasedProduct = null;
-  const purchasedProductName = session.line_items?.data[0]?.description || null;
+  const purchasedProductName = session.line_items?.data[ 0 ]?.description || null;
 
   if (purchasedProductName) {
     purchasedProduct = await sanityFetch({
@@ -86,14 +85,14 @@ export default async function ThankYouPage({
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Track purchase conversion in Google Analytics */}
+      {/* Track purchase conversion in Google Analytics */ }
       <PurchaseTracker
-        transactionId={session.id}
-        totalValue={totalValue}
-        items={purchaseItems}
+        transactionId={ session.id }
+        totalValue={ totalValue }
+        items={ purchaseItems }
         currency="USD"
       />
-      {/* Hero Section */}
+      {/* Hero Section */ }
       <div className="bg-gradient-to-br from-[#2d2d2d] to-[#1a1a1a] text-white">
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-3xl mx-auto text-center">
@@ -120,82 +119,82 @@ export default async function ThankYouPage({
               Your order has been confirmed and will be shipped soon.
             </p>
 
-            {customerEmail && (
+            { customerEmail && (
               <p className="text-gray-400 mt-4">
-                Confirmation email sent to: <strong className="text-white">{customerEmail}</strong>
+                Confirmation email sent to: <strong className="text-white">{ customerEmail }</strong>
               </p>
-            )}
+            ) }
           </div>
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-12 max-w-4xl">
 
-        {/* Order summary */}
+        {/* Order summary */ }
         <div className="bg-gray-50 rounded-2xl p-8 mb-12 shadow-md border border-gray-200">
           <h2 className="text-2xl font-bold mb-6 text-[#2d2d2d]">Order Summary</h2>
 
-          {session.line_items?.data.map((item: any) => (
-            <div key={item.id} className="flex justify-between items-center mb-4 pb-4">
+          { session.line_items?.data.map((item: any) => (
+            <div key={ item.id } className="flex justify-between items-center mb-4 pb-4">
               <div>
-                <p className="font-semibold text-[#2d2d2d]">{item.description}</p>
-                <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
+                <p className="font-semibold text-[#2d2d2d]">{ item.description }</p>
+                <p className="text-sm text-gray-500">Quantity: { item.quantity }</p>
               </div>
               <p className="font-bold text-lg text-[#2d2d2d]">
-                ${((item.amount_total || 0) / 100).toFixed(2)}
+                ${ ((item.amount_total || 0) / 100).toFixed(2) }
               </p>
             </div>
-          ))}
+          )) }
 
           <div className="border-t-2 border-gray-300 pt-4 mt-4">
             <div className="flex justify-between items-center text-xl font-bold">
               <span className="text-[#2d2d2d]">Total Paid</span>
-              <span className="text-[#e31e24]">${((session.amount_total || 0) / 100).toFixed(2)}</span>
+              <span className="text-[#e31e24]">${ ((session.amount_total || 0) / 100).toFixed(2) }</span>
             </div>
           </div>
 
-          {/* Shipping address */}
-          {session.shipping_details?.address && (
+          {/* Shipping address */ }
+          { session.shipping_details?.address && (
             <div className="mt-6 pt-6 border-t-2 border-gray-300">
               <h3 className="font-bold text-lg mb-3 text-[#2d2d2d]">Shipping Address</h3>
               <p className="text-gray-700 leading-relaxed">
-              {session.shipping_details?.name}
-              <br />
-              {session.shipping_details?.address?.line1}
-              {session.shipping_details?.address?.line2 && (
-                <>
-                  <br />
-                  {session.shipping_details?.address?.line2}
-                </>
-              )}
-              <br />
-              {session.shipping_details?.address?.city},{" "}
-              {session.shipping_details?.address?.state}{" "}
-              {session.shipping_details?.address?.postal_code}
-              <br />
-              {session.shipping_details?.address?.country}
+                { session.shipping_details?.name }
+                <br />
+                { session.shipping_details?.address?.line1 }
+                { session.shipping_details?.address?.line2 && (
+                  <>
+                    <br />
+                    { session.shipping_details?.address?.line2 }
+                  </>
+                ) }
+                <br />
+                { session.shipping_details?.address?.city },{ " " }
+                { session.shipping_details?.address?.state }{ " " }
+                { session.shipping_details?.address?.postal_code }
+                <br />
+                { session.shipping_details?.address?.country }
               </p>
             </div>
-          )}
+          ) }
         </div>
 
-        {/* First Upsell - Digital Product */}
-        {upsellProduct && (
-          <Suspense fallback={<UpsellSkeleton />}>
+        {/* First Upsell - Digital Product */ }
+        { upsellProduct && (
+          <Suspense fallback={ <UpsellSkeleton /> }>
             <UpsellOffer
-              product={upsellProduct}
-              customerEmail={customerEmail || ""}
-              customerName={customerName || ""}
-              sessionId={session_id}
-              customerId={customerId}
+              product={ upsellProduct }
+              customerEmail={ customerEmail || "" }
+              customerName={ customerName || "" }
+              sessionId={ session_id }
+              customerId={ customerId }
             />
           </Suspense>
-        )}
+        ) }
 
-        {/* Skip link - goes to second upsell */}
+        {/* Skip link - goes to second upsell */ }
         <div className="text-center mt-8">
           <a
-            href={`/thank-you/upsell-2?session_id=${session_id}${customerId ? `&customer_id=${customerId}` : ''}`}
+            href={ `/thank-you/upsell-2?session_id=${session_id}${customerId ? `&customer_id=${customerId}` : ''}` }
             className="text-gray-600 hover:text-[#e31e24] font-semibold underline transition-colors"
           >
             No thanks, show me other recommendations
@@ -254,7 +253,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Thank You - Order Confirmed",
     description: "Your order has been confirmed. Check your email for order details.",
-    images: ["https://www.jomocousins.com/images/og-image.webp"],
+    images: [ "https://www.jomocousins.com/images/og-image.webp" ],
     creator: "@pastorjomo",
   },
 };
