@@ -113,7 +113,6 @@ export default async function BlogPostPage({
     query: couplesCornerPostBySlugQuery,
     params: { slug },
   });
-  console.log('🚀 ~ post:', post);
 
   if (!post) {
     notFound();
