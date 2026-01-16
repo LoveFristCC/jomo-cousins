@@ -166,6 +166,10 @@ export default function Footer() {
               <Link href="/terms" className="transition-colors hover:text-white">
                 Terms of Service
               </Link>
+              <span className="text-gray-600">•</span>
+              <Link href="/return-policy" className="transition-colors hover:text-white">
+                Return Policy
+              </Link>
             </div>
             <p>&copy; { new Date().getFullYear() } Dr. Jomo Cousins. All rights reserved.</p>
           </div>
