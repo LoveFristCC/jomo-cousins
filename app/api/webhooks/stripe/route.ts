@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
       const session = await stripe.checkout.sessions.retrieve(
         sessionFromEvent.id,
         {
-          expand: ["line_items", "customer"],
+          expand: ["line_items", "customer", "customer_details", "shipping_details"],
         }
       );
 
