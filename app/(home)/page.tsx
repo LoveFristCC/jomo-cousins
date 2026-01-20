@@ -3,8 +3,8 @@ import Link from "next/link";
 import { Suspense } from "react";
 import BooksSection from "./books-section";
 import RecentPrayerSection from "./recent-prayer-section";
+import RecentMarriageBlogSection from "./recent-marriage-blog-section";
 import NewsletterSection from "./NewsLetterSection";
-import CTNAnnouncement from "./ctn-announcement";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -83,9 +83,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* CTN TV Appearance Announcement */ }
-      <CTNAnnouncement />
 
       {/* About Section */ }
       <section id="about" className="relative bg-gray-50 py-20 md:py-32">
@@ -417,6 +414,27 @@ export default function HomePage() {
         </section>
       }>
         <RecentPrayerSection />
+      </Suspense>
+
+      {/* Recent Marriage Blog Section */ }
+      <Suspense fallback={
+        <section className="relative overflow-hidden bg-[#303030] py-20 md:py-32">
+          <div className="container mx-auto px-5">
+            <div className="mx-auto max-w-4xl">
+              <div className="mb-8 flex items-center gap-3">
+                <div className="h-1 w-12 bg-[#ea8125]"></div>
+                <p className="text-sm font-bold uppercase tracking-wider text-[#ea8125]">
+                  Couples' Corner
+                </p>
+              </div>
+              <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl lg:text-5xl">
+                Loading...
+              </h2>
+            </div>
+          </div>
+        </section>
+      }>
+        <RecentMarriageBlogSection />
       </Suspense>
 
       {/* Prayer Line Section */ }

@@ -135,8 +135,8 @@ export default async function RootLayout({
           <main className="pointer-events-auto">{ children }</main>
         </div>
         <Footer />
-        <GoogleAnalytics />
-        <Script
+        {/* <GoogleAnalytics /> */ }
+        {/* <Script
           id="fb-pixel-init"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={ {
@@ -160,7 +160,7 @@ export default async function RootLayout({
             src="https://www.facebook.com/tr?id=3053545348126120&ev=PageView&noscript=1"
             alt='facebook pixel'
           />
-        </noscript>
+        </noscript> */}
       </body>
     </html>
   );
