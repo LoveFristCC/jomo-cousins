@@ -104,7 +104,7 @@ export default function HomePage() {
                     height={ 177 }
                     className="h-16 w-auto"
                   />
-                  About
+                  About{ ' ' }
                 </div>
                 <span className="text-[#e31e24]">Dr. Jomo Cousins</span>
               </h2>
