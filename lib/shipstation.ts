@@ -25,12 +25,15 @@ export async function createShipStationOrder(
       throw new Error("No customer email found in session");
     }
 
-    // In Stripe API 2025-12-15.clover, shipping address is in customer_details.address
-    // Check both old and new locations for compatibility
-    const shippingDetails =
-      (session as any).shipping_details || (session as any).customer_details;
+    // Get shipping address - check multiple locations for Link compatibility
+    // 1. session.shipping_details (standard checkout)
+    // 2. session.customer.shipping (Link checkout with expanded customer)
+    // 3. session.customer_details (fallback)
+    const expandedCustomer = typeof session.customer === 'object' ? session.customer : null;
     const shippingAddress =
-      shippingDetails?.address || shippingDetails?.shipping_address;
+      (session as any).shipping_details?.address ||
+      expandedCustomer?.shipping?.address ||
+      (session as any).customer_details?.address;
 
     if (!shippingAddress) {
       console.error(
@@ -42,10 +45,11 @@ export async function createShipStationOrder(
     }
 
     const customerDetails = session.customer_details;
+    // Get shipping name from various possible locations
     const shippingName =
-      shippingDetails?.name ||
       (session as any).shipping_details?.name ||
-      customerDetails.name;
+      expandedCustomer?.shipping?.name ||
+      customerDetails?.name;
 
     // Build the ShipStation order object
     const order: ShipStationOrder = {

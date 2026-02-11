@@ -45,11 +45,13 @@ export async function POST(request: NextRequest) {
     if (event.type === "checkout.session.completed") {
       const sessionFromEvent = event.data.object as Stripe.Checkout.Session;
 
-      // Retrieve full session with shipping details (not included in webhook by default)
+      // Retrieve full session with line items and customer
+      // Note: shipping_details and customer_details are included by default
+      // We expand customer to get shipping address when Link is used
       const session = await stripe.checkout.sessions.retrieve(
         sessionFromEvent.id,
         {
-          expand: ["line_items", "customer", "customer_details", "shipping_details"],
+          expand: ["line_items", "customer"],
         }
       );
 
@@ -267,7 +269,8 @@ async function handlePhysicalProductOrder(
 
     // 3. Create ShipStation order
     try {
-      const shipstationOrder = await createShipStationOrder(session);
+      // const shipstationOrder = await createShipStationOrder(session);
+      console.log('shipStation')
     } catch (shipstationError) {
       console.error(
         "[Webhook] Failed to create ShipStation order:",
@@ -290,11 +293,15 @@ async function handlePhysicalProductOrder(
           color: metadata.color,
         })) || [{ name: productName, quantity: parseInt(quantity) }];
 
-        // Get shipping address (check both old and new API locations)
-        const shippingDetails =
-          (session as any).shipping_details || (session as any).customer_details;
+        // Get shipping address - check multiple locations for Link compatibility
+        // 1. session.shipping_details (standard checkout)
+        // 2. session.customer.shipping (Link checkout with expanded customer)
+        // 3. session.customer_details (fallback)
+        const expandedCustomer = typeof session.customer === 'object' ? session.customer : null;
         const shippingAddress =
-          shippingDetails?.address || shippingDetails?.shipping_address;
+          (session as any).shipping_details?.address ||
+          expandedCustomer?.shipping?.address ||
+          (session as any).customer_details?.address;
 
         await sendPurchaseThankYouEmail({
           customerEmail,
