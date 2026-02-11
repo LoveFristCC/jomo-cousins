@@ -8,7 +8,6 @@ import type { AllProductsQueryResult } from "@/sanity.types";
 import { urlForImage } from "@/sanity/lib/utils";
 import CategoryFilters from "./CategoryFilters";
 import MerchantWidget from "./MerchantWidget";
-import GoogleReviewsSurvey from "../thank-you/GoogleReviewsSurvey";
 
 export const metadata: Metadata = {
   title: "Shop Books & Products | Dr. Jomo Cousins",
@@ -139,14 +138,6 @@ export default async function ProductsPage({
 
       {/* Google Merchant Widget */ }
       <MerchantWidget />
-
-      {/* Google Reviews Survey - Testing */ }
-      <GoogleReviewsSurvey
-        orderId="cs_live_a1tHZQdTWLS5e9sLtLPSHLzkQjfTfvD9BYmQMGBjb4tuc2tv4OJ9buXuj4"
-        email="mrmichael423@icloud.com"
-        deliveryCountry="US"
-        estimatedDeliveryDate="2026-02-17"
-      />
 
       {/* Hero Section with Background Image */ }
       <div className="relative bg-[#2d2d2d] text-white overflow-hidden">
