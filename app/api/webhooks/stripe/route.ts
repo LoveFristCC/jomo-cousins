@@ -314,7 +314,7 @@ async function handlePhysicalProductOrder(
         // 1. session.shipping_details (standard checkout)
         // 2. session.customer.shipping (Link checkout with expanded customer)
         // 3. session.customer_details (fallback)
-        const expandedCustomer = typeof session.customer === 'object' ? session.customer : null;
+        const expandedCustomer: any = typeof session.customer === 'object' ? session.customer : null;
         const shippingAddress =
           (session as any).shipping_details?.address ||
           expandedCustomer?.shipping?.address ||
