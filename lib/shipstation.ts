@@ -30,15 +30,30 @@ export async function createShipStationOrder(
     // 2. session.customer.shipping (Link checkout with expanded customer)
     // 3. session.customer_details (fallback)
     const expandedCustomer = typeof session.customer === 'object' ? session.customer : null;
+
+    console.log('[ShipStation] Checking for shipping address...');
+    console.log('[ShipStation] session.shipping_details:', (session as any).shipping_details);
+    console.log('[ShipStation] expandedCustomer type:', typeof expandedCustomer);
+    console.log('[ShipStation] expandedCustomer?.shipping:', expandedCustomer?.shipping);
+    console.log('[ShipStation] session.customer_details:', (session as any).customer_details);
+
     const shippingAddress =
       (session as any).shipping_details?.address ||
       expandedCustomer?.shipping?.address ||
       (session as any).customer_details?.address;
 
+    console.log('[ShipStation] Final shippingAddress:', shippingAddress);
+
     if (!shippingAddress) {
       console.error(
         `[ShipStation] No shipping address found in session ${session.id}`
       );
+      console.error('[ShipStation] Session data:', JSON.stringify({
+        has_shipping_details: !!(session as any).shipping_details,
+        has_customer: !!session.customer,
+        customer_type: typeof session.customer,
+        has_customer_details: !!(session as any).customer_details
+      }, null, 2));
       throw new Error(
         `No shipping address found in session. Make sure shipping address collection is enabled in Stripe Checkout.`
       );

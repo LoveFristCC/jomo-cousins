@@ -55,6 +55,18 @@ export async function POST(request: NextRequest) {
         }
       );
 
+      // Debug logging for Link shipping address issues
+      console.log('[Webhook] Session ID:', session.id);
+      console.log('[Webhook] Payment method types:', session.payment_method_types);
+      console.log('[Webhook] Has shipping_details:', !!(session as any).shipping_details);
+      console.log('[Webhook] Shipping details:', JSON.stringify((session as any).shipping_details, null, 2));
+      console.log('[Webhook] Has customer (expanded):', typeof session.customer === 'object');
+      if (typeof session.customer === 'object') {
+        console.log('[Webhook] Customer shipping:', JSON.stringify((session.customer as any).shipping, null, 2));
+        console.log('[Webhook] Customer address:', JSON.stringify((session.customer as any).address, null, 2));
+      }
+      console.log('[Webhook] Customer details:', JSON.stringify(session.customer_details, null, 2));
+
       const metadata = session.metadata as unknown as CheckoutMetadata;
 
       // Handle physical product orders
@@ -269,12 +281,17 @@ async function handlePhysicalProductOrder(
 
     // 3. Create ShipStation order
     try {
-      // const shipstationOrder = await createShipStationOrder(session);
-      console.log('shipStation')
+      console.log('[Webhook] Creating ShipStation order...');
+      const shipstationOrder = await createShipStationOrder(session);
+      console.log('[Webhook] ✓ ShipStation order created:', shipstationOrder?.orderId);
     } catch (shipstationError) {
       console.error(
         "[Webhook] Failed to create ShipStation order:",
         shipstationError
+      );
+      console.error(
+        "[Webhook] Error details:",
+        shipstationError instanceof Error ? shipstationError.message : String(shipstationError)
       );
       // Don't fail the webhook - log for manual fulfillment
     }
