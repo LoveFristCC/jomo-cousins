@@ -5,6 +5,7 @@ import { sanityFetch } from "@/sanity/lib/fetch";
 import { productByNameQuery } from "@/sanity/lib/queries";
 import UpsellOffer from "./UpsellOffer";
 import PurchaseTracker from "./PurchaseTracker";
+import GoogleReviewsSurvey from "./GoogleReviewsSurvey";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-12-15.clover",
@@ -35,7 +36,7 @@ export default async function ThankYouPage({
     console.error("[Thank You] ❌ Error fetching session:", error);
     console.error("[Thank You] Session ID:", session_id);
     console.error("[Thank You] Error details:", error instanceof Error ? error.message : String(error));
-    notFound();
+    // notFound();
   }
 
   // Fetch the digital upsell based on purchased product
@@ -83,6 +84,14 @@ export default async function ThankYouPage({
 
   const totalValue = (session.amount_total || 0) / 100;
 
+  // Calculate estimated delivery date (5 days from now)
+  const estimatedDeliveryDate = new Date();
+  estimatedDeliveryDate.setDate(estimatedDeliveryDate.getDate() + 5);
+  const deliveryDateString = estimatedDeliveryDate.toISOString().split('T')[ 0 ]; // Format: YYYY-MM-DD
+
+  // Get delivery country from shipping address (default to US if not available)
+  const deliveryCountry = session.shipping_details?.address?.country || 'US';
+
   return (
     <div className="min-h-screen bg-white">
       {/* Track purchase conversion in Google Analytics */ }
@@ -92,6 +101,17 @@ export default async function ThankYouPage({
         items={ purchaseItems }
         currency="USD"
       />
+
+      {/* Google Customer Reviews Survey Opt-In */ }
+      { customerEmail && (
+        <GoogleReviewsSurvey
+          orderId={ session.id }
+          email={ customerEmail }
+          deliveryCountry={ deliveryCountry }
+          estimatedDeliveryDate={ deliveryDateString }
+        />
+      ) }
+
       {/* Hero Section */ }
       <div className="bg-gradient-to-br from-[#2d2d2d] to-[#1a1a1a] text-white">
         <div className="container mx-auto px-4 py-16">

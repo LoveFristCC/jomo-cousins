@@ -7,6 +7,8 @@ import { allProductsQuery } from "@/sanity/lib/queries";
 import type { AllProductsQueryResult } from "@/sanity.types";
 import { urlForImage } from "@/sanity/lib/utils";
 import CategoryFilters from "./CategoryFilters";
+import MerchantWidget from "./MerchantWidget";
+import GoogleReviewsSurvey from "../thank-you/GoogleReviewsSurvey";
 
 export const metadata: Metadata = {
   title: "Shop Books & Products | Dr. Jomo Cousins",
@@ -46,7 +48,7 @@ export const metadata: Metadata = {
     title: "Shop Dr. Jomo Cousins Books & Products",
     description: "Books, apparel, and resources for personal growth and spiritual development.",
     creator: "@pastorjomo",
-    images: ["/images/backgrounds/P1122310B_edited.webp"],
+    images: [ "/images/backgrounds/P1122310B_edited.webp" ],
   },
 };
 
@@ -113,7 +115,7 @@ export default async function ProductsPage({
               "@id": `https://www.jomocousins.com/products/${product.slug}`,
               name: product.name,
               url: `https://www.jomocousins.com/products/${product.slug}`,
-              image: product.images?.[0] ? urlForImage(product.images[0])?.width(1200).url() : undefined,
+              image: product.images?.[ 0 ] ? urlForImage(product.images[ 0 ])?.width(1200).url() : undefined,
               offers: {
                 "@type": "Offer",
                 priceCurrency: "USD",
@@ -129,11 +131,23 @@ export default async function ProductsPage({
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Structured Data */}
+      {/* Structured Data */ }
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        dangerouslySetInnerHTML={ { __html: JSON.stringify(structuredData) } }
       />
+
+      {/* Google Merchant Widget */ }
+      <MerchantWidget />
+
+      {/* Google Reviews Survey - Testing */ }
+      <GoogleReviewsSurvey
+        orderId="cs_live_a1tHZQdTWLS5e9sLtLPSHLzkQjfTfvD9BYmQMGBjb4tuc2tv4OJ9buXuj4"
+        email="mrmichael423@icloud.com"
+        deliveryCountry="US"
+        estimatedDeliveryDate="2026-02-17"
+      />
+
       {/* Hero Section with Background Image */ }
       <div className="relative bg-[#2d2d2d] text-white overflow-hidden">
         {/* Background Image with Overlay */ }
