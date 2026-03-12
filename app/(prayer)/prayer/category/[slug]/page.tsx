@@ -474,9 +474,9 @@ export default async function CategoryPage({ params }: Props) {
                     <h3 className="mb-3 text-xl font-bold text-[#3d3d3d]">
                       { faq.question }
                     </h3>
-                    <div className="prose max-w-none text-gray-700">
-                      <CustomPortableText value={ faq.answer } />
-                    </div>
+                    <p className="text-gray-700 whitespace-pre-line">
+                      { faq.answer }
+                    </p>
                   </div>
                 )) }
               </div>
