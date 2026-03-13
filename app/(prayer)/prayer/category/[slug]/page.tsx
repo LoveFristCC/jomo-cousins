@@ -15,6 +15,29 @@ import { format, parseISO } from "date-fns";
 import { getYouTubeVideoId } from "@/lib/youtube";
 import YouTubePlayer from "@/components/YouTubePlayer";
 
+// Convert duration string (e.g. "3:19") to ISO 8601 format (e.g. "PT3M19S")
+function convertToISO8601Duration(duration: string | undefined | null): string | undefined {
+  if (!duration) return undefined;
+
+  const timePattern = /(\d+):(\d+)(?::(\d+))?/;
+  const match = duration.match(timePattern);
+
+  if (match) {
+    const hours = match[3] ? parseInt(match[1]) : 0;
+    const minutes = match[3] ? parseInt(match[2]) : parseInt(match[1]);
+    const seconds = match[3] ? parseInt(match[3]) : parseInt(match[2]);
+
+    let iso = "PT";
+    if (hours > 0) iso += `${hours}H`;
+    if (minutes > 0) iso += `${minutes}M`;
+    if (seconds > 0) iso += `${seconds}S`;
+
+    return iso;
+  }
+
+  return undefined;
+}
+
 type Props = {
   params: Promise<{ slug: string }>;
 };
@@ -184,7 +207,7 @@ export default async function CategoryPage({ params }: Props) {
         ? urlForImage(actualFeaturedPrayer.featuredImage)?.url()
         : undefined,
       uploadDate: actualFeaturedPrayer.publishedAt,
-      duration: actualFeaturedPrayer.duration,
+      ...(convertToISO8601Duration(actualFeaturedPrayer.duration) && { duration: convertToISO8601Duration(actualFeaturedPrayer.duration) }),
       contentUrl: actualFeaturedPrayer.youtubeUrl,
       embedUrl: videoId ? `https://www.youtube.com/embed/${videoId}` : undefined,
     });
