@@ -374,7 +374,7 @@ export default async function CouplesCornerPage() {
 
 export const metadata = {
   title: "Couples' Corner - Marriage & Relationship Blog",
-  description: "Expert marriage advice and relationship tips from Drs. Jomo & Charmaine Cousins. Discover practical guidance on communication, intimacy, trust, dating ideas, prayers for marriage, and building stronger relationships.",
+  description: `Marriage advice from a couple who's been doing this for 24+ years. Dating, communication, fighting fair, intimacy, and the stuff nobody warns you about before you say "I do."`,
   alternates: {
     canonical: "https://www.jomocousins.com/marriage/blog",
   },
@@ -382,7 +382,7 @@ export const metadata = {
     type: "website",
     siteName: "Dr. Jomo Cousins",
     title: "Couples' Corner - Marriage Advice from Jomo & Charmaine",
-    description: "Relationship resources, dating ideas, marriage prayers, and expert counseling tips from experienced Senior Pastors.",
+    description: `Marriage advice from a couple who's been doing this for 24+ years. Dating, communication, fighting fair, intimacy, and the stuff nobody warns you about before you say "I do."`,
     url: "https://www.jomocousins.com/marriage/blog",
     images: [
       {
@@ -396,7 +396,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Couples' Corner - Marriage Advice from Jomo & Charmaine",
-    description: "Relationship resources, dating ideas, marriage prayers, and expert counseling tips from experienced Senior Pastors.",
+    description: `Marriage advice from a couple who's been doing this for 24+ years. Dating, communication, fighting fair, intimacy, and the stuff nobody warns you about before you say "I do."`,
     images: [ "/images/marriage/blog/couple-corner-hero.webp" ],
   },
 };
