@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { couplesCornerPostBySlugQuery, relatedCouplesCornerPostsQuery } from "@/sanity/lib/queries";
+import { couplesCornerPostBySlugQuery, relatedCouplesCornerPostsQuery, recentCouplesCornerPostsExcludingQuery, previousCouplesCornerPostQuery, nextCouplesCornerPostQuery } from "@/sanity/lib/queries";
 import { urlForImage } from "@/sanity/lib/utils";
 import { format, parseISO } from "date-fns";
 import { PortableText } from "next-sanity";
@@ -119,15 +119,38 @@ export default async function BlogPostPage({
   }
 
   // Fetch related posts based on category and tags
-  const relatedPosts = await sanityFetch({
+  let relatedPosts = await sanityFetch({
     query: relatedCouplesCornerPostsQuery,
     params: {
       slug,
       category: post.category,
       tags: post.tags || [],
-      limit: 6
+      limit: 3
     },
   });
+
+  // Fallback to recent posts if no related posts found
+  if (relatedPosts.length === 0) {
+    relatedPosts = await sanityFetch({
+      query: recentCouplesCornerPostsExcludingQuery,
+      params: {
+        slug,
+        limit: 3
+      },
+    });
+  }
+
+  // Fetch previous and next posts for navigation
+  const [previousPost, nextPost] = await Promise.all([
+    sanityFetch({
+      query: previousCouplesCornerPostQuery,
+      params: { publishedAt: post.publishedAt },
+    }),
+    sanityFetch({
+      query: nextCouplesCornerPostQuery,
+      params: { publishedAt: post.publishedAt },
+    }),
+  ]);
 
   const imageUrl = post.coverImage
     ? urlForImage(post.coverImage)?.width(1200).height(630).url()
@@ -342,6 +365,44 @@ export default async function BlogPostPage({
               shareUrl={ `https://www.jomocousins.com/marriage/blog/${slug}` }
               shareTitle={ post.title }
             />
+
+            {/* Previous/Next Navigation */ }
+            { (previousPost || nextPost) && (
+              <div className="mt-12 grid gap-4 border-t border-gray-200 pt-8 md:grid-cols-2">
+                { previousPost ? (
+                  <Link
+                    href={ `/marriage/blog/${previousPost.slug}` }
+                    className="group flex items-center gap-3 rounded-lg border-2 border-gray-200 p-4 transition-all hover:border-[#ea8125] hover:shadow-md"
+                  >
+                    <svg className="h-5 w-5 flex-shrink-0 text-gray-400 transition-colors group-hover:text-[#ea8125]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M15 19l-7-7 7-7" />
+                    </svg>
+                    <div className="min-w-0">
+                      <span className="text-xs font-semibold uppercase text-gray-500">Previous</span>
+                      <p className="truncate font-semibold text-[#303030] group-hover:text-[#ea8125]">{ previousPost.title }</p>
+                    </div>
+                  </Link>
+                ) : (
+                  <div />
+                ) }
+                { nextPost ? (
+                  <Link
+                    href={ `/marriage/blog/${nextPost.slug}` }
+                    className="group flex items-center justify-end gap-3 rounded-lg border-2 border-gray-200 p-4 text-right transition-all hover:border-[#ea8125] hover:shadow-md"
+                  >
+                    <div className="min-w-0">
+                      <span className="text-xs font-semibold uppercase text-gray-500">Next</span>
+                      <p className="truncate font-semibold text-[#303030] group-hover:text-[#ea8125]">{ nextPost.title }</p>
+                    </div>
+                    <svg className="h-5 w-5 flex-shrink-0 text-gray-400 transition-colors group-hover:text-[#ea8125]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                ) : (
+                  <div />
+                ) }
+              </div>
+            ) }
           </div>
         </div>
       </section>
@@ -435,9 +496,7 @@ export default async function BlogPostPage({
             </p>
 
             <div className="grid gap-8 md:grid-cols-3">
-              { relatedPosts
-                .slice(0, 6)
-                .map((relatedPost) => {
+              { relatedPosts.map((relatedPost) => {
                   const relatedImageUrl = relatedPost.coverImage
                     ? urlForImage(relatedPost.coverImage)?.width(600).height(400).url()
                     : null;
@@ -487,7 +546,7 @@ export default async function BlogPostPage({
             <h2 className="mb-8 text-center text-2xl font-bold text-[#303030] md:text-3xl">
               Explore More Marriage Resources
             </h2>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-3">
               <Link
                 href="/marriage/blog"
                 className="group rounded-lg border-2 border-gray-200 bg-white p-6 transition-all hover:border-[#ea8125] hover:shadow-lg"
@@ -523,23 +582,6 @@ export default async function BlogPostPage({
               </Link>
 
               <Link
-                href="/products?category=books"
-                className="group rounded-lg border-2 border-gray-200 bg-white p-6 transition-all hover:border-[#ea8125] hover:shadow-lg"
-              >
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#ea8125]/10">
-                  <svg className="h-6 w-6 text-[#ea8125]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <h3 className="mb-2 font-bold text-lg text-[#303030] group-hover:text-[#ea8125]">
-                  Marriage Books
-                </h3>
-                <p className="text-sm text-gray-600">
-                  Shop books on marriage and relationships
-                </p>
-              </Link>
-
-              <Link
                 href="/prayer/daily"
                 className="group rounded-lg border-2 border-gray-200 bg-white p-6 transition-all hover:border-[#0E6BB7] hover:shadow-lg"
               >
@@ -553,40 +595,6 @@ export default async function BlogPostPage({
                 </h3>
                 <p className="text-sm text-gray-600">
                   Join the 6:30 AM prayer line
-                </p>
-              </Link>
-
-              <Link
-                href="/marriage/about"
-                className="group rounded-lg border-2 border-gray-200 bg-white p-6 transition-all hover:border-[#ea8125] hover:shadow-lg"
-              >
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#ea8125]/10">
-                  <svg className="h-6 w-6 text-[#ea8125]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                </div>
-                <h3 className="mb-2 font-bold text-lg text-[#303030] group-hover:text-[#ea8125]">
-                  About Us
-                </h3>
-                <p className="text-sm text-gray-600">
-                  Meet Dr. Jomo & Dr. Charmaine
-                </p>
-              </Link>
-
-              <Link
-                href="/marriage"
-                className="group rounded-lg border-2 border-gray-200 bg-white p-6 transition-all hover:border-[#0E6BB7] hover:shadow-lg"
-              >
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#0E6BB7]/10">
-                  <svg className="h-6 w-6 text-[#0E6BB7]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                  </svg>
-                </div>
-                <h3 className="mb-2 font-bold text-lg text-[#303030] group-hover:text-[#0E6BB7]">
-                  Marriage Ministry
-                </h3>
-                <p className="text-sm text-gray-600">
-                  Explore all our marriage services
                 </p>
               </Link>
             </div>

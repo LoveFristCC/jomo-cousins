@@ -18,9 +18,6 @@ export default async function CouplesCornerPage() {
     }),
   ]);
 
-  // Get unique categories from all posts
-  const categories = Array.from(new Set(allPosts.map((post) => post.category).filter(Boolean)));
-
   // Filter out featured posts from all posts to avoid duplicates
   const featuredPostIds = new Set(featuredPosts.map((post) => post._id));
   const nonFeaturedPosts = allPosts.filter((post) => !featuredPostIds.has(post._id));
@@ -265,24 +262,10 @@ export default async function CouplesCornerPage() {
       {/* All Posts */ }
       <section className="bg-gradient-to-br from-[#FAFCFE] to-white py-20">
         <div className="container mx-auto px-5">
-          <div className="mb-12 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+          <div className="mb-12">
             <h2 className="text-3xl font-bold text-[#303030] md:text-4xl">
               All <span className="text-[#ea8125]">Articles</span>
             </h2>
-
-            {/* Category Filter */ }
-            { categories.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                { categories.slice(0, 5).map((category) => (
-                  <span
-                    key={ category }
-                    className="cursor-pointer rounded-full border-2 border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 transition-all hover:border-[#ea8125] hover:text-[#ea8125]"
-                  >
-                    { category }
-                  </span>
-                )) }
-              </div>
-            ) }
           </div>
 
           { nonFeaturedPosts.length > 0 ? (

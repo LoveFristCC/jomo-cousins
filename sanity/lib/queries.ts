@@ -233,6 +233,31 @@ export const relatedCouplesCornerPostsQuery = defineQuery(`
   }
 `);
 
+// Fallback query for recent posts when no related posts found
+export const recentCouplesCornerPostsExcludingQuery = defineQuery(`
+  *[_type == "couplesCornerPost" && slug.current != $slug] | order(publishedAt desc) [0...$limit] {
+    ${couplesCornerFields}
+  }
+`);
+
+// Next blog post (newer)
+export const nextCouplesCornerPostQuery = defineQuery(`
+  *[_type == "couplesCornerPost" && publishedAt > $publishedAt] | order(publishedAt asc) [0] {
+    _id,
+    title,
+    "slug": slug.current
+  }
+`);
+
+// Previous blog post (older)
+export const previousCouplesCornerPostQuery = defineQuery(`
+  *[_type == "couplesCornerPost" && publishedAt < $publishedAt] | order(publishedAt desc) [0] {
+    _id,
+    title,
+    "slug": slug.current
+  }
+`);
+
 // Prayer Video queries
 const prayerVideoFields = /* groq */ `
   _id,
