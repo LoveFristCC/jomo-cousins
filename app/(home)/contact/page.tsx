@@ -63,7 +63,7 @@ export default function ContactPage() {
         });
 
         if (newsletterResponse.ok) {
-          console.log("✅ Contact form submitted to Kajabi successfully");
+          console.log("✅ Contact form submit to Kajabi successfully");
         } else {
           console.error("⚠️ Kajabi submission failed:", await newsletterResponse.text());
         }
@@ -98,7 +98,7 @@ export default function ContactPage() {
 
   return (
     <div className="bg-white">
-      {/* Preload background image */}
+      {/* Preload background image */ }
       <link rel="preload" as="image" href="/images/backgrounds/P1122237B_edited.webp" />
 
       {/* Hero Section with Background Image */ }
@@ -306,13 +306,13 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  {/* reCAPTCHA */}
+                  {/* reCAPTCHA */ }
                   <div className="flex justify-center">
                     <ReCAPTCHA
-                      ref={recaptchaRef}
-                      sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-                      onChange={(token) => setRecaptchaToken(token)}
-                      onExpired={() => setRecaptchaToken(null)}
+                      ref={ recaptchaRef }
+                      sitekey={ process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY! }
+                      onChange={ (token) => setRecaptchaToken(token) }
+                      onExpired={ () => setRecaptchaToken(null) }
                     />
                   </div>
 
