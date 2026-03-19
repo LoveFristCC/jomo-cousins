@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import { sanityFetch } from "@/sanity/lib/fetch";
+import { client } from "@/sanity/lib/client";
 import { writeClient } from "@/sanity/lib/write-client";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -52,8 +52,16 @@ export interface SanityProduct {
 export async function syncProductToStripe(sanityProductId: string) {
   try {
     // Fetch product from Sanity - support both product and digitalProduct types
-    const product = await sanityFetch<SanityProduct | any>({
-      query: `*[(_type == "product" || _type == "digitalProduct") && _id == $id][0]{
+    // Use direct client fetch with useCdn: false to bypass CDN cache
+    // This ensures we get freshly created/updated documents immediately
+    // Also check for draft versions in case the webhook fires before publish
+    const queryDraftId = sanityProductId.startsWith('drafts.')
+      ? sanityProductId
+      : `drafts.${sanityProductId}`;
+    const queryPublishedId = sanityProductId.replace(/^drafts\./, '');
+
+    const product = await client.fetch<SanityProduct | null>(
+      `*[(_type == "product" || _type == "digitalProduct") && (_id == $pubId || _id == $draftId)][0]{
         _id,
         _type,
         name,
@@ -90,8 +98,9 @@ export async function syncProductToStripe(sanityProductId: string) {
           inventory
         }
       }`,
-      params: { id: sanityProductId },
-    });
+      { pubId: queryPublishedId, draftId: queryDraftId },
+      { useCdn: false }
+    );
 
     if (!product) {
       throw new Error(`Product not found: ${sanityProductId}`);
