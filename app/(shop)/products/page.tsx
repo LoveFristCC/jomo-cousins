@@ -67,7 +67,7 @@ export default async function ProductsPage({
 
   // Filter products based on selected category
   const filteredProducts = category
-    ? allProducts.filter((p) => p.category?.toLowerCase() === category.toLowerCase())
+    ? allProducts.filter((p) => p.category?.toLowerCase() === category?.toLowerCase())
     : allProducts;
 
   // Separate featured and regular products
