@@ -6,9 +6,11 @@ import Image from "next/image";
 type ProductImageGalleryProps = {
   images: any[];
   productName: string;
+  category?: string;
 };
 
-export default function ProductImageGallery({ images, productName }: ProductImageGalleryProps) {
+export default function ProductImageGallery({ images, productName, category }: ProductImageGalleryProps) {
+  const isApparel = category === "tshirts" || category === "hoodies";
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
@@ -17,9 +19,9 @@ export default function ProductImageGallery({ images, productName }: ProductImag
   return (
     <>
       <div className="space-y-4">
-        {/* Main image */}
+        {/* Main image - smaller for apparel */}
         <div
-          className="relative aspect-square cursor-pointer group"
+          className={`relative cursor-pointer group ${isApparel ? "aspect-[4/5] max-w-md mx-auto" : "aspect-square"}`}
           onClick={() => setIsLightboxOpen(true)}
         >
           <Image
@@ -28,8 +30,8 @@ export default function ProductImageGallery({ images, productName }: ProductImag
             fill
             className="object-contain transition-transform duration-300 group-hover:scale-105"
             priority
-            sizes="(max-width: 768px) 100vw, 50vw"
-            quality={95}
+            sizes={isApparel ? "(max-width: 768px) 100vw, 448px" : "(max-width: 768px) 100vw, 50vw"}
+            quality={85}
           />
           {/* Zoom icon overlay */}
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -108,7 +110,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
               fill
               className="object-contain"
               sizes="90vw"
-              quality={100}
+              quality={85}
               onClick={(e) => e.stopPropagation()}
             />
           </div>

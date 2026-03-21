@@ -13,7 +13,17 @@ export const urlForImage = (source: any) => {
     return undefined;
   }
 
-  return imageBuilder?.image(source).auto("format").fit("max");
+  return imageBuilder?.image(source).fit("max").quality(100);
+};
+
+// High quality version for product images
+export const urlForProductImage = (source: any) => {
+  if (!source?.asset?._ref) {
+    return undefined;
+  }
+
+  // WebP format for smaller files, 90% quality is sharp and fast
+  return imageBuilder?.image(source).auto("format").fit("max").quality(90);
 };
 
 export function resolveOpenGraphImage(image: any, width = 1200, height = 627) {

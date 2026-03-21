@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { productBySlugQuery } from "@/sanity/lib/queries";
-import { urlForImage } from "@/sanity/lib/utils";
+import { urlForImage, urlForProductImage } from "@/sanity/lib/utils";
 import CustomPortableText from "@/app/(home)/portable-text";
 import ProductActions from "./ProductActions";
 import ProductStructuredData from "./product-structured-data";
@@ -28,9 +28,12 @@ export default async function ProductPage({
     notFound();
   }
 
-  // Prepare images for gallery
+  // Prepare images for gallery - size based on actual display needs
+  const isApparel = product.category === "tshirts" || product.category === "hoodies";
+  const imageWidth = isApparel ? 900 : 1200; // Apparel displays smaller
+
   const galleryImages = product.images?.map((image: any) => ({
-    url: urlForImage(image)?.width(1200).url() || "",
+    url: urlForProductImage(image)?.width(imageWidth).url() || "",
     alt: image.alt || product.name,
   })) || [];
 
@@ -62,7 +65,7 @@ export default async function ProductPage({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Product Images */ }
           <div className="space-y-4">
-            <ProductImageGallery images={galleryImages} productName={product.name || "Product"} />
+            <ProductImageGallery images={galleryImages} productName={product.name || "Product"} category={product.category} />
 
             {/* Free Preview Badge - Only for books with preview chapter */ }
             { product.previewChapter && (
