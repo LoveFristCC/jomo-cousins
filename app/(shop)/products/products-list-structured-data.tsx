@@ -59,10 +59,15 @@ export default function ProductsListStructuredData({
     },
   };
 
-  // Page-level structured data
+  // Page-level structured data (includes shipping/return policy for all products to reference)
   const pageStructuredData = {
     "@context": "https://schema.org",
-    "@graph": [collectionPageSchema, breadcrumbSchema],
+    "@graph": [
+      collectionPageSchema,
+      breadcrumbSchema,
+      getShippingDetails(baseUrl),
+      getReturnPolicy(baseUrl),
+    ],
   };
 
   return (
@@ -260,20 +265,11 @@ function ProductSchema({
     };
   }
 
-  // Full structured data with @graph including shipping/return policy
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@graph": [
-      productSchema,
-      getShippingDetails(baseUrl),
-      getReturnPolicy(baseUrl),
-    ],
-  };
-
+  // Product schema only - shipping/return policy defined in page-level schema, referenced by @id
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", ...productSchema }) }}
     />
   );
 }
