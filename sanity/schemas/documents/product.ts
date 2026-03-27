@@ -438,6 +438,53 @@ export default defineType({
       description: "Link to Audible audiobook",
       hidden: ({ document }) => document?.category !== "books",
     }),
+    // Product reviews for structured data (non-books)
+    defineField({
+      name: "reviews",
+      title: "Customer Reviews",
+      type: "array",
+      description: "Customer reviews for Google structured data (recommended for non-book products)",
+      hidden: ({ document }) => document?.category === "books",
+      of: [
+        {
+          type: "object",
+          name: "review",
+          fields: [
+            {
+              name: "reviewerName",
+              title: "Reviewer Name",
+              type: "string",
+              validation: (rule) => rule.required(),
+            },
+            {
+              name: "rating",
+              title: "Rating (1-5)",
+              type: "number",
+              validation: (rule) => rule.required().min(1).max(5),
+            },
+            {
+              name: "reviewText",
+              title: "Review Text",
+              type: "text",
+              rows: 3,
+            },
+          ],
+          preview: {
+            select: {
+              name: "reviewerName",
+              rating: "rating",
+            },
+            prepare({ name, rating }) {
+              return {
+                title: name || "Anonymous",
+                subtitle: `${"★".repeat(rating || 0)}${"☆".repeat(5 - (rating || 0))}`,
+              };
+            },
+          },
+        },
+      ],
+      validation: (rule) => rule.max(10),
+    }),
     // Upsells and cross-sells
     defineField({
       name: "digitalUpsell",

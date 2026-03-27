@@ -81,6 +81,8 @@ const productFields = /* groq */ `
   excerpt,
   amazonLink,
   audibleLink,
+  // Reviews for structured data
+  reviews,
   // Upsells
   upsellHeadline,
   "digitalUpsell": digitalUpsell-> {
