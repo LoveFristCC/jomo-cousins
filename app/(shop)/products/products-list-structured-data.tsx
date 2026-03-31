@@ -214,7 +214,7 @@ function ProductSchema({
 
   if (isBook) {
     productSchema = {
-      "@type": "Book",
+      "@type": ["Book", "Product"],
       "@id": productUrl,
       name: product.name,
       description: product.excerpt || description,
@@ -227,7 +227,7 @@ function ProductSchema({
         url: baseUrl,
       },
       ...(product.isbn && {
-        isbn: product.isbn,
+        isbn: product.isbn.replace(/-/g, ""),
         gtin13: product.isbn.replace(/-/g, ""),
       }),
       ...(product.publisher && {

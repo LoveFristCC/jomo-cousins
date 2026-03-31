@@ -438,13 +438,12 @@ export default defineType({
       description: "Link to Audible audiobook",
       hidden: ({ document }) => document?.category !== "books",
     }),
-    // Product reviews for structured data (non-books)
+    // Product reviews for structured data
     defineField({
       name: "reviews",
       title: "Customer Reviews",
       type: "array",
-      description: "Customer reviews for Google structured data (recommended for non-book products)",
-      hidden: ({ document }) => document?.category === "books",
+      description: "Customer reviews for Google structured data",
       of: [
         {
           type: "object",

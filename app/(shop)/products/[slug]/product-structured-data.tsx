@@ -159,7 +159,7 @@ export default function ProductStructuredData({
 
   const bookSchema = isBook
     ? {
-      "@type": "Book",
+      "@type": ["Book", "Product"],
       "@id": productUrl,
       name: product.name,
       description: product.excerpt || description,
@@ -171,7 +171,7 @@ export default function ProductStructuredData({
         name: product.author || "Dr. Jomo Cousins",
         url: baseUrl,
       },
-      ...(product.isbn && { isbn: product.isbn, gtin13: product.isbn.replace(/-/g, "") }),
+      ...(product.isbn && { isbn: product.isbn.replace(/-/g, ""), gtin13: product.isbn.replace(/-/g, "") }),
       ...(product.publisher && {
         publisher: {
           "@type": "Organization",
@@ -197,6 +197,8 @@ export default function ProductStructuredData({
         shippingDetails: { "@id": `${baseUrl}#shipping` },
         hasMerchantReturnPolicy: { "@id": `${baseUrl}#returnpolicy` },
       },
+      ...(aggregateRating && { aggregateRating }),
+      ...(reviewSchemas && { review: reviewSchemas }),
     }
     : null;
 
