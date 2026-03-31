@@ -63,7 +63,7 @@ export default function ContactPage() {
         });
 
         if (newsletterResponse.ok) {
-          console.log("✅ Contact form submit to Kajabi successfully");
+          console.log("✅ Contact form submit to Kajabi");
         } else {
           console.error("⚠️ Kajabi submission failed:", await newsletterResponse.text());
         }
