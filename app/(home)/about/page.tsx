@@ -3,8 +3,8 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About | NFL Veteran, Pastor & Speaker",
-  description: "Meet Dr. Jomo Cousins: NFL defensive end turned pastor, motivational speaker, and cancer survivor. Founder of Love First Christian Center and creator of The Gap success formula.",
+  title: "About - NFL Veteran, Pastor & Speaker",
+  description: "Dr. Jomo Cousins played for the NY Giants and Arizona Cardinals before founding Love First Christian Center. Cancer survivor, author, and speaker.",
   keywords: [
     "Dr. Jomo Cousins biography",
     "NFL player pastor",
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
     canonical: "https://www.jomocousins.com/about",
   },
   openGraph: {
-    title: "About Dr. Jomo Cousins | NFL Veteran, Pastor & Cancer Survivor",
-    description: "From NFL defensive end to pastor and motivational speaker. Dr. Jomo Cousins inspires transformation through faith, perseverance, and The Gap success formula.",
+    title: "About Dr. Jomo Cousins | NFL Veteran & Cancer Survivor",
+    description: "Dr. Jomo Cousins played for the NY Giants and Arizona Cardinals, survived cancer, and founded Love First Christian Center in Tampa, FL.",
     url: "https://www.jomocousins.com/about",
     type: "profile",
     siteName: "Dr. Jomo Cousins",
@@ -184,10 +184,10 @@ export default function AboutPage() {
                   </svg>
                 </div>
                 <h1 className="text-5xl md:text-6xl font-bold text-[#2d2d2d] mb-6">
-                  ABOUT
+                  ABOUT <span className="text-[#e31e24]">DR. JOMO COUSINS</span>
                 </h1>
                 <p className="text-gray-600 text-lg leading-relaxed">
-                  The esteemed Dr. Cousins is the Founder and senior pastor of <Link href='https://www.lfcc.tv'>Love First Christian Center</Link> in Riverview, FL. He is an accomplished author and contributing benefactor.
+                  NFL veteran. Cancer survivor. Founder and senior pastor of <Link href='https://www.lfcc.tv'>Love First Christian Center</Link> in Riverview, FL. Author, speaker, and the first in his family to go to college.
                 </p>
               </div>
             </div>
@@ -196,7 +196,7 @@ export default function AboutPage() {
             <div className="relative h-[500px] md:h-[650px] flex items-end">
               <Image
                 src="/images/jc-png/aboutHeroJomo.webp"
-                alt="Dr. Jomo Cousins"
+                alt="Dr. Jomo Cousins - NFL Veteran and Motivational Speaker"
                 fill
                 className="object-contain object-bottom"
                 priority
@@ -213,7 +213,7 @@ export default function AboutPage() {
           <div className="relative h-[500px] md:h-auto bg-[#141414]">
             <Image
               src="/images/jc-color-pics/aboutProfilePictures.webp"
-              alt="Dr. Jomo Cousins Portrait"
+              alt="Dr. Jomo Cousins - Pastor and Motivational Speaker Portrait"
               fill
               className="object-cover object-center"
             />
@@ -243,13 +243,13 @@ export default function AboutPage() {
             {/* Bio Text */ }
             <div className="space-y-6 text-white leading-relaxed">
               <p>
-                The esteemed Dr. Cousins is the Founder and senior pastor of <Link href='https://www.lfcc.tv'>Love First Christian Center</Link> in Riverview, FL. He is an accomplished author and contributing benefactor and producer of the critically acclaimed movie, "A Question of Faith." Leveraging his nationally recognized status as a retired NFL defensive end for the Arizona Cardinals and the New York Giants, he has extended his reach within the community through self-motivation seminars, presentation competencies, youth partnership programs, and financial wealth symposiums.
+                Dr. Cousins is the founder and senior pastor of <Link href='https://www.lfcc.tv'>Love First Christian Center</Link> in Riverview, FL. He is an author, a producer of the movie "A Question of Faith," and a retired NFL defensive end who played for the Arizona Cardinals and the New York Giants. After football, he channeled that same competitive drive into ministry, motivational speaking, financial seminars, and youth development programs.
               </p>
               <p>
-                Dr. Cousins is an alumnus of Florida A&M University where his motivational speaking journey began, encouraging high school students to seek a higher education. He was the first generation in his family to go to college. Dr. Cousins went on to earn his PhD from Tabernacle Bible College.
+                Dr. Cousins was the first in his family to attend college. He went to Florida A&M University, where he started speaking to high school students about pursuing higher education. He later earned his PhD from Tabernacle Bible College.
               </p>
               <p>
-                Included in his accolades is his creation of The Gap (The Guaranteed Achievable Plan), a formula derived to achieve unlimited success and capital gain. Of all his accolades and accomplishments, Dr. Cousins is most proud of his first ministry, his marriage to Dr. Charmaine and their beautiful children Jomo, Jamya, and Josiah.
+                He also created The Gap (The Guaranteed Achievable Plan), a goal-setting framework that breaks down big ambitions into concrete, actionable steps. But of everything he's accomplished, Dr. Cousins says he's most proud of his marriage to Dr. Charmaine and their three children: Jomo, Jamya, and Josiah.
               </p>
             </div>
           </div>
@@ -266,7 +266,7 @@ export default function AboutPage() {
               <span className="text-[#2d2d2d]">ICES</span>
             </h2>
             <p className="text-gray-600 text-lg">
-              Leaving audiences inspired and ready to achieve.
+              What your audience walks away with.
             </p>
           </div>
         </div>
@@ -295,7 +295,7 @@ export default function AboutPage() {
                   Motivational<br />Speaking
                 </h4>
                 <p className="text-gray-300">
-                  Get inspired to keep life I.R.I.E., and learn the action steps needed to take your life to the next level.
+                  Your audience leaves with a clear plan of action, not just motivation. Dr. Cousins shares real stories and practical steps drawn from the NFL, ministry, and beating cancer.
                 </p>
               </div>
 
@@ -314,7 +314,7 @@ export default function AboutPage() {
                   Financial<br />Seminars
                 </h4>
                 <p className="text-gray-300">
-                  Unlock your potential with financial literacy and financial discipline tips from Dr. Cousins.
+                  Practical sessions on budgeting, building wealth, and developing financial discipline. Designed for corporate teams, church groups, and community organizations.
                 </p>
               </div>
 
@@ -333,7 +333,7 @@ export default function AboutPage() {
                   Youth<br />Programs
                 </h4>
                 <p className="text-gray-300">
-                  The future is already here. Set your youth up for limitless success in all aspects of their life.
+                  Programs focused on leadership, goal-setting, and college readiness. Dr. Cousins was the first in his family to attend college and speaks directly to what young people need to hear.
                 </p>
               </div>
             </div>
@@ -384,11 +384,7 @@ export default function AboutPage() {
               </h2>
 
               <p className="text-white leading-relaxed text-lg mb-12">
-                Dr. Cousins was diagnosed with colon cancer in 2014. During those
-                trying times, he kept his faith and commitment to God's people,
-                fighting every day to spread inspiration. Dr. Cousins is now
-                cancer-free by the grace of God. Life is precious, and it's never
-                too soon to unlock the power of your potential!
+                Dr. Cousins was diagnosed with colon cancer in 2014. Through treatment, he never stopped showing up for his congregation or his daily prayer line. He is now cancer-free by the grace of God. That fight changed how he sees everything, and it shows in every message he delivers.
               </p>
             </div>
 
@@ -407,7 +403,7 @@ export default function AboutPage() {
             <div className="absolute bottom-0 right-1/2 translate-x-1/2 md:right-0 md:translate-x-0 w-[72%] md:w-[46%] h-[50vh] md:h-[700px] z-20 drop-shadow-[0_40px_80px_rgba(0,0,0,0.6)]">
               <Image
                 src="/images/jc-png/_JC_NewPhotos Edit515_edited.webp"
-                alt="Dr. Jomo Cousins - Cancer Free"
+                alt="Dr. Jomo Cousins - Cancer Survivor and Motivational Speaker"
                 fill
                 priority
                 sizes="(max-width: 768px) 80vw, 45vw"
@@ -427,18 +423,20 @@ export default function AboutPage() {
         <div className="container mx-auto px-5">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="mb-6 text-4xl font-bold md:text-5xl">
-              Ready to Transform Your <span className="text-[#e31e24]">Event?</span>
+              Book Dr. Cousins for Your Next <span className="text-[#e31e24]">Event</span>
             </h2>
-            <p className="mb-10 text-xl text-gray-300">
-              Book Dr. Jomo Cousins for your next company event, church gathering,
-              youth program, or financial seminar.
+            <p className="mb-4 text-xl text-gray-300">
+              Corporate keynotes, church events, youth programs, and financial seminars. Available in-person or virtual, nationwide.
+            </p>
+            <p className="mb-10 text-sm text-gray-400">
+              Fill out a quick form and our team will get back to you within 48 hours.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Link
                 href="/contact"
                 className="inline-block rounded-lg bg-[#e31e24] px-12 py-4 font-bold uppercase tracking-wide shadow-lg transition-all hover:scale-105 hover:bg-[#c41a1f] hover:shadow-xl"
               >
-                Contact for Booking
+                Request Booking Info
               </Link>
               <a
                 href="https://www.youtube.com/@PASTORJOMO"

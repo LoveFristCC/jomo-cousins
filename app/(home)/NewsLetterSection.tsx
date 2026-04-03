@@ -56,7 +56,7 @@ export default function NewsletterSection() {
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">Stay Connected</h2>
             <p className="text-lg text-gray-300">
-              Get the latest updates, inspirational content, and exclusive resources delivered to your inbox.
+              Get new sermon highlights, event announcements, and prayer resources delivered to your inbox.
             </p>
           </div>
 

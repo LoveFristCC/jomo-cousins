@@ -8,7 +8,11 @@ import NewsletterSection from "./NewsLetterSection";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Pastor, Author, & Motivational Speaker | Dr Jomo Cousins",
+  title: {
+    absolute: "Dr. Jomo Cousins | Motivational Speaker & Pastor | Tampa, FL",
+  },
+  description:
+    "Book Dr. Jomo Cousins for motivational speaking, financial seminars, and youth programs. NFL veteran, cancer survivor, and pastor based in Tampa, FL.",
   alternates: {
     canonical: "https://www.jomocousins.com/",
   },
@@ -17,9 +21,54 @@ export const metadata: Metadata = {
 // Revalidate every 20 minutes to match Sanity CDN caching
 export const revalidate = 1200;
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What types of events does Dr. Jomo Cousins speak at?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Dr. Jomo Cousins speaks at corporate events, church gatherings, youth programs, financial seminars, and conferences. He is available for both in-person and virtual engagements nationwide.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Where is Dr. Jomo Cousins based?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Dr. Jomo Cousins is based in Riverview, FL (Tampa Bay area). He is the founder and senior pastor of Love First Christian Center and travels nationwide for speaking engagements.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How do I book Dr. Jomo Cousins for a speaking engagement?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "You can request booking information by filling out the contact form on jomocousins.com/contact. The team typically responds within 48 hours.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What is the I.R.I.E. Method?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "The I.R.I.E. Method is Dr. Jomo Cousins' motivational speaking framework. It stands for Impact, Resonate, Inspire, and Entertain. Born in Jamaica where 'everything is irie' (meaning all good), Dr. Cousins built this approach around authenticity and actionable takeaways.",
+      },
+    },
+  ],
+};
+
 export default function HomePage() {
   return (
     <div className="bg-white">
+      {/* FAQ Schema */ }
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={ { __html: JSON.stringify(faqSchema) } }
+      />
+
       {/* Hero Section */ }
       <section
         id="home"
@@ -51,28 +100,26 @@ export default function HomePage() {
                   className="mb-6 hidden h-16 w-auto md:block"
                   loading="lazy"
                 />
-                UNLOCK THE
+                PURPOSE ISN'T
                 <br />
-                POWER OF
+                FOUND. IT'S
                 <br />
-                PURPOSE IN
-                <br />
-                YOUR <span className="text-[#e31e24]">LIFE!</span>
+                <span className="text-[#e31e24]">BUILT.</span>
               </h1>
               <p className="mb-8 max-w-md text-base leading-relaxed text-gray-700">
-                Whether at a school, an organization, or the general public, motivational speaker and pastor Dr. Jomo Cousins inspires you to transform your thoughts and maximize your potential.
+                From schools to boardrooms to Sunday services, motivational speaker and pastor Dr. Jomo Cousins helps people take action on their goals and live with intention.
               </p>
               <Link
                 href="/contact"
                 className="inline-block rounded-lg bg-[#e31e24] px-8 py-3 text-sm font-bold uppercase tracking-wide text-white shadow-lg transition-all hover:scale-105 hover:bg-[#c41a1f] hover:shadow-xl"
               >
-                Book Now
+                Book Dr. Cousins
               </Link>
             </div>
             <div className="relative w-full max-w-[600px]">
               <Image
                 src="/images/jc-png/heroJomo.webp"
-                alt="Dr. Jomo Cousins"
+                alt="Dr. Jomo Cousins - Motivational Speaker and Pastor in Tampa, FL"
                 width={ 600 }
                 height={ 700 }
                 className="mx-auto w-full h-auto"
@@ -110,16 +157,16 @@ export default function HomePage() {
               </h2>
               <div className="space-y-6 text-lg leading-relaxed text-white">
                 <p>
-                  Dr. Jomo Cousins has been hailed as "a millennial leader of the Christian community" and "a beacon of faith" by both international and national media. A retired NFL defensive end for the New York Giants and the Arizona Cardinals, he has extended his reach within the community through self-motivation seminars, presentation competencies, financial wealth symposiums, and youth partnership programs.
+                  Dr. Jomo Cousins is a retired NFL defensive end who played for the New York Giants and the Arizona Cardinals. After football, he turned that same discipline toward ministry, founding Love First Christian Center in Riverview, FL. Today he speaks at corporate events, churches, schools, and youth programs across the country.
                 </p>
                 <p className="flex items-start justify-center gap-3 md:justify-start">
                   <svg className="mt-1 h-6 w-6 flex-shrink-0 text-[#e31e24]" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                   <span>
-                    Alumnus of Florida A&M University
+                    First in his family to attend college
                     <br />
-                    and Tabernacle Bible College
+                    (Florida A&M University, PhD from Tabernacle Bible College)
                   </span>
                 </p>
                 <p className="flex items-start justify-center gap-3 md:justify-start">
@@ -127,9 +174,9 @@ export default function HomePage() {
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                   <span>
-                    Creator of The Gap
+                    Creator of The Gap (The Guaranteed Achievable Plan),
                     <br />
-                    (The Guaranteed Achievable Plan)
+                    a step-by-step framework for setting and reaching goals
                   </span>
                 </p>
               </div>
@@ -181,7 +228,7 @@ export default function HomePage() {
                 IMPACT
               </h3>
               <p className="text-gray-700">
-                Each engagement presents a new opportunity to make a lasting impact every time. Dr. Jomo Cousins is ready to make a lasting impact every time.
+                Every audience is different, and Dr. Jomo Cousins prepares for each one. The goal is always the same: leave people with something they can act on, not just feel good about.
               </p>
             </div>
 
@@ -196,7 +243,7 @@ export default function HomePage() {
                 RESONATE
               </h3>
               <p className="text-gray-700">
-                Authenticity? Check. Connecting with people on a human level? Check. Dr. Jomo Cousins is bound to resonate when these two things are present.
+                Dr. Cousins speaks from experience, not a script. When you've played in the NFL, beaten cancer, and built a church from the ground up, people can tell you mean what you say.
               </p>
             </div>
 
@@ -236,7 +283,7 @@ export default function HomePage() {
               href="/contact"
               className="inline-block rounded-lg bg-[#e31e24] px-12 py-4 font-bold uppercase tracking-wide text-white shadow-lg transition-all hover:scale-105 hover:bg-[#c41a1f] hover:shadow-xl"
             >
-              Book Now
+              Book Dr. Cousins
             </Link>
           </div>
         </div>
@@ -315,11 +362,11 @@ export default function HomePage() {
               </h2>
 
               <p className="mb-6 text-lg leading-relaxed text-gray-300">
-                Whether you're seeking personal growth, spiritual enlightenment, or a fresh perspective, Dr. Jomo Cousins has got you covered. If you haven't already, make sure to check out some of Dr. Jomo Cousins' most recent videos on YouTube. They are packed with life-changing insights, practical advice, and soul-stirring motivation.
+                Dr. Jomo Cousins shares weekly messages on faith, discipline, and personal growth on YouTube. Whether you're working through a tough season or looking for a new perspective, his videos offer honest, practical advice rooted in real experience.
               </p>
 
               <p className="mb-8 text-lg leading-relaxed text-gray-300">
-                Join the movement of individuals who are embracing a life of purpose and fulfillment. Hit that subscribe button and turn on the notification bell, so you never miss an update.
+                Subscribe to the channel so you don't miss new content. Thousands of viewers tune in each week.
               </p>
 
               {/* Video Embeds */ }
@@ -345,7 +392,7 @@ export default function HomePage() {
                 </div> */}
 
               <p className="mb-8 text-base italic text-gray-400">
-                Get ready to unlock your full potential and embark on an incredible journey of personal growth with God in the center. Welcome to the movement!
+                Real talk about faith, purpose, and what it takes to keep going when things get hard.
               </p>
 
               {/* Social Media Icons */ }
@@ -460,13 +507,10 @@ export default function HomePage() {
               Join the <span className="text-[#e31e24]">6:30 AM Prayer Line</span>
             </h2>
             <p className="mb-6 text-xl leading-relaxed text-gray-700">
-              For nearly 11 years, Dr. Jomo Cousins has consistently hosted a 6:30 AM
-              weekday prayer line accessible via social media, touching lives around
-              the world with daily devotions and prayers.
+              Every weekday morning at 6:30 AM, Dr. Jomo Cousins goes live on social media to pray with people around the world. He's done this for over 11 years straight, rain or shine, including through his own cancer treatment.
             </p>
             <p className="mb-10 text-lg text-gray-600">
-              Start your day with powerful prayer and encouragement. Connect with
-              believers worldwide every weekday morning.
+              Start your morning with prayer, encouragement, and a community of believers who show up for each other every day.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Link
@@ -587,18 +631,20 @@ export default function HomePage() {
         <div className="container mx-auto px-5">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="mb-6 text-4xl font-bold md:text-5xl">
-              Ready to Transform Your <span className="text-[#e31e24]">Event?</span>
+              Book Dr. Cousins for Your Next <span className="text-[#e31e24]">Event</span>
             </h2>
-            <p className="mb-10 text-xl text-gray-300">
-              Book Dr. Jomo Cousins for your next company event, church gathering,
-              youth program, or financial seminar.
+            <p className="mb-4 text-xl text-gray-300">
+              Corporate keynotes, church events, youth programs, and financial seminars. Available in-person or virtual, nationwide.
+            </p>
+            <p className="mb-10 text-sm text-gray-400">
+              Fill out a quick form and our team will get back to you within 48 hours.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Link
                 href="/contact"
                 className="inline-block rounded-lg bg-[#e31e24] px-12 py-4 font-bold uppercase tracking-wide shadow-lg transition-all hover:scale-105 hover:bg-[#c41a1f] hover:shadow-xl"
               >
-                Contact for Booking
+                Request Booking Info
               </Link>
               <a
                 href="https://www.youtube.com/@PASTORJOMO"
