@@ -100,11 +100,13 @@ export default function HomePage() {
                   className="mb-6 hidden h-16 w-auto md:block"
                   loading="lazy"
                 />
-                PURPOSE ISN'T
+                UNLOCK THE
                 <br />
-                FOUND. IT'S
+                POWER OF
                 <br />
-                <span className="text-[#e31e24]">BUILT.</span>
+                PURPOSE IN
+                <br />
+                YOUR <span className="text-[#e31e24]">LIFE!</span>
               </h1>
               <p className="mb-8 max-w-md text-base leading-relaxed text-gray-700">
                 From schools to boardrooms to Sunday services, motivational speaker and pastor Dr. Jomo Cousins helps people take action on their goals and live with intention.
