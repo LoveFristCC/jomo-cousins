@@ -56,6 +56,15 @@ Browse prayers organized by topic including:
 ### Prayer Request Submission
 Submit personal prayer requests to Pastor Jomo Cousins. All requests are confidential and prayed over personally. The philosophy is "You're not alone—I'm praying with you."
 
+### Prayer Videos
+Video prayers from Pastor Jomo Cousins with YouTube integration and full transcripts.
+
+### Prayer of the Day
+A featured daily prayer highlighted on the prayer ministry page.
+
+### Prayer Testimonials
+Community members can share testimonials about answered prayers (subject to approval).
+
 ### Prayer Search
 Search the prayer database by keyword to find specific prayers for your situation.
 
@@ -133,6 +142,8 @@ Website: https://www.lfcc.tv
 /marriage/blog/[slug]      - Individual blog posts
 /marriage/contact          - Marriage counseling contact
 /prayer                    - Prayer ministry home
+/prayer/daily              - Daily prayer / prayer of the day
+/prayer/[slug]             - Individual prayer pages
 /prayer/category           - Browse prayer categories
 /prayer/category/[slug]    - Prayers by category
 /prayer/search             - Search prayers
@@ -140,8 +151,12 @@ Website: https://www.lfcc.tv
 /products                  - Shop all products
 /products/[slug]           - Individual product pages
 /books/[slug]/preview      - Free book preview chapters
+/thank-you                 - Post-purchase thank you page
+/thank-you/complete        - Order completion page
+/thank-you/upsell-2        - Secondary upsell offer
 /privacy                   - Privacy policy
 /terms                     - Terms of service
+/return-policy             - Return policy
 ```
 
 ## Technical Information
@@ -153,6 +168,10 @@ Website: https://www.lfcc.tv
 - Vercel hosting
 - TypeScript
 - Tailwind CSS
+- Nodemailer for email
+- Google reCAPTCHA for form protection
+- jsPDF for PDF generation
+- Vercel Speed Insights
 
 **SEO Features:**
 - Comprehensive structured data (Schema.org)
@@ -217,7 +236,7 @@ Primary audiences:
 
 ## Updates & Maintenance
 
-This llms.txt file was last updated: January 2026
+This llms.txt file was last updated: April 2026
 
 For the most current information, visit https://www.jomocousins.com
 
