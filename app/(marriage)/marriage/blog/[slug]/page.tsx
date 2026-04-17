@@ -417,20 +417,12 @@ export default async function BlogPostPage({
             <p className="mb-8 text-lg text-blue-100">
               Dr. Jomo & Dr. Charmaine offer personalized marriage counseling, premarital prep, and relationship coaching.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/marriage/contact"
-                className="inline-block rounded-lg bg-white px-8 py-4 font-bold text-[#0E6BB7] shadow-lg transition-all hover:scale-105 hover:shadow-xl"
-              >
-                Schedule Counseling
-              </Link>
-              <Link
-                href="/marriage"
-                className="inline-block rounded-lg border-2 border-white px-8 py-4 font-bold text-white transition-all hover:bg-white hover:text-[#0E6BB7]"
-              >
-                Learn More About Our Services
-              </Link>
-            </div>
+            <Link
+              href="/marriage/contact"
+              className="inline-block rounded-lg bg-white px-8 py-4 font-bold text-[#0E6BB7] shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+            >
+              Schedule Counseling
+            </Link>
           </div>
         </div>
       </section>
@@ -469,12 +461,6 @@ export default async function BlogPostPage({
                       className="text-[#0E6BB7] font-semibold hover:underline"
                     >
                       More Couples Corner Articles →
-                    </Link>
-                    <Link
-                      href="/prayer/daily"
-                      className="text-[#0E6BB7] font-semibold hover:underline"
-                    >
-                      Join Daily Prayer →
                     </Link>
                   </div>
                 </div>
@@ -538,69 +524,6 @@ export default async function BlogPostPage({
           </div>
         </section>
       ) }
-
-      {/* Explore More Resources */ }
-      <section className="bg-white py-16 border-t border-gray-100">
-        <div className="container mx-auto px-5">
-          <div className="mx-auto max-w-5xl">
-            <h2 className="mb-8 text-center text-2xl font-bold text-[#303030] md:text-3xl">
-              Explore More Marriage Resources
-            </h2>
-            <div className="grid gap-6 md:grid-cols-3">
-              <Link
-                href="/marriage/blog"
-                className="group rounded-lg border-2 border-gray-200 bg-white p-6 transition-all hover:border-[#ea8125] hover:shadow-lg"
-              >
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#ea8125]/10">
-                  <svg className="h-6 w-6 text-[#ea8125]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <h3 className="mb-2 font-bold text-lg text-[#303030] group-hover:text-[#ea8125]">
-                  All Blog Posts
-                </h3>
-                <p className="text-sm text-gray-600">
-                  Browse all marriage advice articles
-                </p>
-              </Link>
-
-              <Link
-                href="/marriage/contact"
-                className="group rounded-lg border-2 border-gray-200 bg-white p-6 transition-all hover:border-[#0E6BB7] hover:shadow-lg"
-              >
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#0E6BB7]/10">
-                  <svg className="h-6 w-6 text-[#0E6BB7]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                  </svg>
-                </div>
-                <h3 className="mb-2 font-bold text-lg text-[#303030] group-hover:text-[#0E6BB7]">
-                  Marriage Counseling
-                </h3>
-                <p className="text-sm text-gray-600">
-                  Get personalized support for your relationship
-                </p>
-              </Link>
-
-              <Link
-                href="/prayer/daily"
-                className="group rounded-lg border-2 border-gray-200 bg-white p-6 transition-all hover:border-[#0E6BB7] hover:shadow-lg"
-              >
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#0E6BB7]/10">
-                  <svg className="h-6 w-6 text-[#0E6BB7]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="mb-2 font-bold text-lg text-[#303030] group-hover:text-[#0E6BB7]">
-                  Daily Prayer
-                </h3>
-                <p className="text-sm text-gray-600">
-                  Join the 6:30 AM prayer line
-                </p>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Newsletter Section */ }
       <section className="bg-white py-20 md:py-32">
