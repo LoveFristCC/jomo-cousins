@@ -142,7 +142,6 @@ export default async function CategoryPage({ params }: Props) {
         name: `${category.title} Prayers with Jomo Cousins`,
         description: category.description,
         url: `https://www.jomocousins.com/prayer/category/${category.slug}`,
-        numberOfItems: actualPrayers?.length || 0,
         author: {
           "@type": "Person",
           name: "Jomo Cousins",
