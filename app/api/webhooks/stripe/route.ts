@@ -138,7 +138,9 @@ export async function POST(request: NextRequest) {
             id: invoice.id,
           } as Stripe.Checkout.Session;
 
-          await handleDigitalProductOrder(sessionData, metadata);
+          const isFirstInvoice =
+            invoice.billing_reason === "subscription_create";
+          await handleDigitalProductOrder(sessionData, metadata, isFirstInvoice);
         }
       }
     }
@@ -353,7 +355,8 @@ async function handlePhysicalProductOrder(
  */
 async function handleDigitalProductOrder(
   session: Stripe.Checkout.Session,
-  metadata: CheckoutMetadata
+  metadata: CheckoutMetadata,
+  sendEmail: boolean = true
 ) {
   try {
     const { kajabiWebhookUrl, productName } = metadata;
@@ -409,26 +412,26 @@ async function handleDigitalProductOrder(
       }
     }
 
-    // Send thank you email with Kajabi login link
-    try {
-      if (customerEmail) {
-        // Extract line items if available
-        const items = [{ name: productName || "Digital Product", quantity: 1 }];
+    // Send thank you email with Kajabi login link (only on first purchase, not recurring invoices)
+    if (sendEmail) {
+      try {
+        if (customerEmail) {
+          const items = [{ name: productName || "Digital Product", quantity: 1 }];
 
-        await sendPurchaseThankYouEmail({
-          customerEmail,
-          customerName,
-          orderNumber: session.id,
-          items,
-          productType: "digital",
-        });
+          await sendPurchaseThankYouEmail({
+            customerEmail,
+            customerName,
+            orderNumber: session.id,
+            items,
+            productType: "digital",
+          });
+        }
+      } catch (emailError) {
+        console.error(
+          "[Webhook] Failed to send thank you email for digital product:",
+          emailError
+        );
       }
-    } catch (emailError) {
-      console.error(
-        "[Webhook] Failed to send thank you email for digital product:",
-        emailError
-      );
-      // Don't fail the webhook - email is nice-to-have
     }
   } catch (error) {
     console.error("[Webhook] Error handling digital product order:", error);

@@ -47,8 +47,8 @@ export default async function BookPreviewPage({
   const baseUrl = "https://www.jomocousins.com";
   const previewUrl = `${baseUrl}/books/${slug}/preview`;
   const productUrl = `${baseUrl}/products/${slug}`;
-  const imageUrl = product.images?.[0]
-    ? urlForImage(product.images[0])?.width(1200).height(1200).url()
+  const imageUrl = product.images?.[ 0 ]
+    ? urlForImage(product.images[ 0 ])?.width(1200).height(1200).url()
     : undefined;
 
   const structuredData = {
@@ -105,7 +105,7 @@ export default async function BookPreviewPage({
         inLanguage: "en-US",
         url: productUrl,
         image: imageUrl,
-        description: product.excerpt || product.description?.[0]?.children?.[0]?.text || "",
+        description: product.excerpt || product.description?.[ 0 ]?.children?.[ 0 ]?.text || "",
         offers: {
           "@type": "Offer",
           url: productUrl,
@@ -155,10 +155,10 @@ export default async function BookPreviewPage({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
-      {/* Structured Data */}
+      {/* Structured Data */ }
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        dangerouslySetInnerHTML={ { __html: JSON.stringify(structuredData) } }
       />
       {/* Header with book info and CTA */ }
       <div className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
@@ -484,7 +484,7 @@ export async function generateMetadata({
   const previewUrl = `${baseUrl}/books/${slug}/preview`;
   const { previewChapter } = product;
 
-  const title = `${previewChapter.title} - Free Chapter from ${product.name}`;
+  const title = `${previewChapter.title} - Preview of ${product.name}`;
   const description = `Read a free preview chapter from "${product.name}" by ${product.author || "Dr. Jomo Cousins"}. ${product.excerpt?.substring(0, 100) || "Discover powerful insights on faith, purpose, and personal transformation."}`;
 
   const imageUrl = product.images?.[ 0 ]
