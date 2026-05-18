@@ -502,6 +502,86 @@ export default async function PrayerVideoPage({ params }: Props) {
         ) }
       </article>
 
+      {/* Prayer Book Section */ }
+      { prayerBook && prayerBook.status === "active" && (
+        <section className="bg-gray-50 py-16">
+          <div className="container mx-auto px-5">
+            <div className="mx-auto max-w-4xl">
+              <div className="text-center mb-8">
+                <p className="text-sm uppercase tracking-wide text-[#e31e24] font-semibold mb-2">
+                  { primaryCategory ? `Recommended for ${primaryCategory.title}` : "Continue Your Journey" }
+                </p>
+                <h2 className="text-3xl font-bold text-[#3d3d3d] mb-4">
+                  { primaryCategory ? `Go Deeper in ${primaryCategory.title}` : "Deepen Your Prayer Life" }
+                </h2>
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                  Continue what God started in this prayer with a resource handpicked for your journey.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div className="grid md:grid-cols-2 gap-8 p-8">
+                  {/* Book Image */ }
+                  <div className="flex items-center justify-center">
+                    { prayerBook.images && prayerBook.images.length > 0 && (
+                      <div className="relative w-full max-w-sm aspect-[3/4] rounded-lg overflow-hidden shadow-lg">
+                        <Image
+                          src={ urlForImage(prayerBook.images[ 0 ])?.url() || "" }
+                          alt={ prayerBook.name }
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                    ) }
+                  </div>
+
+                  {/* Book Details */ }
+                  <div className="flex flex-col justify-center">
+                    { primaryCategory && (
+                      <span className="mb-2 inline-block w-fit rounded-full bg-[#e31e24]/10 px-3 py-1 text-xs font-semibold text-[#e31e24]">
+                        Pastor Jomo&apos;s Pick for { primaryCategory.title }
+                      </span>
+                    ) }
+                    <h3 className="text-2xl font-bold text-[#3d3d3d] mb-4">
+                      { prayerBook.name }
+                    </h3>
+                    { prayerBook.excerpt && (
+                      <p className="text-gray-600 mb-6 leading-relaxed">
+                        { prayerBook.excerpt }
+                      </p>
+                    ) }
+
+                    {/* CTA Button */ }
+                    <Link
+                      href={ `/products/${prayerBook.slug}` }
+                      className="inline-block text-center rounded-lg bg-[#e31e24] px-8 py-4 font-bold text-white shadow-lg transition-all hover:bg-[#c41a1f] mb-6"
+                    >
+                      Get Your Copy
+                    </Link>
+
+                    {/* Trust Badges */ }
+                    <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                      <div className="flex items-center gap-2">
+                        <svg className="h-5 w-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span>Fast Shipping</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <svg className="h-5 w-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span>Secure Checkout</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      ) }
+
       {/* Related Prayers Section */ }
       { relatedPrayers && relatedPrayers.length > 0 && (
         <section className="bg-gray-50 py-16">
@@ -593,86 +673,6 @@ export default async function PrayerVideoPage({ params }: Props) {
           </div>
         </div>
       </section>
-
-      {/* Prayer Book Section */ }
-      { prayerBook && prayerBook.status === "active" && (
-        <section className="bg-gray-50 py-16">
-          <div className="container mx-auto px-5">
-            <div className="mx-auto max-w-4xl">
-              <div className="text-center mb-8">
-                <p className="text-sm uppercase tracking-wide text-[#e31e24] font-semibold mb-2">
-                  { primaryCategory ? `Recommended for ${primaryCategory.title}` : "Continue Your Journey" }
-                </p>
-                <h2 className="text-3xl font-bold text-[#3d3d3d] mb-4">
-                  { primaryCategory ? `Go Deeper in ${primaryCategory.title}` : "Deepen Your Prayer Life" }
-                </h2>
-                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  Continue what God started in this prayer with a resource handpicked for your journey.
-                </p>
-              </div>
-
-              <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-                <div className="grid md:grid-cols-2 gap-8 p-8">
-                  {/* Book Image */ }
-                  <div className="flex items-center justify-center">
-                    { prayerBook.images && prayerBook.images.length > 0 && (
-                      <div className="relative w-full max-w-sm aspect-[3/4] rounded-lg overflow-hidden shadow-lg">
-                        <Image
-                          src={ urlForImage(prayerBook.images[ 0 ])?.url() || "" }
-                          alt={ prayerBook.name }
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                    ) }
-                  </div>
-
-                  {/* Book Details */ }
-                  <div className="flex flex-col justify-center">
-                    { primaryCategory && (
-                      <span className="mb-2 inline-block w-fit rounded-full bg-[#e31e24]/10 px-3 py-1 text-xs font-semibold text-[#e31e24]">
-                        Pastor Jomo&apos;s Pick for { primaryCategory.title }
-                      </span>
-                    ) }
-                    <h3 className="text-2xl font-bold text-[#3d3d3d] mb-4">
-                      { prayerBook.name }
-                    </h3>
-                    { prayerBook.excerpt && (
-                      <p className="text-gray-600 mb-6 leading-relaxed">
-                        { prayerBook.excerpt }
-                      </p>
-                    ) }
-
-                    {/* CTA Button */ }
-                    <Link
-                      href={ `/products/${prayerBook.slug}` }
-                      className="inline-block text-center rounded-lg bg-[#e31e24] px-8 py-4 font-bold text-white shadow-lg transition-all hover:bg-[#c41a1f] mb-6"
-                    >
-                      Get Your Copy
-                    </Link>
-
-                    {/* Trust Badges */ }
-                    <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-                      <div className="flex items-center gap-2">
-                        <svg className="h-5 w-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                        <span>Fast Shipping</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <svg className="h-5 w-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                        <span>Secure Checkout</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      ) }
     </div>
   );
 }
