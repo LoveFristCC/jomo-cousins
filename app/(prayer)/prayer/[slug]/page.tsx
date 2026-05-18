@@ -123,6 +123,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+const categoryBookMap: Record<string, string> = {
+  "healing": "my-god-is-a-healer",
+  "prayer": "prayer-life-the-conversation",
+  "speech": "speak-it",
+  "direction": "how-to-hear-god",
+  "wisdom": "how-to-hear-god",
+  "anxiety-fear-worry": "prayer-life-the-conversation",
+  "courage": "fully-equipped-you-have-all-you-need-to-succeed",
+  "faith": "fully-equipped-you-have-all-you-need-to-succeed",
+  "identity": "youre-in-a-place-too-small-for-your-call",
+  "acceptance": "youre-in-a-place-too-small-for-your-call",
+};
+
+const defaultBookSlug = "prayer-life-the-conversation";
+
 export default async function PrayerVideoPage({ params }: Props) {
   const { slug } = await params;
   const prayer = await sanityFetch({
@@ -136,6 +151,10 @@ export default async function PrayerVideoPage({ params }: Props) {
 
   // Get category IDs for related prayers
   const categoryIds = prayer.categories?.map((cat: any) => cat._ref) || [];
+
+  // Get primary category for breadcrumb and book recommendation
+  const primaryCategory = prayer.categories?.[ 0 ];
+  const bookSlug = (primaryCategory?.slug && categoryBookMap[primaryCategory.slug]) || defaultBookSlug;
 
   // Fetch all related content in parallel
   const [ relatedPrayers, nextPrayer, previousPrayer, prayerBook ] = await Promise.all([
@@ -157,12 +176,9 @@ export default async function PrayerVideoPage({ params }: Props) {
     }),
     sanityFetch({
       query: productBySlugQuery,
-      params: { slug: "prayer-life-the-conversation" },
+      params: { slug: bookSlug },
     }),
   ]);
-
-  // Get primary category for breadcrumb
-  const primaryCategory = prayer.categories?.[ 0 ];
 
   // Get video ID with fallback
   const videoId = getYouTubeVideoId(prayer.youtubeVideoId, prayer.youtubeUrl);
@@ -339,11 +355,18 @@ export default async function PrayerVideoPage({ params }: Props) {
         </header>
 
         {/* Video Section */ }
-        <section className="bg-gradient-to-b from-gray-50 to-white py-12">
+        <section className="bg-gradient-to-b from-[#1a1a1a] to-[#2d2d2d] py-10 md:py-14">
           <div className="container mx-auto px-5">
             <div className="mx-auto max-w-5xl">
+              <div className="mb-6 flex items-center justify-center gap-3 text-center">
+                <div className="h-px flex-1 max-w-16 bg-white/20" />
+                <p className="text-sm font-semibold uppercase tracking-widest text-white/70">
+                  Press play to pray with Pastor Jomo
+                </p>
+                <div className="h-px flex-1 max-w-16 bg-white/20" />
+              </div>
               { videoId ? (
-                <div className="overflow-hidden rounded-2xl shadow-2xl ring-1 ring-gray-200">
+                <div className="overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/10">
                   <YouTubePlayer
                     videoId={ videoId }
                     title={ prayer.title }
@@ -351,9 +374,14 @@ export default async function PrayerVideoPage({ params }: Props) {
                   />
                 </div>
               ) : (
-                <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-gray-100 flex items-center justify-center shadow-xl">
-                  <p className="text-gray-500">Video not available</p>
+                <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-gray-800 flex items-center justify-center shadow-xl">
+                  <p className="text-gray-400">Video not available</p>
                 </div>
+              ) }
+              { prayer.duration && (
+                <p className="mt-4 text-center text-sm text-white/50">
+                  { prayer.duration } min prayer
+                </p>
               ) }
             </div>
           </div>
@@ -573,13 +601,13 @@ export default async function PrayerVideoPage({ params }: Props) {
             <div className="mx-auto max-w-4xl">
               <div className="text-center mb-8">
                 <p className="text-sm uppercase tracking-wide text-[#e31e24] font-semibold mb-2">
-                  Continue Your Journey
+                  { primaryCategory ? `Recommended for ${primaryCategory.title}` : "Continue Your Journey" }
                 </p>
                 <h2 className="text-3xl font-bold text-[#3d3d3d] mb-4">
-                  Deepen Your Prayer Life
+                  { primaryCategory ? `Go Deeper in ${primaryCategory.title}` : "Deepen Your Prayer Life" }
                 </h2>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  Take the next step in your prayer journey with resources designed to help you grow closer to God.
+                  Continue what God started in this prayer with a resource handpicked for your journey.
                 </p>
               </div>
 
@@ -601,6 +629,11 @@ export default async function PrayerVideoPage({ params }: Props) {
 
                   {/* Book Details */ }
                   <div className="flex flex-col justify-center">
+                    { primaryCategory && (
+                      <span className="mb-2 inline-block w-fit rounded-full bg-[#e31e24]/10 px-3 py-1 text-xs font-semibold text-[#e31e24]">
+                        Pastor Jomo&apos;s Pick for { primaryCategory.title }
+                      </span>
+                    ) }
                     <h3 className="text-2xl font-bold text-[#3d3d3d] mb-4">
                       { prayerBook.name }
                     </h3>
@@ -615,7 +648,7 @@ export default async function PrayerVideoPage({ params }: Props) {
                       href={ `/products/${prayerBook.slug}` }
                       className="inline-block text-center rounded-lg bg-[#e31e24] px-8 py-4 font-bold text-white shadow-lg transition-all hover:bg-[#c41a1f] mb-6"
                     >
-                      Transform Your Prayer Life
+                      Get Your Copy
                     </Link>
 
                     {/* Trust Badges */ }
