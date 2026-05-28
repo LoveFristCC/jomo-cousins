@@ -13,7 +13,7 @@ export default function PrivacyPolicyPage() {
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-16 max-w-4xl">
         <h1 className="text-4xl font-bold text-[#3d3d3d] mb-4">Privacy Policy</h1>
-        <p className="text-gray-600 mb-8">Last Updated: { new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }</p>
+        <p className="text-gray-600 mb-8">Last Updated: May 28, 2026</p>
 
         <div className="prose prose-lg max-w-none">
           <section className="mb-8">
@@ -139,7 +139,56 @@ export default function PrivacyPolicyPage() {
               <div>
                 <h3 className="text-lg font-semibold text-[#3d3d3d] mb-2">Email Communications</h3>
                 <p className="text-gray-700 leading-relaxed">
-                  <strong>Email Service Provider:</strong> We use email services to send newsletters, order confirmations, and other communications.
+                  <strong>Gmail (Google Workspace):</strong> We use Google's Gmail SMTP service via Nodemailer to send newsletters, order confirmations, booking confirmations, prayer request responses, and other communications. View Google's privacy policy at{ ' ' }
+                  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#e31e24] hover:underline">
+                    policies.google.com/privacy
+                  </a>
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold text-[#3d3d3d] mb-2">Spam Protection</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  <strong>Google reCAPTCHA:</strong> We use Google reCAPTCHA on our contact, booking, and prayer request forms to protect against spam and abuse. reCAPTCHA collects hardware and software information, such as device and application data, and sends it to Google for analysis. Your use of reCAPTCHA is subject to Google's{ ' ' }
+                  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#e31e24] hover:underline">
+                    Privacy Policy
+                  </a> and{ ' ' }
+                  <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="text-[#e31e24] hover:underline">
+                    Terms of Service
+                  </a>.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold text-[#3d3d3d] mb-2">Advertising and Conversion Tracking</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  <strong>Meta (Facebook) Pixel:</strong> We use the Meta Pixel to measure the effectiveness of our advertising, understand the actions people take on our Site, and deliver targeted advertisements. The Meta Pixel collects data about your browsing activity, which is shared with Meta. You can manage your Meta ad preferences at{ ' ' }
+                  <a href="https://www.facebook.com/adpreferences" target="_blank" rel="noopener noreferrer" className="text-[#e31e24] hover:underline">
+                    facebook.com/adpreferences
+                  </a>. View Meta's privacy policy at{ ' ' }
+                  <a href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer" className="text-[#e31e24] hover:underline">
+                    facebook.com/privacy/policy
+                  </a>
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold text-[#3d3d3d] mb-2">Hosting and Infrastructure</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  <strong>Vercel:</strong> Our Site is hosted on Vercel's platform, which may collect server logs including IP addresses and request data for performance and security purposes. View Vercel's privacy policy at{ ' ' }
+                  <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-[#e31e24] hover:underline">
+                    vercel.com/legal/privacy-policy
+                  </a>
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold text-[#3d3d3d] mb-2">Font Delivery</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  <strong>Google Fonts:</strong> We use Google Fonts to deliver web fonts for consistent typography. Google may collect your IP address and browser information when fonts are loaded. View Google's privacy policy at{ ' ' }
+                  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#e31e24] hover:underline">
+                    policies.google.com/privacy
+                  </a>
                 </p>
               </div>
 
@@ -289,6 +338,16 @@ export default function PrivacyPolicyPage() {
                     <td className="px-4 py-3 text-sm text-gray-700">2 years</td>
                   </tr>
                   <tr>
+                    <td className="px-4 py-3 text-sm text-gray-700">Meta (Facebook) Pixel</td>
+                    <td className="px-4 py-3 text-sm text-gray-700">Advertising conversion tracking and targeted ads</td>
+                    <td className="px-4 py-3 text-sm text-gray-700">Up to 2 years</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 text-sm text-gray-700">Google reCAPTCHA</td>
+                    <td className="px-4 py-3 text-sm text-gray-700">Spam and abuse protection on forms</td>
+                    <td className="px-4 py-3 text-sm text-gray-700">6 months</td>
+                  </tr>
+                  <tr>
                     <td className="px-4 py-3 text-sm text-gray-700">Preference Cookies</td>
                     <td className="px-4 py-3 text-sm text-gray-700">Remember user preferences and settings</td>
                     <td className="px-4 py-3 text-sm text-gray-700">1 year</td>
@@ -301,7 +360,7 @@ export default function PrivacyPolicyPage() {
 
         <div className="mt-12 p-6 bg-gray-50 rounded-lg">
           <p className="text-sm text-gray-600 italic">
-            This Privacy Policy was last updated on { new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }. By continuing to use our Site after changes are posted, you accept the updated Privacy Policy.
+            This Privacy Policy was last updated on May 28, 2026. By continuing to use our Site after changes are posted, you accept the updated Privacy Policy.
           </p>
         </div>
       </div>

@@ -13,7 +13,7 @@ export default function TermsOfServicePage() {
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-16 max-w-4xl">
         <h1 className="text-4xl font-bold text-[#3d3d3d] mb-4">Terms of Service</h1>
-        <p className="text-gray-600 mb-8">Last Updated: { new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }</p>
+        <p className="text-gray-600 mb-8">Last Updated: May 28, 2026</p>
 
         <div className="prose prose-lg max-w-none">
           <section className="mb-8">
@@ -170,6 +170,26 @@ export default function TermsOfServicePage() {
             <p className="text-gray-700 leading-relaxed mb-4">
               The Site may contain links to third-party websites or services that are not owned or controlled by us. We have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party websites or services. You acknowledge and agree that we shall not be responsible or liable, directly or indirectly, for any damage or loss caused by or in connection with the use of any such content, goods, or services available on or through any such websites or services.
             </p>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              Our Site uses the following third-party services and technologies. By using the Site, you acknowledge and agree to the use of these services in accordance with their respective terms:
+            </p>
+            <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-2">
+              <li><strong>Stripe:</strong> Payment processing for all transactions</li>
+              <li><strong>Sanity.io:</strong> Content management system for site content</li>
+              <li><strong>Google Analytics:</strong> Website traffic and usage analytics</li>
+              <li><strong>Google reCAPTCHA:</strong> Spam and abuse protection on forms, subject to Google's Privacy Policy and Terms of Service</li>
+              <li><strong>Meta (Facebook) Pixel:</strong> Advertising conversion tracking and audience measurement</li>
+              <li><strong>Gmail (Google Workspace):</strong> Email delivery for order confirmations, booking requests, and communications via Nodemailer</li>
+              <li><strong>ShipStation:</strong> Order fulfillment and shipping for physical products</li>
+              <li><strong>Vercel:</strong> Website hosting and infrastructure</li>
+              <li><strong>Google Fonts:</strong> Web font delivery for site typography</li>
+            </ul>
+            <p className="text-gray-700 leading-relaxed">
+              Each of these services operates under its own terms of service and privacy policy. We encourage you to review those policies. For more information, please see our{ ' ' }
+              <a href="/privacy" className="text-[#e31e24] hover:underline">
+                Privacy Policy
+              </a>.
+            </p>
           </section>
 
           <section className="mb-8">
@@ -283,7 +303,7 @@ export default function TermsOfServicePage() {
 
         <div className="mt-12 p-6 bg-gray-50 rounded-lg">
           <p className="text-sm text-gray-600 italic">
-            These Terms of Service were last updated on { new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }. By continuing to use our Site after changes are posted, you accept the updated Terms.
+            These Terms of Service were last updated on May 28, 2026. By continuing to use our Site after changes are posted, you accept the updated Terms.
           </p>
         </div>
       </div>
