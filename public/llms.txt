@@ -122,12 +122,12 @@ Website: https://www.lfcc.tv
 - Instagram: @pastorjomo
 - Twitter/X: @pastorjomo
 - Facebook: Dr. Jomo Cousins
-- YouTube: Dr. Jomo Cousins
+- YouTube: @PASTORJOMO
 
 **Marriage Ministry:**
 - Website: https://www.jomocousins.com/marriage
 - Social Media: @jomoandcharmaine_ (Instagram), @JomoCharmaine (Twitter)
-- YouTube: Jomo & Charmaine
+- YouTube: @jomocharmaine
 - Podcast: Available on YouTube
 
 ## Site Structure
@@ -236,13 +236,13 @@ Primary audiences:
 
 ## Updates & Maintenance
 
-This llms.txt file was last updated: April 2026
+This llms.txt file was last updated: May 2026
 
 For the most current information, visit https://www.jomocousins.com
 
 ---
 
-# Additional Resources
+## Additional Resources
 
 ## FAQ Integration
 Common questions answered on the site include:
