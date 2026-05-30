@@ -113,7 +113,7 @@ export default function ShopLayout({
               t.src=v;s=b.getElementsByTagName(e)[0];
               s.parentNode.insertBefore(t,s)}(window,document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '3053545348126120'); 
+              fbq('init', '1773876080649146'); 
               fbq('track', 'PageView');`,
           } }
         />
@@ -121,7 +121,7 @@ export default function ShopLayout({
           <img
             height="1"
             width="1"
-            src="https://www.facebook.com/tr?id=3053545348126120&ev=PageView&noscript=1"
+            src="https://www.facebook.com/tr?id=1773876080649146&ev=PageView&noscript=1"
             alt='facebook pixel'
           />
         </noscript>
