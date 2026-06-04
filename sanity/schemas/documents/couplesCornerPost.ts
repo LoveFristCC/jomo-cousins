@@ -222,6 +222,42 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "faqSection",
+      title: "FAQ (for AI search / structured data)",
+      type: "array",
+      description:
+        "Question & answer pairs for FAQPage structured data. IMPORTANT: only add Q&As whose answers already appear in the post content above — this markup mirrors visible content, it doesn't replace it.",
+      of: [
+        {
+          type: "object",
+          name: "faqItem",
+          fields: [
+            {
+              name: "question",
+              title: "Question",
+              type: "string",
+              validation: (rule) => rule.required(),
+            },
+            {
+              name: "answer",
+              title: "Answer",
+              type: "text",
+              rows: 4,
+              description: "Plain-text answer (must match what's in the post content)",
+              validation: (rule) => rule.required(),
+            },
+          ],
+          preview: {
+            select: { title: "question", subtitle: "answer" },
+          },
+        },
+      ],
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+    }),
+    defineField({
       name: "publishedAt",
       title: "Published Date",
       type: "datetime",

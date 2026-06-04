@@ -226,6 +226,24 @@ export default async function BlogPostPage({
     ],
   };
 
+  // FAQ structured data — only emitted when the post has Q&As (which mirror
+  // content already visible in the article body, per schema guidelines).
+  const faqStructuredData =
+    post.faqSection && post.faqSection.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: post.faqSection.map((faq) => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: faq.answer,
+            },
+          })),
+        }
+      : null;
+
   return (
     <div className="bg-white">
       {/* Structured Data */ }
@@ -237,6 +255,12 @@ export default async function BlogPostPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={ { __html: JSON.stringify(breadcrumbStructuredData) } }
       />
+      { faqStructuredData && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={ { __html: JSON.stringify(faqStructuredData) } }
+        />
+      ) }
       {/* Hero Section */ }
       <section className="relative bg-gradient-to-br from-[#FAFCFE] to-white py-20">
         <div className="container mx-auto px-5">
