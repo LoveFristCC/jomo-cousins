@@ -252,10 +252,6 @@ export default defineType({
           },
         },
       ],
-      options: {
-        collapsible: true,
-        collapsed: true,
-      },
     }),
     defineField({
       name: "publishedAt",
