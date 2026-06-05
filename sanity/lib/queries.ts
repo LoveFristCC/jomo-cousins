@@ -217,7 +217,8 @@ export const couplesCornerPostBySlugQuery = defineQuery(`
   *[_type == "couplesCornerPost" && slug.current == $slug] [0] {
     ${couplesCornerFields},
     content,
-    faqSection
+    faqSection,
+    _updatedAt
   }
 `);
 

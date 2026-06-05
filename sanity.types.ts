@@ -2231,7 +2231,7 @@ export type CouplesCornerPostsByCategoryQueryResult = Array<{
   } | null;
 }>;
 // Variable: couplesCornerPostBySlugQuery
-// Query: *[_type == "couplesCornerPost" && slug.current == $slug] [0] {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo,    content,    faqSection  }
+// Query: *[_type == "couplesCornerPost" && slug.current == $slug] [0] {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo,    content,    faqSection,    _updatedAt  }
 export type CouplesCornerPostBySlugQueryResult = {
   _id: string;
   title: string | null;
@@ -2306,6 +2306,7 @@ export type CouplesCornerPostBySlugQueryResult = {
     _type: "faqItem";
     _key: string;
   }> | null;
+  _updatedAt: string;
 } | null;
 // Variable: recentCouplesCornerPostsQuery
 // Query: *[_type == "couplesCornerPost"] | order(publishedAt desc) [0...$limit] {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
@@ -2877,7 +2878,7 @@ declare module "@sanity/client" {
     "\n  *[_type == \"couplesCornerPost\"] | order(publishedAt desc) {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": AllCouplesCornerPostsQueryResult;
     "\n  *[_type == \"couplesCornerPost\" && featured == true] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": FeaturedCouplesCornerPostsQueryResult;
     "\n  *[_type == \"couplesCornerPost\" && category == $category] | order(publishedAt desc) {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": CouplesCornerPostsByCategoryQueryResult;
-    "\n  *[_type == \"couplesCornerPost\" && slug.current == $slug] [0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n,\n    content,\n    faqSection\n  }\n": CouplesCornerPostBySlugQueryResult;
+    "\n  *[_type == \"couplesCornerPost\" && slug.current == $slug] [0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n,\n    content,\n    faqSection,\n    _updatedAt\n  }\n": CouplesCornerPostBySlugQueryResult;
     "\n  *[_type == \"couplesCornerPost\"] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": RecentCouplesCornerPostsQueryResult;
     "\n  *[_type == \"couplesCornerPost\" && slug.current != $slug && (\n    category == $category ||\n    count((tags[])[@ in $tags]) > 0\n  )] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": RelatedCouplesCornerPostsQueryResult;
     "\n  *[_type == \"couplesCornerPost\" && slug.current != $slug] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": RecentCouplesCornerPostsExcludingQueryResult;

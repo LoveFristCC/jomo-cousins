@@ -170,7 +170,7 @@ export default async function BlogPostPage({
     description: post.excerpt,
     image: imageUrl || undefined,
     datePublished: post.publishedAt,
-    dateModified: post.publishedAt,
+    dateModified: post._updatedAt || post.publishedAt,
     author: [
       {
         "@type": "Person",
@@ -300,6 +300,15 @@ export default async function BlogPostPage({
                 </svg>
                 <span>{ format(parseISO(post.publishedAt), "MMMM d, yyyy") }</span>
               </div>
+
+              { post._updatedAt && post._updatedAt !== post.publishedAt && (
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  <span>Updated { format(parseISO(post._updatedAt), "MMMM d, yyyy") }</span>
+                </div>
+              ) }
 
               { post.tags && post.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2">
@@ -608,6 +617,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       type: "article",
       url: `https://www.jomocousins.com/marriage/blog/${slug}`,
       publishedTime: post.publishedAt,
+      modifiedTime: post._updatedAt || post.publishedAt,
       authors: [ "Dr. Jomo Cousins", "Dr. Charmaine Cousins" ],
       images: imageUrl ? [ { url: imageUrl } ] : [],
     },
