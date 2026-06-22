@@ -283,21 +283,6 @@ export default async function PrayerVideoPage({ params }: Props) {
         datePublished: prayer.publishedAt,
         ...(prayerPlainText && { articleBody: prayerPlainText }),
       },
-      ...(hasFaq
-        ? [
-          {
-            "@type": "FAQPage",
-            mainEntity: prayer.faqSection.map((faq: any) => ({
-              "@type": "Question",
-              name: faq.question,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: faq.answer,
-              },
-            })),
-          },
-        ]
-        : []),
       {
         "@type": "Person",
         "@id": "https://jomocousins.com/#jomo",
@@ -307,6 +292,23 @@ export default async function PrayerVideoPage({ params }: Props) {
       },
     ],
   };
+
+  // FAQ structured data — emitted as its own script, only when the prayer has
+  // Q&As (which mirror content already visible on the page).
+  const faqStructuredData = hasFaq
+    ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: prayer.faqSection.map((faq: any) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    }
+    : null;
 
   const shareUrl = `https://jomocousins.com/prayer/${prayer.slug}`;
   const shareTitle = `${prayer.title} - Prayer with Pastor Jomo Cousins`;
@@ -326,6 +328,12 @@ export default async function PrayerVideoPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={ { __html: JSON.stringify(structuredData) } }
       />
+      { faqStructuredData && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={ { __html: JSON.stringify(faqStructuredData) } }
+        />
+      ) }
 
       {/* Breadcrumbs */ }
       <div className="border-b border-gray-200 bg-gray-50 py-3">
