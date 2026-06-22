@@ -359,6 +359,11 @@ export const featuredPrayerByCategoryQuery = defineQuery(`
 export const prayerBySlugQuery = defineQuery(`
   *[_type == "prayerVideo" && slug.current == $slug] [0] {
     ${prayerVideoFields},
+    introParagraph,
+    wordBeforePrayer,
+    writtenPrayer,
+    howToUse,
+    faqSection,
     fullTranscript,
     "pdfDownloadUrl": pdfDownloadUrl.asset->url,
     seoMetadata

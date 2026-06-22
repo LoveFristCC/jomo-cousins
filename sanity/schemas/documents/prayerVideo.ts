@@ -48,10 +48,76 @@ export default defineType({
       validation: (Rule) => Rule.max(200),
     }),
     defineField({
-      name: 'fullTranscript',
-      title: 'Full Transcript',
+      name: 'introParagraph',
+      title: 'Intro Paragraph (answer-first)',
+      type: 'text',
+      rows: 5,
+      description:
+        'Answer-first opening shown beneath the video. Lead with what the prayer is for so the reader (and AI search) gets the answer immediately.',
+    }),
+    defineField({
+      name: 'wordBeforePrayer',
+      title: 'A Word Before You Pray',
       type: 'array',
       of: [{ type: 'block' }],
+      description: "Pastor Jomo's pastoral lead-in before the written prayer.",
+    }),
+    defineField({
+      name: 'writtenPrayer',
+      title: 'Written Prayer Text',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'The full written prayer the reader can pray along with.',
+    }),
+    defineField({
+      name: 'howToUse',
+      title: 'How to Use This Prayer',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Practical guidance on how/when to pray this prayer.',
+    }),
+    defineField({
+      name: 'faqSection',
+      title: 'FAQ (for AI search / structured data)',
+      type: 'array',
+      description:
+        "Question & answer pairs for FAQPage structured data. IMPORTANT: only add Q&As whose answers already appear in the prayer content above — this markup mirrors visible content, it doesn't replace it.",
+      of: [
+        {
+          type: 'object',
+          name: 'faqItem',
+          fields: [
+            {
+              name: 'question',
+              title: 'Question',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'answer',
+              title: 'Answer',
+              type: 'text',
+              rows: 4,
+              description: "Plain-text answer (must match what's in the content)",
+              validation: (Rule) => Rule.required(),
+            },
+          ],
+          preview: {
+            select: {
+              title: 'question',
+              subtitle: 'answer',
+            },
+          },
+        },
+      ],
+    }),
+    defineField({
+      name: 'fullTranscript',
+      title: 'Full Transcript (legacy / fallback)',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description:
+        'Legacy single transcript field. Used as a fallback when the structured sections above are empty.',
     }),
     defineField({
       name: 'prayerCategories',

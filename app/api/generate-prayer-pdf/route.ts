@@ -29,13 +29,6 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    if (!prayer.fullTranscript) {
-      return NextResponse.json(
-        { error: "Prayer does not have a transcript" },
-        { status: 404 }
-      );
-    }
-
     // Helper function to convert Portable Text to plain text
     const portableTextToPlainText = (blocks: PortableTextBlock[]): string => {
       if (!blocks || !Array.isArray(blocks)) return "";
@@ -47,9 +40,36 @@ export async function GET(request: NextRequest) {
         .join("\n\n");
     };
 
+    // Build the prayer body from the structured sections, falling back to the
+    // legacy fullTranscript field. Each section becomes a heading + text block.
+    const sections: { heading: string | null; text: string }[] = [];
+    if (prayer.introParagraph) {
+      sections.push({ heading: null, text: prayer.introParagraph });
+    }
+    if (prayer.wordBeforePrayer && prayer.wordBeforePrayer.length > 0) {
+      sections.push({ heading: "A Word Before You Pray", text: portableTextToPlainText(prayer.wordBeforePrayer) });
+    }
+    if (prayer.writtenPrayer && prayer.writtenPrayer.length > 0) {
+      sections.push({ heading: "The Prayer", text: portableTextToPlainText(prayer.writtenPrayer) });
+    }
+    if (prayer.howToUse && prayer.howToUse.length > 0) {
+      sections.push({ heading: "How to Use This Prayer", text: portableTextToPlainText(prayer.howToUse) });
+    }
+
+    // Fall back to legacy transcript when no structured sections exist
+    if (sections.length === 0 && prayer.fullTranscript) {
+      sections.push({ heading: "Full Prayer Text", text: portableTextToPlainText(prayer.fullTranscript) });
+    }
+
+    if (sections.length === 0) {
+      return NextResponse.json(
+        { error: "Prayer does not have any content" },
+        { status: 404 }
+      );
+    }
+
     // Extract data
     const categories = prayer.categories?.map((cat: any) => cat.title) || [];
-    const prayerText = portableTextToPlainText(prayer.fullTranscript);
 
     // Create PDF using jsPDF
     const doc = new jsPDF();
@@ -108,26 +128,38 @@ export async function GET(request: NextRequest) {
       yPosition += (noteLines.length * 5) + 10;
     }
 
-    // Prayer Text
-    doc.setFontSize(14);
-    doc.setTextColor(61, 61, 61);
-    doc.text("Full Prayer Text", margin, yPosition);
-    yPosition += 10;
-
-    doc.setFontSize(11);
-    const paragraphs = prayerText.split("\n\n").filter(p => p.trim());
-
-    for (const paragraph of paragraphs) {
-      const lines = doc.splitTextToSize(paragraph, maxWidth);
-
-      // Check if we need a new page
-      if (yPosition + (lines.length * 6) > pageHeight - margin) {
-        doc.addPage();
-        yPosition = margin;
+    // Prayer Body — render each section with an optional heading
+    for (const section of sections) {
+      if (section.heading) {
+        // Check if heading fits on the current page
+        if (yPosition + 16 > pageHeight - margin) {
+          doc.addPage();
+          yPosition = margin;
+        }
+        doc.setFontSize(14);
+        doc.setTextColor(61, 61, 61);
+        doc.text(section.heading, margin, yPosition);
+        yPosition += 10;
       }
 
-      doc.text(lines, margin, yPosition);
-      yPosition += (lines.length * 6) + 8;
+      doc.setFontSize(11);
+      doc.setTextColor(61, 61, 61);
+      const paragraphs = section.text.split("\n\n").filter(p => p.trim());
+
+      for (const paragraph of paragraphs) {
+        const lines = doc.splitTextToSize(paragraph, maxWidth);
+
+        // Check if we need a new page
+        if (yPosition + (lines.length * 6) > pageHeight - margin) {
+          doc.addPage();
+          yPosition = margin;
+        }
+
+        doc.text(lines, margin, yPosition);
+        yPosition += (lines.length * 6) + 8;
+      }
+
+      yPosition += 4;
     }
 
     // Footer on all pages

@@ -162,6 +162,67 @@ export type PrayerVideo = {
   youtubeUrl?: string;
   youtubeVideoId?: string;
   excerpt?: string;
+  introParagraph?: string;
+  wordBeforePrayer?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  writtenPrayer?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  howToUse?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  faqSection?: Array<{
+    question?: string;
+    answer?: string;
+    _type: "faqItem";
+    _key: string;
+  }>;
   fullTranscript?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -2710,7 +2771,7 @@ export type FeaturedPrayerByCategoryQueryResult = {
   }> | null;
 } | null;
 // Variable: prayerBySlugQuery
-// Query: *[_type == "prayerVideo" && slug.current == $slug] [0] {      _id,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount,    fullTranscript,    "pdfDownloadUrl": pdfDownloadUrl.asset->url,    seoMetadata  }
+// Query: *[_type == "prayerVideo" && slug.current == $slug] [0] {      _id,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount,    introParagraph,    wordBeforePrayer,    writtenPrayer,    howToUse,    faqSection,    fullTranscript,    "pdfDownloadUrl": pdfDownloadUrl.asset->url,    seoMetadata  }
 export type PrayerBySlugQueryResult = {
   _id: string;
   title: string | null;
@@ -2741,6 +2802,67 @@ export type PrayerBySlugQueryResult = {
   duration: string | null;
   personalNote: string | null;
   viewCount: number | null;
+  introParagraph: string | null;
+  wordBeforePrayer: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  writtenPrayer: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  howToUse: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  faqSection: Array<{
+    question?: string;
+    answer?: string;
+    _type: "faqItem";
+    _key: string;
+  }> | null;
   fullTranscript: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -2891,7 +3013,7 @@ declare module "@sanity/client" {
     "\n  *[_type == \"prayerCategory\" && slug.current == $slug] [0] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    description,\n    longDescription,\n    icon,\n    featuredImage,\n    jomoMessage,\n    seoContent,\n    hubPageContent,\n    faqSection,\n    \"relatedCategories\": relatedCategories[]-> {\n      _id,\n      title,\n      \"slug\": slug.current,\n      description,\n      icon,\n      \"prayerCount\": count(*[_type == \"prayerVideo\" && references(^._id)])\n    },\n    biblicalFoundation,\n    \"prayerCount\": count(*[_type == \"prayerVideo\" && references(^._id)])\n  }\n": PrayerCategoryBySlugQueryResult;
     "\n  *[_type == \"prayerVideo\" && references($categoryId)] | order(publishedAt desc) {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n\n  }\n": PrayersByCategoryQueryResult;
     "\n  *[_type == \"prayerVideo\" && references($categoryId)] | order(viewCount desc) [0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n,\n    fullTranscript\n  }\n": FeaturedPrayerByCategoryQueryResult;
-    "\n  *[_type == \"prayerVideo\" && slug.current == $slug] [0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n,\n    fullTranscript,\n    \"pdfDownloadUrl\": pdfDownloadUrl.asset->url,\n    seoMetadata\n  }\n": PrayerBySlugQueryResult;
+    "\n  *[_type == \"prayerVideo\" && slug.current == $slug] [0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n,\n    introParagraph,\n    wordBeforePrayer,\n    writtenPrayer,\n    howToUse,\n    faqSection,\n    fullTranscript,\n    \"pdfDownloadUrl\": pdfDownloadUrl.asset->url,\n    seoMetadata\n  }\n": PrayerBySlugQueryResult;
     "\n  *[_type == \"prayerVideo\" && _id != $excludeId && count((prayerCategories[]._ref)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n\n  }\n": RelatedPrayersQueryResult;
     "\n  *[_type == \"prayerVideo\" && publishedAt > $currentDate] | order(publishedAt asc) [0] {\n    _id,\n    title,\n    \"slug\": slug.current\n  }\n": NextPrayerQueryResult;
     "\n  *[_type == \"prayerVideo\" && publishedAt < $currentDate] | order(publishedAt desc) [0] {\n    _id,\n    title,\n    \"slug\": slug.current\n  }\n": PreviousPrayerQueryResult;

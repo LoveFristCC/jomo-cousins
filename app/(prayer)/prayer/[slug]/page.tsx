@@ -32,6 +32,21 @@ function portableTextToPlainText(blocks: any[]): string {
     .join("\n\n");
 }
 
+// Build a combined plain-text version of the prayer content for structured data.
+// Prefers the structured sections; falls back to the legacy fullTranscript.
+function buildPrayerPlainText(prayer: any): string {
+  const parts: string[] = [];
+  if (prayer.introParagraph) parts.push(prayer.introParagraph);
+  if (prayer.wordBeforePrayer) parts.push(portableTextToPlainText(prayer.wordBeforePrayer));
+  if (prayer.writtenPrayer) parts.push(portableTextToPlainText(prayer.writtenPrayer));
+  if (prayer.howToUse) parts.push(portableTextToPlainText(prayer.howToUse));
+
+  const combined = parts.filter(Boolean).join("\n\n");
+  if (combined) return combined;
+
+  return prayer.fullTranscript ? portableTextToPlainText(prayer.fullTranscript) : "";
+}
+
 // Convert duration string to ISO 8601 format
 function convertToISO8601Duration(duration: string | undefined): string | undefined {
   if (!duration) return undefined;
@@ -183,6 +198,17 @@ export default async function PrayerVideoPage({ params }: Props) {
   // Get video ID with fallback
   const videoId = getYouTubeVideoId(prayer.youtubeVideoId, prayer.youtubeUrl);
 
+  // Content flags — prefer the structured sections, fall back to legacy transcript
+  const hasStructuredContent = Boolean(
+    prayer.introParagraph ||
+    (prayer.wordBeforePrayer && prayer.wordBeforePrayer.length > 0) ||
+    (prayer.writtenPrayer && prayer.writtenPrayer.length > 0) ||
+    (prayer.howToUse && prayer.howToUse.length > 0)
+  );
+  const hasPrayerContent = hasStructuredContent || Boolean(prayer.fullTranscript);
+  const prayerPlainText = buildPrayerPlainText(prayer);
+  const hasFaq = Boolean(prayer.faqSection && prayer.faqSection.length > 0);
+
   // Structured Data
   const structuredData = {
     "@context": "https://schema.org",
@@ -244,7 +270,7 @@ export default async function PrayerVideoPage({ params }: Props) {
           jobTitle: "Pastor & Spiritual Leader",
           url: "https://jomocousins.com",
         },
-        ...(prayer.fullTranscript && { transcript: portableTextToPlainText(prayer.fullTranscript) }),
+        ...(prayerPlainText && { transcript: prayerPlainText }),
       },
       {
         "@type": "Article",
@@ -255,8 +281,23 @@ export default async function PrayerVideoPage({ params }: Props) {
           jobTitle: "Pastor & Spiritual Leader",
         },
         datePublished: prayer.publishedAt,
-        ...(prayer.fullTranscript && { articleBody: portableTextToPlainText(prayer.fullTranscript) }),
+        ...(prayerPlainText && { articleBody: prayerPlainText }),
       },
+      ...(hasFaq
+        ? [
+          {
+            "@type": "FAQPage",
+            mainEntity: prayer.faqSection.map((faq: any) => ({
+              "@type": "Question",
+              name: faq.question,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: faq.answer,
+              },
+            })),
+          },
+        ]
+        : []),
       {
         "@type": "Person",
         "@id": "https://jomocousins.com/#jomo",
@@ -433,7 +474,7 @@ export default async function PrayerVideoPage({ params }: Props) {
               <ShareButtons shareUrl={ shareUrl } shareTitle={ shareTitle } />
 
               {/* Download PDF */ }
-              { prayer.fullTranscript && (
+              { hasPrayerContent && (
                 <DownloadPrayerPDFButton
                   slug={ prayer.slug }
                   title={ prayer.title }
@@ -443,16 +484,119 @@ export default async function PrayerVideoPage({ params }: Props) {
           </div>
         </section>
 
-        {/* Full Prayer Text */ }
-        { prayer.fullTranscript && (
-          <section className="py-16">
+        {/* Structured Prayer Content */ }
+        { hasStructuredContent ? (
+          <div>
+            {/* Intro Paragraph (answer-first) */ }
+            { prayer.introParagraph && (
+              <section className="pt-16 pb-8">
+                <div className="container mx-auto px-5">
+                  <div className="mx-auto max-w-4xl">
+                    <p className="text-xl leading-relaxed text-gray-700">
+                      { prayer.introParagraph }
+                    </p>
+                  </div>
+                </div>
+              </section>
+            ) }
+
+            {/* A Word Before You Pray */ }
+            { prayer.wordBeforePrayer && prayer.wordBeforePrayer.length > 0 && (
+              <section className="py-8">
+                <div className="container mx-auto px-5">
+                  <div className="mx-auto max-w-4xl">
+                    <h2 className="mb-6 text-3xl font-bold text-[#3d3d3d]">
+                      A Word Before You Pray
+                    </h2>
+                    <div className="prose prose-lg max-w-none">
+                      <CustomPortableText value={ prayer.wordBeforePrayer } />
+                    </div>
+                  </div>
+                </div>
+              </section>
+            ) }
+
+            {/* Written Prayer Text */ }
+            { prayer.writtenPrayer && prayer.writtenPrayer.length > 0 && (
+              <section className="py-8">
+                <div className="container mx-auto px-5">
+                  <div className="mx-auto max-w-4xl">
+                    <h2 className="mb-6 text-3xl font-bold text-[#3d3d3d]">
+                      The Prayer
+                    </h2>
+                    <div className="rounded-xl border-l-4 border-[#e31e24] bg-gray-50 p-6 md:p-8">
+                      <div className="prose prose-lg max-w-none">
+                        <CustomPortableText value={ prayer.writtenPrayer } />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            ) }
+
+            {/* How to Use This Prayer */ }
+            { prayer.howToUse && prayer.howToUse.length > 0 && (
+              <section className="py-8 pb-16">
+                <div className="container mx-auto px-5">
+                  <div className="mx-auto max-w-4xl">
+                    <h2 className="mb-6 text-3xl font-bold text-[#3d3d3d]">
+                      How to Use This Prayer
+                    </h2>
+                    <div className="prose prose-lg max-w-none">
+                      <CustomPortableText value={ prayer.howToUse } />
+                    </div>
+                  </div>
+                </div>
+              </section>
+            ) }
+          </div>
+        ) : (
+          prayer.fullTranscript && (
+            <section className="py-16">
+              <div className="container mx-auto px-5">
+                <div className="mx-auto max-w-4xl">
+                  <h2 className="mb-8 text-3xl font-bold text-[#3d3d3d]">
+                    Full Prayer Text
+                  </h2>
+                  <div className="prose prose-lg max-w-none">
+                    <CustomPortableText value={ prayer.fullTranscript } />
+                  </div>
+                </div>
+              </div>
+            </section>
+          )
+        ) }
+
+        {/* FAQ Section */ }
+        { hasFaq && (
+          <section className="border-t border-gray-200 bg-gray-50 py-16">
             <div className="container mx-auto px-5">
               <div className="mx-auto max-w-4xl">
-                <h2 className="mb-8 text-3xl font-bold text-[#3d3d3d]">
-                  Full Prayer Text
+                <h2 className="mb-10 text-center text-3xl font-bold text-[#3d3d3d] md:text-4xl">
+                  Frequently Asked Questions
                 </h2>
-                <div className="prose prose-lg max-w-none">
-                  <CustomPortableText value={ prayer.fullTranscript } />
+                <div className="space-y-4">
+                  { prayer.faqSection.map((faq: any, index: number) => (
+                    <details
+                      key={ index }
+                      className="group rounded-xl bg-white p-6 shadow-md"
+                    >
+                      <summary className="flex cursor-pointer items-center justify-between text-lg font-bold text-[#3d3d3d] list-none">
+                        { faq.question }
+                        <svg
+                          className="h-5 w-5 flex-shrink-0 text-[#e31e24] transition-transform group-open:rotate-180"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </summary>
+                      <p className="mt-4 text-gray-700 whitespace-pre-line leading-relaxed">
+                        { faq.answer }
+                      </p>
+                    </details>
+                  )) }
                 </div>
               </div>
             </div>
