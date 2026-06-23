@@ -56,11 +56,12 @@ export async function GET() {
           ? `      <category>${escapeXml(post.category)}</category>`
           : "",
         imageUrl
-          ? `      <enclosure url="${escapeXml(imageUrl)}" type="image/jpeg" />`
-          : "",
-        imageUrl
           ? `      <media:content url="${escapeXml(imageUrl)}" medium="image" />`
           : "",
+        imageUrl
+          ? `      <media:thumbnail url="${escapeXml(imageUrl)}" />`
+          : "",
+        "    </item>",
       ]
         .filter(Boolean)
         .join("\n");
@@ -87,7 +88,7 @@ export async function GET() {
     <lastBuildDate>${lastBuildDate}</lastBuildDate>
     <ttl>60</ttl>
     <image>
-      <url>${SITE_URL}/images/logos/Asset 1.webp</url>
+      <url>${SITE_URL}/images/logos/JomoCousins%20Logo15.png</url>
       <title>${escapeXml(FEED_TITLE)}</title>
       <link>${SITE_URL}/marriage/blog</link>
     </image>
