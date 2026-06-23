@@ -1,6 +1,14 @@
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { recentPrayersQuery } from "@/sanity/lib/queries";
+import { prayerFeedQuery } from "@/sanity/lib/queries";
 import { urlForImage } from "@/sanity/lib/utils";
+import {
+  cdata,
+  escapeXml,
+  faqToFeedHtml,
+  portableTextToFeedHtml,
+  sectionHtml,
+  toRfc822,
+} from "@/lib/rss";
 
 const SITE_URL = "https://www.jomocousins.com";
 const FEED_TITLE = "Pray with Pastor Jomo Cousins";
@@ -10,24 +18,36 @@ const FEED_DESCRIPTION =
 // Rebuild the feed at most once an hour.
 export const revalidate = 3600;
 
-/** Escape a string for safe inclusion in XML text/attribute nodes. */
-function escapeXml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&apos;");
-}
+/**
+ * Assemble a prayer's written sections into one HTML body for <content:encoded>,
+ * mirroring the order shown on the prayer page. fullTranscript is a fallback
+ * used only when the structured sections are empty.
+ */
+function buildPrayerHtml(prayer: any): string {
+  const hasStructured =
+    prayer.introParagraph ||
+    prayer.wordBeforePrayer?.length ||
+    prayer.writtenPrayer?.length ||
+    prayer.howToUse?.length;
 
-/** Format a date as an RFC-822 string, which is what RSS 2.0 requires. */
-function toRfc822(date: Date): string {
-  return date.toUTCString();
+  const parts = [
+    sectionHtml("A Note from Pastor Jomo", portableTextToFeedHtml(prayer.personalNote)),
+    prayer.introParagraph ? `<p>${escapeXml(prayer.introParagraph)}</p>` : "",
+    sectionHtml("A Word Before You Pray", portableTextToFeedHtml(prayer.wordBeforePrayer)),
+    sectionHtml("The Prayer", portableTextToFeedHtml(prayer.writtenPrayer)),
+    sectionHtml("How to Use This Prayer", portableTextToFeedHtml(prayer.howToUse)),
+    hasStructured
+      ? ""
+      : sectionHtml("Full Prayer Text", portableTextToFeedHtml(prayer.fullTranscript)),
+    faqToFeedHtml(prayer.faqSection, "Frequently Asked Questions"),
+  ];
+
+  return parts.filter(Boolean).join("\n");
 }
 
 export async function GET() {
   const prayers = await sanityFetch({
-    query: recentPrayersQuery,
+    query: prayerFeedQuery,
     params: { limit: 50 },
   });
 
@@ -46,6 +66,8 @@ export async function GET() {
         .map((cat: any) => cat?.title)
         .filter(Boolean);
 
+      const fullHtml = buildPrayerHtml(prayer);
+
       return [
         "    <item>",
         `      <title>${escapeXml(prayer.title || "Untitled Prayer")}</title>`,
@@ -53,6 +75,9 @@ export async function GET() {
         `      <guid isPermaLink="true">${escapeXml(link)}</guid>`,
         prayer.excerpt
           ? `      <description>${escapeXml(prayer.excerpt)}</description>`
+          : "",
+        fullHtml
+          ? `      <content:encoded>${cdata(fullHtml)}</content:encoded>`
           : "",
         pubDate ? `      <pubDate>${pubDate}</pubDate>` : "",
         "      <dc:creator>Pastor Jomo Cousins</dc:creator>",
@@ -81,6 +106,7 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0"
   xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>

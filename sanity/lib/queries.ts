@@ -229,6 +229,15 @@ export const recentCouplesCornerPostsQuery = defineQuery(`
   }
 `);
 
+// Feed query: includes full content + FAQs for the RSS <content:encoded> body.
+export const couplesCornerFeedQuery = defineQuery(`
+  *[_type == "couplesCornerPost"] | order(publishedAt desc) [0...$limit] {
+    ${couplesCornerFields},
+    content,
+    faqSection
+  }
+`);
+
 export const relatedCouplesCornerPostsQuery = defineQuery(`
   *[_type == "couplesCornerPost" && slug.current != $slug && (
     category == $category ||
@@ -291,6 +300,20 @@ export const prayerOfTheDayQuery = defineQuery(`
 export const recentPrayersQuery = defineQuery(`
   *[_type == "prayerVideo"] | order(publishedAt desc) [0...$limit] {
     ${prayerVideoFields}
+  }
+`);
+
+// Feed query: includes the full written sections + FAQs for <content:encoded>.
+export const prayerFeedQuery = defineQuery(`
+  *[_type == "prayerVideo"] | order(publishedAt desc) [0...$limit] {
+    ${prayerVideoFields},
+    personalNote,
+    introParagraph,
+    wordBeforePrayer,
+    writtenPrayer,
+    howToUse,
+    fullTranscript,
+    faqSection
   }
 `);
 

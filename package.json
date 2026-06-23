@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@next/third-parties": "^16.1.1",
+    "@portabletext/to-html": "^5.0.2",
     "@sanity/assist": "^3.0.8",
     "@sanity/client": "^7.12.1",
     "@sanity/icons": "^3.4.0",

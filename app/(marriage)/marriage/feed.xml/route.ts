@@ -1,6 +1,13 @@
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { recentCouplesCornerPostsQuery } from "@/sanity/lib/queries";
+import { couplesCornerFeedQuery } from "@/sanity/lib/queries";
 import { urlForImage } from "@/sanity/lib/utils";
+import {
+  cdata,
+  escapeXml,
+  faqToFeedHtml,
+  portableTextToFeedHtml,
+  toRfc822,
+} from "@/lib/rss";
 
 const SITE_URL = "https://www.jomocousins.com";
 const FEED_TITLE = "Couples Corner — Jomo Cousins Marriage";
@@ -10,24 +17,9 @@ const FEED_DESCRIPTION =
 // Rebuild the feed at most once an hour.
 export const revalidate = 3600;
 
-/** Escape a string for safe inclusion in XML text/attribute nodes. */
-function escapeXml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&apos;");
-}
-
-/** Format a date as an RFC-822 string, which is what RSS 2.0 requires. */
-function toRfc822(date: Date): string {
-  return date.toUTCString();
-}
-
 export async function GET() {
   const posts = await sanityFetch({
-    query: recentCouplesCornerPostsQuery,
+    query: couplesCornerFeedQuery,
     params: { limit: 50 },
   });
 
@@ -42,6 +34,14 @@ export async function GET() {
         ? urlForImage(post.coverImage)?.width(1200).height(630).fit("crop").url()
         : undefined;
 
+      // The body is the full content. We appended "Common Questions" directly
+      // into `content` for migrated posts, so only append the FAQ separately
+      // when the content doesn't already include that heading (avoids dupes).
+      const contentHtml = portableTextToFeedHtml(post.content);
+      const alreadyHasFaq = /common questions/i.test(contentHtml);
+      const faqHtml = alreadyHasFaq ? "" : faqToFeedHtml(post.faqSection);
+      const fullHtml = [contentHtml, faqHtml].filter(Boolean).join("\n");
+
       return [
         "    <item>",
         `      <title>${escapeXml(post.title || "Untitled")}</title>`,
@@ -49,6 +49,9 @@ export async function GET() {
         `      <guid isPermaLink="true">${escapeXml(link)}</guid>`,
         post.excerpt
           ? `      <description>${escapeXml(post.excerpt)}</description>`
+          : "",
+        fullHtml
+          ? `      <content:encoded>${cdata(fullHtml)}</content:encoded>`
           : "",
         pubDate ? `      <pubDate>${pubDate}</pubDate>` : "",
         "      <dc:creator>Jomo Cousins</dc:creator>",
@@ -77,6 +80,7 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0"
   xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>

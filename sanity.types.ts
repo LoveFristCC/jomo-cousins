@@ -2187,9 +2187,10 @@ export type BooksWithPreviewsQueryResult = Array<{
   } | null;
 }>;
 // Variable: allCouplesCornerPostsQuery
-// Query: *[_type == "couplesCornerPost"] | order(publishedAt desc) {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
+// Query: *[_type == "couplesCornerPost"] | order(publishedAt desc) {      _id,  _updatedAt,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
 export type AllCouplesCornerPostsQueryResult = Array<{
   _id: string;
+  _updatedAt: string;
   title: string | null;
   slug: string | null;
   excerpt: string | null;
@@ -2222,9 +2223,10 @@ export type AllCouplesCornerPostsQueryResult = Array<{
   } | null;
 }>;
 // Variable: featuredCouplesCornerPostsQuery
-// Query: *[_type == "couplesCornerPost" && featured == true] | order(publishedAt desc) [0...$limit] {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
+// Query: *[_type == "couplesCornerPost" && featured == true] | order(publishedAt desc) [0...$limit] {      _id,  _updatedAt,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
 export type FeaturedCouplesCornerPostsQueryResult = Array<{
   _id: string;
+  _updatedAt: string;
   title: string | null;
   slug: string | null;
   excerpt: string | null;
@@ -2257,9 +2259,10 @@ export type FeaturedCouplesCornerPostsQueryResult = Array<{
   } | null;
 }>;
 // Variable: couplesCornerPostsByCategoryQuery
-// Query: *[_type == "couplesCornerPost" && category == $category] | order(publishedAt desc) {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
+// Query: *[_type == "couplesCornerPost" && category == $category] | order(publishedAt desc) {      _id,  _updatedAt,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
 export type CouplesCornerPostsByCategoryQueryResult = Array<{
   _id: string;
+  _updatedAt: string;
   title: string | null;
   slug: string | null;
   excerpt: string | null;
@@ -2292,9 +2295,10 @@ export type CouplesCornerPostsByCategoryQueryResult = Array<{
   } | null;
 }>;
 // Variable: couplesCornerPostBySlugQuery
-// Query: *[_type == "couplesCornerPost" && slug.current == $slug] [0] {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo,    content,    faqSection,    _updatedAt  }
+// Query: *[_type == "couplesCornerPost" && slug.current == $slug] [0] {      _id,  _updatedAt,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo,    content,    faqSection,    _updatedAt  }
 export type CouplesCornerPostBySlugQueryResult = {
   _id: string;
+  _updatedAt: string;
   title: string | null;
   slug: string | null;
   excerpt: string | null;
@@ -2367,12 +2371,12 @@ export type CouplesCornerPostBySlugQueryResult = {
     _type: "faqItem";
     _key: string;
   }> | null;
-  _updatedAt: string;
 } | null;
 // Variable: recentCouplesCornerPostsQuery
-// Query: *[_type == "couplesCornerPost"] | order(publishedAt desc) [0...$limit] {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
+// Query: *[_type == "couplesCornerPost"] | order(publishedAt desc) [0...$limit] {      _id,  _updatedAt,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
 export type RecentCouplesCornerPostsQueryResult = Array<{
   _id: string;
+  _updatedAt: string;
   title: string | null;
   slug: string | null;
   excerpt: string | null;
@@ -2404,10 +2408,89 @@ export type RecentCouplesCornerPostsQueryResult = Array<{
     keywords?: Array<string>;
   } | null;
 }>;
+// Variable: couplesCornerFeedQuery
+// Query: *[_type == "couplesCornerPost"] | order(publishedAt desc) [0...$limit] {      _id,  _updatedAt,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo,    content,    faqSection  }
+export type CouplesCornerFeedQueryResult = Array<{
+  _id: string;
+  _updatedAt: string;
+  title: string | null;
+  slug: string | null;
+  excerpt: string | null;
+  coverImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  category: "communication" | "conflict-resolution" | "dating-courtship" | "faith-relationships" | "general" | "intimacy" | "marriage" | "parenting" | "premarital" | "self-care" | "trust-forgiveness" | null;
+  tags: Array<string> | null;
+  youtubeVideo: {
+    url?: string;
+    title?: string;
+    placement?: "bottom" | "top";
+  } | null;
+  publishedAt: string;
+  featured: boolean | null;
+  seo: {
+    metaTitle?: string;
+    metaDescription?: string;
+    keywords?: Array<string>;
+  } | null;
+  content: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      color?: "#0E6BB7" | "#ea8125" | "#ffaa62";
+      _type: "highlight";
+      _key: string;
+    } | {
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    caption?: string;
+    _type: "image";
+    _key: string;
+  }> | null;
+  faqSection: Array<{
+    question?: string;
+    answer?: string;
+    _type: "faqItem";
+    _key: string;
+  }> | null;
+}>;
 // Variable: relatedCouplesCornerPostsQuery
-// Query: *[_type == "couplesCornerPost" && slug.current != $slug && (    category == $category ||    count((tags[])[@ in $tags]) > 0  )] | order(publishedAt desc) [0...$limit] {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
+// Query: *[_type == "couplesCornerPost" && slug.current != $slug && (    category == $category ||    count((tags[])[@ in $tags]) > 0  )] | order(publishedAt desc) [0...$limit] {      _id,  _updatedAt,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
 export type RelatedCouplesCornerPostsQueryResult = Array<{
   _id: string;
+  _updatedAt: string;
   title: string | null;
   slug: string | null;
   excerpt: string | null;
@@ -2440,9 +2523,10 @@ export type RelatedCouplesCornerPostsQueryResult = Array<{
   } | null;
 }>;
 // Variable: recentCouplesCornerPostsExcludingQuery
-// Query: *[_type == "couplesCornerPost" && slug.current != $slug] | order(publishedAt desc) [0...$limit] {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
+// Query: *[_type == "couplesCornerPost" && slug.current != $slug] | order(publishedAt desc) [0...$limit] {      _id,  _updatedAt,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
 export type RecentCouplesCornerPostsExcludingQueryResult = Array<{
   _id: string;
+  _updatedAt: string;
   title: string | null;
   slug: string | null;
   excerpt: string | null;
@@ -2489,9 +2573,10 @@ export type PreviousCouplesCornerPostQueryResult = {
   slug: string | null;
 } | null;
 // Variable: prayerOfTheDayQuery
-// Query: *[_type == "prayerVideo" && isPrayerOfTheDay == true] | order(publishedAt desc) [0] {      _id,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount  }
+// Query: *[_type == "prayerVideo" && isPrayerOfTheDay == true] | order(publishedAt desc) [0] {      _id,  _updatedAt,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount  }
 export type PrayerOfTheDayQueryResult = {
   _id: string;
+  _updatedAt: string;
   title: string | null;
   slug: string | null;
   youtubeUrl: string | null;
@@ -2522,9 +2607,10 @@ export type PrayerOfTheDayQueryResult = {
   viewCount: number | null;
 } | null;
 // Variable: recentPrayersQuery
-// Query: *[_type == "prayerVideo"] | order(publishedAt desc) [0...$limit] {      _id,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount  }
+// Query: *[_type == "prayerVideo"] | order(publishedAt desc) [0...$limit] {      _id,  _updatedAt,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount  }
 export type RecentPrayersQueryResult = Array<{
   _id: string;
+  _updatedAt: string;
   title: string | null;
   slug: string | null;
   youtubeUrl: string | null;
@@ -2553,6 +2639,119 @@ export type RecentPrayersQueryResult = Array<{
   duration: string | null;
   personalNote: string | null;
   viewCount: number | null;
+}>;
+// Variable: prayerFeedQuery
+// Query: *[_type == "prayerVideo"] | order(publishedAt desc) [0...$limit] {      _id,  _updatedAt,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount,    personalNote,    introParagraph,    wordBeforePrayer,    writtenPrayer,    howToUse,    fullTranscript,    faqSection  }
+export type PrayerFeedQueryResult = Array<{
+  _id: string;
+  _updatedAt: string;
+  title: string | null;
+  slug: string | null;
+  youtubeUrl: string | null;
+  youtubeVideoId: string | null;
+  excerpt: string | null;
+  categories: Array<{
+    title: string | null;
+    slug: string | null;
+  }> | null;
+  tags: Array<string> | null;
+  featuredImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  publishedAt: string | null;
+  isPrayerOfTheDay: boolean | null;
+  duration: string | null;
+  personalNote: string | null;
+  viewCount: number | null;
+  introParagraph: string | null;
+  wordBeforePrayer: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  writtenPrayer: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  howToUse: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  fullTranscript: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  faqSection: Array<{
+    question?: string;
+    answer?: string;
+    _type: "faqItem";
+    _key: string;
+  }> | null;
 }>;
 // Variable: prayerCategoriesQuery
 // Query: *[_type == "prayerCategory"] | order(displayOrder asc) {    _id,    title,    "slug": slug.current,    description,    icon,    "prayerCount": count(*[_type == "prayerVideo" && references(^._id)])  }
@@ -2687,9 +2886,10 @@ export type PrayerCategoryBySlugQueryResult = {
   prayerCount: number;
 } | null;
 // Variable: prayersByCategoryQuery
-// Query: *[_type == "prayerVideo" && references($categoryId)] | order(publishedAt desc) {      _id,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount  }
+// Query: *[_type == "prayerVideo" && references($categoryId)] | order(publishedAt desc) {      _id,  _updatedAt,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount  }
 export type PrayersByCategoryQueryResult = Array<{
   _id: string;
+  _updatedAt: string;
   title: string | null;
   slug: string | null;
   youtubeUrl: string | null;
@@ -2720,9 +2920,10 @@ export type PrayersByCategoryQueryResult = Array<{
   viewCount: number | null;
 }>;
 // Variable: featuredPrayerByCategoryQuery
-// Query: *[_type == "prayerVideo" && references($categoryId)] | order(viewCount desc) [0] {      _id,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount,    fullTranscript  }
+// Query: *[_type == "prayerVideo" && references($categoryId)] | order(viewCount desc) [0] {      _id,  _updatedAt,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount,    fullTranscript  }
 export type FeaturedPrayerByCategoryQueryResult = {
   _id: string;
+  _updatedAt: string;
   title: string | null;
   slug: string | null;
   youtubeUrl: string | null;
@@ -2771,9 +2972,10 @@ export type FeaturedPrayerByCategoryQueryResult = {
   }> | null;
 } | null;
 // Variable: prayerBySlugQuery
-// Query: *[_type == "prayerVideo" && slug.current == $slug] [0] {      _id,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount,    introParagraph,    wordBeforePrayer,    writtenPrayer,    howToUse,    faqSection,    fullTranscript,    "pdfDownloadUrl": pdfDownloadUrl.asset->url,    seoMetadata  }
+// Query: *[_type == "prayerVideo" && slug.current == $slug] [0] {      _id,  _updatedAt,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount,    introParagraph,    wordBeforePrayer,    writtenPrayer,    howToUse,    faqSection,    fullTranscript,    "pdfDownloadUrl": pdfDownloadUrl.asset->url,    seoMetadata  }
 export type PrayerBySlugQueryResult = {
   _id: string;
+  _updatedAt: string;
   title: string | null;
   slug: string | null;
   youtubeUrl: string | null;
@@ -2889,9 +3091,10 @@ export type PrayerBySlugQueryResult = {
   } | null;
 } | null;
 // Variable: relatedPrayersQuery
-// Query: *[_type == "prayerVideo" && _id != $excludeId && count((prayerCategories[]._ref)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...$limit] {      _id,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount  }
+// Query: *[_type == "prayerVideo" && _id != $excludeId && count((prayerCategories[]._ref)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...$limit] {      _id,  _updatedAt,  title,  "slug": slug.current,  youtubeUrl,  youtubeVideoId,  excerpt,  "categories": prayerCategories[]->{ title, "slug": slug.current },  tags,  featuredImage,  publishedAt,  isPrayerOfTheDay,  duration,  personalNote,  viewCount  }
 export type RelatedPrayersQueryResult = Array<{
   _id: string;
+  _updatedAt: string;
   title: string | null;
   slug: string | null;
   youtubeUrl: string | null;
@@ -2936,9 +3139,10 @@ export type PreviousPrayerQueryResult = {
   slug: string | null;
 } | null;
 // Variable: relatedMarriageBlogPostsQuery
-// Query: *[_type == "couplesCornerPost" && count(tags[@ in $tags]) > 0] | order(publishedAt desc) [0...$limit] {      _id,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
+// Query: *[_type == "couplesCornerPost" && count(tags[@ in $tags]) > 0] | order(publishedAt desc) [0...$limit] {      _id,  _updatedAt,  title,  "slug": slug.current,  excerpt,  coverImage,  category,  tags,  youtubeVideo,  "publishedAt": coalesce(publishedAt, _createdAt),  featured,  seo  }
 export type RelatedMarriageBlogPostsQueryResult = Array<{
   _id: string;
+  _updatedAt: string;
   title: string | null;
   slug: string | null;
   excerpt: string | null;
@@ -2997,27 +3201,29 @@ declare module "@sanity/client" {
     "\n  *[_type == \"product\" && category == \"books\" && status == \"active\"] | order(_createdAt desc) [0...$limit] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  images,\n  basePrice,\n  category\n\n  }\n": NewestBooksQueryResult;
     "\n  *[_type == \"product\" && category == \"books\" && status == \"active\" && featured == true] | order(_createdAt desc) [0...$limit] {\n    \n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  images,\n  basePrice,\n  category\n\n  }\n": FeaturedBooksQueryResult;
     "\n  *[_type == \"product\" && category == \"books\" && status == \"active\" && defined(previewChapter.content)] | order(name asc) {\n    _id,\n    name,\n    \"slug\": slug.current,\n    author,\n    images,\n    previewChapter {\n      title,\n      chapterNumber\n    }\n  }\n": BooksWithPreviewsQueryResult;
-    "\n  *[_type == \"couplesCornerPost\"] | order(publishedAt desc) {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": AllCouplesCornerPostsQueryResult;
-    "\n  *[_type == \"couplesCornerPost\" && featured == true] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": FeaturedCouplesCornerPostsQueryResult;
-    "\n  *[_type == \"couplesCornerPost\" && category == $category] | order(publishedAt desc) {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": CouplesCornerPostsByCategoryQueryResult;
-    "\n  *[_type == \"couplesCornerPost\" && slug.current == $slug] [0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n,\n    content,\n    faqSection,\n    _updatedAt\n  }\n": CouplesCornerPostBySlugQueryResult;
-    "\n  *[_type == \"couplesCornerPost\"] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": RecentCouplesCornerPostsQueryResult;
-    "\n  *[_type == \"couplesCornerPost\" && slug.current != $slug && (\n    category == $category ||\n    count((tags[])[@ in $tags]) > 0\n  )] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": RelatedCouplesCornerPostsQueryResult;
-    "\n  *[_type == \"couplesCornerPost\" && slug.current != $slug] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": RecentCouplesCornerPostsExcludingQueryResult;
+    "\n  *[_type == \"couplesCornerPost\"] | order(publishedAt desc) {\n    \n  _id,\n  _updatedAt,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": AllCouplesCornerPostsQueryResult;
+    "\n  *[_type == \"couplesCornerPost\" && featured == true] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  _updatedAt,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": FeaturedCouplesCornerPostsQueryResult;
+    "\n  *[_type == \"couplesCornerPost\" && category == $category] | order(publishedAt desc) {\n    \n  _id,\n  _updatedAt,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": CouplesCornerPostsByCategoryQueryResult;
+    "\n  *[_type == \"couplesCornerPost\" && slug.current == $slug] [0] {\n    \n  _id,\n  _updatedAt,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n,\n    content,\n    faqSection,\n    _updatedAt\n  }\n": CouplesCornerPostBySlugQueryResult;
+    "\n  *[_type == \"couplesCornerPost\"] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  _updatedAt,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": RecentCouplesCornerPostsQueryResult;
+    "\n  *[_type == \"couplesCornerPost\"] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  _updatedAt,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n,\n    content,\n    faqSection\n  }\n": CouplesCornerFeedQueryResult;
+    "\n  *[_type == \"couplesCornerPost\" && slug.current != $slug && (\n    category == $category ||\n    count((tags[])[@ in $tags]) > 0\n  )] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  _updatedAt,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": RelatedCouplesCornerPostsQueryResult;
+    "\n  *[_type == \"couplesCornerPost\" && slug.current != $slug] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  _updatedAt,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": RecentCouplesCornerPostsExcludingQueryResult;
     "\n  *[_type == \"couplesCornerPost\" && publishedAt > $publishedAt] | order(publishedAt asc) [0] {\n    _id,\n    title,\n    \"slug\": slug.current\n  }\n": NextCouplesCornerPostQueryResult;
     "\n  *[_type == \"couplesCornerPost\" && publishedAt < $publishedAt] | order(publishedAt desc) [0] {\n    _id,\n    title,\n    \"slug\": slug.current\n  }\n": PreviousCouplesCornerPostQueryResult;
-    "\n  *[_type == \"prayerVideo\" && isPrayerOfTheDay == true] | order(publishedAt desc) [0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n\n  }\n": PrayerOfTheDayQueryResult;
-    "\n  *[_type == \"prayerVideo\"] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n\n  }\n": RecentPrayersQueryResult;
+    "\n  *[_type == \"prayerVideo\" && isPrayerOfTheDay == true] | order(publishedAt desc) [0] {\n    \n  _id,\n  _updatedAt,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n\n  }\n": PrayerOfTheDayQueryResult;
+    "\n  *[_type == \"prayerVideo\"] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  _updatedAt,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n\n  }\n": RecentPrayersQueryResult;
+    "\n  *[_type == \"prayerVideo\"] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  _updatedAt,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n,\n    personalNote,\n    introParagraph,\n    wordBeforePrayer,\n    writtenPrayer,\n    howToUse,\n    fullTranscript,\n    faqSection\n  }\n": PrayerFeedQueryResult;
     "\n  *[_type == \"prayerCategory\"] | order(displayOrder asc) {\n    _id,\n    title,\n    \"slug\": slug.current,\n    description,\n    icon,\n    \"prayerCount\": count(*[_type == \"prayerVideo\" && references(^._id)])\n  }\n": PrayerCategoriesQueryResult;
     "\n  *[_type == \"prayerTestimonial\" && isApproved == true] | order(submittedAt desc) [0...$limit] {\n    _id,\n    name,\n    testimonialText,\n    location,\n    submittedAt\n  }\n": ApprovedTestimonialsQueryResult;
     "\n  *[_type == \"prayerCategory\" && slug.current == $slug] [0] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    description,\n    longDescription,\n    icon,\n    featuredImage,\n    jomoMessage,\n    seoContent,\n    hubPageContent,\n    faqSection,\n    \"relatedCategories\": relatedCategories[]-> {\n      _id,\n      title,\n      \"slug\": slug.current,\n      description,\n      icon,\n      \"prayerCount\": count(*[_type == \"prayerVideo\" && references(^._id)])\n    },\n    biblicalFoundation,\n    \"prayerCount\": count(*[_type == \"prayerVideo\" && references(^._id)])\n  }\n": PrayerCategoryBySlugQueryResult;
-    "\n  *[_type == \"prayerVideo\" && references($categoryId)] | order(publishedAt desc) {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n\n  }\n": PrayersByCategoryQueryResult;
-    "\n  *[_type == \"prayerVideo\" && references($categoryId)] | order(viewCount desc) [0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n,\n    fullTranscript\n  }\n": FeaturedPrayerByCategoryQueryResult;
-    "\n  *[_type == \"prayerVideo\" && slug.current == $slug] [0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n,\n    introParagraph,\n    wordBeforePrayer,\n    writtenPrayer,\n    howToUse,\n    faqSection,\n    fullTranscript,\n    \"pdfDownloadUrl\": pdfDownloadUrl.asset->url,\n    seoMetadata\n  }\n": PrayerBySlugQueryResult;
-    "\n  *[_type == \"prayerVideo\" && _id != $excludeId && count((prayerCategories[]._ref)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n\n  }\n": RelatedPrayersQueryResult;
+    "\n  *[_type == \"prayerVideo\" && references($categoryId)] | order(publishedAt desc) {\n    \n  _id,\n  _updatedAt,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n\n  }\n": PrayersByCategoryQueryResult;
+    "\n  *[_type == \"prayerVideo\" && references($categoryId)] | order(viewCount desc) [0] {\n    \n  _id,\n  _updatedAt,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n,\n    fullTranscript\n  }\n": FeaturedPrayerByCategoryQueryResult;
+    "\n  *[_type == \"prayerVideo\" && slug.current == $slug] [0] {\n    \n  _id,\n  _updatedAt,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n,\n    introParagraph,\n    wordBeforePrayer,\n    writtenPrayer,\n    howToUse,\n    faqSection,\n    fullTranscript,\n    \"pdfDownloadUrl\": pdfDownloadUrl.asset->url,\n    seoMetadata\n  }\n": PrayerBySlugQueryResult;
+    "\n  *[_type == \"prayerVideo\" && _id != $excludeId && count((prayerCategories[]._ref)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  _updatedAt,\n  title,\n  \"slug\": slug.current,\n  youtubeUrl,\n  youtubeVideoId,\n  excerpt,\n  \"categories\": prayerCategories[]->{ title, \"slug\": slug.current },\n  tags,\n  featuredImage,\n  publishedAt,\n  isPrayerOfTheDay,\n  duration,\n  personalNote,\n  viewCount\n\n  }\n": RelatedPrayersQueryResult;
     "\n  *[_type == \"prayerVideo\" && publishedAt > $currentDate] | order(publishedAt asc) [0] {\n    _id,\n    title,\n    \"slug\": slug.current\n  }\n": NextPrayerQueryResult;
     "\n  *[_type == \"prayerVideo\" && publishedAt < $currentDate] | order(publishedAt desc) [0] {\n    _id,\n    title,\n    \"slug\": slug.current\n  }\n": PreviousPrayerQueryResult;
-    "\n  *[_type == \"couplesCornerPost\" && count(tags[@ in $tags]) > 0] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": RelatedMarriageBlogPostsQueryResult;
+    "\n  *[_type == \"couplesCornerPost\" && count(tags[@ in $tags]) > 0] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  _updatedAt,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": RelatedMarriageBlogPostsQueryResult;
     "\n  *[_type == \"prayerTestimonial\" && isApproved == true && category._ref == $categoryId] | order(submittedAt desc) [0...$limit] {\n    _id,\n    name,\n    testimonialText,\n    location,\n    submittedAt\n  }\n": TestimonialsByCategoryQueryResult;
   }
 }
