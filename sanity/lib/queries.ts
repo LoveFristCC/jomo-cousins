@@ -183,6 +183,7 @@ export const booksWithPreviewsQuery = defineQuery(`
 // Couples Corner Blog queries
 const couplesCornerFields = /* groq */ `
   _id,
+  _updatedAt,
   title,
   "slug": slug.current,
   excerpt,
@@ -265,6 +266,7 @@ export const previousCouplesCornerPostQuery = defineQuery(`
 // Prayer Video queries
 const prayerVideoFields = /* groq */ `
   _id,
+  _updatedAt,
   title,
   "slug": slug.current,
   youtubeUrl,

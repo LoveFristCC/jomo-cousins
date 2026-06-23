@@ -134,9 +134,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic prayer video pages
   const prayerPages: MetadataRoute.Sitemap = prayers.map((prayer: any) => ({
     url: `${baseUrl}/prayer/${prayer.slug}`,
-    lastModified: prayer.publishedAt
-      ? new Date(prayer.publishedAt)
-      : new Date(),
+    lastModified: new Date(
+      prayer._updatedAt ?? prayer.publishedAt ?? Date.now()
+    ),
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
@@ -155,7 +155,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const couplesCornerPages: MetadataRoute.Sitemap = couplesCornerPosts.map(
     (post: any) => ({
       url: `${baseUrl}/marriage/blog/${post.slug}`,
-      lastModified: post.publishedAt ? new Date(post.publishedAt) : new Date(),
+      lastModified: new Date(
+        post._updatedAt ?? post.publishedAt ?? Date.now()
+      ),
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })
