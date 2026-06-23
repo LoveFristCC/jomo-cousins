@@ -18,7 +18,7 @@ export default function GoogleReviewsSurvey({
   estimatedDeliveryDate,
   products = [],
 }: GoogleReviewsSurveyProps) {
-  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [ scriptLoaded, setScriptLoaded ] = useState(false);
 
   // Define the renderOptIn function before script loads
   useEffect(() => {
@@ -58,20 +58,19 @@ export default function GoogleReviewsSurvey({
         }
       });
     };
-  }, [orderId, email, deliveryCountry, estimatedDeliveryDate, products]);
+  }, [ orderId, email, deliveryCountry, estimatedDeliveryDate, products ]);
 
   return (
     <>
       <Script
         src="https://apis.google.com/js/platform.js?onload=renderOptIn"
         strategy="afterInteractive"
-        onLoad={() => {
-          console.log('[GoogleReviewsSurvey] Script loaded');
+        onLoad={ () => {
           setScriptLoaded(true);
-        }}
-        onError={(e) => {
+        } }
+        onError={ (e) => {
           console.error('[GoogleReviewsSurvey] Script failed to load:', e);
-        }}
+        } }
       />
     </>
   );
