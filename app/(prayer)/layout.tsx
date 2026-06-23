@@ -41,6 +41,14 @@ export const metadata: Metadata = {
   publisher: "Love First Christian Center",
   alternates: {
     canonical: "https://www.jomocousins.com/prayer",
+    types: {
+      "application/rss+xml": [
+        {
+          url: "https://www.jomocousins.com/feed.xml",
+          title: "Pray with Pastor Jomo Cousins — Prayer Videos",
+        },
+      ],
+    },
   },
   openGraph: {
     type: "website",

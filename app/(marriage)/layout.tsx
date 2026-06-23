@@ -22,6 +22,14 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://www.jomocousins.com/marriage",
+    types: {
+      "application/rss+xml": [
+        {
+          url: "https://www.jomocousins.com/marriage/feed.xml",
+          title: "Couples Corner — Jomo Cousins Marriage",
+        },
+      ],
+    },
   },
   keywords: [
     "Jomo and Charmaine",
