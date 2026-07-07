@@ -19,6 +19,7 @@ export default function robots(): MetadataRoute.Robots {
           "/checkout/",
           "/thank-you/complete/",
           "/thank-you/upsell-2/",
+          "/newsletter-preview",
         ],
       },
       {
@@ -31,6 +32,7 @@ export default function robots(): MetadataRoute.Robots {
           "/checkout/",
           "/thank-you/complete/",
           "/thank-you/upsell-2/",
+          "/newsletter-preview",
         ],
       },
     ],
