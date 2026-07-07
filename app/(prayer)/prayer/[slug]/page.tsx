@@ -138,6 +138,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+// Maps a prayer category slug to the recommended book (product) slug shown at
+// the bottom of the prayer page. Keep every prayerCategory slug represented
+// here; any category not listed falls back to `defaultBookSlug`.
 const categoryBookMap: Record<string, string> = {
   "healing": "my-god-is-a-healer",
   "prayer": "prayer-life-the-conversation",
@@ -149,6 +152,12 @@ const categoryBookMap: Record<string, string> = {
   "faith": "fully-equipped-you-have-all-you-need-to-succeed",
   "identity": "youre-in-a-place-too-small-for-your-call",
   "acceptance": "youre-in-a-place-too-small-for-your-call",
+  "intercession": "prayer-life-the-conversation",
+  "finances-provision": "60-prayers-in-60-seconds-strictly-business",
+  "marriage-relationships": "the-mechanics-of-marriage",
+  "protection": "fully-equipped-you-have-all-you-need-to-succeed",
+  "forgiveness": "prayer-life-the-conversation",
+  "worship": "prayer-life-the-conversation",
 };
 
 const defaultBookSlug = "prayer-life-the-conversation";
@@ -164,8 +173,10 @@ export default async function PrayerVideoPage({ params }: Props) {
     notFound();
   }
 
-  // Get category IDs for related prayers
-  const categoryIds = prayer.categories?.map((cat: any) => cat._ref) || [];
+  // Category slugs drive the related-prayers query (categories are dereferenced
+  // to { title, slug } here, so no raw _ref is available to match on).
+  const categoryIds =
+    prayer.categories?.map((cat: any) => cat.slug).filter(Boolean) || [];
 
   // Get primary category for breadcrumb and book recommendation
   const primaryCategory = prayer.categories?.[ 0 ];

@@ -395,9 +395,10 @@ export const prayerBySlugQuery = defineQuery(`
   }
 `);
 
-// Related prayers (same category)
+// Related prayers (same category). Matched by category slug because the page
+// dereferences categories to { title, slug } (no raw _ref is available there).
 export const relatedPrayersQuery = defineQuery(`
-  *[_type == "prayerVideo" && _id != $excludeId && count((prayerCategories[]._ref)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...$limit] {
+  *[_type == "prayerVideo" && _id != $excludeId && count((prayerCategories[]->slug.current)[@ in $categoryIds]) > 0] | order(publishedAt desc) [0...$limit] {
     ${prayerVideoFields}
   }
 `);
