@@ -43,6 +43,19 @@ export default async function BookPreviewPage({
     (book: any) => book.slug !== slug
   );
 
+  // Author attribution — credit both authors on co-written (marriage) titles.
+  const isCoAuthored = /charmaine/i.test(product.author || "");
+
+  // Reviews power the visible "What Readers Say" block + Review/AggregateRating
+  // schema. Only rendered when the book actually has reviews in Sanity.
+  const reviews = (product.reviews || []).filter(
+    (r: any) => r && typeof r.rating === "number"
+  );
+  const avgRating =
+    reviews.length > 0
+      ? reviews.reduce((sum: number, r: any) => sum + (r.rating || 0), 0) / reviews.length
+      : 0;
+
   // Structured Data for book preview
   const baseUrl = "https://www.jomocousins.com";
   const previewUrl = `${baseUrl}/books/${slug}/preview`;
@@ -117,6 +130,24 @@ export default async function BookPreviewPage({
             name: "Dr. Jomo Cousins",
           },
         },
+        ...(reviews.length > 0 && {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: avgRating.toFixed(1),
+            reviewCount: reviews.length,
+            bestRating: 5,
+          },
+          review: reviews.map((r: any) => ({
+            "@type": "Review",
+            author: { "@type": "Person", name: r.reviewerName || "Reader" },
+            reviewRating: {
+              "@type": "Rating",
+              ratingValue: r.rating,
+              bestRating: 5,
+            },
+            reviewBody: r.reviewText || "",
+          })),
+        }),
       },
       {
         "@type": "WebPage",
@@ -203,6 +234,33 @@ export default async function BookPreviewPage({
       {/* Main Content */ }
       <article className="container mx-auto px-4 py-12 md:py-16">
         <div className="max-w-3xl mx-auto">
+          {/* Breadcrumb — mirrors the BreadcrumbList JSON-LD above */ }
+          <nav aria-label="Breadcrumb" className="mb-8">
+            <ol className="flex flex-wrap items-center gap-2 text-sm">
+              <li>
+                <Link href="/" className="text-gray-600 transition-colors hover:text-[#e31e24]">Home</Link>
+              </li>
+              <li aria-hidden="true">
+                <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 5l7 7-7 7" /></svg>
+              </li>
+              <li>
+                <Link href="/products" className="text-gray-600 transition-colors hover:text-[#e31e24]">Products</Link>
+              </li>
+              <li aria-hidden="true">
+                <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 5l7 7-7 7" /></svg>
+              </li>
+              <li className="min-w-0">
+                <Link href={ `/products/${slug}` } className="block truncate max-w-[40vw] text-gray-600 transition-colors hover:text-[#e31e24] md:max-w-xs">{ product.name }</Link>
+              </li>
+              <li aria-hidden="true">
+                <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 5l7 7-7 7" /></svg>
+              </li>
+              <li aria-current="page">
+                <span className="font-semibold text-[#2d2d2d]">Free Preview</span>
+              </li>
+            </ol>
+          </nav>
+
           {/* Preview Badge */ }
           <div className="text-center mb-8">
             <span className="inline-block bg-gradient-to-r from-[#e31e24] to-[#c41a1f] text-white px-6 py-2 rounded-full text-sm font-bold uppercase tracking-wide shadow-lg">
@@ -308,23 +366,59 @@ export default async function BookPreviewPage({
             </div>
           </div>
 
-          {/* About the Author */ }
+          {/* What Readers Say — social proof + Review schema (renders only when the book has reviews) */ }
+          { reviews.length > 0 && (
+            <div className="mt-12 bg-white rounded-xl shadow-lg p-8">
+              <div className="mb-6 flex flex-wrap items-center gap-3">
+                <h3 className="text-2xl font-bold text-[#2d2d2d]">What Readers Say</h3>
+                <div className="flex items-center gap-1.5">
+                  <div className="flex text-[#f5a623]" aria-hidden="true">
+                    { Array.from({ length: 5 }).map((_, i) => (
+                      <svg key={ i } className={ `h-5 w-5 ${i < Math.round(avgRating) ? "" : "text-gray-300"}` } fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                    )) }
+                  </div>
+                  <span className="text-sm font-semibold text-gray-600">{ avgRating.toFixed(1) } · { reviews.length } review{ reviews.length > 1 ? "s" : "" }</span>
+                </div>
+              </div>
+              <div className="grid gap-6 md:grid-cols-2">
+                { reviews.slice(0, 2).map((r: any, i: number) => (
+                  <blockquote key={ i } className="border-l-4 border-[#e31e24] pl-4">
+                    <div className="mb-2 flex text-[#f5a623]" aria-hidden="true">
+                      { Array.from({ length: 5 }).map((_, s) => (
+                        <svg key={ s } className={ `h-4 w-4 ${s < (r.rating || 0) ? "" : "text-gray-300"}` } fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                      )) }
+                    </div>
+                    <p className="mb-2 italic leading-relaxed text-gray-700">&ldquo;{ r.reviewText }&rdquo;</p>
+                    <cite className="text-sm font-semibold not-italic text-[#2d2d2d]">— { r.reviewerName || "Reader" }</cite>
+                  </blockquote>
+                )) }
+              </div>
+            </div>
+          ) }
+
+          {/* About the Author — attribution follows the book's actual author(s) */ }
           <div className="mt-12 bg-white rounded-xl shadow-lg p-8">
             <h3 className="text-2xl font-bold text-[#2d2d2d] mb-4">
-              About the Author
+              About the Author{ isCoAuthored ? "s" : "" }
             </h3>
-            <p className="text-gray-700 leading-relaxed mb-4">
-              <strong>Dr. Jomo Cousins</strong> is a renowned motivational speaker, pastor, and author
-              who has inspired thousands through his powerful messages of faith, purpose, and personal
-              transformation. As a former NFL player and founder of Love First Christian Center,
-              Dr. Cousins brings a unique perspective on achieving success while staying grounded in
-              spiritual principles.
-            </p>
+            { isCoAuthored ? (
+              <p className="text-gray-700 leading-relaxed mb-4">
+                <strong>Drs. Jomo and Charmaine Cousins</strong> are Senior Pastors at Love First
+                Christian Center and have been married for 24+ years. Together they&apos;ve counseled
+                over 1,000 couples, blending faith with practical tools to help marriages thrive.
+              </p>
+            ) : (
+              <p className="text-gray-700 leading-relaxed mb-4">
+                <strong>Dr. Jomo Cousins</strong> is a motivational speaker, pastor, and author — a
+                former NFL player and founder of Love First Christian Center — who helps people pursue
+                purpose and transformation grounded in faith.
+              </p>
+            ) }
             <Link
-              href="/about"
+              href={ isCoAuthored ? "/marriage/about" : "/about" }
               className="text-[#e31e24] font-semibold hover:underline"
             >
-              Learn more about Dr. Jomo Cousins →
+              { isCoAuthored ? "Meet Jomo & Charmaine →" : "Learn more about Dr. Jomo Cousins →" }
             </Link>
           </div>
         </div>
@@ -419,32 +513,6 @@ export default async function BookPreviewPage({
           </div>
         ) }
 
-        {/* SEO-friendly hidden content */ }
-        <div className="max-w-3xl mx-auto">
-          <div className="sr-only">
-            <p>
-              This is a free preview chapter from "{ product.name }" by { product.author || "Dr. Jomo Cousins" }.
-              The complete book is available for purchase and contains additional chapters with insights on
-              personal growth, spiritual development, faith, motivation, and achieving your God-given purpose.
-              { product.isbn && ` ISBN: ${product.isbn}.` }
-              { product.pageCount && ` The book contains ${product.pageCount} pages.` }
-              Purchase the full book to access all chapters and transform your life today.
-            </p>
-            { otherPreviews.length > 0 && (
-              <p>
-                You may also enjoy reading free preview chapters from other books by Dr. Jomo Cousins:
-                { otherPreviews.map((book: any, index: number) => (
-                  <span key={ book._id }>
-                    { index > 0 && (index === otherPreviews.length - 1 ? ", and " : ", ") }
-                    "{ book.name }"
-                    { book.previewChapter?.title && ` featuring "${book.previewChapter.title}"` }
-                  </span>
-                )) }.
-                All preview chapters are available for free and provide valuable insights from Dr. Cousins' teachings.
-              </p>
-            ) }
-          </div>
-        </div>
       </article>
     </div>
   );
