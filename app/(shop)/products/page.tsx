@@ -220,11 +220,11 @@ function FeaturedProductCard({ product }: { product: AllProductsQueryResult[ num
     ? urlForImage(product.images[ 0 ])?.width(1200).url()
     : null;
 
+  const hasPreview = product.category === "books" && !!product.previewChapter;
+
   return (
-    <Link
-      href={ `/products/${product.slug || ''}` }
-      className="group bg-gradient-to-br from-white to-gray-50 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-[#e31e24]/20"
-    >
+    <div className="group relative flex flex-col bg-gradient-to-br from-white to-gray-50 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-[#e31e24]/20">
+      <Link href={ `/products/${product.slug || ''}` } className="block flex-1">
       {/* Product image */ }
       <div className="relative aspect-square bg-white overflow-hidden">
         { imageUrl ? (
@@ -268,6 +268,14 @@ function FeaturedProductCard({ product }: { product: AllProductsQueryResult[ num
         <div className="absolute top-4 left-4 bg-[#2d2d2d] text-white px-4 py-2 rounded-full text-xs font-semibold uppercase">
           { product.category }
         </div>
+
+        {/* Free preview badge */ }
+        { hasPreview && (
+          <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm text-[#e31e24] px-3 py-1.5 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
+            <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 12a4.5 4.5 0 110-9 4.5 4.5 0 010 9zm0-7a2.5 2.5 0 100 5 2.5 2.5 0 000-5z" /></svg>
+            Free Preview
+          </div>
+        ) }
       </div>
 
       {/* Product info */ }
@@ -296,7 +304,21 @@ function FeaturedProductCard({ product }: { product: AllProductsQueryResult[ num
           </svg>
         </div>
       </div>
-    </Link>
+      </Link>
+
+      {/* Free preview link — separate crawlable anchor to de-orphan /books/[slug]/preview */ }
+      { hasPreview && (
+        <Link
+          href={ `/books/${product.slug || ''}/preview` }
+          className="relative z-10 flex items-center justify-center gap-1.5 border-t border-[#e31e24]/15 px-6 py-3 text-sm font-bold text-[#e31e24] transition-colors hover:bg-[#e31e24] hover:text-white"
+        >
+          Read a free preview
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 5l7 7-7 7" />
+          </svg>
+        </Link>
+      ) }
+    </div>
   );
 }
 
@@ -320,11 +342,11 @@ function ProductCard({ product }: { product: AllProductsQueryResult[ number ] })
     ? urlForImage(product.images[ 0 ])?.width(1000).url()
     : null;
 
+  const hasPreview = product.category === "books" && !!product.previewChapter;
+
   return (
-    <Link
-      href={ `/products/${product.slug || ''}` }
-      className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100"
-    >
+    <div className="group relative flex flex-col bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100">
+      <Link href={ `/products/${product.slug || ''}` } className="block flex-1">
       {/* Product image */ }
       <div className="relative aspect-square bg-gray-50 overflow-hidden">
         { imageUrl ? (
@@ -360,6 +382,14 @@ function ProductCard({ product }: { product: AllProductsQueryResult[ number ] })
         <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[#2d2d2d] px-3 py-1 rounded-full text-xs font-semibold uppercase">
           { product.category }
         </div>
+
+        {/* Free preview badge */ }
+        { hasPreview && (
+          <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-sm text-[#e31e24] px-2.5 py-1 rounded-full text-[11px] font-bold shadow-md flex items-center gap-1">
+            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 12a4.5 4.5 0 110-9 4.5 4.5 0 010 9zm0-7a2.5 2.5 0 100 5 2.5 2.5 0 000-5z" /></svg>
+            Free Preview
+          </div>
+        ) }
       </div>
 
       {/* Product info */ }
@@ -388,7 +418,21 @@ function ProductCard({ product }: { product: AllProductsQueryResult[ number ] })
           </svg>
         </div>
       </div>
-    </Link>
+      </Link>
+
+      {/* Free preview link — separate crawlable anchor to de-orphan /books/[slug]/preview */ }
+      { hasPreview && (
+        <Link
+          href={ `/books/${product.slug || ''}/preview` }
+          className="relative z-10 flex items-center justify-center gap-1.5 border-t border-gray-100 px-5 py-2.5 text-sm font-bold text-[#e31e24] transition-colors hover:bg-[#e31e24] hover:text-white"
+        >
+          Read a free preview
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 5l7 7-7 7" />
+          </svg>
+        </Link>
+      ) }
+    </div>
   );
 }
 

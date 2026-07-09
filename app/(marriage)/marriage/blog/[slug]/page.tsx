@@ -8,6 +8,7 @@ import { format, parseISO } from "date-fns";
 import { PortableText } from "next-sanity";
 import JCNewsletterForm from "../../JCNewsletterForm";
 import ShareButtons from "./ShareButtons";
+import Breadcrumb from "@/app/(marriage)/Breadcrumb";
 
 // Helper function to extract YouTube video ID from URL
 function getYouTubeVideoId(url: string): string | null {
@@ -214,7 +215,7 @@ export default async function BlogPostPage({
       {
         "@type": "ListItem",
         position: 3,
-        name: "Couples Corner",
+        name: "Couples' Corner",
         item: "https://www.jomocousins.com/marriage/blog",
       },
       {
@@ -264,19 +265,16 @@ export default async function BlogPostPage({
       {/* Hero Section */ }
       <section className="relative bg-gradient-to-br from-[#FAFCFE] to-white py-20">
         <div className="container mx-auto px-5">
-          {/* Breadcrumb */ }
-          <div className="mb-8 flex items-center gap-2 text-sm">
-            <Link
-              href="/marriage/blog"
-              className="text-gray-600 transition-colors hover:text-[#ea8125]"
-            >
-              Couples Corner
-            </Link>
-            <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 5l7 7-7 7" />
-            </svg>
-            <span className="text-[#303030] font-semibold">{ post.title }</span>
-          </div>
+          {/* Breadcrumb — mirrors the BreadcrumbList JSON-LD below */ }
+          <Breadcrumb
+            className="mb-8"
+            items={ [
+              { name: "Home", href: "/" },
+              { name: "Marriage", href: "/marriage" },
+              { name: "Couples' Corner", href: "/marriage/blog" },
+              { name: post.title },
+            ] }
+          />
 
           {/* Title & Meta */ }
           <div className="mx-auto max-w-4xl">

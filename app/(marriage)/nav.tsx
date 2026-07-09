@@ -16,6 +16,8 @@ export default function Nav() {
     { name: "HOME", href: "/marriage" },
     { name: "ABOUT US", href: "/marriage/about" },
     { name: "COUPLES' CORNER", href: "/marriage/blog" },
+    { name: "PRAYER", href: "/prayer" },
+    { name: "BOOKS", href: "/products" },
     // { name: "CONTACT US", href: "/marriage/contact" },
   ];
 
@@ -39,7 +41,7 @@ export default function Nav() {
 
             {/* Desktop Navigation */ }
             <div className="hidden items-center md:flex">
-              <div className="flex items-center gap-10 mr-8">
+              <div className="flex items-center gap-6 mr-6">
                 { navLinks.map((link) => {
                   // For home, only match exact path. For others, match exact or nested routes
                   const isActive = link.href === "/marriage"

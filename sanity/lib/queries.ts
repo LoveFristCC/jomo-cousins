@@ -131,6 +131,22 @@ export const productByNameQuery = defineQuery(`
   }
 `);
 
+// Related products for internal linking on product detail pages.
+// Prefers same-category items, falls back to any other active product.
+export const relatedProductsQuery = defineQuery(`
+  *[_type == "product" && status == "active" && slug.current != $slug] {
+    _id,
+    name,
+    "slug": slug.current,
+    category,
+    images,
+    basePrice,
+    excerpt,
+    author,
+    featured
+  } | order(select(category == $category => 0, 1) asc, featured desc, name asc) [0...4]
+`);
+
 export const digitalProductByPositionQuery = defineQuery(`
   *[_type == "digitalProduct" && upsellPosition == $position && status == "active"] [0] {
     ${digitalProductFields}

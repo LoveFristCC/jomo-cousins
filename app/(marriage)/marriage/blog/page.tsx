@@ -6,6 +6,7 @@ import type { AllCouplesCornerPostsQueryResult, FeaturedCouplesCornerPostsQueryR
 import { urlForImage } from "@/sanity/lib/utils";
 import { format, parseISO } from "date-fns";
 import JCNewsletterForm from "../JCNewsletterForm";
+import Breadcrumb from "@/app/(marriage)/Breadcrumb";
 
 export default async function CouplesCornerPage() {
   const [ allPosts, featuredPosts ] = await Promise.all([
@@ -39,13 +40,13 @@ export default async function CouplesCornerPage() {
           {
             "@type": "ListItem",
             position: 2,
-            name: "Marriage Counseling",
+            name: "Marriage",
             item: "https://www.jomocousins.com/marriage",
           },
           {
             "@type": "ListItem",
             position: 3,
-            name: "Couples' Corner Blog",
+            name: "Couples' Corner",
             item: "https://www.jomocousins.com/marriage/blog",
           },
         ],
@@ -116,6 +117,19 @@ export default async function CouplesCornerPage() {
           </div>
         </div>
       </section>
+
+      {/* Breadcrumb — mirrors the BreadcrumbList JSON-LD above */ }
+      <div className="border-b border-gray-100 bg-white">
+        <div className="container mx-auto px-5 py-4">
+          <Breadcrumb
+            items={ [
+              { name: "Home", href: "/" },
+              { name: "Marriage", href: "/marriage" },
+              { name: "Couples' Corner" },
+            ] }
+          />
+        </div>
+      </div>
 
       {/* Featured Posts */ }
       { featuredPosts.length > 0 && (

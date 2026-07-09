@@ -54,28 +54,28 @@ export default async function DailyPrayerPage() {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://jomocousins.com",
+            item: "https://www.jomocousins.com",
           },
           {
             "@type": "ListItem",
             position: 2,
             name: "Prayer",
-            item: "https://jomocousins.com/prayer",
+            item: "https://www.jomocousins.com/prayer",
           },
           {
             "@type": "ListItem",
             position: 3,
             name: "Daily Prayer",
-            item: "https://jomocousins.com/prayer/daily",
+            item: "https://www.jomocousins.com/prayer/daily",
           },
         ],
       },
       {
         "@type": "Person",
-        "@id": "https://jomocousins.com/#jomo",
+        "@id": "https://www.jomocousins.com/#jomo",
         name: "Jomo Cousins",
         jobTitle: "Pastor & Spiritual Leader",
-        url: "https://jomocousins.com",
+        url: "https://www.jomocousins.com",
       },
     ],
   };
@@ -91,7 +91,7 @@ export default async function DailyPrayerPage() {
   //       item: {
   //         "@type": "VideoObject",
   //         name: prayer.title,
-  //         url: `https://jomocousins.com/prayer/${prayer.slug}`,
+  //         url: `https://www.jomocousins.com/prayer/${prayer.slug}`,
   //       },
   //     })),
   //   });

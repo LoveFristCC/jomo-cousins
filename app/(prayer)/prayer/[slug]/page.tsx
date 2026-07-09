@@ -231,13 +231,13 @@ export default async function PrayerVideoPage({ params }: Props) {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://jomocousins.com",
+            item: "https://www.jomocousins.com",
           },
           {
             "@type": "ListItem",
             position: 2,
             name: "Prayer",
-            item: "https://jomocousins.com/prayer",
+            item: "https://www.jomocousins.com/prayer",
           },
           ...(primaryCategory
             ? [
@@ -245,13 +245,13 @@ export default async function PrayerVideoPage({ params }: Props) {
                 "@type": "ListItem",
                 position: 3,
                 name: primaryCategory.title,
-                item: `https://jomocousins.com/prayer/category/${primaryCategory.slug}`,
+                item: `https://www.jomocousins.com/prayer/category/${primaryCategory.slug}`,
               },
               {
                 "@type": "ListItem",
                 position: 4,
                 name: prayer.title,
-                item: `https://jomocousins.com/prayer/${prayer.slug}`,
+                item: `https://www.jomocousins.com/prayer/${prayer.slug}`,
               },
             ]
             : [
@@ -259,7 +259,7 @@ export default async function PrayerVideoPage({ params }: Props) {
                 "@type": "ListItem",
                 position: 3,
                 name: prayer.title,
-                item: `https://jomocousins.com/prayer/${prayer.slug}`,
+                item: `https://www.jomocousins.com/prayer/${prayer.slug}`,
               },
             ]),
         ],
@@ -279,7 +279,7 @@ export default async function PrayerVideoPage({ params }: Props) {
           "@type": "Person",
           name: "Jomo Cousins",
           jobTitle: "Pastor & Spiritual Leader",
-          url: "https://jomocousins.com",
+          url: "https://www.jomocousins.com",
         },
         ...(prayerPlainText && { transcript: prayerPlainText }),
       },
@@ -296,10 +296,10 @@ export default async function PrayerVideoPage({ params }: Props) {
       },
       {
         "@type": "Person",
-        "@id": "https://jomocousins.com/#jomo",
+        "@id": "https://www.jomocousins.com/#jomo",
         name: "Jomo Cousins",
         jobTitle: "Pastor & Spiritual Leader",
-        url: "https://jomocousins.com",
+        url: "https://www.jomocousins.com",
       },
     ],
   };
@@ -321,7 +321,7 @@ export default async function PrayerVideoPage({ params }: Props) {
     }
     : null;
 
-  const shareUrl = `https://jomocousins.com/prayer/${prayer.slug}`;
+  const shareUrl = `https://www.jomocousins.com/prayer/${prayer.slug}`;
   const shareTitle = `${prayer.title} - Prayer with Pastor Jomo Cousins`;
 
   return (

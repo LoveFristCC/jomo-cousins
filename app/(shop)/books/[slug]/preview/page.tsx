@@ -484,8 +484,32 @@ export async function generateMetadata({
   const previewUrl = `${baseUrl}/books/${slug}/preview`;
   const { previewChapter } = product;
 
-  const title = `${previewChapter.title} - Preview of ${product.name}`;
-  const description = `Read a free preview chapter from "${product.name}" by ${product.author || "Dr. Jomo Cousins"}. ${product.excerpt?.substring(0, 100) || "Discover powerful insights on faith, purpose, and personal transformation."}`;
+  const author = product.author || "Dr. Jomo Cousins";
+  const name = product.name?.trim() || "Book Preview";
+
+  // Keyword-first <title>, kept under ~60 chars: lead with the book name (what
+  // people search) and add a "Free Preview" label only while it still fits.
+  const withLabel = `${name} — Free Preview`;
+  const title =
+    withLabel.length <= 60
+      ? withLabel
+      : name.length <= 60
+        ? name
+        : `${name.slice(0, 59).trimEnd()}…`;
+
+  // Clamp the meta description to ~155 chars on a word boundary (no mid-word cuts).
+  const clamp = (text: string, max = 155) => {
+    const t = text.replace(/\s+/g, " ").trim();
+    if (t.length <= max) return t;
+    const cut = t.slice(0, max - 1);
+    const lastSpace = cut.lastIndexOf(" ");
+    return `${(lastSpace > 60 ? cut.slice(0, lastSpace) : cut).trimEnd()}…`;
+  };
+  const description = clamp(
+    product.excerpt
+      ? `Read a free chapter of ${name} by ${author}. ${product.excerpt}`
+      : `Read a free chapter of ${name} by ${author} — insights on faith, purpose, and personal transformation.`
+  );
 
   const imageUrl = product.images?.[ 0 ]
     ? urlForImage(product.images[ 0 ])?.width(1200).height(630).url()

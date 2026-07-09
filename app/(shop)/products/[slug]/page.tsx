@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { productBySlugQuery } from "@/sanity/lib/queries";
+import { productBySlugQuery, relatedProductsQuery } from "@/sanity/lib/queries";
 import { urlForImage, urlForProductImage } from "@/sanity/lib/utils";
 import CustomPortableText from "@/app/(home)/portable-text";
 import ProductActions from "./ProductActions";
@@ -27,6 +28,12 @@ export default async function ProductPage({
   if (!product) {
     notFound();
   }
+
+  // Related products for internal linking (kills the dead-end product page)
+  const relatedProducts = await sanityFetch({
+    query: relatedProductsQuery,
+    params: { slug, category: product.category ?? "" },
+  });
 
   // Prepare images for gallery - size based on actual display needs
   const isApparel = product.category === "tshirts" || product.category === "hoodies";
@@ -181,6 +188,80 @@ export default async function ProductPage({
           />
         </div>
       ) }
+
+      {/* Related Products - internal linking for SEO */ }
+      { relatedProducts.length > 0 && (
+        <section className="border-t border-gray-100 bg-gray-50 py-16">
+          <div className="container mx-auto px-4">
+            <h2 className="mb-8 text-3xl font-bold text-[#2d2d2d]">You May Also Like</h2>
+            <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+              { relatedProducts.map((related: any) => {
+                const relatedImage = related.images?.[ 0 ]
+                  ? urlForImage(related.images[ 0 ])?.width(500).height(500).url()
+                  : null;
+                return (
+                  <Link
+                    key={ related._id }
+                    href={ `/products/${related.slug}` }
+                    className="group block overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-xl"
+                  >
+                    <div className="relative aspect-square overflow-hidden bg-gray-50">
+                      { relatedImage && (
+                        <Image
+                          src={ relatedImage }
+                          alt={ related.images?.[ 0 ]?.alt || related.name }
+                          fill
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          sizes="(max-width: 768px) 50vw, 25vw"
+                        />
+                      ) }
+                    </div>
+                    <div className="p-4">
+                      <h3 className="mb-1 line-clamp-2 font-bold text-[#2d2d2d] transition-colors group-hover:text-[#e31e24]">
+                        { related.name }
+                      </h3>
+                      <p className="font-semibold text-[#e31e24]">${ (related.basePrice || 0).toFixed(2) }</p>
+                    </div>
+                  </Link>
+                );
+              }) }
+            </div>
+          </div>
+        </section>
+      ) }
+
+      {/* Cross-section discovery CTA - de-silos shop from prayer & marriage */ }
+      <section className="border-t border-gray-100 bg-white py-14">
+        <div className="container mx-auto px-4">
+          <h2 className="mb-8 text-center text-2xl font-bold text-[#2d2d2d]">
+            Explore More from Dr. Jomo Cousins
+          </h2>
+          <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
+            <Link
+              href="/prayer"
+              className="group rounded-xl border-2 border-gray-100 p-6 transition-all hover:border-[#e31e24] hover:shadow-md"
+            >
+              <h3 className="mb-2 text-lg font-bold text-[#2d2d2d] group-hover:text-[#e31e24]">
+                Prayer Library →
+              </h3>
+              <p className="text-sm text-gray-600">
+                On-demand prayer videos for healing, finances, anxiety, and more.
+              </p>
+            </Link>
+            <Link
+              href="/marriage/blog"
+              className="group rounded-xl border-2 border-gray-100 p-6 transition-all hover:border-[#e31e24] hover:shadow-md"
+            >
+              <h3 className="mb-2 text-lg font-bold text-[#2d2d2d] group-hover:text-[#e31e24]">
+                Couples&apos; Corner →
+              </h3>
+              <p className="text-sm text-gray-600">
+                Faith-based marriage and relationship advice from Jomo &amp; Charmaine.
+              </p>
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
@@ -220,21 +301,40 @@ export async function generateMetadata({
     return `${product.name} by Dr. Jomo Cousins. Available now.`;
   };
 
-  const description = getDescription();
+  // Clamp the meta description to ~155 chars on a word boundary (no mid-word cuts).
+  const clamp = (text: string, max = 155) => {
+    const t = text.replace(/\s+/g, " ").trim();
+    if (t.length <= max) return t;
+    const cut = t.slice(0, max - 1);
+    const lastSpace = cut.lastIndexOf(" ");
+    return `${(lastSpace > 60 ? cut.slice(0, lastSpace) : cut).trimEnd()}…`;
+  };
+  const description = clamp(getDescription());
 
   // Get product image
   const imageUrl = product.images?.[ 0 ]
     ? urlForImage(product.images[ 0 ])?.width(1200).height(630).url()
     : `${baseUrl}/images/og-image.jpg`;
 
-  // Build title based on category
-  const titleSuffix =
-    product.category === "books" ? "Book by Dr. Jomo Cousins" : "Shop";
-  const fullTitle = `${product.name} - ${titleSuffix}`;
+  // Build a <title> that stays under ~60 chars: book name first, then the most
+  // descriptive suffix that still fits (falls back to shorter branding).
+  const name = product.name?.trim() || "Product";
+  const longSuffix =
+    product.category === "books" ? "Book by Dr. Jomo Cousins" : "Dr. Jomo Cousins";
+  const withLongSuffix = `${name} — ${longSuffix}`;
+  const withShortSuffix = `${name} — Dr. Jomo Cousins`;
+  const fullTitle =
+    withLongSuffix.length <= 60
+      ? withLongSuffix
+      : withShortSuffix.length <= 60
+        ? withShortSuffix
+        : name.length <= 60
+          ? name
+          : `${name.slice(0, 59).trimEnd()}…`;
 
   return {
     title: fullTitle,
-    description: description.substring(0, 160), // Optimal length for meta description
+    description,
     keywords: [
       product.name,
       "Dr. Jomo Cousins",
@@ -255,7 +355,7 @@ export async function generateMetadata({
       type: product.category === "books" ? "book" : "website",
       url: productUrl,
       title: fullTitle,
-      description: description.substring(0, 160),
+      description,
       images: [
         {
           url: imageUrl || "",
@@ -278,7 +378,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
-      description: description.substring(0, 160),
+      description,
       images: [ imageUrl || "" ],
       creator: "@pastorjomo",
     },
