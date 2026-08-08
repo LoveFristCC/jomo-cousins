@@ -24,6 +24,10 @@ import couplesCornerPost from "@/sanity/schemas/documents/couplesCornerPost";
 import prayerVideo from "@/sanity/schemas/documents/prayerVideo";
 import prayerCategory from "@/sanity/schemas/documents/prayerCategory";
 import prayerTestimonial from "@/sanity/schemas/documents/prayerTestimonial";
+import prayerSeries from "@/sanity/schemas/documents/prayerSeries";
+import prayerWeek from "@/sanity/schemas/documents/prayerWeek";
+import scripture from "@/sanity/schemas/objects/scripture";
+import prayerDay from "@/sanity/schemas/objects/prayerDay";
 import settings from "@/sanity/schemas/singletons/settings";
 import { resolveHref } from "@/sanity/lib/utils";
 
@@ -49,8 +53,12 @@ export default defineConfig({
       prayerVideo,
       prayerCategory,
       prayerTestimonial,
+      prayerSeries,
+      prayerWeek,
       // Objects
       productVariant,
+      scripture,
+      prayerDay,
     ],
   },
   document: {
@@ -62,7 +70,8 @@ export default defineConfig({
         context.schemaType === "digitalProduct" ||
         context.schemaType === "couplesCornerPost" ||
         context.schemaType === "prayerVideo" ||
-        context.schemaType === "prayerCategory"
+        context.schemaType === "prayerCategory" ||
+        context.schemaType === "prayerWeek"
       ) {
         // Filter out default publish action and add our clean publish action
         const filteredActions = prev.filter(

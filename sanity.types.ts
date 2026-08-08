@@ -13,6 +13,23 @@
  */
 
 // Source: schema.json
+export type PrayerDay = {
+  _type: "prayerDay";
+  day?: "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday";
+  focus?: string;
+  prompt?: string;
+  scriptures?: Array<{
+    _key: string;
+  } & Scripture>;
+};
+
+export type Scripture = {
+  _type: "scripture";
+  reference?: string;
+  translation?: string;
+  text?: string;
+};
+
 export type ProductVariant = {
   _type: "productVariant";
   sku?: string;
@@ -37,6 +54,86 @@ export type ProductVariant = {
     _type: "image";
   };
   allowBackorder?: boolean;
+};
+
+export type PrayerWeek = {
+  _id: string;
+  _type: "prayerWeek";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  series?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "prayerSeries";
+  };
+  weekNumber?: number;
+  title?: string;
+  slug?: Slug;
+  weekOf?: string;
+  intro?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  sermonUrl?: string;
+  sermonLabel?: string;
+  days?: Array<{
+    _key: string;
+  } & PrayerDay>;
+  unsortedScriptures?: Array<{
+    _key: string;
+  } & Scripture>;
+  relatedVideos?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "prayerVideo";
+  }>;
+  publishedAt?: string;
+};
+
+export type PrayerSeries = {
+  _id: string;
+  _type: "prayerSeries";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  subtitle?: string;
+  description?: string;
+  coverImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  startDate?: string;
+  totalWeeks?: number;
+  isActive?: boolean;
 };
 
 export type PrayerTestimonial = {
@@ -900,7 +997,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = ProductVariant | PrayerTestimonial | PrayerCategory | PrayerVideo | CouplesCornerPost | Product | DigitalProduct | Post | Author | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = PrayerDay | Scripture | ProductVariant | PrayerWeek | PrayerSeries | PrayerTestimonial | PrayerCategory | PrayerVideo | CouplesCornerPost | Product | DigitalProduct | Post | Author | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: settingsQuery
@@ -3209,6 +3306,169 @@ export type TestimonialsByCategoryQueryResult = Array<{
   location: string | null;
   submittedAt: string | null;
 }>;
+// Variable: activePrayerSeriesQuery
+// Query: *[_type == "prayerSeries" && isActive == true] | order(startDate desc) [0] {    _id,    title,    "slug": slug.current,    subtitle,    description,    coverImage,    startDate,    totalWeeks,    "weeks": *[_type == "prayerWeek" && references(^._id)] | order(weekNumber asc) {        _id,  weekNumber,  title,  "slug": slug.current,  weekOf,  sermonUrl,  sermonLabel,  intro,  days[]{    day,    focus,    prompt,    scriptures[]{   reference,  translation,  text }  },  unsortedScriptures[]{   reference,  translation,  text },  "scriptureCount": count(unsortedScriptures) + count(days[].scriptures[]),  "relatedVideos": relatedVideos[]->{   _id,  title,  "slug": slug.current,  duration,  featuredImage,  "category": prayerCategories[0]->title }    }  }
+export type ActivePrayerSeriesQueryResult = {
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  subtitle: string | null;
+  description: string | null;
+  coverImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  startDate: string | null;
+  totalWeeks: number | null;
+  weeks: Array<{
+    _id: string;
+    weekNumber: number | null;
+    title: string | null;
+    slug: string | null;
+    weekOf: string | null;
+    sermonUrl: string | null;
+    sermonLabel: string | null;
+    intro: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+    days: Array<{
+      day: "Friday" | "Monday" | "Thursday" | "Tuesday" | "Wednesday" | null;
+      focus: string | null;
+      prompt: string | null;
+      scriptures: Array<{
+        reference: string | null;
+        translation: string | null;
+        text: string | null;
+      }> | null;
+    }> | null;
+    unsortedScriptures: Array<{
+      reference: string | null;
+      translation: string | null;
+      text: string | null;
+    }> | null;
+    scriptureCount: number | null;
+    relatedVideos: Array<{
+      _id: string;
+      title: string | null;
+      slug: string | null;
+      duration: string | null;
+      featuredImage: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+      } | null;
+      category: string | null;
+    }> | null;
+  }>;
+} | null;
+// Variable: prayerWeekBySlugQuery
+// Query: *[_type == "prayerWeek" && slug.current == $slug] [0] {      _id,  weekNumber,  title,  "slug": slug.current,  weekOf,  sermonUrl,  sermonLabel,  intro,  days[]{    day,    focus,    prompt,    scriptures[]{   reference,  translation,  text }  },  unsortedScriptures[]{   reference,  translation,  text },  "scriptureCount": count(unsortedScriptures) + count(days[].scriptures[]),  "relatedVideos": relatedVideos[]->{   _id,  title,  "slug": slug.current,  duration,  featuredImage,  "category": prayerCategories[0]->title },    "series": series->{      title,      "slug": slug.current,      subtitle,      totalWeeks    }  }
+export type PrayerWeekBySlugQueryResult = {
+  _id: string;
+  weekNumber: number | null;
+  title: string | null;
+  slug: string | null;
+  weekOf: string | null;
+  sermonUrl: string | null;
+  sermonLabel: string | null;
+  intro: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  days: Array<{
+    day: "Friday" | "Monday" | "Thursday" | "Tuesday" | "Wednesday" | null;
+    focus: string | null;
+    prompt: string | null;
+    scriptures: Array<{
+      reference: string | null;
+      translation: string | null;
+      text: string | null;
+    }> | null;
+  }> | null;
+  unsortedScriptures: Array<{
+    reference: string | null;
+    translation: string | null;
+    text: string | null;
+  }> | null;
+  scriptureCount: number | null;
+  relatedVideos: Array<{
+    _id: string;
+    title: string | null;
+    slug: string | null;
+    duration: string | null;
+    featuredImage: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+    category: string | null;
+  }> | null;
+  series: {
+    title: string | null;
+    slug: string | null;
+    subtitle: string | null;
+    totalWeeks: number | null;
+  } | null;
+} | null;
+// Variable: prayerWeekSlugsQuery
+// Query: *[_type == "prayerWeek" && defined(slug.current)]{ "slug": slug.current }
+export type PrayerWeekSlugsQueryResult = Array<{
+  slug: string | null;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -3252,5 +3512,8 @@ declare module "@sanity/client" {
     "\n  *[_type == \"prayerVideo\" && publishedAt < $currentDate] | order(publishedAt desc) [0] {\n    _id,\n    title,\n    \"slug\": slug.current\n  }\n": PreviousPrayerQueryResult;
     "\n  *[_type == \"couplesCornerPost\" && count(tags[@ in $tags]) > 0] | order(publishedAt desc) [0...$limit] {\n    \n  _id,\n  _updatedAt,\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  category,\n  tags,\n  youtubeVideo,\n  \"publishedAt\": coalesce(publishedAt, _createdAt),\n  featured,\n  seo\n\n  }\n": RelatedMarriageBlogPostsQueryResult;
     "\n  *[_type == \"prayerTestimonial\" && isApproved == true && category._ref == $categoryId] | order(submittedAt desc) [0...$limit] {\n    _id,\n    name,\n    testimonialText,\n    location,\n    submittedAt\n  }\n": TestimonialsByCategoryQueryResult;
+    "\n  *[_type == \"prayerSeries\" && isActive == true] | order(startDate desc) [0] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    subtitle,\n    description,\n    coverImage,\n    startDate,\n    totalWeeks,\n    \"weeks\": *[_type == \"prayerWeek\" && references(^._id)] | order(weekNumber asc) {\n      \n  _id,\n  weekNumber,\n  title,\n  \"slug\": slug.current,\n  weekOf,\n  sermonUrl,\n  sermonLabel,\n  intro,\n  days[]{\n    day,\n    focus,\n    prompt,\n    scriptures[]{ \n  reference,\n  translation,\n  text\n }\n  },\n  unsortedScriptures[]{ \n  reference,\n  translation,\n  text\n },\n  \"scriptureCount\": count(unsortedScriptures) + count(days[].scriptures[]),\n  \"relatedVideos\": relatedVideos[]->{ \n  _id,\n  title,\n  \"slug\": slug.current,\n  duration,\n  featuredImage,\n  \"category\": prayerCategories[0]->title\n }\n\n    }\n  }\n": ActivePrayerSeriesQueryResult;
+    "\n  *[_type == \"prayerWeek\" && slug.current == $slug] [0] {\n    \n  _id,\n  weekNumber,\n  title,\n  \"slug\": slug.current,\n  weekOf,\n  sermonUrl,\n  sermonLabel,\n  intro,\n  days[]{\n    day,\n    focus,\n    prompt,\n    scriptures[]{ \n  reference,\n  translation,\n  text\n }\n  },\n  unsortedScriptures[]{ \n  reference,\n  translation,\n  text\n },\n  \"scriptureCount\": count(unsortedScriptures) + count(days[].scriptures[]),\n  \"relatedVideos\": relatedVideos[]->{ \n  _id,\n  title,\n  \"slug\": slug.current,\n  duration,\n  featuredImage,\n  \"category\": prayerCategories[0]->title\n }\n,\n    \"series\": series->{\n      title,\n      \"slug\": slug.current,\n      subtitle,\n      totalWeeks\n    }\n  }\n": PrayerWeekBySlugQueryResult;
+    "\n  *[_type == \"prayerWeek\" && defined(slug.current)]{ \"slug\": slug.current }\n": PrayerWeekSlugsQueryResult;
   }
 }

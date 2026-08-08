@@ -9,6 +9,7 @@ import {
 } from "@/sanity/lib/queries";
 import { urlForImage } from "@/sanity/lib/utils";
 import { format, parseISO } from "date-fns";
+import SeriesSection from "./week/_components/SeriesSection";
 
 // Enable ISR with revalidation every hour
 export const revalidate = 3600;
@@ -167,6 +168,9 @@ export default async function PrayerPage() {
           </div>
         </div>
       </section>
+
+      {/* Featured Prayer Series (first content section) */ }
+      <SeriesSection />
 
       {/* Popular Prayer Topics Grid */ }
       { categories && categories.length > 0 && (

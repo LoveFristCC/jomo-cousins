@@ -454,3 +454,78 @@ export const testimonialsByCategoryQuery = defineQuery(`
     submittedAt
   }
 `);
+
+// ---------------------------------------------------------------------------
+// Prayer Series & Weeks (10-week prayer-points journey)
+// ---------------------------------------------------------------------------
+
+const scriptureFields = /* groq */ `
+  reference,
+  translation,
+  text
+`;
+
+// Compact prayer-video card fields for the "related videos" rails.
+const relatedVideoFields = /* groq */ `
+  _id,
+  title,
+  "slug": slug.current,
+  duration,
+  featuredImage,
+  "category": prayerCategories[0]->title
+`;
+
+const weekFields = /* groq */ `
+  _id,
+  weekNumber,
+  title,
+  "slug": slug.current,
+  weekOf,
+  sermonUrl,
+  sermonLabel,
+  intro,
+  days[]{
+    day,
+    focus,
+    prompt,
+    scriptures[]{ ${scriptureFields} }
+  },
+  unsortedScriptures[]{ ${scriptureFields} },
+  "scriptureCount": count(unsortedScriptures) + count(days[].scriptures[]),
+  "relatedVideos": relatedVideos[]->{ ${relatedVideoFields} }
+`;
+
+// The active series plus its weeks (ordered), for the /prayer page.
+export const activePrayerSeriesQuery = defineQuery(`
+  *[_type == "prayerSeries" && isActive == true] | order(startDate desc) [0] {
+    _id,
+    title,
+    "slug": slug.current,
+    subtitle,
+    description,
+    coverImage,
+    startDate,
+    totalWeeks,
+    "weeks": *[_type == "prayerWeek" && references(^._id)] | order(weekNumber asc) {
+      ${weekFields}
+    }
+  }
+`);
+
+// A single week by slug, with its parent series for breadcrumbs/labels.
+export const prayerWeekBySlugQuery = defineQuery(`
+  *[_type == "prayerWeek" && slug.current == $slug] [0] {
+    ${weekFields},
+    "series": series->{
+      title,
+      "slug": slug.current,
+      subtitle,
+      totalWeeks
+    }
+  }
+`);
+
+// All week slugs for the active series — used by generateStaticParams.
+export const prayerWeekSlugsQuery = defineQuery(`
+  *[_type == "prayerWeek" && defined(slug.current)]{ "slug": slug.current }
+`);

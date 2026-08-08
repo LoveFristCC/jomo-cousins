@@ -95,6 +95,23 @@ export const productStructure: StructureResolver = (S) => {
                 .title("💬 Prayer Testimonials")
                 .schemaType("prayerTestimonial")
                 .child(S.documentTypeList("prayerTestimonial").title("Prayer Testimonials")),
+
+              S.divider(),
+
+              // Prayer Points series (10-week journey)
+              S.listItem()
+                .title("✨ Prayer Series")
+                .schemaType("prayerSeries")
+                .child(S.documentTypeList("prayerSeries").title("Prayer Series")),
+
+              S.listItem()
+                .title("🗓️ Prayer Weeks")
+                .schemaType("prayerWeek")
+                .child(
+                  S.documentTypeList("prayerWeek")
+                    .title("Prayer Weeks")
+                    .defaultOrdering([{ field: "weekNumber", direction: "asc" }])
+                ),
             ])
         ),
 
