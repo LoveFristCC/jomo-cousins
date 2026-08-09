@@ -67,13 +67,15 @@ export default defineType({
       name: "sermonUrl",
       title: "Sermon Link (optional)",
       type: "url",
-      description: "Link to watch/listen to this week's sermon, if available.",
+      description:
+        "Link to this week's sermon — the sermon notes, or a video/audio to watch or listen. Set the button text below.",
     }),
     defineField({
       name: "sermonLabel",
-      title: "Sermon Link Label",
+      title: "Sermon Link — Button Text",
       type: "string",
-      description: 'e.g., "Watch the sermon". Only used if a sermon link is set.',
+      description:
+        'The button text, e.g., "Read the sermon notes" or "Watch the sermon". Defaults to "Read the sermon notes". Only used if a sermon link is set.',
       hidden: ({ parent }) => !parent?.sermonUrl,
     }),
     defineField({

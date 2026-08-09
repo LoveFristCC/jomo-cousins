@@ -119,7 +119,7 @@ export default async function PrayerWeekPage({
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg bg-[#e31e24] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#c11a1f]"
               >
-                {week.sermonLabel || "Watch the sermon"} &rarr;
+                {week.sermonLabel || "Read the sermon notes"} &rarr;
               </a>
             )}
           </div>
