@@ -11,7 +11,7 @@ type Teaching = {
 };
 
 /**
- * "Learn to Pray" block for the /prayer page — one card per prayer teaching.
+ * "Teaching Points" block for the /prayer page — one card per prayer teaching.
  * Returns null until at least one teaching is published.
  */
 export default async function TeachingsSection() {
@@ -24,17 +24,9 @@ export default async function TeachingsSection() {
   return (
     <section className="bg-white py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="mb-8 max-w-2xl sm:mb-10">
-          <p className="text-sm font-bold uppercase tracking-wider text-[#e31e24]">
-            Prayer Teachings
-          </p>
-          <h2 className="mt-2 text-3xl font-bold text-[#3d3d3d] md:text-4xl">
-            Learn to Pray with Pastor Jomo
-          </h2>
-          <p className="mt-3 max-w-2xl text-lg text-gray-600">
-            Short teachings on prayer, each with prayer videos to pray along with.
-          </p>
-        </div>
+        <h2 className="mb-6 text-2xl font-bold text-[#3d3d3d] md:text-3xl">
+          Teaching Points with Pastor Jomo
+        </h2>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {teachings.map((t) => (
