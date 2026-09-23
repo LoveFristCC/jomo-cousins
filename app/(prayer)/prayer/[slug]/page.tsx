@@ -119,7 +119,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: prayer.featuredImage
         ? [
           {
-            url: urlForImage(prayer.featuredImage)?.url() || "",
+            url: urlForImage(prayer.featuredImage)?.width(1200).height(630).fit("crop").quality(80).url() || "",
             width: 1200,
             height: 630,
             alt: prayer.title,
@@ -132,7 +132,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: metaTitle,
       description: metaDescription,
       images: prayer.featuredImage
-        ? [ urlForImage(prayer.featuredImage)?.url() || "" ]
+        ? [ urlForImage(prayer.featuredImage)?.width(1200).height(630).fit("crop").quality(80).url() || "" ]
         : [],
     },
   };
@@ -269,7 +269,7 @@ export default async function PrayerVideoPage({ params }: Props) {
         name: prayer.title,
         description: prayer.excerpt,
         thumbnailUrl: prayer.featuredImage
-          ? urlForImage(prayer.featuredImage)?.url()
+          ? urlForImage(prayer.featuredImage)?.width(1200).height(630).fit("crop").quality(80).url()
           : undefined,
         uploadDate: prayer.publishedAt,
         ...(convertToISO8601Duration(prayer.duration) && { duration: convertToISO8601Duration(prayer.duration) }),
@@ -348,8 +348,8 @@ export default async function PrayerVideoPage({ params }: Props) {
 
       {/* Breadcrumbs */ }
       <div className="border-b border-gray-200 bg-gray-50 py-3">
-        <div className="container mx-auto px-5">
-          <nav className="flex flex-wrap items-center gap-2 text-sm text-gray-600">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-gray-600">
             <Link href="/" className="hover:text-[#e31e24] transition-colors">
               Home
             </Link>
@@ -369,7 +369,7 @@ export default async function PrayerVideoPage({ params }: Props) {
               </>
             ) }
             <span className="text-gray-400">/</span>
-            <span className="font-semibold text-[#3d3d3d] truncate">
+            <span aria-current="page" className="min-w-0 truncate font-semibold text-[#3d3d3d]">
               { prayer.title }
             </span>
           </nav>
@@ -381,14 +381,14 @@ export default async function PrayerVideoPage({ params }: Props) {
         {/* Prayer Header */ }
         <header
           id="main-content"
-          className="border-b border-gray-200 bg-white py-8"
+          className="bg-white py-8 sm:py-10"
         >
-          <div className="container mx-auto px-5">
-            <div className="mx-auto max-w-5xl">
-              <h1 className="mb-4 text-3xl font-bold text-[#3d3d3d] md:text-4xl lg:text-5xl">
+          <div className="mx-auto max-w-7xl px-5 sm:px-8">
+            <div className="mx-auto max-w-4xl">
+              <h1 className="mb-5 text-3xl font-bold leading-tight tracking-tight text-[#3d3d3d] sm:text-4xl lg:text-5xl">
                 { prayer.title }
               </h1>
-              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-600">
                 <span className="font-semibold">Led by Pastor Jomo Cousins</span>
                 { prayer.publishedAt && (
                   <span>{ format(parseISO(prayer.publishedAt), "MMMM d, yyyy") }</span>
@@ -415,10 +415,10 @@ export default async function PrayerVideoPage({ params }: Props) {
         </header>
 
         {/* Video Section */ }
-        <section className="bg-gradient-to-b from-[#1a1a1a] to-[#2d2d2d] py-10 md:py-14">
-          <div className="container mx-auto px-5">
-            <div className="mx-auto max-w-5xl">
-              <div className="mb-6 flex items-center justify-center gap-3 text-center">
+        <section className="bg-gradient-to-b from-[#1a1a1a] to-[#2d2d2d] py-6 sm:py-8">
+          <div className="mx-auto max-w-7xl px-5 sm:px-8">
+            <div className="mx-auto max-w-4xl">
+              <div className="mb-4 flex items-center justify-center gap-3 text-center">
                 <div className="h-px flex-1 max-w-16 bg-white/20" />
                 <p className="text-sm font-semibold uppercase tracking-widest text-white/70">
                   Press play to pray with Pastor Jomo
@@ -430,7 +430,7 @@ export default async function PrayerVideoPage({ params }: Props) {
                   <YouTubePlayer
                     videoId={ videoId }
                     title={ prayer.title }
-                    thumbnailUrl={ prayer.featuredImage ? urlForImage(prayer.featuredImage)?.url() : undefined }
+                    thumbnailUrl={ prayer.featuredImage ? urlForImage(prayer.featuredImage)?.width(1280).height(720).fit("crop").quality(80).url() : undefined }
                   />
                 </div>
               ) : (
@@ -440,55 +440,17 @@ export default async function PrayerVideoPage({ params }: Props) {
               ) }
               { prayer.duration && (
                 <p className="mt-4 text-center text-sm text-white/50">
-                  { prayer.duration } min prayer
+                  { prayer.duration } prayer
                 </p>
               ) }
             </div>
           </div>
         </section>
 
-        {/* Prayer Description & Personal Note */ }
-        <section className="py-12">
-          <div className="container mx-auto px-5">
-            <div className="mx-auto max-w-4xl">
-              { prayer.excerpt && (
-                <div className="mb-8">
-                  <p className="text-xl leading-relaxed text-gray-700">
-                    { prayer.excerpt }
-                  </p>
-                </div>
-              ) }
-
-              {/* Jomo's Personal Note */ }
-              { prayer.personalNote && Array.isArray(prayer.personalNote) && (
-                <div className="mb-8 rounded-xl border-l-4 border-[#e31e24] bg-gray-50 p-6 md:p-8">
-                  <div className="mb-3 flex items-center gap-3">
-                    <div className="h-12 w-12 overflow-hidden rounded-full">
-                      <Image
-                        src="/images/jomo-profile.webp"
-                        alt="Jomo Cousins"
-                        width={ 48 }
-                        height={ 48 }
-                        className="object-cover"
-                      />
-                    </div>
-                    <div>
-                      <p className="font-bold text-[#3d3d3d]">A Note from Pastor Jomo</p>
-                    </div>
-                  </div>
-                  <div className="prose max-w-none">
-                    <CustomPortableText value={ prayer.personalNote } />
-                  </div>
-                </div>
-              ) }
-            </div>
-          </div>
-        </section>
-
         {/* Action Bar */ }
-        <section className="border-y border-gray-200 bg-gray-50 py-6">
-          <div className="container mx-auto px-5">
-            <div className="mx-auto flex max-w-4xl flex-col items-center justify-center gap-4 sm:flex-row sm:justify-between">
+        <section className="border-y border-gray-200 bg-gray-50 py-4">
+          <div className="mx-auto max-w-7xl px-5 sm:px-8">
+            <div className="mx-auto flex max-w-4xl flex-col items-center justify-center gap-4 lg:flex-row lg:justify-between">
               {/* Share Buttons */ }
               <ShareButtons shareUrl={ shareUrl } shareTitle={ shareTitle } />
 
@@ -503,14 +465,54 @@ export default async function PrayerVideoPage({ params }: Props) {
           </div>
         </section>
 
+        {/* Prayer Description & Personal Note */ }
+        { (prayer.excerpt || prayer.personalNote?.length > 0) && (
+          <section className="py-8 sm:py-10">
+            <div className="mx-auto max-w-7xl px-5 sm:px-8">
+              <div className="mx-auto max-w-3xl">
+                { prayer.excerpt && (
+                  <div>
+                    <p className="text-xl leading-relaxed text-gray-700">
+                      { prayer.excerpt }
+                    </p>
+                  </div>
+              ) }
+
+              {/* Jomo's Personal Note */ }
+              { Array.isArray(prayer.personalNote) && prayer.personalNote.length > 0 && (
+                <div className="mt-6 rounded-xl border-l-4 border-[#e31e24] bg-gray-50 p-6 md:p-8">
+                  <div className="mb-3 flex items-center gap-3">
+                    <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full">
+                      <Image
+                        src="/images/jomo-profile.webp"
+                        alt="Jomo Cousins"
+                        width={ 48 }
+                        height={ 48 }
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <p className="font-bold text-[#3d3d3d]">A Note from Pastor Jomo</p>
+                    </div>
+                  </div>
+                  <div className="prose max-w-none">
+                    <CustomPortableText className="max-w-none" value={ prayer.personalNote } />
+                  </div>
+                </div>
+              ) }
+            </div>
+          </div>
+        </section>
+        ) }
+
         {/* Structured Prayer Content */ }
         { hasStructuredContent ? (
-          <div>
+          <div className="pb-10 sm:pb-12">
             {/* Intro Paragraph (answer-first) */ }
             { prayer.introParagraph && (
-              <section className="pt-16 pb-8">
-                <div className="container mx-auto px-5">
-                  <div className="mx-auto max-w-4xl">
+              <section className="pt-8 pb-4">
+                <div className="mx-auto max-w-7xl px-5 sm:px-8">
+                  <div className="mx-auto max-w-3xl">
                     <p className="text-xl leading-relaxed text-gray-700">
                       { prayer.introParagraph }
                     </p>
@@ -522,13 +524,13 @@ export default async function PrayerVideoPage({ params }: Props) {
             {/* A Word Before You Pray */ }
             { prayer.wordBeforePrayer && prayer.wordBeforePrayer.length > 0 && (
               <section className="py-8">
-                <div className="container mx-auto px-5">
-                  <div className="mx-auto max-w-4xl">
+                <div className="mx-auto max-w-7xl px-5 sm:px-8">
+                  <div className="mx-auto max-w-3xl">
                     <h2 className="mb-6 text-3xl font-bold text-[#3d3d3d]">
                       A Word Before You Pray
                     </h2>
-                    <div className="prose prose-lg max-w-none">
-                      <CustomPortableText value={ prayer.wordBeforePrayer } />
+                    <div className="prose max-w-none sm:prose-lg">
+                      <CustomPortableText className="max-w-none sm:prose-lg" value={ prayer.wordBeforePrayer } />
                     </div>
                   </div>
                 </div>
@@ -538,14 +540,14 @@ export default async function PrayerVideoPage({ params }: Props) {
             {/* Written Prayer Text */ }
             { prayer.writtenPrayer && prayer.writtenPrayer.length > 0 && (
               <section className="py-8">
-                <div className="container mx-auto px-5">
-                  <div className="mx-auto max-w-4xl">
+                <div className="mx-auto max-w-7xl px-5 sm:px-8">
+                  <div className="mx-auto max-w-3xl">
                     <h2 className="mb-6 text-3xl font-bold text-[#3d3d3d]">
                       The Prayer
                     </h2>
                     <div className="rounded-xl border-l-4 border-[#e31e24] bg-gray-50 p-6 md:p-8">
-                      <div className="prose prose-lg max-w-none">
-                        <CustomPortableText value={ prayer.writtenPrayer } />
+                      <div className="prose max-w-none sm:prose-lg">
+                        <CustomPortableText className="max-w-none sm:prose-lg" value={ prayer.writtenPrayer } />
                       </div>
                     </div>
                   </div>
@@ -555,14 +557,14 @@ export default async function PrayerVideoPage({ params }: Props) {
 
             {/* How to Use This Prayer */ }
             { prayer.howToUse && prayer.howToUse.length > 0 && (
-              <section className="py-8 pb-16">
-                <div className="container mx-auto px-5">
-                  <div className="mx-auto max-w-4xl">
+              <section className="py-8">
+                <div className="mx-auto max-w-7xl px-5 sm:px-8">
+                  <div className="mx-auto max-w-3xl">
                     <h2 className="mb-6 text-3xl font-bold text-[#3d3d3d]">
                       How to Use This Prayer
                     </h2>
-                    <div className="prose prose-lg max-w-none">
-                      <CustomPortableText value={ prayer.howToUse } />
+                    <div className="prose max-w-none sm:prose-lg">
+                      <CustomPortableText className="max-w-none sm:prose-lg" value={ prayer.howToUse } />
                     </div>
                   </div>
                 </div>
@@ -571,14 +573,14 @@ export default async function PrayerVideoPage({ params }: Props) {
           </div>
         ) : (
           prayer.fullTranscript && (
-            <section className="py-16">
-              <div className="container mx-auto px-5">
-                <div className="mx-auto max-w-4xl">
+            <section className="py-10 sm:py-12">
+              <div className="mx-auto max-w-7xl px-5 sm:px-8">
+                <div className="mx-auto max-w-3xl">
                   <h2 className="mb-8 text-3xl font-bold text-[#3d3d3d]">
                     Full Prayer Text
                   </h2>
-                  <div className="prose prose-lg max-w-none">
-                    <CustomPortableText value={ prayer.fullTranscript } />
+                  <div className="prose max-w-none sm:prose-lg">
+                    <CustomPortableText className="max-w-none sm:prose-lg" value={ prayer.fullTranscript } />
                   </div>
                 </div>
               </div>
@@ -588,19 +590,19 @@ export default async function PrayerVideoPage({ params }: Props) {
 
         {/* FAQ Section */ }
         { hasFaq && (
-          <section className="border-t border-gray-200 bg-gray-50 py-16">
-            <div className="container mx-auto px-5">
-              <div className="mx-auto max-w-4xl">
-                <h2 className="mb-10 text-center text-3xl font-bold text-[#3d3d3d] md:text-4xl">
+          <section className="border-t border-gray-200 bg-gray-50 py-10 sm:py-12">
+            <div className="mx-auto max-w-7xl px-5 sm:px-8">
+              <div className="mx-auto max-w-3xl">
+                <h2 className="mb-6 text-2xl font-bold text-[#3d3d3d] sm:text-3xl">
                   Frequently Asked Questions
                 </h2>
                 <div className="space-y-4">
                   { prayer.faqSection.map((faq: any, index: number) => (
                     <details
                       key={ index }
-                      className="group rounded-xl bg-white p-6 shadow-md"
+                      className="group rounded-xl border border-gray-200 bg-white p-5 sm:p-6"
                     >
-                      <summary className="flex cursor-pointer items-center justify-between text-lg font-bold text-[#3d3d3d] list-none">
+                      <summary className="flex cursor-pointer items-center justify-between gap-4 text-base font-bold sm:text-lg text-[#3d3d3d] list-none">
                         { faq.question }
                         <svg
                           className="h-5 w-5 flex-shrink-0 text-[#e31e24] transition-transform group-open:rotate-180"
@@ -625,14 +627,14 @@ export default async function PrayerVideoPage({ params }: Props) {
         {/* Next/Previous Prayer Navigation */ }
         { (previousPrayer || nextPrayer) && (
           <section className="border-t border-gray-200 bg-white py-8">
-            <div className="container mx-auto px-5">
-              <div className="mx-auto flex max-w-4xl items-center justify-between gap-4">
+            <div className="mx-auto max-w-7xl px-5 sm:px-8">
+              <div className="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2">
                 { previousPrayer ? (
                   <Link
                     href={ `/prayer/${previousPrayer.slug}` }
-                    className="group flex items-center gap-2 text-[#3d3d3d] transition-colors hover:text-[#e31e24]"
+                    className="group flex min-w-0 items-center justify-between gap-3 rounded-xl border border-gray-200 p-4 text-[#3d3d3d] transition-colors hover:border-[#e31e24] hover:text-[#e31e24]"
                   >
-                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M15 19l-7-7 7-7" />
                     </svg>
                     <div className="text-left">
@@ -641,23 +643,23 @@ export default async function PrayerVideoPage({ params }: Props) {
                     </div>
                   </Link>
                 ) : (
-                  <div />
+                  <div className="hidden sm:block" />
                 ) }
                 { nextPrayer ? (
                   <Link
                     href={ `/prayer/${nextPrayer.slug}` }
-                    className="group flex items-center gap-2 text-[#3d3d3d] transition-colors hover:text-[#e31e24]"
+                    className="group flex min-w-0 items-center justify-between gap-3 rounded-xl border border-gray-200 p-4 text-[#3d3d3d] transition-colors hover:border-[#e31e24] hover:text-[#e31e24]"
                   >
                     <div className="text-right">
                       <div className="text-xs uppercase text-gray-500">Next Prayer</div>
                       <div className="font-semibold group-hover:underline">{ nextPrayer.title }</div>
                     </div>
-                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M9 5l7 7-7 7" />
                     </svg>
                   </Link>
                 ) : (
-                  <div />
+                  <div className="hidden sm:block" />
                 ) }
               </div>
             </div>
@@ -667,9 +669,9 @@ export default async function PrayerVideoPage({ params }: Props) {
 
       {/* Prayer Book Section */ }
       { prayerBook && prayerBook.status === "active" && (
-        <section className="bg-gray-50 py-16">
-          <div className="container mx-auto px-5">
-            <div className="mx-auto max-w-4xl">
+        <section className="bg-gray-50 py-10 sm:py-12">
+          <div className="mx-auto max-w-7xl px-5 sm:px-8">
+            <div className="mx-auto max-w-3xl">
               <div className="text-center mb-8">
                 <p className="text-sm uppercase tracking-wide text-[#e31e24] font-semibold mb-2">
                   { primaryCategory ? `Recommended for ${primaryCategory.title}` : "Continue Your Journey" }
@@ -682,16 +684,17 @@ export default async function PrayerVideoPage({ params }: Props) {
                 </p>
               </div>
 
-              <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-                <div className="grid md:grid-cols-2 gap-8 p-8">
+              <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+                <div className="grid items-center gap-6 p-5 sm:grid-cols-[180px_minmax(0,1fr)] sm:gap-8 sm:p-8">
                   {/* Book Image */ }
                   <div className="flex items-center justify-center">
                     { prayerBook.images && prayerBook.images.length > 0 && (
-                      <div className="relative w-full max-w-sm aspect-[3/4] rounded-lg overflow-hidden shadow-lg">
+                      <div className="relative aspect-[3/4] w-full max-w-[180px] overflow-hidden rounded-lg">
                         <Image
                           src={ urlForImage(prayerBook.images[ 0 ])?.url() || "" }
                           alt={ prayerBook.name }
                           fill
+                          sizes="180px"
                           className="object-contain"
                         />
                       </div>
@@ -747,40 +750,41 @@ export default async function PrayerVideoPage({ params }: Props) {
 
       {/* Related Prayers Section */ }
       { relatedPrayers && relatedPrayers.length > 0 && (
-        <section className="bg-gray-50 py-16">
-          <div className="container mx-auto px-5">
+        <section className="bg-gray-50 py-10 sm:py-12">
+          <div className="mx-auto max-w-7xl px-5 sm:px-8">
             <div className="mx-auto max-w-6xl">
               <h2 className="mb-8 text-3xl font-bold text-[#3d3d3d]">
                 { primaryCategory
                   ? `More ${primaryCategory.title} Prayers with Pastor Jomo`
                   : "More Prayers with Pastor Jomo" }
               </h2>
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 { relatedPrayers.map((relatedPrayer: any) => (
                   <Link
                     key={ relatedPrayer._id }
                     href={ `/prayer/${relatedPrayer.slug}` }
-                    className="group overflow-hidden rounded-xl bg-white shadow-lg transition-all hover:shadow-2xl"
+                    className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md"
                   >
                     { relatedPrayer.featuredImage && (
                       <div className="relative aspect-video w-full overflow-hidden">
                         <Image
                           src={
-                            urlForImage(relatedPrayer.featuredImage)?.url() || ""
+                            urlForImage(relatedPrayer.featuredImage)?.width(800).height(450).fit("crop").quality(80).url() || ""
                           }
                           alt={ `${relatedPrayer.title} - Prayer with Jomo Cousins` }
                           fill
+                          sizes="(min-width: 1280px) 270px, (min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                           loading="lazy"
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
                         />
                       </div>
                     ) }
-                    <div className="p-4">
+                    <div className="flex flex-1 flex-col p-4">
                       <h3 className="mb-2 font-bold text-[#3d3d3d] group-hover:text-[#e31e24]">
                         { relatedPrayer.title }
                       </h3>
                       { relatedPrayer.duration && (
-                        <p className="text-sm text-gray-500">
+                        <p className="mt-auto pt-2 text-sm text-gray-500">
                           { relatedPrayer.duration }
                         </p>
                       ) }
@@ -804,9 +808,9 @@ export default async function PrayerVideoPage({ params }: Props) {
       ) }
 
       {/* Personal CTA Box */ }
-      <section className="py-16">
-        <div className="container mx-auto px-5">
-          <div className="mx-auto max-w-4xl rounded-2xl bg-gradient-to-r from-[#3d3d3d] to-[#2d2d2d] p-12 text-center text-white shadow-2xl">
+      <section className="py-10 sm:py-12">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="mx-auto max-w-3xl rounded-2xl bg-gradient-to-r from-[#3d3d3d] to-[#2d2d2d] p-6 text-center text-white shadow-sm sm:p-10">
             <div className="mx-auto mb-6 h-24 w-24 overflow-hidden rounded-full border-4 border-white">
               <Image
                 src="/images/jc-color-pics/_JC_NewPhotos Edit141.webp"

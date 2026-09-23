@@ -285,7 +285,7 @@ export default async function DailyPrayerPage() {
                   { prayer.featuredImage && (
                     <div className="relative aspect-video w-full overflow-hidden bg-gray-200">
                       <Image
-                        src={ urlForImage(prayer.featuredImage)?.url() || "" }
+                        src={ urlForImage(prayer.featuredImage)?.width(800).height(450).fit("crop").quality(80).url() || "" }
                         alt={ `${prayer.title} - Prayer with Jomo Cousins` }
                         fill
                         loading="lazy"

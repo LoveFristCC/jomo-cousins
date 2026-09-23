@@ -62,7 +62,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: category.featuredImage
         ? [
           {
-            url: urlForImage(category.featuredImage)?.url() || "",
+            url: urlForImage(category.featuredImage)?.width(1200).height(630).fit("crop").quality(80).url() || "",
             width: 1200,
             height: 630,
             alt: `${category.title} prayers with Jomo Cousins`,
@@ -75,7 +75,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: metaTitle,
       description: metaDescription,
       images: category.featuredImage
-        ? [ urlForImage(category.featuredImage)?.url() || "" ]
+        ? [ urlForImage(category.featuredImage)?.width(1200).height(630).fit("crop").quality(80).url() || "" ]
         : [],
     },
   };
@@ -254,7 +254,7 @@ export default async function CategoryPage({ params }: Props) {
             { category.featuredImage && (
               <div className="relative h-[400px] overflow-hidden rounded-xl shadow-2xl">
                 <Image
-                  src={ urlForImage(category.featuredImage)?.url() || "" }
+                  src={ urlForImage(category.featuredImage)?.width(1600).quality(80).url() || "" }
                   alt={ `${category.title} prayers with Jomo Cousins` }
                   fill
                   priority
@@ -288,7 +288,7 @@ export default async function CategoryPage({ params }: Props) {
                     <YouTubePlayer
                       videoId={ featuredVideoId }
                       title={ actualFeaturedPrayer.title }
-                      thumbnailUrl={ actualFeaturedPrayer.featuredImage ? urlForImage(actualFeaturedPrayer.featuredImage)?.url() : undefined }
+                      thumbnailUrl={ actualFeaturedPrayer.featuredImage ? urlForImage(actualFeaturedPrayer.featuredImage)?.width(1280).height(720).fit("crop").quality(80).url() : undefined }
                     />
                   ) : (
                     <div className="relative aspect-video w-full bg-gray-200 flex items-center justify-center">
@@ -345,7 +345,7 @@ export default async function CategoryPage({ params }: Props) {
               { actualPrayers.map((prayer: any) => {
                 const videoId = getYouTubeVideoId(prayer.youtubeVideoId, prayer.youtubeUrl);
                 const thumbnailSrc = prayer.featuredImage
-                  ? urlForImage(prayer.featuredImage)?.url() || ""
+                  ? urlForImage(prayer.featuredImage)?.width(800).height(450).fit("crop").quality(80).url() || ""
                   : videoId
                     ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
                     : "";

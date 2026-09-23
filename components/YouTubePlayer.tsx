@@ -61,6 +61,7 @@ export default function YouTubePlayer({
               src={ thumbnail }
               alt={ title }
               fill
+              priority
               className="object-cover"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
             />
