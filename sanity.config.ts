@@ -26,6 +26,7 @@ import prayerCategory from "@/sanity/schemas/documents/prayerCategory";
 import prayerTestimonial from "@/sanity/schemas/documents/prayerTestimonial";
 import prayerSeries from "@/sanity/schemas/documents/prayerSeries";
 import prayerWeek from "@/sanity/schemas/documents/prayerWeek";
+import prayerTeaching from "@/sanity/schemas/documents/prayerTeaching";
 import scripture from "@/sanity/schemas/objects/scripture";
 import prayerDay from "@/sanity/schemas/objects/prayerDay";
 import settings from "@/sanity/schemas/singletons/settings";
@@ -55,6 +56,7 @@ export default defineConfig({
       prayerTestimonial,
       prayerSeries,
       prayerWeek,
+      prayerTeaching,
       // Objects
       productVariant,
       scripture,
@@ -71,7 +73,8 @@ export default defineConfig({
         context.schemaType === "couplesCornerPost" ||
         context.schemaType === "prayerVideo" ||
         context.schemaType === "prayerCategory" ||
-        context.schemaType === "prayerWeek"
+        context.schemaType === "prayerWeek" ||
+        context.schemaType === "prayerTeaching"
       ) {
         // Filter out default publish action and add our clean publish action
         const filteredActions = prev.filter(

@@ -5,6 +5,7 @@ import {
   recentPrayersQuery,
   prayerCategoriesQuery,
   allCouplesCornerPostsQuery,
+  prayerTeachingsQuery,
 } from "@/sanity/lib/queries";
 
 /**
@@ -15,12 +16,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.jomocousins.com";
 
   // Fetch all dynamic content in parallel
-  const [products, prayers, prayerCategories, couplesCornerPosts] =
+  const [products, prayers, prayerCategories, couplesCornerPosts, prayerTeachings] =
     await Promise.all([
       sanityFetch({ query: allProductsQuery }),
       sanityFetch({ query: recentPrayersQuery, params: { limit: 1000 } }),
       sanityFetch({ query: prayerCategoriesQuery }),
       sanityFetch({ query: allCouplesCornerPostsQuery }),
+      sanityFetch({ query: prayerTeachingsQuery }),
     ]);
 
   // Static pages - Main site
@@ -151,6 +153,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
   );
 
+  // Dynamic prayer teaching pages
+  const prayerTeachingPages: MetadataRoute.Sitemap = prayerTeachings.map(
+    (teaching: any) => ({
+      url: `${baseUrl}/prayer/teaching/${teaching.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })
+  );
+
   // Dynamic couples corner post pages
   const couplesCornerPages: MetadataRoute.Sitemap = couplesCornerPosts.map(
     (post: any) => ({
@@ -171,6 +183,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...bookPreviewPages,
     ...prayerPages,
     ...prayerCategoryPages,
+    ...prayerTeachingPages,
     ...couplesCornerPages,
   ];
 }

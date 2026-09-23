@@ -529,3 +529,31 @@ export const prayerWeekBySlugQuery = defineQuery(`
 export const prayerWeekSlugsQuery = defineQuery(`
   *[_type == "prayerWeek" && defined(slug.current)]{ "slug": slug.current }
 `);
+
+// Prayer teachings — short lessons on how to pray, linked from /prayer.
+export const prayerTeachingsQuery = defineQuery(`
+  *[_type == "prayerTeaching" && defined(slug.current)] | order(order asc, publishedAt asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    summary,
+    "keyReference": keyScripture.reference
+  }
+`);
+
+// A single teaching by slug, with its body and related prayer videos.
+export const prayerTeachingBySlugQuery = defineQuery(`
+  *[_type == "prayerTeaching" && slug.current == $slug] [0] {
+    _id,
+    _updatedAt,
+    title,
+    "slug": slug.current,
+    summary,
+    keyScripture{ ${scriptureFields} },
+    body[]{
+      ...,
+      _type == "scripture" => { _key, _type, ${scriptureFields} }
+    },
+    "relatedVideos": relatedVideos[]->{ ${relatedVideoFields} }
+  }
+`);

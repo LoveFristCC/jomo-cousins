@@ -112,6 +112,17 @@ export const productStructure: StructureResolver = (S) => {
                     .title("Prayer Weeks")
                     .defaultOrdering([{ field: "weekNumber", direction: "asc" }])
                 ),
+
+              S.divider(),
+
+              S.listItem()
+                .title("📖 Prayer Teachings")
+                .schemaType("prayerTeaching")
+                .child(
+                  S.documentTypeList("prayerTeaching")
+                    .title("Prayer Teachings")
+                    .defaultOrdering([{ field: "order", direction: "asc" }])
+                ),
             ])
         ),
 

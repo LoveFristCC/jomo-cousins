@@ -2,7 +2,6 @@ import Link from "next/link";
 import { format, parseISO } from "date-fns";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { activePrayerSeriesQuery } from "@/sanity/lib/queries";
-import RelatedVideos, { type RelatedVideo } from "./RelatedVideos";
 
 type Week = {
   _id?: string;
@@ -11,7 +10,6 @@ type Week = {
   slug?: string | null;
   weekOf?: string | null;
   scriptureCount?: number | null;
-  relatedVideos?: RelatedVideo[] | null;
 };
 
 type Series = {
@@ -52,11 +50,11 @@ export default async function SeriesSection() {
   const totalWeeks = series.totalWeeks ?? weeks.length;
 
   return (
-    <section className="border-b border-gray-100 bg-gradient-to-br from-gray-50 to-white py-16 md:py-20">
-      <div className="container mx-auto px-5">
-        <div className="mx-auto max-w-4xl">
+    <section className="border-b border-gray-100 bg-gradient-to-br from-gray-50 to-white py-12 sm:py-16">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="w-full">
           {/* Heading */}
-          <div className="mb-8 text-center">
+          <div className="mb-8 max-w-2xl">
             <p className="text-sm font-bold uppercase tracking-wider text-[#e31e24]">
               {totalWeeks}-Week Prayer Series
             </p>
@@ -64,7 +62,7 @@ export default async function SeriesSection() {
               {series.title}
             </h2>
             {series.subtitle && (
-              <p className="mx-auto mt-3 max-w-2xl text-lg text-gray-600">
+              <p className="mt-3 max-w-2xl text-lg text-gray-600">
                 {series.subtitle}
               </p>
             )}
@@ -89,7 +87,7 @@ export default async function SeriesSection() {
           )}
 
           {/* All weeks */}
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: totalWeeks }).map((_, i) => {
               const n = i + 1;
               const week = weeks.find((w) => w.weekNumber === n);
@@ -133,14 +131,6 @@ export default async function SeriesSection() {
               );
             })}
           </div>
-
-          {/* Current week's related videos */}
-          {current?.relatedVideos && current.relatedVideos.length > 0 && (
-            <RelatedVideos
-              videos={current.relatedVideos}
-              heading="Prayer videos for this week"
-            />
-          )}
         </div>
       </div>
     </section>

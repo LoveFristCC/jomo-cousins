@@ -23,13 +23,6 @@ export type PrayerDay = {
   } & Scripture>;
 };
 
-export type Scripture = {
-  _type: "scripture";
-  reference?: string;
-  translation?: string;
-  text?: string;
-};
-
 export type ProductVariant = {
   _type: "productVariant";
   sku?: string;
@@ -54,6 +47,54 @@ export type ProductVariant = {
     _type: "image";
   };
   allowBackorder?: boolean;
+};
+
+export type PrayerTeaching = {
+  _id: string;
+  _type: "prayerTeaching";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  order?: number;
+  summary?: string;
+  keyScripture?: Scripture;
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    _key: string;
+  } & Scripture>;
+  relatedVideos?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "prayerVideo";
+  }>;
+  publishedAt?: string;
+};
+
+export type Scripture = {
+  _type: "scripture";
+  reference?: string;
+  translation?: string;
+  text?: string;
 };
 
 export type PrayerWeek = {
@@ -997,7 +1038,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = PrayerDay | Scripture | ProductVariant | PrayerWeek | PrayerSeries | PrayerTestimonial | PrayerCategory | PrayerVideo | CouplesCornerPost | Product | DigitalProduct | Post | Author | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = PrayerDay | ProductVariant | PrayerTeaching | Scripture | PrayerWeek | PrayerSeries | PrayerTestimonial | PrayerCategory | PrayerVideo | CouplesCornerPost | Product | DigitalProduct | Post | Author | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: settingsQuery
@@ -3469,6 +3510,73 @@ export type PrayerWeekBySlugQueryResult = {
 export type PrayerWeekSlugsQueryResult = Array<{
   slug: string | null;
 }>;
+// Variable: prayerTeachingsQuery
+// Query: *[_type == "prayerTeaching" && defined(slug.current)] | order(order asc, publishedAt asc) {    _id,    title,    "slug": slug.current,    summary,    "keyReference": keyScripture.reference  }
+export type PrayerTeachingsQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  summary: string | null;
+  keyReference: string | null;
+}>;
+// Variable: prayerTeachingBySlugQuery
+// Query: *[_type == "prayerTeaching" && slug.current == $slug] [0] {    _id,    _updatedAt,    title,    "slug": slug.current,    summary,    keyScripture{   reference,  translation,  text },    body[]{      ...,      _type == "scripture" => { _key, _type,   reference,  translation,  text }    },    "relatedVideos": relatedVideos[]->{   _id,  title,  "slug": slug.current,  duration,  featuredImage,  "category": prayerCategories[0]->title }  }
+export type PrayerTeachingBySlugQueryResult = {
+  _id: string;
+  _updatedAt: string;
+  title: string | null;
+  slug: string | null;
+  summary: string | null;
+  keyScripture: {
+    reference: string | null;
+    translation: string | null;
+    text: string | null;
+  } | null;
+  body: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    _key: string;
+    _type: "scripture";
+    reference: string | null;
+    translation: string | null;
+    text: string | null;
+  }> | null;
+  relatedVideos: Array<{
+    _id: string;
+    title: string | null;
+    slug: string | null;
+    duration: string | null;
+    featuredImage: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+    category: string | null;
+  }> | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -3515,5 +3623,7 @@ declare module "@sanity/client" {
     "\n  *[_type == \"prayerSeries\" && isActive == true] | order(startDate desc) [0] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    subtitle,\n    description,\n    coverImage,\n    startDate,\n    totalWeeks,\n    \"weeks\": *[_type == \"prayerWeek\" && references(^._id)] | order(weekNumber asc) {\n      \n  _id,\n  weekNumber,\n  title,\n  \"slug\": slug.current,\n  weekOf,\n  sermonUrl,\n  sermonLabel,\n  intro,\n  days[]{\n    day,\n    focus,\n    prompt,\n    scriptures[]{ \n  reference,\n  translation,\n  text\n }\n  },\n  unsortedScriptures[]{ \n  reference,\n  translation,\n  text\n },\n  \"scriptureCount\": count(unsortedScriptures) + count(days[].scriptures[]),\n  \"relatedVideos\": relatedVideos[]->{ \n  _id,\n  title,\n  \"slug\": slug.current,\n  duration,\n  featuredImage,\n  \"category\": prayerCategories[0]->title\n }\n\n    }\n  }\n": ActivePrayerSeriesQueryResult;
     "\n  *[_type == \"prayerWeek\" && slug.current == $slug] [0] {\n    \n  _id,\n  weekNumber,\n  title,\n  \"slug\": slug.current,\n  weekOf,\n  sermonUrl,\n  sermonLabel,\n  intro,\n  days[]{\n    day,\n    focus,\n    prompt,\n    scriptures[]{ \n  reference,\n  translation,\n  text\n }\n  },\n  unsortedScriptures[]{ \n  reference,\n  translation,\n  text\n },\n  \"scriptureCount\": count(unsortedScriptures) + count(days[].scriptures[]),\n  \"relatedVideos\": relatedVideos[]->{ \n  _id,\n  title,\n  \"slug\": slug.current,\n  duration,\n  featuredImage,\n  \"category\": prayerCategories[0]->title\n }\n,\n    \"series\": series->{\n      title,\n      \"slug\": slug.current,\n      subtitle,\n      totalWeeks\n    }\n  }\n": PrayerWeekBySlugQueryResult;
     "\n  *[_type == \"prayerWeek\" && defined(slug.current)]{ \"slug\": slug.current }\n": PrayerWeekSlugsQueryResult;
+    "\n  *[_type == \"prayerTeaching\" && defined(slug.current)] | order(order asc, publishedAt asc) {\n    _id,\n    title,\n    \"slug\": slug.current,\n    summary,\n    \"keyReference\": keyScripture.reference\n  }\n": PrayerTeachingsQueryResult;
+    "\n  *[_type == \"prayerTeaching\" && slug.current == $slug] [0] {\n    _id,\n    _updatedAt,\n    title,\n    \"slug\": slug.current,\n    summary,\n    keyScripture{ \n  reference,\n  translation,\n  text\n },\n    body[]{\n      ...,\n      _type == \"scripture\" => { _key, _type, \n  reference,\n  translation,\n  text\n }\n    },\n    \"relatedVideos\": relatedVideos[]->{ \n  _id,\n  title,\n  \"slug\": slug.current,\n  duration,\n  featuredImage,\n  \"category\": prayerCategories[0]->title\n }\n  }\n": PrayerTeachingBySlugQueryResult;
   }
 }

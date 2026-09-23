@@ -10,6 +10,7 @@ import {
 import { urlForImage } from "@/sanity/lib/utils";
 import { format, parseISO } from "date-fns";
 import SeriesSection from "./week/_components/SeriesSection";
+import TeachingsSection from "./teaching/_components/TeachingsSection";
 
 // Enable ISR with revalidation every hour
 export const revalidate = 3600;
@@ -120,31 +121,31 @@ export default async function PrayerPage() {
       {/* Hero Section */ }
       <section
         id="main-content"
-        className="relative bg-gradient-to-b from-[#3d3d3d] to-[#2d2d2d] pt-20 text-white md:pt-32"
+        className="relative bg-gradient-to-b from-[#3d3d3d] to-[#2d2d2d] pt-12 text-white sm:pt-16 lg:pt-12"
       >
-        <div className="container mx-auto px-5">
-          <div className="grid items-center gap-12 md:grid-cols-2">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="grid items-center gap-8 lg:grid-cols-[1.15fr_1fr] lg:gap-12">
             {/* Left - Content */ }
-            <div>
-              <h1 className="mb-6 text-5xl font-bold leading-tight md:text-6xl lg:text-7xl">
+            <div className="pb-2 lg:py-12">
+              <h1 className="mb-5 max-w-xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl xl:text-6xl">
                 Prayer for Every Need
               </h1>
-              <p className="mb-8 text-xl leading-relaxed text-gray-300 md:text-2xl">
+              <p className="mb-8 max-w-lg text-lg leading-relaxed text-gray-300 sm:text-xl">
                 Find peace, healing, and guidance through daily prayer. You're
                 not alone.
               </p>
 
-              <div className="flex flex-col gap-4 sm:flex-row">
+              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <Link
                   href="/prayer/search"
-                  className="rounded-lg bg-[#e31e24] px-8 py-4 text-center text-lg font-bold text-white shadow-lg transition-all hover:bg-[#c41a1f] hover:shadow-xl"
+                  className="rounded-lg bg-[#e31e24] px-6 py-3.5 text-center text-base font-bold text-white shadow-lg transition-all hover:bg-[#c41a1f] hover:shadow-xl"
                   aria-label="Search prayer library to find a prayer"
                 >
                   Find a Prayer Now
                 </Link>
                 <Link
                   href="/prayer/submit"
-                  className="rounded-lg border-2 border-white px-8 py-4 text-center text-lg font-bold text-white transition-all hover:bg-white hover:text-[#3d3d3d]"
+                  className="rounded-lg border-2 border-white px-6 py-3.5 text-center text-base font-bold text-white transition-all hover:bg-white hover:text-[#3d3d3d]"
                   aria-label="Send your prayer request to Jomo Cousins"
                 >
                   Send Prayer Request
@@ -153,13 +154,14 @@ export default async function PrayerPage() {
             </div>
 
             {/* Right - Image */ }
-            <div className="relative">
-              <div className="aspect-square overflow-hidden rounded-2xl">
+            <div className="relative mx-auto w-full max-w-sm self-end lg:max-w-none">
+              <div className="aspect-[5/4] overflow-hidden rounded-t-2xl lg:aspect-square">
                 <Image
                   src="/images/jc-png/_JC_NewPhotos Edit240.webp"
                   alt="Pray with Jomo Cousins"
                   width={ 600 }
                   height={ 600 }
+                  sizes="(min-width: 1280px) 520px, (min-width: 1024px) 45vw, 384px"
                   className="h-full w-full object-cover object-top"
                   priority
                 />
@@ -172,26 +174,29 @@ export default async function PrayerPage() {
       {/* Featured Prayer Series (first content section) */ }
       <SeriesSection />
 
+      {/* Prayer Teachings */ }
+      <TeachingsSection />
+
       {/* Popular Prayer Topics Grid */ }
       { categories && categories.length > 0 && (
-        <section className="bg-white py-20">
-          <div className="container mx-auto px-5">
-            <div className="mb-12 text-center">
+        <section className="bg-white py-12 sm:py-16">
+          <div className="mx-auto max-w-7xl px-5 sm:px-8">
+            <div className="mb-8 max-w-2xl sm:mb-10">
               <h2 className="mb-4 text-3xl font-bold text-[#3d3d3d] md:text-4xl">
                 Pray with Pastor Jomo about...
               </h2>
-              <p className="mx-auto max-w-2xl text-lg text-gray-600">
+              <p className="max-w-2xl text-lg text-gray-600">
                 Find prayers for every area of your life. Pastor Jomo is praying with
                 you.
               </p>
             </div>
 
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               { categories.slice(0, 8).map((category: any) => (
                 <Link
                   key={ category._id }
                   href={ `/prayer/category/${category.slug}` }
-                  className="group relative overflow-hidden rounded-xl border-2 border-gray-200 bg-white p-6 shadow-lg transition-all hover:border-[#e31e24] hover:shadow-2xl hover:-translate-y-1"
+                  className="group relative flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-all hover:border-[#e31e24] hover:shadow-md"
                 >
                   { category.icon && (
                     <div className="mb-4">
@@ -208,10 +213,10 @@ export default async function PrayerPage() {
                   <h3 className="mb-2 text-xl font-bold text-[#3d3d3d] transition-colors group-hover:text-[#e31e24]">
                     { category.title }
                   </h3>
-                  <p className="mb-4 text-sm text-gray-600">
+                  <p className="mb-5 text-sm leading-relaxed text-gray-600">
                     { category.description }
                   </p>
-                  <div className="flex items-center justify-between">
+                  <div className="mt-auto flex items-center justify-between gap-3">
                     <p className="text-xs font-semibold text-gray-500">
                       { category.prayerCount }{ " " }
                       { category.prayerCount === 1 ? "prayer" : "prayers" }
@@ -239,20 +244,20 @@ export default async function PrayerPage() {
         </section>
       ) }
 
-      {/* Recent Prayers Carousel */ }
+      {/* Recent Prayers Grid */ }
       { recentPrayers && recentPrayers.length > 0 && (
-        <section className="bg-gradient-to-br from-gray-50 to-white py-20">
-          <div className="container mx-auto px-5">
-            <div className="mb-12 text-center">
+        <section className="bg-gradient-to-br from-gray-50 to-white py-12 sm:py-16">
+          <div className="mx-auto max-w-7xl px-5 sm:px-8">
+            <div className="mb-8 max-w-2xl sm:mb-10">
               <h2 className="mb-4 text-3xl font-bold text-[#3d3d3d] md:text-4xl">
                 Recent Prayers
               </h2>
-              <p className="mx-auto max-w-2xl text-lg text-gray-600">
+              <p className="max-w-2xl text-lg text-gray-600">
                 Watch the latest prayers from Pastor Jomo
               </p>
             </div>
 
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               { recentPrayers.map((prayer: any) => {
                 const imageUrl = prayer.featuredImage
                   ? urlForImage(prayer.featuredImage)?.width(600).height(400).url()
@@ -262,7 +267,7 @@ export default async function PrayerPage() {
                   <Link
                     key={ prayer._id }
                     href={ `/prayer/${prayer.slug}` }
-                    className="group overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-xl"
+                    className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md"
                   >
                     <div className="relative aspect-video overflow-hidden bg-gray-200">
                       { imageUrl ? (
@@ -270,6 +275,7 @@ export default async function PrayerPage() {
                           src={ imageUrl }
                           alt={ `${prayer.title} - Prayer with Pastor Jomo Cousins` }
                           fill
+                          sizes="(min-width: 1280px) 390px, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                           loading="lazy"
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
                         />
@@ -285,7 +291,7 @@ export default async function PrayerPage() {
                       ) }
                     </div>
 
-                    <div className="p-6">
+                    <div className="flex flex-1 flex-col p-5 sm:p-6">
                       <h3 className="mb-2 text-xl font-bold text-[#3d3d3d] transition-colors group-hover:text-[#e31e24]">
                         { prayer.title }
                       </h3>
@@ -294,7 +300,7 @@ export default async function PrayerPage() {
                           { prayer.excerpt }
                         </p>
                       ) }
-                      <div className="flex items-center justify-between text-xs text-gray-500">
+                      <div className="mt-auto flex flex-wrap items-center justify-between gap-x-3 gap-y-1 pt-3 text-xs text-gray-500">
                         <span>Led by Pastor Jomo Cousins</span>
                         { prayer.publishedAt && (
                           <span>
@@ -312,11 +318,11 @@ export default async function PrayerPage() {
       ) }
 
       {/* Personal Message from Jomo */ }
-      <section className="bg-white py-20">
-        <div className="container mx-auto px-5">
-          <div className="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-2">
+      <section className="bg-white py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="grid items-center gap-8 md:grid-cols-[0.8fr_1.2fr] lg:gap-16">
             <div className="relative">
-              <div className="aspect-square overflow-hidden rounded-2xl">
+              <div className="mx-auto aspect-square max-w-sm overflow-hidden rounded-2xl md:max-w-none">
                 <Image
                   src="/images/jc-png/Instagram post 2_Master_Pic.webp"
                   alt="Jomo Cousins"
@@ -362,27 +368,27 @@ export default async function PrayerPage() {
 
       {/* Testimonials Section */ }
       { testimonials && testimonials.length > 0 && (
-        <section className="bg-gradient-to-br from-gray-50 to-white py-20">
-          <div className="container mx-auto px-5">
-            <div className="mb-12 text-center">
+        <section className="bg-gradient-to-br from-gray-50 to-white py-12 sm:py-16">
+          <div className="mx-auto max-w-7xl px-5 sm:px-8">
+            <div className="mb-8 max-w-2xl sm:mb-10">
               <h2 className="mb-4 text-3xl font-bold text-[#3d3d3d] md:text-4xl">
                 Prayer Stories
               </h2>
-              <p className="mx-auto max-w-2xl text-lg text-gray-600">
+              <p className="max-w-2xl text-lg text-gray-600">
                 Hear from others who have experienced God's power through prayer
               </p>
             </div>
 
-            <div className="grid gap-8 md:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-3">
               { testimonials.map((testimonial: any) => (
                 <div
                   key={ testimonial._id }
-                  className="rounded-xl bg-white p-8 shadow-md"
+                  className="flex flex-col rounded-xl border border-gray-100 bg-white p-6 shadow-sm sm:p-8"
                 >
                   <p className="mb-6 italic leading-relaxed text-gray-700">
                     "{ testimonial.testimonialText }"
                   </p>
-                  <div>
+                  <div className="mt-auto">
                     <p className="font-bold text-[#3d3d3d]">
                       { testimonial.name }
                     </p>
@@ -400,8 +406,8 @@ export default async function PrayerPage() {
       ) }
 
       {/* Dual CTA Section */ }
-      <section className="bg-[#3d3d3d] py-20 text-white">
-        <div className="container mx-auto px-5">
+      <section className="bg-[#3d3d3d] py-12 sm:py-16 text-white">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="mb-6 text-3xl font-bold md:text-4xl">
               Need prayer right now?
@@ -411,16 +417,16 @@ export default async function PrayerPage() {
               personal request.
             </p>
 
-            <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
               <Link
                 href="/prayer/search"
-                className="rounded-lg bg-white px-8 py-4 text-center text-lg font-bold text-[#3d3d3d] shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl"
+                className="rounded-lg bg-white px-6 py-3.5 text-center text-base font-bold text-[#3d3d3d] shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl"
               >
                 Search Prayer Library
               </Link>
               <Link
                 href="/prayer/submit"
-                className="rounded-lg border-2 border-white bg-[#e31e24] px-8 py-4 text-center text-lg font-bold text-white transition-all hover:bg-[#c41a1f]"
+                className="rounded-lg border-2 border-white bg-[#e31e24] px-6 py-3.5 text-center text-base font-bold text-white transition-all hover:bg-[#c41a1f]"
               >
                 Send Pastor Jomo Your Prayer Request
               </Link>
