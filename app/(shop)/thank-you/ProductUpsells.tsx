@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import Image from "@/components/ProductImage";
 import { urlForImage } from "@/sanity/lib/utils";
 
 interface UpsellProduct {
@@ -95,7 +95,7 @@ export default function ProductUpsells({
   };
 
   return (
-    <section className="bg-gradient-to-br from-gray-50 to-gray-100 py-16 mt-12">
+    <section className="bg-gray-50 py-10 md:py-14">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
@@ -130,18 +130,19 @@ export default function ProductUpsells({
             {activeUpsells.map((product) => (
               <div
                 key={product._id}
-                className="group bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100 hover:border-[#e31e24] transition-all duration-300"
+                className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-gray-300 transition-colors"
               >
                 {/* Product Image */}
                 <div className="relative aspect-square bg-gray-100">
-                  {product.images?.[0] && (
+                  {(
                     <Image
                       src={
-                        urlForImage(product.images[0])?.width(400).height(400).url() || ""
+                        product.images?.map((image) => urlForImage(image)?.width(600).url()).find(Boolean)
                       }
-                      alt={product.images[0].alt || product.name}
+                      alt={product.images?.[0]?.alt || product.name}
                       fill
-                      className="object-cover"
+                      className="object-contain p-6"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                   )}
                   {/* Category Badge */}
@@ -153,7 +154,7 @@ export default function ProductUpsells({
                 </div>
 
                 {/* Product Info */}
-                <div className="p-5">
+                <div className="flex flex-1 flex-col p-5">
                   <h3 className="font-bold text-lg text-[#2d2d2d] mb-2 line-clamp-2">
                     {product.name}
                   </h3>
@@ -173,7 +174,7 @@ export default function ProductUpsells({
                   )}
 
                   {/* Price and Buy Button */}
-                  <div className="mt-4 pt-4 border-t border-gray-100">
+                  <div className="mt-auto pt-4 border-t border-gray-100">
                     <div className="text-2xl font-bold text-[#e31e24] mb-3">
                       ${product.basePrice.toFixed(2)}
                     </div>

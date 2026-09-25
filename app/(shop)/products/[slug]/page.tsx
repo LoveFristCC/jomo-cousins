@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "@/components/ProductImage";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { productBySlugQuery, relatedProductsQuery } from "@/sanity/lib/queries";
 import { urlForImage, urlForProductImage } from "@/sanity/lib/utils";
@@ -42,14 +42,14 @@ export default async function ProductPage({
   const galleryImages = product.images?.map((image: any) => ({
     url: urlForProductImage(image)?.width(imageWidth).url() || "",
     alt: image.alt || product.name,
-  })) || [];
+  })).filter((image) => image.url) || [];
 
   return (
     <div className="min-h-screen bg-white">
       {/* Structured Data for SEO */ }
       <ProductStructuredData product={ product } />
 
-      <div className="container mx-auto px-4 py-8 md:py-12">
+      <div className="container mx-auto max-w-6xl px-4 py-8 md:py-12">
         {/* Breadcrumb Navigation */ }
         <nav aria-label="Breadcrumb" className="mb-8">
           <ol className="flex items-center gap-2 text-sm">
@@ -69,16 +69,16 @@ export default async function ProductPage({
           </ol>
         </nav>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Product Images */ }
           <div className="space-y-4">
-            <ProductImageGallery images={galleryImages} productName={product.name || "Product"} category={product.category} />
+            <ProductImageGallery key={slug} images={galleryImages} productName={product.name || "Product"} category={product.category} />
 
             {/* Free Preview Badge - Only for books with preview chapter */ }
             { product.previewChapter && (
               <Link
                 href={ `/books/${slug}/preview` }
-                className="block mt-6 bg-gradient-to-br from-[#e31e24] to-[#c41a1f] rounded-xl p-6 text-center text-white shadow-xl hover:shadow-2xl transition-all hover:scale-105 cursor-pointer group"
+                className="block mt-6 border border-gray-200 bg-gray-50 rounded-xl p-4 text-center text-[#2d2d2d] hover:border-[#e31e24] transition-colors group"
               >
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -96,18 +96,18 @@ export default async function ProductPage({
           <div className="space-y-6">
             {/* Category badge */ }
             <div>
-              <span className="inline-block px-4 py-2 bg-[#2d2d2d] text-white rounded-full text-sm font-bold uppercase tracking-wide">
+              <span className="inline-block text-xs font-semibold uppercase tracking-widest text-gray-500">
                 { product.category }
               </span>
             </div>
 
             {/* Product name */ }
-            <h1 className="text-4xl md:text-5xl font-bold text-[#2d2d2d] leading-tight">
+            <h1 className="text-3xl md:text-4xl font-bold text-[#2d2d2d] leading-tight">
               { product.name || 'Untitled Product' }
             </h1>
 
             {/* Price */ }
-            <div className="text-4xl md:text-5xl font-bold text-[#e31e24]">
+            <div className="text-3xl font-bold text-[#e31e24]">
               ${ (product.basePrice || 0).toFixed(2) }
             </div>
 
@@ -128,7 +128,7 @@ export default async function ProductPage({
               <div id="description">
                 <CustomPortableText
                   value={ product.description as any }
-                  className="prose-lg max-w-none text-gray-700 leading-relaxed"
+                  className="prose max-w-none text-gray-700 leading-relaxed"
                 />
               </div>
             ) }
@@ -206,12 +206,12 @@ export default async function ProductPage({
                     className="group block overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-xl"
                   >
                     <div className="relative aspect-square overflow-hidden bg-gray-50">
-                      { relatedImage && (
+                      { (
                         <Image
                           src={ relatedImage }
                           alt={ related.images?.[ 0 ]?.alt || related.name }
                           fill
-                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
                           sizes="(max-width: 768px) 50vw, 25vw"
                         />
                       ) }

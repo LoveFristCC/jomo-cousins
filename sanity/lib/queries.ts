@@ -81,6 +81,9 @@ const productFields = /* groq */ `
   excerpt,
   amazonLink,
   audibleLink,
+  // eBook (file URL intentionally not exposed; served via /api/ebook-download)
+  "hasEbook": defined(ebookFile.asset),
+  ebookPrice,
   // Reviews for structured data
   reviews,
   // Upsells

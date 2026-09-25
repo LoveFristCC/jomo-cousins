@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import Image from "@/components/ProductImage";
 import type { DigitalProductByPositionQueryResult } from "@/sanity.types";
 import { urlForImage } from "@/sanity/lib/utils";
 import CustomPortableText from "@/app/(home)/portable-text";
@@ -87,23 +87,24 @@ export default function UpsellOffer({
   const displayPrice = discountedPrice;
 
   return (
-    <div className="border-2 border-blue-500 rounded-xl p-8 bg-gradient-to-br from-blue-50 to-white">
+    <div className="border border-gray-200 rounded-2xl p-5 sm:p-8 bg-white shadow-sm">
       {/* Special offer badge */}
       <div className="text-center mb-6">
-        <span className="inline-block bg-blue-500 text-white px-6 py-2 rounded-full font-bold text-lg">
-          🎉 Special One-Time Offer
+        <span className="inline-block bg-red-50 text-[#e31e24] px-4 py-2 rounded-full font-semibold text-sm">
+          A Special Offer for You
         </span>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid lg:grid-cols-2 gap-6 lg:gap-8">
         {/* Product image */}
-        {product.image && (
-          <div className="relative aspect-square rounded-lg overflow-hidden">
+        {(
+          <div className="relative aspect-square rounded-xl overflow-hidden bg-gray-50">
             <Image
-              src={urlForImage(product.image)?.width(500).height(500).url() || ""}
-              alt={product.image.alt || product.name}
+              src={urlForImage(product.image)?.width(900).url() || ""}
+              alt={product.image?.alt || product.name}
               fill
-              className="object-cover"
+              className="object-contain p-4"
+              sizes="(max-width: 1024px) 100vw, 450px"
             />
           </div>
         )}
@@ -124,7 +125,7 @@ export default function UpsellOffer({
               {product.bulletPoints.map((point, idx) => (
                 <li key={idx} className="flex items-start">
                   <svg
-                    className="w-6 h-6 text-green-500 mr-2 flex-shrink-0 mt-0.5"
+                    className="w-6 h-6 text-[#e31e24] mr-2 flex-shrink-0 mt-0.5"
                     fill="none"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -144,8 +145,8 @@ export default function UpsellOffer({
           <div className="mb-6">
             {hasTrialPricing ? (
               <div>
-                <div className="flex items-center gap-3">
-                  <span className="text-3xl font-bold text-green-600">
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="text-3xl font-bold text-[#e31e24]">
                     ${displayPrice!.toFixed(2)}
                   </span>
                   <span className="text-lg text-gray-600">
@@ -158,8 +159,8 @@ export default function UpsellOffer({
               </div>
             ) : product.discount && product.discount > 0 ? (
               <div>
-                <div className="flex items-center gap-3">
-                  <span className="text-3xl font-bold text-green-600">
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="text-3xl font-bold text-[#e31e24]">
                     ${discountedPrice.toFixed(2)}
                   </span>
                   <span className="text-xl text-gray-400 line-through">
@@ -195,7 +196,7 @@ export default function UpsellOffer({
             <button
               onClick={handleAccept}
               disabled={isLoading}
-              className="w-full py-4 bg-green-500 text-white rounded-lg font-bold text-lg hover:bg-green-600 transition disabled:bg-gray-300 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-[#e31e24] text-white rounded-lg font-bold text-lg hover:bg-[#c41a1f] transition disabled:bg-gray-300 disabled:cursor-not-allowed"
             >
               {isLoading
                 ? "Processing..."

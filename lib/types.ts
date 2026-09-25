@@ -90,7 +90,8 @@ export interface CheckoutMetadata {
   size?: string;
   color?: string;
   weight: string;
-  productType: "physical" | "digital";
+  productType: "physical" | "digital" | "ebook";
+  productSlug?: string; // Used to look up the eBook file for "ebook" orders
   kajabiWebhookUrl?: string;
   firstMonthPrice?: string; // Special first month price for subscriptions
   regularPrice?: string; // Regular subscription price (used with firstMonthPrice)

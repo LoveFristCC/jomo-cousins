@@ -74,6 +74,11 @@ export async function POST(request: NextRequest) {
         await handlePhysicalProductOrder(session, metadata);
       }
 
+      // Handle eBook orders (PDF download link by email)
+      if (metadata.productType === "ebook") {
+        await handleEbookOrder(session, metadata);
+      }
+
       // Handle digital product orders (one-time payments only)
       // For subscriptions, we wait for invoice.paid event
       if (metadata.productType === "digital" && session.mode === "payment") {
@@ -347,6 +352,37 @@ async function handlePhysicalProductOrder(
   } catch (error) {
     console.error("[Webhook] Error handling physical product order:", error);
     throw error;
+  }
+}
+
+/**
+ * Handle eBook order - email the customer a download link
+ * (no inventory or ShipStation; /api/ebook-download verifies payment)
+ */
+async function handleEbookOrder(
+  session: Stripe.Checkout.Session,
+  metadata: CheckoutMetadata
+) {
+  const customerEmail = session.customer_details?.email;
+  if (!customerEmail) {
+    console.error("[Webhook] Missing customer email for eBook order:", session.id);
+    return;
+  }
+
+  const baseUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
+
+  try {
+    await sendPurchaseThankYouEmail({
+      customerEmail,
+      customerName: session.customer_details?.name || "Customer",
+      orderNumber: session.id,
+      items: [{ name: `${metadata.productName} (eBook)`, quantity: 1 }],
+      productType: "ebook",
+      downloadUrl: `${baseUrl}/api/ebook-download?session_id=${session.id}`,
+    });
+  } catch (emailError) {
+    // Don't fail the webhook - buyer can still download from the thank-you page
+    console.error("[Webhook] Failed to send eBook email:", emailError);
   }
 }
 

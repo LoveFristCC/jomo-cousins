@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { checkInventoryAvailability } from "@/lib/inventory";
+import { client } from "@/sanity/lib/client";
 
 // Helper to sanitize metadata (Stripe limit: 500 chars)
 function sanitizeMetadata(text: string | undefined | null): string {
@@ -24,7 +25,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    const {
+    let {
       variantSku,
       quantity,
       productName,
@@ -32,7 +33,8 @@ export async function POST(request: NextRequest) {
       size,
       color,
       weight,
-      productType = "physical", // 'physical' or 'digital'
+      productType = "physical", // 'physical', 'digital' (Kajabi) or 'ebook' (PDF download)
+      productSlug = null, // Required for 'ebook'
       kajabiWebhookUrl,
       stripePriceId,
       isSubscription = false,
@@ -55,6 +57,31 @@ export async function POST(request: NextRequest) {
         { error: "Variant SKU is required for physical products" },
         { status: 400 }
       );
+    }
+
+    // eBooks: price and name come from Sanity, never from the client
+    if (productType === "ebook") {
+      const ebook = productSlug
+        ? await client.fetch<{ name: string; ebookPrice: number | null; hasEbook: boolean } | null>(
+            `*[_type == "product" && slug.current == $slug && status == "active"][0]{ name, ebookPrice, "hasEbook": defined(ebookFile.asset) }`,
+            { slug: productSlug }
+          )
+        : null;
+
+      if (!ebook?.hasEbook || !ebook.ebookPrice) {
+        return NextResponse.json(
+          { error: "This eBook is not available" },
+          { status: 400 }
+        );
+      }
+
+      productName = ebook.name;
+      price = ebook.ebookPrice;
+      quantity = 1;
+      variantSku = null;
+      size = null;
+      color = null;
+      weight = 0;
     }
 
     if (!productName || !price) {
@@ -90,6 +117,8 @@ export async function POST(request: NextRequest) {
       weight: weight?.toString() || "0",
       productType,
     };
+
+    if (productType === "ebook") metadata.productSlug = sanitizeMetadata(productSlug);
 
     if (size) metadata.size = sanitizeMetadata(size);
     if (color) metadata.color = sanitizeMetadata(color);
@@ -133,6 +162,8 @@ export async function POST(request: NextRequest) {
               product_data: {
                 name: productName,
                 ...(description && { description }), // Only include if not empty
+                // Digital books tax code so Stripe Tax applies the right rate
+                ...(productType === "ebook" && { tax_code: "txcd_10302000" }),
               },
               // Use firstMonthPrice if it's a subscription with trial pricing
               unit_amount: Math.round((useTrialPricing ? firstMonthPrice : price) * 100),
@@ -204,6 +235,9 @@ export async function POST(request: NextRequest) {
     if (productType === "digital") {
       // After digital product/subscription → Show product upsells
       successUrl = `${baseUrl}/thank-you/upsell-2?session_id={CHECKOUT_SESSION_ID}${originalSessionParam}`;
+    } else if (productType === "ebook") {
+      // eBook → Thank-you page shows the download link, then the normal upsell flow
+      successUrl = `${baseUrl}/thank-you?session_id={CHECKOUT_SESSION_ID}`;
     } else if (returnSessionId) {
       // Physical product from upsell page → Go to complete page (don't restart upsell flow)
       successUrl = `${baseUrl}/thank-you/complete?session_id={CHECKOUT_SESSION_ID}`;
@@ -217,6 +251,8 @@ export async function POST(request: NextRequest) {
     if (productType === "digital") {
       // Digital product cancellation → Return to upsell-2
       cancelUrl = `${baseUrl}/thank-you/upsell-2?session_id={CHECKOUT_SESSION_ID}${originalSessionParam}`;
+    } else if (productType === "ebook") {
+      cancelUrl = `${baseUrl}/products/${productSlug}`;
     } else if (returnSessionId) {
       // Physical product from upsell page → Return to complete page with original session
       cancelUrl = `${baseUrl}/thank-you/complete?session_id=${returnSessionId}`;

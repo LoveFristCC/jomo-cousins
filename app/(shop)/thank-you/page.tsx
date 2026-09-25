@@ -54,8 +54,12 @@ export default async function ThankYouPage({
     upsellProduct = purchasedProduct?.digitalUpsell || null;
   }
 
+  const isEbook = session?.metadata?.productType === "ebook";
+  const ebookDownloadUrl = isEbook ? `/api/ebook-download?session_id=${session_id}` : null;
+
   // If no digital upsell, check for product upsells
-  if (!upsellProduct) {
+  // (eBook buyers always stay here so they can see their download button)
+  if (!upsellProduct && !isEbook) {
     const hasProductUpsells = purchasedProduct?.upsells && purchasedProduct.upsells.length > 0;
 
     if (hasProductUpsells) {
@@ -136,7 +140,9 @@ export default async function ThankYouPage({
               Thank You for Your Order!
             </h1>
             <p className="text-xl text-gray-300">
-              Your order has been confirmed and will be shipped soon.
+              { isEbook
+                ? "Your eBook is ready to download."
+                : "Your order has been confirmed and will be shipped soon." }
             </p>
 
             { customerEmail && (
@@ -149,6 +155,22 @@ export default async function ThankYouPage({
       </div>
 
       <div className="container mx-auto px-4 py-12 max-w-4xl">
+
+        {/* eBook download */ }
+        { ebookDownloadUrl && (
+          <div className="bg-[#e31e24]/5 border-2 border-[#e31e24] rounded-2xl p-8 mb-12 text-center">
+            <h2 className="text-2xl font-bold mb-3 text-[#2d2d2d]">Your eBook</h2>
+            <p className="text-gray-700 mb-6">
+              Download your PDF now. We've also emailed you a link so you can download it again later.
+            </p>
+            <a
+              href={ ebookDownloadUrl }
+              className="inline-block px-8 py-4 bg-[#e31e24] text-white rounded-xl font-bold text-lg shadow-lg hover:bg-[#c41a1f] transition-all"
+            >
+              Download eBook (PDF)
+            </a>
+          </div>
+        ) }
 
         {/* Order summary */ }
         <div className="bg-gray-50 rounded-2xl p-8 mb-12 shadow-md border border-gray-200">
@@ -217,7 +239,7 @@ export default async function ThankYouPage({
             href={ `/thank-you/upsell-2?session_id=${session_id}${customerId ? `&customer_id=${customerId}` : ''}` }
             className="text-gray-600 hover:text-[#e31e24] font-semibold underline transition-colors"
           >
-            No thanks, show me other recommendations
+            { upsellProduct ? "No thanks, show me other recommendations" : "Continue" }
           </a>
         </div>
       </div>

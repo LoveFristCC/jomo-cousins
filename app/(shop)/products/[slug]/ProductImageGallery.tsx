@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import Image from "@/components/ProductImage";
 
 type ProductImageGalleryProps = {
-  images: any[];
+  images: { url: string; alt?: string }[];
   productName: string;
   category?: string;
 };
@@ -14,21 +14,34 @@ export default function ProductImageGallery({ images, productName, category }: P
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
-  if (!images || images.length === 0) return null;
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    if (!isLightboxOpen) return;
+    dialogRef.current?.showModal();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [isLightboxOpen]);
+
+  if (!images || images.length === 0) return (
+    <div className="relative aspect-square rounded-2xl overflow-hidden"><Image alt={productName} fill /></div>
+  );
 
   return (
     <>
       <div className="space-y-4">
         {/* Main image - smaller for apparel */}
-        <div
-          className={`relative cursor-pointer group ${isApparel ? "aspect-[4/5] max-w-md mx-auto" : "aspect-square"}`}
+        <button
+          type="button"
+          aria-label={`Enlarge image of ${productName}`}
+          className={`relative block w-full overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 cursor-zoom-in group ${isApparel ? "aspect-[4/5] max-w-md mx-auto" : "aspect-square"}`}
           onClick={() => setIsLightboxOpen(true)}
         >
           <Image
             src={images[selectedImageIndex].url}
             alt={images[selectedImageIndex].alt || productName}
             fill
-            className="object-contain transition-transform duration-300 group-hover:scale-105"
+            className="object-contain p-6 sm:p-8 transition-transform duration-300 group-hover:scale-[1.03]"
             priority
             sizes={isApparel ? "(max-width: 768px) 100vw, 448px" : "(max-width: 768px) 100vw, 50vw"}
             quality={85}
@@ -41,16 +54,19 @@ export default function ProductImageGallery({ images, productName, category }: P
               </svg>
             </div>
           </div>
-        </div>
+        </button>
 
         {/* Thumbnail gallery */}
         {images.length > 1 && (
-          <div className="grid grid-cols-4 gap-3">
-            {images.map((image: any, idx: number) => (
+          <div className="flex gap-3 overflow-x-auto p-1">
+            {images.map((image, idx) => (
               <button
-                key={idx}
+                key={image.url}
+                type="button"
+                aria-label={`View image ${idx + 1} of ${productName}`}
+                aria-pressed={selectedImageIndex === idx}
                 onClick={() => setSelectedImageIndex(idx)}
-                className={`relative aspect-square overflow-hidden transition-all ${
+                className={`relative h-20 w-20 shrink-0 rounded-lg border border-gray-200 bg-gray-50 overflow-hidden transition-all ${
                   selectedImageIndex === idx
                     ? "ring-2 ring-[#e31e24]"
                     : "opacity-60 hover:opacity-100"
@@ -61,7 +77,7 @@ export default function ProductImageGallery({ images, productName, category }: P
                   alt={image.alt || `${productName} ${idx + 1}`}
                   fill
                   className="object-contain"
-                  sizes="200px"
+                  sizes="80px"
                   quality={90}
                 />
               </button>
@@ -72,13 +88,16 @@ export default function ProductImageGallery({ images, productName, category }: P
 
       {/* Lightbox Modal */}
       {isLightboxOpen && (
-        <div
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+        <dialog
+          ref={dialogRef}
+          aria-label={`${productName} image gallery`}
+          onClose={() => setIsLightboxOpen(false)}
+          className="fixed inset-0 m-0 h-dvh max-h-none w-screen max-w-none border-0 z-50 bg-black/90 text-white open:flex items-center justify-center p-4"
           onClick={() => setIsLightboxOpen(false)}
         >
           <button
             onClick={() => setIsLightboxOpen(false)}
-            className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors"
+            className="absolute z-10 top-4 right-4 text-white hover:text-gray-300 transition-colors"
             aria-label="Close"
           >
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -93,7 +112,7 @@ export default function ProductImageGallery({ images, productName, category }: P
                 e.stopPropagation();
                 setSelectedImageIndex(selectedImageIndex - 1);
               }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white rounded-full p-3 transition-colors"
+              className="absolute z-10 left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white rounded-full p-3 transition-colors"
               aria-label="Previous image"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,7 +122,7 @@ export default function ProductImageGallery({ images, productName, category }: P
           )}
 
           {/* Main lightbox image */}
-          <div className="relative w-full max-w-5xl aspect-square">
+          <div className="relative w-full max-w-5xl h-[80dvh]">
             <Image
               src={images[selectedImageIndex].url}
               alt={images[selectedImageIndex].alt || productName}
@@ -122,7 +141,7 @@ export default function ProductImageGallery({ images, productName, category }: P
                 e.stopPropagation();
                 setSelectedImageIndex(selectedImageIndex + 1);
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white rounded-full p-3 transition-colors"
+              className="absolute z-10 right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white rounded-full p-3 transition-colors"
               aria-label="Next image"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -135,7 +154,7 @@ export default function ProductImageGallery({ images, productName, category }: P
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-4 py-2 rounded-full text-sm">
             {selectedImageIndex + 1} / {images.length}
           </div>
-        </div>
+        </dialog>
       )}
     </>
   );

@@ -438,6 +438,30 @@ export default defineType({
       description: "Link to Audible audiobook",
       hidden: ({ document }) => document?.category !== "books",
     }),
+    defineField({
+      name: "ebookFile",
+      title: "eBook File (PDF)",
+      type: "file",
+      description:
+        "Upload the eBook PDF to offer an eBook option. Buyers get a download link after payment; the file URL is never shown publicly.",
+      options: { accept: "application/pdf" },
+      hidden: ({ document }) => document?.category !== "books",
+    }),
+    defineField({
+      name: "ebookPrice",
+      title: "eBook Price",
+      type: "number",
+      description: "Price in dollars for the eBook version",
+      hidden: ({ document }) => document?.category !== "books",
+      validation: (rule) =>
+        rule.positive().custom((value, context) => {
+          const doc = context.document as any;
+          if (doc?.ebookFile?.asset && !value) {
+            return "Set an eBook price when an eBook file is uploaded.";
+          }
+          return true;
+        }),
+    }),
     // Product reviews for structured data
     defineField({
       name: "reviews",

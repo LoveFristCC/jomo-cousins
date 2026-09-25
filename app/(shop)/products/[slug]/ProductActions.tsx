@@ -29,6 +29,9 @@ export default function ProductActions({ product }: ProductActionsProps) {
   const [ quantity, setQuantity ] = useState(1);
   const [ isLoading, setIsLoading ] = useState(false);
   const [ error, setError ] = useState<string | null>(null);
+  const hasEbook = Boolean(product.hasEbook && product.ebookPrice);
+  const [ format, setFormat ] = useState<"physical" | "ebook">("physical");
+  const isEbook = format === "ebook";
 
   // Get unique sizes and colors from variants (sanitized)
   const sizes = product.variants
@@ -110,6 +113,36 @@ export default function ProductActions({ product }: ProductActionsProps) {
     };
   };
 
+  // Handle eBook checkout (price is looked up server-side)
+  const handleBuyEbook = async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/create-checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productType: "ebook",
+          productSlug: product.slug,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to create checkout session");
+      }
+
+      window.location.href = data.url;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+      setIsLoading(false);
+    }
+  };
+
   // Handle checkout
   const handleBuyNow = async () => {
     if (!selectedVariant) {
@@ -167,8 +200,43 @@ export default function ProductActions({ product }: ProductActionsProps) {
 
   return (
     <div className="space-y-6 bg-gray-50 rounded-2xl p-6 md:p-8">
+      {/* Format selector (books with an eBook) */ }
+      { hasEbook && (
+        <div>
+          <label className="block text-base font-bold mb-4 text-[#2d2d2d]">
+            Format
+          </label>
+          <div className="grid grid-cols-2 gap-3">
+            { ([
+              { value: "physical", label: "Paperback", price: product.basePrice || 0 },
+              { value: "ebook", label: "eBook (PDF)", price: product.ebookPrice || 0 },
+            ] as const).map((option) => (
+              <button
+                key={ option.value }
+                onClick={ () => {
+                  setFormat(option.value);
+                  setError(null);
+                } }
+                className={ `px-4 py-3 rounded-lg border-2 font-semibold transition-all text-left ${format === option.value
+                  ? "border-[#e31e24] bg-[#e31e24] text-white shadow-md"
+                  : "border-[#2d2d2d] text-[#2d2d2d] hover:border-[#e31e24]"
+                  }` }
+              >
+                <span className="block">{ option.label }</span>
+                <span className="block text-sm font-normal">${ option.price.toFixed(2) }</span>
+              </button>
+            )) }
+          </div>
+          { isEbook && (
+            <p className="text-sm text-gray-600 mt-3">
+              Instant download after purchase. A download link is also emailed to you.
+            </p>
+          ) }
+        </div>
+      ) }
+
       {/* Size selector */ }
-      { sizes.length > 0 && (
+      { !isEbook && sizes.length > 0 && (
         <div>
           <label className="block text-base font-bold mb-4 text-[#2d2d2d]">
             Size { selectedSize && <span className="font-normal text-gray-600">: { selectedSize }</span> }
@@ -202,7 +270,7 @@ export default function ProductActions({ product }: ProductActionsProps) {
       ) }
 
       {/* Color selector */ }
-      { colors.length > 0 && (
+      { !isEbook && colors.length > 0 && (
         <div>
           <label className="block text-base font-bold mb-4 text-[#2d2d2d]">
             Color{ " " }
@@ -255,7 +323,7 @@ export default function ProductActions({ product }: ProductActionsProps) {
       ) }
 
       {/* Variant image (if available) */ }
-      { selectedVariant?.image && (
+      { !isEbook && selectedVariant?.image && (
         <div className="relative w-24 h-24 rounded-lg overflow-hidden border">
           <Image
             src={
@@ -280,6 +348,7 @@ export default function ProductActions({ product }: ProductActionsProps) {
       ) } */}
 
       {/* Quantity selector */ }
+      { !isEbook && (
       <div className="flex flex-col items-center justify-center">
         <label className="block text-base font-bold mb-4 text-[#2d2d2d]">
           Quantity
@@ -311,6 +380,7 @@ export default function ProductActions({ product }: ProductActionsProps) {
           </button>
         </div>
       </div>
+      ) }
 
 
       {/* Error message */ }
@@ -321,6 +391,15 @@ export default function ProductActions({ product }: ProductActionsProps) {
       ) }
 
       {/* Buy Now button */ }
+      { isEbook ? (
+        <button
+          onClick={ handleBuyEbook }
+          disabled={ isLoading }
+          className="w-full py-5 bg-[#e31e24] text-white rounded-xl font-bold text-lg shadow-lg hover:bg-[#c41a1f] hover:scale-105 transition-all disabled:bg-gray-300 disabled:cursor-not-allowed disabled:hover:scale-100"
+        >
+          { isLoading ? "Processing..." : `Buy eBook - $${(product.ebookPrice || 0).toFixed(2)}` }
+        </button>
+      ) : (
       <button
         onClick={ handleBuyNow }
         disabled={ !canPurchase || isLoading }
@@ -332,9 +411,10 @@ export default function ProductActions({ product }: ProductActionsProps) {
             ? "Out of Stock"
             : `Buy Now - $${((product.basePrice || 0) * quantity).toFixed(2)}` }
       </button>
+      ) }
 
       {/* SKU display */ }
-      { selectedVariant && (
+      { !isEbook && selectedVariant && (
         <div className="text-sm text-gray-600 pt-4 border-t border-gray-200">
           <span className="font-semibold text-[#2d2d2d]">SKU:</span> { selectedVariant.sku }
         </div>

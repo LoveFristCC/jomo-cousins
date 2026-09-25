@@ -9,7 +9,7 @@ const imageBuilder = createImageUrlBuilder({
 
 export const urlForImage = (source: any) => {
   // Ensure that source image contains a valid reference
-  if (!source?.asset?._ref) {
+  if (!source?.asset?._ref && !source?.asset?._id && !source?.asset?.url) {
     return undefined;
   }
 
@@ -18,7 +18,7 @@ export const urlForImage = (source: any) => {
 
 // High quality version for product images
 export const urlForProductImage = (source: any) => {
-  if (!source?.asset?._ref) {
+  if (!source?.asset?._ref && !source?.asset?._id && !source?.asset?.url) {
     return undefined;
   }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import Image from "@/components/ProductImage";
 import { urlForImage } from "@/sanity/lib/utils";
 
 interface DigitalProduct {
@@ -85,7 +85,7 @@ export default function DigitalProductUpsell({
   };
 
   const imageUrl = product.image
-    ? urlForImage(product.image)?.width(800).height(800).url()
+    ? urlForImage(product.image)?.width(900).url()
     : null;
 
   // Calculate original price if there's a discount
@@ -104,30 +104,25 @@ export default function DigitalProductUpsell({
         </div>
       )}
 
-      <div className="bg-gradient-to-br from-[#2d2d2d] to-[#1a1a1a] rounded-3xl shadow-2xl overflow-hidden">
-        <div className="grid md:grid-cols-2 gap-8 p-8 md:p-12">
+      <div className="bg-gradient-to-br from-[#2d2d2d] to-[#1a1a1a] rounded-2xl border border-gray-200 overflow-hidden">
+        <div className="grid lg:grid-cols-2 gap-6 p-5 sm:p-8">
           {/* Left: Product Image */}
           <div className="flex items-center justify-center">
-            {imageUrl ? (
-              <div className="relative w-full aspect-square max-w-md rounded-2xl overflow-hidden shadow-xl">
-                <Image
-                  src={imageUrl}
-                  alt={product.image?.alt || product.name}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ) : (
-              <div className="w-full aspect-square max-w-md rounded-2xl bg-gray-700 flex items-center justify-center">
-                <span className="text-6xl">🚀</span>
-              </div>
-            )}
+            <div className="relative w-full aspect-square max-w-md rounded-xl overflow-hidden bg-white">
+              <Image
+                src={imageUrl}
+                alt={product.image?.alt || product.name}
+                fill
+                className="object-contain p-4"
+                sizes="(max-width: 1024px) 100vw, 450px"
+              />
+            </div>
           </div>
 
           {/* Right: Product Info */}
           <div className="flex flex-col justify-center text-white">
             {/* Headline */}
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 leading-tight">
               {product.headline}
             </h2>
 
@@ -151,7 +146,7 @@ export default function DigitalProductUpsell({
                 </div>
               )}
               <div className="flex items-baseline gap-3">
-                <span className="text-5xl md:text-6xl font-bold text-[#e31e24]">
+                <span className="text-4xl md:text-5xl font-bold text-[#e31e24]">
                   ${displayPrice.toFixed(2)}
                 </span>
                 {product.isSubscription && (
@@ -190,11 +185,11 @@ export default function DigitalProductUpsell({
             )}
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col gap-3">
               <button
                 onClick={handleAccept}
                 disabled={loading}
-                className="flex-1 py-4 px-8 bg-[#e31e24] text-white rounded-lg font-bold text-xl hover:bg-[#c41a1f] transition-all disabled:bg-gray-600 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:scale-105"
+                className="flex-1 py-4 px-8 bg-[#e31e24] text-white rounded-lg font-bold text-xl hover:bg-[#c41a1f] transition-all disabled:bg-gray-600 disabled:cursor-not-allowed "
               >
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -234,7 +229,7 @@ export default function DigitalProductUpsell({
             </div>
 
             {/* Trust badges */}
-            <div className="mt-6 pt-6 border-t border-gray-700 flex items-center justify-center gap-6 text-sm text-gray-400">
+            <div className="mt-6 pt-6 border-t border-gray-700 flex flex-wrap items-center justify-center gap-4 text-sm text-gray-400">
               <span className="flex items-center gap-2">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />

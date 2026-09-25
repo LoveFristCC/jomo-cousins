@@ -12,7 +12,8 @@ interface EmailData {
   customerName: string;
   orderNumber: string;
   items: ProductItem[];
-  productType: "physical" | "digital";
+  productType: "physical" | "digital" | "ebook";
+  downloadUrl?: string; // Required for "ebook"
   shippingAddress?: {
     line1: string;
     line2?: string;
@@ -35,7 +36,9 @@ export async function sendPurchaseThankYouEmail(data: EmailData) {
   });
 
   const subject =
-    data.productType === "digital"
+    data.productType === "ebook"
+      ? "Your eBook Is Ready to Download"
+      : data.productType === "digital"
       ? "Thank You for Your Purchase - Access Your Content"
       : "Thank You for Your Order!";
 
@@ -76,7 +79,59 @@ function generateEmailHTML(data: EmailData): string {
     )
     .join("");
 
-  if (data.productType === "digital") {
+  if (data.productType === "ebook") {
+    return `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <div style="background-color: #f9f9f9; padding: 30px; border-radius: 10px;">
+    <h1 style="color: #2c3e50; margin-bottom: 20px;">Thank You for Your Purchase!</h1>
+
+    <p>Hi ${data.customerName},</p>
+
+    <p>Thank you so much for your purchase! Your eBook is ready.</p>
+
+    <div style="background-color: #e31e24; color: white; padding: 20px; border-radius: 5px; margin: 30px 0; text-align: center;">
+      <h2 style="margin: 0 0 15px 0; color: white;">Download Your eBook</h2>
+      <p style="margin: 0 0 20px 0;">Click the button below to download your PDF. Save this email so you can download it again later.</p>
+      <a href="${data.downloadUrl}"
+         style="display: inline-block; background-color: white; color: #e31e24; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px;">
+        Download eBook (PDF)
+      </a>
+    </div>
+
+    <div style="margin: 30px 0;">
+      <h3 style="color: #2c3e50; margin-bottom: 10px;">Order Details</h3>
+      <p><strong>Order Number:</strong> ${data.orderNumber}</p>
+
+      <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+        <thead>
+          <tr>
+            <th style="padding: 10px; border-bottom: 2px solid #2c3e50; text-align: left;">Item</th>
+            <th style="padding: 10px; border-bottom: 2px solid #2c3e50; text-align: right;">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${itemsList}
+        </tbody>
+      </table>
+    </div>
+
+    <p style="margin-top: 30px;">If you have any trouble downloading, please email us at <a href="mailto:support@pastorjomo.com">support@pastorjomo.com</a></p>
+
+    <p style="margin-top: 20px;">Blessings,<br><strong>Jomo Cousins</strong></p>
+  </div>
+
+  <div style="margin-top: 20px; padding: 20px; text-align: center; color: #666; font-size: 12px;">
+    <p>You received this email because you made a purchase at jomocousins.com</p>
+  </div>
+</body>
+</html>
+    `;
+  } else if (data.productType === "digital") {
     return `
 <!DOCTYPE html>
 <html>
@@ -216,7 +271,34 @@ function generateEmailText(data: EmailData): string {
     )
     .join("\n");
 
-  if (data.productType === "digital") {
+  if (data.productType === "ebook") {
+    return `
+Thank You for Your Purchase!
+
+Hi ${data.customerName},
+
+Thank you so much for your purchase! Your eBook is ready.
+
+DOWNLOAD YOUR EBOOK
+${data.downloadUrl}
+
+Save this email so you can download it again later.
+
+Order Details:
+Order Number: ${data.orderNumber}
+
+Items:
+${itemsList}
+
+If you have any trouble downloading, please email us at support@pastorjomo.com
+
+Blessings,
+Jomo Cousins
+
+---
+You received this email because you made a purchase at jomocousins.com
+    `.trim();
+  } else if (data.productType === "digital") {
     return `
 Thank You for Your Purchase!
 

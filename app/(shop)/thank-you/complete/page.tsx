@@ -1,10 +1,71 @@
 import Link from "next/link";
+import Stripe from "stripe";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2025-12-15.clover",
+});
+
+type ProductType = "physical" | "digital" | "ebook";
+
+/**
+ * Collect what the customer bought in this checkout flow.
+ * The session_id here may be an upsell's session rather than the original
+ * purchase, so look across the customer's paid sessions from the last day.
+ */
+async function getPurchaseSummary(sessionId?: string) {
+  const types = new Set<ProductType>();
+  const ebooks = new Map<string, { name: string; downloadUrl: string }>();
+
+  if (!sessionId) return { types, ebooks };
+
+  try {
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    const customerId =
+      typeof session.customer === "string" ? session.customer : session.customer?.id;
+
+    const since = Math.floor(Date.now() / 1000) - 24 * 60 * 60;
+    const sessions = customerId
+      ? (await stripe.checkout.sessions.list({ customer: customerId, created: { gte: since }, limit: 20 })).data
+      : [ session ];
+
+    for (const s of sessions) {
+      if (s.status !== "complete") continue;
+      const type = s.metadata?.productType as ProductType | undefined;
+      if (type) types.add(type);
+
+      const slug = s.metadata?.productSlug;
+      if (type === "ebook" && s.payment_status === "paid" && slug && !ebooks.has(slug)) {
+        ebooks.set(slug, {
+          name: s.metadata?.productName || "Your eBook",
+          downloadUrl: `/api/ebook-download?session_id=${s.id}`,
+        });
+      }
+    }
+  } catch (error) {
+    console.error("[Complete] Error fetching purchase summary:", error);
+  }
+
+  return { types, ebooks };
+}
 
 /**
  * Final confirmation page
  * Shown after all upsells are complete or declined
  */
-export default function CompletePage() {
+export default async function CompletePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ session_id?: string }>;
+}) {
+  const { session_id } = await searchParams;
+  const { types, ebooks } = await getPurchaseSummary(session_id);
+
+  // If we couldn't tell what was bought, fall back to the generic physical + digital steps
+  const unknown = types.size === 0;
+  const showPhysical = unknown || types.has("physical");
+  const showDigital = unknown || types.has("digital");
+  const showEbook = ebooks.size > 0;
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -29,7 +90,9 @@ export default function CompletePage() {
 
             <h1 className="text-5xl md:text-6xl font-bold mb-4">You're All Set!</h1>
             <p className="text-xl text-gray-300">
-              Thank you for your purchase. Your order is being processed.
+              { showEbook && !showPhysical && !showDigital
+                ? "Thank you for your purchase. Your eBook is ready to download."
+                : "Thank you for your purchase. Your order is being processed." }
             </p>
           </div>
         </div>
@@ -37,12 +100,62 @@ export default function CompletePage() {
 
       <div className="container mx-auto px-4 py-12 max-w-4xl">
 
+        {/* eBook downloads */}
+        { showEbook && (
+          <div className="bg-[#e31e24]/5 border-2 border-[#e31e24] rounded-2xl p-8 mb-8 text-center">
+            <h2 className="text-2xl font-bold mb-3 text-[#2d2d2d]">
+              { ebooks.size > 1 ? "Your eBooks" : "Your eBook" }
+            </h2>
+            <p className="text-gray-700 mb-6">
+              Download your PDF now. We've also emailed you a link so you can download it again later.
+            </p>
+            <div className="flex flex-col items-center gap-4">
+              { Array.from(ebooks.values()).map((ebook) => (
+                <a
+                  key={ ebook.downloadUrl }
+                  href={ ebook.downloadUrl }
+                  className="inline-block px-8 py-4 bg-[#e31e24] text-white rounded-xl font-bold text-lg shadow-lg hover:bg-[#c41a1f] transition-all"
+                >
+                  { ebooks.size > 1 ? `Download ${ebook.name} (PDF)` : "Download eBook (PDF)" }
+                </a>
+              )) }
+            </div>
+          </div>
+        ) }
+
         {/* What's next section */}
         <div className="bg-gray-50 rounded-2xl p-8 mb-8 shadow-md border border-gray-200">
           <h2 className="text-3xl font-bold mb-8 text-[#2d2d2d]">What Happens Next?</h2>
 
           <div className="space-y-8">
+            {/* eBooks */}
+            { showEbook && (
+            <div className="flex items-start">
+              <div className="flex-shrink-0 w-14 h-14 bg-[#e31e24]/10 rounded-xl flex items-center justify-center mr-5">
+                <svg
+                  className="w-7 h-7 text-[#e31e24]"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                  <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 className="font-bold text-xl mb-2 text-[#2d2d2d]">eBook</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Your eBook is ready now. Use the download button above, or the link
+                  in your email any time you need it again.
+                </p>
+              </div>
+            </div>
+            ) }
+
             {/* Physical products */}
+            { showPhysical && (
             <div className="flex items-start">
               <div className="flex-shrink-0 w-14 h-14 bg-[#e31e24]/10 rounded-xl flex items-center justify-center mr-5">
                 <svg
@@ -65,8 +178,10 @@ export default function CompletePage() {
                 </p>
               </div>
             </div>
+            ) }
 
             {/* Digital products */}
+            { showDigital && (
             <div className="flex items-start">
               <div className="flex-shrink-0 w-14 h-14 bg-[#2d2d2d]/10 rounded-xl flex items-center justify-center mr-5">
                 <svg
@@ -89,6 +204,7 @@ export default function CompletePage() {
                 </p>
               </div>
             </div>
+            ) }
 
             {/* Email confirmation */}
             <div className="flex items-start">
