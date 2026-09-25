@@ -376,7 +376,7 @@ async function handleEbookOrder(
       customerEmail,
       customerName: session.customer_details?.name || "Customer",
       orderNumber: session.id,
-      items: [{ name: `${metadata.productName} (eBook)`, quantity: 1 }],
+      items: [{ name: `${metadata.productName} – eBook (PDF)`, quantity: 1 }],
       productType: "ebook",
       downloadUrl: `${baseUrl}/api/ebook-download?session_id=${session.id}`,
     });

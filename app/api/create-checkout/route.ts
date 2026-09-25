@@ -160,7 +160,8 @@ export async function POST(request: NextRequest) {
           : {
               currency: "usd",
               product_data: {
-                name: productName,
+                // Label eBooks so they're distinguishable from paperbacks in Stripe and on receipts
+                name: productType === "ebook" ? `${productName} – eBook (PDF)` : productName,
                 ...(description && { description }), // Only include if not empty
                 // Digital books tax code so Stripe Tax applies the right rate
                 ...(productType === "ebook" && { tax_code: "txcd_10302000" }),

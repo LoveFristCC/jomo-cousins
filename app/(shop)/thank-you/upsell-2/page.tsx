@@ -55,7 +55,11 @@ export default async function UpsellTwoPage({
 
   // Find matching products and collect their upsells
   purchasedProductNames.forEach((productName: string) => {
-    const matchedProduct = allProducts?.find((p: any) => p.name === productName);
+    // eBook line items are labeled "<name> – eBook (PDF)", so match those by slug instead of name
+    const ebookSlug = session.metadata?.productType === "ebook" ? session.metadata.productSlug : null;
+    const matchedProduct = allProducts?.find((p: any) =>
+      ebookSlug ? p.slug === ebookSlug : p.name === productName
+    );
 
     // Skip if no matched product found
     if (!matchedProduct) return;

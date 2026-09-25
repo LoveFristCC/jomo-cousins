@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { notFound, redirect } from "next/navigation";
 import Stripe from "stripe";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { productByNameQuery } from "@/sanity/lib/queries";
+import { productByNameQuery, productBySlugQuery } from "@/sanity/lib/queries";
 import UpsellOffer from "./UpsellOffer";
 import PurchaseTracker from "./PurchaseTracker";
 import GoogleReviewsSurvey from "./GoogleReviewsSurvey";
@@ -44,7 +44,17 @@ export default async function ThankYouPage({
   let purchasedProduct = null;
   const purchasedProductName = session.line_items?.data[ 0 ]?.description || null;
 
-  if (purchasedProductName) {
+  // eBook line items are labeled "<name> – eBook (PDF)", so match those by slug instead of name
+  const ebookSlug = session?.metadata?.productType === "ebook" ? session.metadata.productSlug : null;
+
+  if (ebookSlug) {
+    purchasedProduct = await sanityFetch({
+      query: productBySlugQuery,
+      params: { slug: ebookSlug },
+    });
+
+    upsellProduct = purchasedProduct?.digitalUpsell || null;
+  } else if (purchasedProductName) {
     purchasedProduct = await sanityFetch({
       query: productByNameQuery,
       params: { name: purchasedProductName },
