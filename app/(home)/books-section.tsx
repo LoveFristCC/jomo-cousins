@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Download } from "lucide-react";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { featuredBooksQuery, newestBooksQuery } from "@/sanity/lib/queries";
 import { urlForImage } from "@/sanity/lib/utils";
@@ -71,6 +72,15 @@ export default async function BooksSection() {
                   >
                     View Book
                   </Link>
+                  { book.freeChapterPdfUrl && (
+                    <a
+                      href={ `${book.freeChapterPdfUrl}?dl=${encodeURIComponent(`${(book.name || "book").replace(/[^\w\s-]/g, "").trim()} - Free Chapter.pdf`)}` }
+                      className="mt-3 flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-wide text-[#e31e24] transition-colors hover:text-[#c41a1f] hover:underline"
+                    >
+                      <Download className="h-4 w-4" />
+                      Download Free Chapter
+                    </a>
+                  ) }
                 </div>
               </StaggerItem>
             )) }

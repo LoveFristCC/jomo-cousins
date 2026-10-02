@@ -5,6 +5,7 @@ import { sanityFetch } from "@/sanity/lib/fetch";
 import { productBySlugQuery, booksWithPreviewsQuery } from "@/sanity/lib/queries";
 import { urlForImage } from "@/sanity/lib/utils";
 import CustomPortableText from "@/app/(home)/portable-text";
+import FreeChapterDownload from "@/components/FreeChapterDownload";
 
 /**
  * Dedicated free chapter preview page
@@ -290,6 +291,17 @@ export default async function BookPreviewPage({
               <CustomPortableText value={ previewChapter.content as any } />
             </div>
           </div>
+
+          {/* Free chapter PDF download (email-gated) */ }
+          { product.freeChapter?.pdfUrl && (
+            <div className="mb-12">
+              <FreeChapterDownload
+                pdfUrl={ product.freeChapter.pdfUrl }
+                bookTitle={ product.name || "" }
+                chapterTitle={ product.freeChapter.title || undefined }
+              />
+            </div>
+          ) }
 
           {/* End of Preview CTA */ }
           <div className="bg-gradient-to-br from-[#2d2d2d] to-[#1a1a1a] rounded-2xl shadow-2xl p-8 md:p-12 text-center text-white">

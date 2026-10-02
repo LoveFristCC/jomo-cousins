@@ -448,6 +448,28 @@ export default defineType({
       hidden: ({ document }) => document?.category !== "books",
     }),
     defineField({
+      name: "freeChapter",
+      title: "Free Chapter Download (PDF)",
+      type: "object",
+      description:
+        "Upload a sample chapter PDF to offer as a free download on the book page and home page.",
+      hidden: ({ document }) => document?.category !== "books",
+      fields: [
+        {
+          name: "pdfFile",
+          title: "Chapter PDF",
+          type: "file",
+          options: { accept: "application/pdf" },
+        },
+        {
+          name: "title",
+          title: "Chapter Title",
+          type: "string",
+          description: 'Optional, e.g. "Chapter 1: When God Is Quiet"',
+        },
+      ],
+    }),
+    defineField({
       name: "ebookPrice",
       title: "eBook Price",
       type: "number",

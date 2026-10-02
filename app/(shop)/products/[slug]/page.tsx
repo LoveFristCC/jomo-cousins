@@ -9,6 +9,7 @@ import ProductActions from "./ProductActions";
 import ProductStructuredData from "./product-structured-data";
 import BookPreview from "./book-preview";
 import ProductImageGallery from "./ProductImageGallery";
+import FreeChapterDownload from "@/components/FreeChapterDownload";
 
 /**
  * Product detail page with variant selection
@@ -172,6 +173,17 @@ export default async function ProductPage({
                     </a>
                   ) }
                 </div>
+              </div>
+            ) }
+
+            {/* Free chapter PDF download (email-gated) */ }
+            { product.freeChapter?.pdfUrl && (
+              <div id="free-chapter" className="mt-8 scroll-mt-24">
+                <FreeChapterDownload
+                  pdfUrl={ product.freeChapter.pdfUrl }
+                  bookTitle={ product.name || "" }
+                  chapterTitle={ product.freeChapter.title || undefined }
+                />
               </div>
             ) }
           </div>

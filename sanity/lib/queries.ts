@@ -78,6 +78,10 @@ const productFields = /* groq */ `
   publicationDate,
   pageCount,
   previewChapter,
+  "freeChapter": freeChapter {
+    title,
+    "pdfUrl": pdfFile.asset->url
+  },
   excerpt,
   amazonLink,
   audibleLink,
@@ -170,7 +174,8 @@ const bookFields = /* groq */ `
   description,
   images,
   basePrice,
-  category
+  category,
+  "freeChapterPdfUrl": freeChapter.pdfFile.asset->url
 `;
 
 export const newestBooksQuery = defineQuery(`
