@@ -438,22 +438,57 @@ export default async function BlogPostPage({
         </div>
       </section>
 
-      {/* Marriage Counseling CTA */ }
+      {/* Marriage Books */ }
       <section className="bg-gradient-to-r from-[#0E6BB7] to-[#0a5a9f] py-16 text-white">
         <div className="container mx-auto px-5">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="mb-4 text-3xl font-bold md:text-4xl">
-              Need More Support for Your Marriage?
-            </h2>
-            <p className="mb-8 text-lg text-blue-100">
-              Dr. Jomo & Dr. Charmaine offer personalized marriage counseling, premarital prep, and relationship coaching.
-            </p>
-            <Link
-              href="/marriage/contact"
-              className="inline-block rounded-lg bg-white px-8 py-4 font-bold text-[#0E6BB7] shadow-lg transition-all hover:scale-105 hover:shadow-xl"
-            >
-              Schedule Counseling
-            </Link>
+          <div className="mx-auto max-w-5xl">
+            <div className="mb-10 text-center">
+              <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+                Need More Support for Your Marriage?
+              </h2>
+              <p className="text-lg text-blue-100">
+                Go deeper with Dr. Jomo & Dr. Charmaine's books for couples.
+              </p>
+            </div>
+            <div className="grid gap-8 md:grid-cols-2">
+              { [
+                {
+                  title: "The Mechanics of Marriage",
+                  description: "Are you ready to hit the gas pedal on reaching the marriage of your dreams? It's full speed ahead once you learn the mechanics of marriage!",
+                  image: "/images/marriage/main-page/reading-marriage-book.webp",
+                  href: "/products/the-mechanics-of-marriage",
+                },
+                {
+                  title: "Transform Your Mind Transform Your Marriage",
+                  description: "Allow your marriage to be transformed by the renewing of your mind.",
+                  image: "/images/marriage/main-page/tym-book.webp",
+                  href: "/products/transform-your-mind-transform-your-marriage",
+                },
+              ].map((book) => (
+                <Link
+                  key={ book.href }
+                  href={ book.href }
+                  className="group flex flex-col overflow-hidden rounded-2xl bg-white text-[#303030] shadow-lg transition-all hover:-translate-y-1 hover:shadow-2xl"
+                >
+                  <div className="relative aspect-[16/9] w-full overflow-hidden">
+                    <Image
+                      src={ book.image }
+                      alt={ book.title }
+                      fill
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="flex flex-1 flex-col p-6">
+                    <h3 className="mb-3 text-xl font-bold md:text-2xl">{ book.title }</h3>
+                    <p className="mb-6 flex-1 text-gray-600 leading-relaxed">{ book.description }</p>
+                    <span className="inline-block self-start rounded-lg bg-[#ea8125] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow transition-colors group-hover:bg-[#d67320]">
+                      Get Your Copy Today
+                    </span>
+                  </div>
+                </Link>
+              )) }
+            </div>
           </div>
         </div>
       </section>
